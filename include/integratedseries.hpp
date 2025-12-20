@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <atomic>
+#include <thread>
 #include <omp.h>
 #include <stdexcept>
 #include <sstream>

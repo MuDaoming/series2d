@@ -42,7 +42,7 @@ SeriesConfig parseCommandLine(int argc, char* argv[]) {
 template<typename T>
 void setupEnvironment(const SeriesConfig& config) {
     // 设置OpenMP线程数
-    omp_set_num_threads(config.num_threads);
+    // omp_set_num_threads(config.num_threads);
     
     // 设置质数（这里假设T是FlintMod）
     if constexpr (std::is_same_v<T, FlintMod>) {
@@ -101,11 +101,19 @@ std::vector<std::vector<Series<T>>> solveDiffEquations(
     int mi_count = diffSys.getSystemSize();
     
     // 计算 mseries[mi_bc][mi_red] - 对每个边界条件求解
-    std::vector<std::vector<Series<T>>> mseries(mi_count, std::vector<Series<T>>(mi_count, Series<T>(degree)));
+    // std::vector<std::vector<Series<T>>> mseries(mi_count, std::vector<Series<T>>(mi_count, Series<T>(degree)));
+
     
+    // debug
+    std::vector<std::vector<Series<T>>> mseries(1, std::vector<Series<T>>(mi_count, Series<T>(degree)));
+
+
+        
     // 使用OpenMP并行化边界条件求解
-    #pragma omp parallel for 
-    for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+    // #pragma omp parallel for 
+    // for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+    // debug
+    for (int mi_bc = 0; mi_bc < 1; ++mi_bc) {
         // mi_bc标记边界条件
         std::vector<T> boundary_conditions(mi_count, T(0));
         boundary_conditions[mi_bc] = T(1);  // 边界条件第mi_bc个分量为1
@@ -128,15 +136,37 @@ std::vector<std::vector<Series<T>>> computeSeries(
     TRACE("computeSeries");
     
     int intg_count = red_coe.size();
-    int mi_count = mseries.size();
+    // int mi_count = mseries.size();
+    int mi_count = mseries[0].size();
     
     // 计算 series[intg][mi_bc] = sum_{mi_red} red_coe[intg][mi_red] * mseries[mi_bc][mi_red]
-    std::vector<std::vector<Series<T>>> series(intg_count, std::vector<Series<T>>(mi_count, Series<T>(degree)));
-    
-    // 使用OpenMP并行化外层两个循环，使用dynamic调度以获得更好的负载均衡
-    #pragma omp parallel for collapse(2) schedule(dynamic)
+    // std::vector<std::vector<Series<T>>> series(intg_count, std::vector<Series<T>>(mi_count, Series<T>(degree)));
+
+    // debug
+    std::vector<std::vector<Series<T>>> series(intg_count, std::vector<Series<T>>(1, Series<T>(degree)));
+
+    // 进度监控, 粒度为 (intg, mi_bc), 对齐OpenMP并行化
+    // std::atomic<size_t> completed{0};
+    // // size_t total_tasks = static_cast<size_t>(intg_count) * static_cast<size_t>(mi_count);
+    // // debug
+    // size_t total_tasks = static_cast<size_t>(intg_count) * static_cast<size_t>(1);
+    // std::atomic<bool> stopMonitor{false};
+
+    // 监控线程：每5秒打印已完成任务 / 总任务
+    // std::thread monitor([&]() {
+    //     while (!stopMonitor.load(std::memory_order_relaxed)) {
+    //         size_t cur = completed.load(std::memory_order_relaxed);
+    //         std::cout << "Progress: " << cur << "/" << total_tasks << std::endl;
+    //         if (cur >= total_tasks) break;
+    //         std::this_thread::sleep_for(std::chrono::seconds(5));
+    //     }
+    // });
+    // 使用OpenMP并行化外层两个循环（collapse)
+    // #pragma omp parallel for collapse(2) schedule(dynamic)
     for (int intg = 0; intg < intg_count; ++intg) {
-        for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {  
+        // for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+        // debug
+        for (int mi_bc = 0; mi_bc < 1; ++mi_bc) {
             // series[intg][mi_bc] = sum_{mi_red} red_coe[intg][mi_red] * mseries[mi_bc][mi_red]
             Series<T> temp(degree);
             temp.setZero();
@@ -147,9 +177,18 @@ std::vector<std::vector<Series<T>>> computeSeries(
                 temp += product;
             }
             series[intg][mi_bc] = temp;
+            // 每完成一个 (intg, mi_bc) 迭代即算一个任务完成
+            // completed.fetch_add(1, std::memory_order_relaxed);
         }
     }
-    
+
+    // 通知监控线程结束并 join
+    // stopMonitor.store(true, std::memory_order_relaxed);
+    // if (monitor.joinable()) monitor.join();
+
+    // 最终确保打印 100%
+    // std::cout << "Progress: " << total_tasks << "/" << total_tasks << std::endl;
+
     return series;
 }
 
@@ -171,14 +210,20 @@ std::vector<std::vector<std::vector<T>>> performIntegration(
     int intg_count = series.size();
     int mi_count = series[0].size();
     
+    
     // integrated_series 有维度 intg_count * mi_count * (degree+1)
+    // std::vector<std::vector<std::vector<T>>> integrated_series(
+    //     intg_count, std::vector<std::vector<T>>(mi_count, std::vector<T>(degree + 1)));
+    // debug
     std::vector<std::vector<std::vector<T>>> integrated_series(
-        intg_count, std::vector<std::vector<T>>(mi_count, std::vector<T>(degree + 1)));
+    intg_count, std::vector<std::vector<T>>(1, std::vector<T>(degree + 1)));
     
     // 积分权重计算 - 使用OpenMP并行化前三层循环
-    #pragma omp parallel for collapse(3)
+    // #pragma omp parallel for collapse(3)
     for (int intg = 0; intg < intg_count; ++intg) {
-        for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+        // for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+        // debug
+        for (int mi_bc = 0; mi_bc < 1; ++mi_bc) {
             for (int d = 0; d <= degree; ++d) {
                 integrated_series[intg][mi_bc][d] = T(0);
                 for (int n_idx = 0; n_idx <= d; ++n_idx) {
@@ -218,7 +263,9 @@ void outputIntegratedSeries(
     for (int intg = 0; intg < intg_count; ++intg) {
         if (intg > 0) integratedOutFile << ",";
         integratedOutFile << "{";
-        for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+        // for (int mi_bc = 0; mi_bc < mi_count; ++mi_bc) {
+        // debug
+        for (int mi_bc = 0; mi_bc < 1; ++mi_bc) {
             if (mi_bc > 0) integratedOutFile << ",";
             
             // output integrated_series[intg][mi_bc] as a[0]+a[1]s+a[2]s^2+...+a[degree]s^degree

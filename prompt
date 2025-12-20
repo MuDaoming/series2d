@@ -1,0 +1,4 @@
+1. 变量名的修改. 所以的nu类变量(如nu, sectorNu, nuMinusEi)都应该是一个元素非负的列表, 当然sectorNu元素只能是0或者1
+2. sector可以用数字表示也就把0,1序列看出二进制转换为一个数字, 这个变量统一叫sectorIdx
+3. 所有的对nu的所有元素求和的类似的东西叫做(类)nuSum, 你可以写一个小函数叫做sumNu
+4. 最好再包装一个sumSectorNu
