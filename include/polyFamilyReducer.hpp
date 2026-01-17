@@ -44,8 +44,11 @@ namespace firefly {
                 Y = T(values[1][0].n);
             }
             
+            // 设置当前工作点
+            reducer_->setCurrentPoint(X, Y);
+            
             // 获取约化系数向量
-            std::vector<T> coeffs = reducer_->getReductionCoeff(nu_, delta_, X, Y);
+            std::vector<T> coeffs = reducer_->getReductionCoeff(nu_, delta_);
             
             // 转换为 FFIntTemp 类型
             std::vector<FFIntTemp> result;
@@ -94,13 +97,16 @@ namespace firefly {
                 Y = T(values[1][0].n);
             }
             
+            // 设置当前工作点
+            reducer_->setCurrentPoint(X, Y);
+            
             // 存储所有FBI的约化系数
             std::vector<FFIntTemp> result;
             
             // 遍历所有FBI
             for (const auto& [nu, delta] : fbi_list_) {
                 // 获取当前FBI的约化系数
-                std::vector<T> coeffs = reducer_->getReductionCoeff(nu, delta, X, Y);
+                std::vector<T> coeffs = reducer_->getReductionCoeff(nu, delta);
                 
                 // 添加到结果向量
                 for (const auto& c : coeffs) {
@@ -159,9 +165,6 @@ public:
     
     /// 获取总探测点数（最近一次调用的统计）
     uint32_t getTotalProbes() const { return total_probes_; }
-    
-    /// 获取使用的(X,Y)点数量（numReducer的cache大小）
-    size_t getCacheSize() const { return numReducer_->getCacheSize(); }
     
     /// 打印统计信息
     void printStats() const;

@@ -21,6 +21,9 @@ DENumBuilder<T>::DENumBuilder(const std::vector<std::vector<T>>& topS,
     numMasterFBI_ = family_->getMasterIdxs().size();
     numProps_ = family_->getNumProps();
     numBranch_ = family_->getNumBranch();
+    
+    // 设置当前工作点
+    numReducer_->setCurrentPoint(X, Y);
 }
 
 template<typename T>
@@ -38,8 +41,9 @@ void DENumBuilder<T>::buildDEMatrices(std::vector<std::vector<T>>& AX,
         // 约化导数中的每个FBI到MFBI
         for (const auto& [key, coeff] : derivX) {
             const auto& [nu, delta] = key;
-            // 使用数值约化器约化FBI(nu, delta)，需要传入X和Y
-            auto reduction = numReducer_->getReductionCoeff(nu, delta, X_, Y_);
+            // 使用数值约化器约化FBI(nu, delta)
+            // 注意：已在构造函数中通过 setCurrentPoint 设置了 (X, Y)
+            auto reduction = numReducer_->getReductionCoeff(nu, delta);
             // reduction[j]是FBI(nu,delta)在第j个MFBI上的系数
             for (int j = 0; j < numMasterFBI_; ++j) {
                 AX[i][j] += coeff * reduction[j];
@@ -50,7 +54,7 @@ void DENumBuilder<T>::buildDEMatrices(std::vector<std::vector<T>>& AX,
         auto derivY = computeMasterDerivativeY(i);
         for (const auto& [key, coeff] : derivY) {
             const auto& [nu, delta] = key;
-            auto reduction = numReducer_->getReductionCoeff(nu, delta, X_, Y_);
+            auto reduction = numReducer_->getReductionCoeff(nu, delta);
             for (int j = 0; j < numMasterFBI_; ++j) {
                 AY[i][j] += coeff * reduction[j];
             }
@@ -168,9 +172,13 @@ std::unique_ptr<DENumBuilder<T>> DEBuilder<T>::createNumBuilder(const T& X, cons
     auto dRdX_val = evaluateMatrix(dRdX_);
     auto dRdY_val = evaluateMatrix(dRdY_);
     
+    // 重要：为每个点创建独立的 numReducer，避免多线程竞争
+    // 在多线程环境下，共享 numReducer_ 会导致 setCurrentPoint 的竞争条件
+    auto local_numReducer = std::make_shared<PolyFamilyNumReducer<T>>(S_, numProps_, numBranch_);
+    
     return std::make_unique<DENumBuilder<T>>(
         topS_val, dRdX_val, dRdY_val,
-        numReducer_, family_, delta_, X, Y
+        local_numReducer, family_, delta_, X, Y
     );
 }
 

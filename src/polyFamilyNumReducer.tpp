@@ -6,7 +6,8 @@ template<typename T>
 PolyFamilyNumReducer<T>::PolyFamilyNumReducer(const std::vector<std::vector<Polynomial<T>>>& polyTopS, 
                                                int numProps, 
                                                int numBranch)
-    : polyTopS_(polyTopS), numProps_(numProps), numBranch_(numBranch) {
+    : polyTopS_(polyTopS), numProps_(numProps), numBranch_(numBranch), 
+      curX_(0), curY_(0), hasCurrentPoint_(false) {
     // 检查 polyTopS 的维度
     if (polyTopS_.size() != static_cast<size_t>(numProps + numBranch)) {
         throw std::invalid_argument("polyTopS row size must equal numProps + numBranch");
@@ -20,8 +21,7 @@ PolyFamilyNumReducer<T>::PolyFamilyNumReducer(const std::vector<std::vector<Poly
 
 template<typename T>
 PolyFamilyNumReducer<T>::~PolyFamilyNumReducer() {
-    // unique_ptr 会自动清理，但我们可以显式清空
-    clearCache();
+    // unique_ptr 会自动清理
 }
 
 template<typename T>
@@ -40,42 +40,27 @@ std::vector<std::vector<T>> PolyFamilyNumReducer<T>::evaluateTopS(const T& X, co
 }
 
 template<typename T>
-std::pair<Family<T>*, FBIReducer<T>*> PolyFamilyNumReducer<T>::getOrCreateReducer(const T& X, const T& Y) {
-    auto key = std::make_pair(X, Y);
+void PolyFamilyNumReducer<T>::setCurrentPoint(const T& X, const T& Y) {
+    curX_ = X;
+    curY_ = Y;
+    hasCurrentPoint_ = true;
     
-    // 检查缓存中是否已存在
-    auto it = familyCache_.find(key);
-    if (it != familyCache_.end()) {
-        // 缓存命中
-        return std::make_pair(it->second.first.get(), it->second.second.get());
-    }
-    
-    // 缓存未命中，创建新的 Family 和 Reducer
+    // 在新点处求值 topS
     auto numericTopS = evaluateTopS(X, Y);
     
-    // 创建 Family（使用 unique_ptr 管理）
-    auto family = std::make_unique<Family<T>>(numericTopS, numProps_, numBranch_);
-    
-    // 创建 FBIReducer（使用 unique_ptr 管理）
-    auto reducer = std::make_unique<FBIReducer<T>>(family.get());
-    
-    // 获取原始指针用于返回
-    Family<T>* family_ptr = family.get();
-    FBIReducer<T>* reducer_ptr = reducer.get();
-    
-    // 存入缓存
-    familyCache_[key] = std::make_pair(std::move(family), std::move(reducer));
-    
-    return std::make_pair(family_ptr, reducer_ptr);
+    // 创建新的 Family 和 Reducer（使用 unique_ptr 自动管理）
+    curFamily_ = std::make_unique<Family<T>>(numericTopS, numProps_, numBranch_);
+    curReducer_ = std::make_unique<FBIReducer<T>>(curFamily_.get());
 }
 
 template<typename T>
-std::vector<T> PolyFamilyNumReducer<T>::getReductionCoeff(const std::vector<int>& nu, T delta, const T& X, const T& Y) {
-    // 获取或创建对应 (X, Y) 的 Reducer
-    auto [family_ptr, reducer_ptr] = getOrCreateReducer(X, Y);
+std::vector<T> PolyFamilyNumReducer<T>::getReductionCoeff(const std::vector<int>& nu, T delta) {
+    if (!hasCurrentPoint_) {
+        throw std::runtime_error("PolyFamilyNumReducer: Must call setCurrentPoint before getReductionCoeff!");
+    }
     
-    // 调用 Reducer 的 getReductionCoeff 方法
-    return reducer_ptr->getReductionCoeff(nu, delta);
+    // 调用当前 Reducer 的 getReductionCoeff 方法
+    return curReducer_->getReductionCoeff(nu, delta);
 }
 
 template<typename T>
@@ -86,25 +71,4 @@ size_t PolyFamilyNumReducer<T>::getNumMasterFBIs() const {
     auto numericTopS = evaluateTopS(zero, zero);
     Family<T> temp_family(numericTopS, numProps_, numBranch_);
     return temp_family.getNumMaster();
-}
-
-template<typename T>
-void PolyFamilyNumReducer<T>::clearCache() {
-    familyCache_.clear();
-}
-
-template<typename T>
-void PolyFamilyNumReducer<T>::printCacheInfo() const {
-    std::cout << "PolyFamily Cache Information:\n";
-    std::cout << "  Total cached (X, Y) points: " << familyCache_.size() << "\n";
-    
-    if (!familyCache_.empty()) {
-        std::cout << "  Cached points:\n";
-        int idx = 0;
-        for (const auto& [key, value] : familyCache_) {
-            std::cout << "    [" << idx << "] (X=" << key.first 
-                      << ", Y=" << key.second << ")\n";
-            idx++;
-        }
-    }
 }

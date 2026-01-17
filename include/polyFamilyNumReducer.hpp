@@ -25,13 +25,18 @@ public:
     /// 析构函数：清理缓存
     ~PolyFamilyNumReducer();
     
-    /// 主要接口：在给定 (X,Y) 值处进行数值约化
-    /// @param nu FBI 的指数向量
-    /// @param delta delta 参数
+    /// 设置当前工作点 (X, Y)
+    /// 注意：会重新创建 Family 和 Reducer，清除 FBIReducer 的内部缓存
     /// @param X X 的值
     /// @param Y Y 的值
+    void setCurrentPoint(const T& X, const T& Y);
+    
+    /// 主要接口：在当前点进行数值约化
+    /// 注意：必须先调用 setCurrentPoint 设置工作点
+    /// @param nu FBI 的指数向量
+    /// @param delta delta 参数
     /// @return 约化系数向量（对应所有 master FBI）
-    std::vector<T> getReductionCoeff(const std::vector<int>& nu, T delta, const T& X, const T& Y);
+    std::vector<T> getReductionCoeff(const std::vector<int>& nu, T delta);
     
     /// 获取 numProps
     inline int getNumProps() const { return numProps_; }
@@ -42,35 +47,29 @@ public:
     /// 获取 master FBI 的数量
     size_t getNumMasterFBIs() const;
     
-    /// 清除缓存
-    void clearCache();
+    /// 检查是否已设置当前点
+    inline bool hasCurrentPoint() const { return hasCurrentPoint_; }
     
-    /// 获取缓存大小
-    size_t getCacheSize() const { return familyCache_.size(); }
-    
-    /// 打印缓存信息
-    void printCacheInfo() const;
+    /// 获取当前的 FBIReducer（如果存在）
+    FBIReducer<T>* getCurrentReducer() { return curReducer_.get(); }
 
 private:
     std::vector<std::vector<Polynomial<T>>> polyTopS_;  ///< 多项式 topS 矩阵
     int numProps_;                                      ///< 传播子数量
     int numBranch_;                                     ///< Branch 数量
     
-    /// 缓存：(X, Y) -> (Family, FBIReducer)
-    /// 使用 unique_ptr 自动管理内存
-    std::map<std::pair<T, T>, std::pair<std::unique_ptr<Family<T>>, std::unique_ptr<FBIReducer<T>>>> familyCache_;
+    /// 当前工作点状态
+    T curX_;                                            ///< 当前 X 值
+    T curY_;                                            ///< 当前 Y 值
+    bool hasCurrentPoint_;                              ///< 是否已设置当前点
+    std::unique_ptr<Family<T>> curFamily_;              ///< 当前点的 Family
+    std::unique_ptr<FBIReducer<T>> curReducer_;         ///< 当前点的 Reducer
     
     /// 在 (X, Y) 处对 polyTopS 求值，得到数值 topS
     /// @param X X 的值
     /// @param Y Y 的值
     /// @return 数值 topS 矩阵
     std::vector<std::vector<T>> evaluateTopS(const T& X, const T& Y) const;
-    
-    /// 获取或创建 Family 和 Reducer
-    /// @param X X 的值
-    /// @param Y Y 的值
-    /// @return Family 和 FBIReducer 的指针对
-    std::pair<Family<T>*, FBIReducer<T>*> getOrCreateReducer(const T& X, const T& Y);
 };
 
 #include "../src/polyFamilyNumReducer.tpp"

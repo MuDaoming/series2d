@@ -108,9 +108,6 @@ std::vector<Rational<T>> PolyFamilyReducer<T>::getReductionCoeffDebug(const std:
     std::cout << "开始批量插值重构 (Debug模式)...\n";
     std::cout << "  Master FBI 数量: " << numMasterFBIs_ << "\n";
     
-    // 记录插值前的 cache 大小
-    size_t cache_before = numReducer_->getCacheSize();
-    
     // 设置质数
     firefly::FFInt::set_new_prime(prime_);
     
@@ -134,13 +131,7 @@ std::vector<Rational<T>> PolyFamilyReducer<T>::getReductionCoeffDebug(const std:
     // 执行重构（只在一个质数域，不做CRT）
     reconst.reconstruct(1);
     
-    // 记录插值后的 cache 大小
-    size_t cache_after = numReducer_->getCacheSize();
-    size_t total_points_used = cache_after - cache_before;
-    
     std::cout << "  插值完成!\n";
-    std::cout << "  使用的 (X,Y) 点数: " << total_points_used << "\n";
-    std::cout << "  Cache 大小变化: " << cache_before << " -> " << cache_after << "\n";
     
     // 获取结果（有限域上的有理函数）
     std::vector<firefly::RationalFunctionFF> ff_results = reconst.get_result_ff();
@@ -181,9 +172,6 @@ std::vector<Rational<T>> PolyFamilyReducer<T>::getBatchReductionCoeff(
     std::cout << "  Each FBI has " << numMasterFBIs_ << " coefficients\n";
     std::cout << "  Total functions to interpolate: " << fbi_list.size() * numMasterFBIs_ << "\n\n";
     
-    // 记录插值前的 cache 大小
-    size_t cache_before = numReducer_->getCacheSize();
-    
     // 创建 BatchBlackBox
     firefly::PolyFamilyBatchBlackBox<T> bb(numReducer_, fbi_list);
     
@@ -207,13 +195,7 @@ std::vector<Rational<T>> PolyFamilyReducer<T>::getBatchReductionCoeff(
     std::cout << "  Starting batch reconstruction...\n";
     reconst.reconstruct(1);
     
-    // 记录插值后的 cache 大小
-    size_t cache_after = numReducer_->getCacheSize();
-    size_t total_points_used = cache_after - cache_before;
-    
     std::cout << "\n  Batch reconstruction completed!\n";
-    std::cout << "  Used (X,Y) points: " << total_points_used << "\n";
-    std::cout << "  Cache size: " << cache_before << " -> " << cache_after << "\n";
     
     // 获取结果（有限域上的有理函数）
     std::vector<firefly::RationalFunctionFF> ff_results = reconst.get_result_ff();
@@ -243,6 +225,5 @@ void PolyFamilyReducer<T>::printStats() const {
     std::cout << "PolyFamilyReducer Statistics:\n";
     std::cout << "  Prime: " << prime_ << "\n";
     std::cout << "  Number of master FBIs: " << numMasterFBIs_ << "\n";
-    std::cout << "  Cache size (X,Y points): " << numReducer_->getCacheSize() << "\n";
     std::cout << "  Total probes (last call): " << total_probes_ << "\n";
 }
