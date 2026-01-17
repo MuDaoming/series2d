@@ -116,25 +116,16 @@ std::string Polynomial<T>::toString() const {
     
     for (const auto& [power, coeff] : poly_) {
         if (!first) {
-            if (coeff >= T{0}) {
-                oss << " + ";
-            } else {
-                oss << " - ";
-            }
-        } else if (coeff < T{0}) {
-            oss << "-";
+            oss << " + ";
         }
         
-        // 计算绝对值系数
-        T abs_coeff = (coeff < T{0}) ? -coeff : coeff;
-        
         if (power.isConstant()) {
-            oss << abs_coeff;
+            oss << coeff;
         } else {
-            if (abs_coeff == T{1}) {
+            if (coeff == T{1}) {
                 oss << power.toString();
             } else {
-                oss << abs_coeff << "*" << power.toString();
+                oss << coeff << "*" << power.toString();
             }
         }
         
@@ -142,6 +133,112 @@ std::string Polynomial<T>::toString() const {
     }
     
     return oss.str();
+}
+
+template<typename T>
+T Polynomial<T>::evaluate(const T& X, const T& Y) const {
+    if (isEmpty()) {
+        return T{0};
+    }
+    
+    T result{0};
+    for (const auto& [power, coeff] : poly_) {
+        // 计算 X^x_power
+        T x_term{1};
+        for (int i = 0; i < power.x_power; ++i) {
+            x_term *= X;
+        }
+        
+        // 计算 Y^y_power
+        T y_term{1};
+        for (int i = 0; i < power.y_power; ++i) {
+            y_term *= Y;
+        }
+        
+        // 累加 coeff * X^x_power * Y^y_power
+        result += coeff * x_term * y_term;
+    }
+    
+    return result;
+}
+
+template<typename T>
+Polynomial<T> Polynomial<T>::derivativeX() const {
+    Polynomial<T> result;
+    
+    // 对每一项求导：d/dX (c * X^i * Y^j) = i * c * X^(i-1) * Y^j
+    for (const auto& [power, coeff] : poly_) {
+        if (power.x_power > 0) {
+            // 新系数 = i * 原系数
+            T new_coeff = T(power.x_power) * coeff;
+            // 新幂次：X的指数减1
+            Power new_power(power.x_power - 1, power.y_power);
+            result.addMonomial(new_coeff, new_power);
+        }
+        // 如果 x_power == 0，该项对X的导数为0，不添加
+    }
+    
+    return result;
+}
+
+template<typename T>
+Polynomial<T> Polynomial<T>::derivativeY() const {
+    Polynomial<T> result;
+    
+    // 对每一项求导：d/dY (c * X^i * Y^j) = j * c * X^i * Y^(j-1)
+    for (const auto& [power, coeff] : poly_) {
+        if (power.y_power > 0) {
+            // 新系数 = j * 原系数
+            T new_coeff = T(power.y_power) * coeff;
+            // 新幂次：Y的指数减1
+            Power new_power(power.x_power, power.y_power - 1);
+            result.addMonomial(new_coeff, new_power);
+        }
+        // 如果 y_power == 0，该项对Y的导数为0，不添加
+    }
+    
+    return result;
+}
+
+template<typename T>
+Polynomial<T> Polynomial<T>::operator+(const Polynomial<T>& other) const {
+    Polynomial<T> result = *this;
+    result += other;
+    return result;
+}
+
+template<typename T>
+Polynomial<T>& Polynomial<T>::operator+=(const Polynomial<T>& other) {
+    // 将other的每一项添加到当前多项式
+    for (const auto& [power, coeff] : other.poly_) {
+        addMonomial(coeff, power);
+    }
+    return *this;
+}
+
+template<typename T>
+Polynomial<T> Polynomial<T>::operator*(const T& scalar) const {
+    Polynomial<T> result = *this;
+    result *= scalar;
+    return result;
+}
+
+template<typename T>
+Polynomial<T>& Polynomial<T>::operator*=(const T& scalar) {
+    if (scalar == T(0)) {
+        // 乘以0结果为零多项式
+        poly_.clear();
+        deg_ = -1;
+        numOfMono_ = 0;
+        return *this;
+    }
+    
+    // 将每一项的系数乘以标量
+    for (auto& [power, coeff] : poly_) {
+        coeff *= scalar;
+    }
+    
+    return *this;
 }
 
 // ===== Rational模板类实现 =====
@@ -194,6 +291,66 @@ std::string Rational<T>::toString() const {
     
     // 否则返回分数形式
     return "(" + num_str + ") / (" + den_str + ")";
+}
+
+// ===== Rational类运算符 =====
+
+/// 有理函数加法: (a/b) + (c/d) = (a*d + b*c) / (b*d)
+template<typename T>
+Rational<T> Rational<T>::operator+(const Rational<T>& other) const {
+    // 计算新的分子: a*d + b*c
+    Polynomial<T> newNumerator;
+    
+    // a*d
+    for (const auto& [power, coeff] : numerator) {
+        for (const auto& [power2, coeff2] : other.denominator) {
+            Power newPower(power.x_power + power2.x_power, power.y_power + power2.y_power);
+            newNumerator.addMonomial(coeff * coeff2, newPower);
+        }
+    }
+    
+    // + b*c
+    for (const auto& [power, coeff] : denominator) {
+        for (const auto& [power2, coeff2] : other.numerator) {
+            Power newPower(power.x_power + power2.x_power, power.y_power + power2.y_power);
+            newNumerator.addMonomial(coeff * coeff2, newPower);
+        }
+    }
+    
+    // 计算新的分母: b*d
+    Polynomial<T> newDenominator;
+    for (const auto& [power, coeff] : denominator) {
+        for (const auto& [power2, coeff2] : other.denominator) {
+            Power newPower(power.x_power + power2.x_power, power.y_power + power2.y_power);
+            newDenominator.addMonomial(coeff * coeff2, newPower);
+        }
+    }
+    
+    return Rational<T>(newNumerator, newDenominator);
+}
+
+/// 有理函数乘法: (a/b) * (c/d) = (a*c) / (b*d)
+template<typename T>
+Rational<T> Rational<T>::operator*(const Rational<T>& other) const {
+    // 计算新的分子: a*c
+    Polynomial<T> newNumerator;
+    for (const auto& [power, coeff] : numerator) {
+        for (const auto& [power2, coeff2] : other.numerator) {
+            Power newPower(power.x_power + power2.x_power, power.y_power + power2.y_power);
+            newNumerator.addMonomial(coeff * coeff2, newPower);
+        }
+    }
+    
+    // 计算新的分母: b*d
+    Polynomial<T> newDenominator;
+    for (const auto& [power, coeff] : denominator) {
+        for (const auto& [power2, coeff2] : other.denominator) {
+            Power newPower(power.x_power + power2.x_power, power.y_power + power2.y_power);
+            newDenominator.addMonomial(coeff * coeff2, newPower);
+        }
+    }
+    
+    return Rational<T>(newNumerator, newDenominator);
 }
 
 // // ===== 显式实例化 =====

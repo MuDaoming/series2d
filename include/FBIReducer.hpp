@@ -4,68 +4,79 @@
 #include <map>
 #include <tuple>
 #include <iostream>
-#include "FBI.hpp"
 #include "family.hpp"
 
 // FBI 约化器
 template<typename T>
 class FBIReducer {
-private:
-    const Family<T>* family;           // 绑定的 family
-    
-    // 缓存键：(sectorNu, nu向量, delta) -> 约化系数
-    using CacheKey = std::tuple<int, std::vector<int>, T>;
-    std::map<CacheKey, std::vector<T>> cache;
-    
-    // 辅助函数：创建缓存键
-    CacheKey makeKey(int sectorNu, const std::vector<int>& nu, T delta) const;
-    
-    // 辅助函数：比较两个 nu 向量是否相等
-    bool nuEqual(const std::vector<int>& nu1, const std::vector<int>& nu2) const;
-    
-    // 辅助函数：找到 nu 中最大元素的索引
-    std::pair<int, int> findMaxIndex(const std::vector<int>& nu) const;
-    
-    // 辅助函数：检查 nu 是否全部等于 sectorNu
-    bool isMasterFBI(const std::vector<int>& nu, int sectorNu, const Family<T>* fam) const;
-    
-    // 辅助函数：从 nu 向量获取 sectorNu
-    int getSectorNu(const std::vector<int>& nu) const;
-    
-    // Case 0 约化函数
-    std::vector<T> reduceCase0(int sectorNu, const std::vector<int>& nu, T delta);
-    
-    // Case 0：步骤1 - IBP 恒等式（从 delta 到 delta+1）
-    std::vector<T> case0IBP(int sectorNu, const std::vector<int>& nu, T delta);
-    
-    // Case 0：步骤2 - 维度变换（从 delta+1 到 delta）
-    std::vector<T> case0DimensionShift(int sectorNu, const std::vector<int>& nu, 
-                                        const std::vector<T>& coeffDeltaPlus1, T delta);
-    
-    // 通用约化函数（根据 case 调用相应的约化方法）
-    std::vector<T> reduceInternal(int sectorNu, const std::vector<int>& nu, T delta);
-
 public:
-    // 构造函数
-    FBIReducer(const Family<T>* fam);
-    
-    // 主接口：获取约化系数（自动使用缓存）
-    const std::vector<T>& getReductionCoeff(const std::vector<int>& nu, T delta);
-    
-    // 主接口：为 FBI 对象获取约化系数
-    const std::vector<T>& getReductionCoeff(const FBI<T>& fbi);
-    
-    // 构造 MFBIs（特定维度的所有 master FBI）
-    std::vector<FBI<T>> buildMFBIs(T delta) const;
-    
-    // 清空缓存
+    FBIReducer(const Family<T>* family) : family_(family) {};
+
+    const std::vector<T>& getReductionCoeff(const std::vector<int>& nu, T delta); 
+
+    inline const Family<T>* getFamily() const { return family_; }
     void clearCache();
-    
-    // 获取缓存大小
     size_t getCacheSize() const;
+    void printCache() const;
+
+private:
+    const Family<T>* family_;   
+    using CacheKey = std::tuple<std::vector<int>, T>;
+    std::map<CacheKey, std::vector<T>> cache_;
     
-    // Getter
-    inline const Family<T>* getFamily() const { return family; }
+    // main reduction function
+    std::vector<T> reduceFBI(const std::vector<int>& nu, T delta);
+
+    // case 0
+    std::vector<T> reduceCase0(const std::vector<int>& nu, T delta);
+    std::vector<T> case0IBP(const std::vector<int>& nu, T delta);
+    std::vector<T> case0DimensionShift(const std::vector<int>& nu, T delta);
+    std::vector<T> case0CornerDimensionShift(const std::vector<int>& nu, T delta, T targetDelta);
+    std::vector<T> case0CornerDimensionShiftUp(const std::vector<int>& nu, T delta, T targetDelta);
+    std::vector<T> case0CornerDimensionShiftDown(const std::vector<int>& nu, T delta, T targetDelta);
+
+    // case 1
+    std::vector<T> reduceCase1(const std::vector<int>& nu, T delta);
+
+    // case 2
+    std::vector<T> reduceCase2(const std::vector<int>& nu, T delta);
+
+    // case 3
+    std::vector<T> reduceCase3(const std::vector<int>& nu, T delta);
+
+    // auxiliary functions
+    CacheKey makeKey(const std::vector<int>& nu, T delta) const {return std::make_tuple(nu, delta); };
+    
+    // 判断nu是否为corner（所有元素都是0或1）
+    bool isCorner(const std::vector<int>& nu) const {
+        for (int val : nu) {
+            if (val != 0 && val != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    std::pair<int, int> findMaxIndex(const std::vector<int>& nu) const {
+        int maxIdxInTopSector = 0;
+        int maxVal = nu[0];
+        for (size_t i = 1; i < nu.size(); i++) {
+            if (nu[i] > maxVal) {
+                maxVal = nu[i];
+                maxIdxInTopSector = i;
+            }
+        }
+
+        int maxIdxInCurrentSector = 0;
+        for (int i = 0; i < maxIdxInTopSector; i++) {
+            if (nu[i] > 0) {
+                maxIdxInCurrentSector++;
+            }
+        }
+        return std::pair(maxIdxInTopSector, maxIdxInCurrentSector);
+    };
+
+    
 };
 
 #include "../src/FBIReducer.tpp"

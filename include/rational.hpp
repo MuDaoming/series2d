@@ -111,6 +111,32 @@ public:
     T getCoeff(int x, int y) const {
         return getCoeff(Power(x, y));
     }
+    
+    /// 在给定X和Y值时求多项式的值
+    /// @param X X的值
+    /// @param Y Y的值
+    /// @return 多项式在(X,Y)处的值
+    T evaluate(const T& X, const T& Y) const;
+    
+    /// 对X求偏导数
+    /// @return 对X的偏导数多项式
+    Polynomial<T> derivativeX() const;
+    
+    /// 对Y求偏导数
+    /// @return 对Y的偏导数多项式
+    Polynomial<T> derivativeY() const;
+    
+    /// 多项式加法
+    Polynomial<T> operator+(const Polynomial<T>& other) const;
+    
+    /// 多项式加法赋值
+    Polynomial<T>& operator+=(const Polynomial<T>& other);
+    
+    /// 标量乘法
+    Polynomial<T> operator*(const T& scalar) const;
+    
+    /// 标量乘法赋值
+    Polynomial<T>& operator*=(const T& scalar);
 
 private:
     /// 辅助函数：重新计算度和单项式数量
@@ -142,6 +168,12 @@ struct Rational {
     
     /// 转换为字符串（调试用）
     std::string toString() const;
+    
+    /// 有理函数加法
+    Rational<T> operator+(const Rational<T>& other) const;
+    
+    /// 有理函数乘法
+    Rational<T> operator*(const Rational<T>& other) const;
 };
 
 /// 矩阵类型别名
