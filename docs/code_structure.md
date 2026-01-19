@@ -29,9 +29,12 @@
 2. **FBI结构模块**：
    - `family.hpp`：FBI族（Family）管理
    - `sector.hpp`：Sector分析与分类
-   - `FBIReducer.hpp`：FBI约化引擎
+   - `fbi_reducer.hpp`：FBI数值约化引擎
+   - `fbi_interpolater.hpp`：FBI符号约化（Firefly插值）
 
 3. **微分方程模块**：
+   - `de_builder.hpp`：数值点微分方程构建器
+   - `de_interpolater.hpp`：符号微分方程构建器（Firefly插值）
    - `diffeq.hpp`：二维微分方程系统求解器
 
 4. **辅助模块**：
@@ -212,21 +215,33 @@ static void divRat(Series& result, const Series& series, const Rational& rationa
    - 记录Case类型
    - 识别MFBI（Case 0且 $\vec{\nu}$ 为角积分）
 
-### 3.6 FBIReducer类 (`FBIReducer.hpp`)
+### 3.6 FBIReducer类 (`fbi_reducer.hpp`)
 
 #### `FBIReducer<T>` 类
 
 FBI约化引擎，将任意FBI表示为MFBI的线性组合。
 
+**设计特点：**
+- 持有 `Family<T>` 对象（非指针），在构造时创建
+- 构造时指定工作维度delta，Family使用此delta初始化所有MFBI
+- 线程安全：每个FBIReducer实例独立，可安全并行使用
+
 **构造参数：**
-- `family`：指向 `Family<T>` 对象的指针
+- `topS`：数值S矩阵（$(N+B) \times (N+B)$）
+- `numProps`：传播子数量 $N$
+- `numBranch`：分支数量 $B$
+- `delta`：工作维度（MFBI的目标delta值）
 
 **核心方法：**
 - `getReductionCoeff(nu, delta)`：获取约化系数向量
+  - 参数：要约化的FBI指数 $\vec{\nu}$ 和维度 $\Delta$
   - 返回值：长度为 $M$ 的向量（$M$ 是MFBI数量）
   - 含义：$I_{\vec{\nu}}^{\Delta} = \sum_{k=1}^{M} c_k \cdot I_{\text{MFBI}_k}^{\Delta_0}$
+- `getNumMaster()`：返回MFBI数量
+- `getMasterNus()`：返回所有MFBI的指数向量列表
+- `getMasterDeltas()`：返回所有MFBI的delta值（均为构造时的targetDelta）
 
-**约化实现（`src/FBIReducer.tpp`）：**
+**约化实现（`src/fbi_reducer.tpp`）：**
 
 核心函数 `reduceFBI(nu, delta)` 根据Case类型分派：
 
@@ -299,68 +314,153 @@ $$I_{\vec{\nu}}^{\Delta} = -\sum_{\alpha \neq \beta} \frac{z_\alpha}{z_\beta} I_
 - `CacheKey = tuple<vector<int>, T>`，对应 $(\vec{\nu}, \Delta)$
 - 避免重复计算，显著提升性能
 
-### 3.7 微分方程构建类 (`setDE.hpp`)
+### 3.7 FBIInterpolater类 (`fbi_interpolater.hpp`)
 
-#### `DENumBuilder<T>` 类
+#### `FBIInterpolater<T>` 类
 
-在数值点(X,Y)下构建MFBI的微分方程系数矩阵。
+使用Firefly插值重构FBI约化系数的符号形式（有理函数）。
+
+**设计特点：**
+- 将FBI约化系数从数值形式提升为符号有理函数 $r_k^{(\vec{\nu},\Delta)}(X,Y)$
+- 使用Firefly黑盒插值方法在多个数值点求值并重构
+- 线程安全：在并行插值中为每个线程创建独立的FBIReducer
 
 **构造参数：**
-- `topS`：在数值点(X,Y)下的S矩阵（N×N数值矩阵）
-- `numReducer`：FBI数值约化器（PolyFamilyNumReducer）
-- `family`：FBI族对象
+- `polyTopS`：符号S矩阵（Polynomial<T>的矩阵，关于X,Y）
+- `numProps`：传播子数量 $N$
+- `numBranch`：分支数量 $B$
 - `delta`：工作维度
-
-**核心成员变量：**
-- `dRdX_`, `dRdY_`：矩阵R对X和Y的导数（数值形式）
-- `numReducer_`：数值约化器
-- `topS_`：S矩阵的数值
+- `prime`：有限域质数
 
 **核心方法：**
-- `buildDEMatrices(AX, AY)`：构建数值微分方程矩阵
-- `computeFBIDerivative(nu, dR)`：使用公式计算FBI导数
+- `getReductionCoeff(fbi_list)`：批量计算FBI约化系数
+  - 参数：FBI列表 `vector<pair<vector<int>, T>>`（指数向量和delta）
+  - 返回：每个FBI的约化系数向量 `vector<vector<Rational<T>>>`
+  - 每个系数是关于$(X,Y)$的有理函数
 
-**数学对应：** 数学框架步骤2（微分方程求解）的前置步骤。
+**实现细节（`src/fbi_interpolater.tpp`）：**
 
-**实现细节（`src/setDE.tpp`）：**
+1. **Firefly黑盒类** `FBIBlackBox<T>`：
+   - 在数值点$(X,Y)$处：创建FBIReducer，调用数值约化，返回系数
+   - 实现`operator()`接口供Firefly调用
 
-1. **FBI导数公式**（对应用户指定的公式）：
+2. **插值流程**：
+   ```cpp
+   // 创建Firefly Reconstructor（2个变量：X和Y）
+   Reconstructor<FBIBlackBox<T>> reconst(2, n_threads, blackbox);
+   
+   // 设置质数并执行重构
+   FFInt::set_new_prime(prime_);
+   reconst.reconstruct(1);  // 单质数重构
+   
+   // 获取有理函数结果并转换
+   auto ff_results = reconst.get_result_ff();
    ```
-   d FBI(nu,delta)/dX = sum_{i,j} -1/2 * dRdX[i,j] * factor * FBI(nu+e_i+e_j, delta+1)
-   ```
-   其中 `factor = (i!=j ? nu[i]*nu[j] : nu[i]*(nu[i]+1))`
 
-2. **构建流程**：
-   - 对每个MFBI计算其对X和Y的导数（得到FBI的线性组合）
-   - 使用数值约化器将导数中的每个FBI约化到MFBI
-   - 组合系数得到微分方程矩阵 `AX[i][j]` 和 `AY[i][j]`
+3. **线程安全设计**：
+   - 黑盒在每次调用时创建新的FBIReducer（传入当前$(X,Y)$）
+   - 避免共享状态，实现并行安全
+
+**数学对应：** 数学框架第3节FBI约化，将数值约化提升为符号约化。
+
+### 3.8 DEBuilder类 (`de_builder.hpp`)
 
 #### `DEBuilder<T>` 类
 
-符号构建MFBI的微分方程，使用Firefly插值重构。
+在给定数值点$(X,Y)$构建MFBI的微分方程系数矩阵。
+
+**设计特点：**
+- 接受数值S矩阵和导数矩阵
+- 在单个数值点计算微分方程系数
+- 用于Firefly插值的黑盒求值
 
 **构造参数：**
-- `polyTopS`：符号S矩阵（关于X,Y的多项式）
-- `family`：FBI族
+- `numTopS`：数值S矩阵（$(N+B) \times (N+B)$，在某个$(X,Y)$点求值）
+- `numDRdX`：$\partial R/\partial X$的数值（$N \times N$矩阵）
+- `numDRdY`：$\partial R/\partial Y$的数值（$N \times N$矩阵）
+- `numProps`：传播子数量 $N$
+- `numBranch`：分支数量 $B$
 - `delta`：工作维度
-- `prime`：有限域素数
-
-**核心成员变量：**
-- `S_`：符号S(X,Y)矩阵
-- `dRdX_`, `dRdY_`：符号形式的导数矩阵（Polynomial类型）
 
 **核心方法：**
-- `buildDEMatrices(AX, AY)`：构建符号微分方程矩阵（Rational<T>类型）
-- `evaluateS(X,Y)`, `evaluateDRdX(X,Y)`, `evaluateDRdY(X,Y)`：在数值点求值
+- `buildDEMatrices(AX, AY)`：构建数值微分方程矩阵
+  - `AX[i][j]`, `AY[i][j]`：数值系数（类型T）
+  - 表示：$\frac{\partial f_i}{\partial X} = \sum_j A_X[i][j] \cdot f_j$
+
+**实现细节（`src/de_builder.tpp`）：**
+
+1. **FBI导数公式**：
+   $$\frac{\partial I_{\vec{\nu}}^{\Delta}}{\partial X} = \sum_{i,j} -\frac{1}{2} \frac{\partial R_{ij}}{\partial X} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}$$
+   
+   其中 $\text{factor}_{ij} = \begin{cases} \nu_i \nu_j & i \neq j \\ \nu_i(\nu_i+1) & i = j \end{cases}$
+
+2. **构建流程**：
+   - 对每个MFBI计算其对$X$和$Y$的导数（得到FBI的线性组合）
+   - 使用FBIReducer将每个FBI约化到MFBI基
+   - 组合系数得到矩阵元素$A_X[i][j]$和$A_Y[i][j]$
+
+**数学对应：** 数学框架第4.4节，构建微分方程系数矩阵。
+
+### 3.9 DEInterpolater类 (`de_interpolater.hpp`)
+
+#### `DEInterpolater<T>` 类
+
+使用Firefly插值重构MFBI微分方程系数矩阵的符号形式。
+
+**设计特点：**
+- 将微分方程系数从数值形式提升为符号有理函数矩阵
+- 使用Firefly黑盒插值：在多个$(X,Y)$点调用DEBuilder求值
+- 线程安全：为每个求值点创建独立的DEBuilder
+
+**构造参数：**
+- `topS`：符号S矩阵（Polynomial<T>的矩阵）
+- `numProps`：传播子数量 $N$
+- `numBranch`：分支数量 $B$
+- `delta`：工作维度
+- `prime`：有限域质数
+
+**核心成员变量：**
+- `topS_`：符号S矩阵
+- `dRdX_`, `dRdY_`：符号导数矩阵（在构造时计算）
+- `numMasterFBI_`：MFBI数量
+
+**核心方法：**
+- `buildDEMatrices(AX, AY)`：构建符号微分方程矩阵
+  - 返回：$M \times M$有理函数矩阵，$A_X[i][j], A_Y[i][j]$类型为`Rational<T>`
+
+**辅助方法：**
+- `evaluateTopS(X,Y)`, `evaluateDRdX(X,Y)`, `evaluateDRdY(X,Y)`：在数值点求值
+- `createDEBuilder(X,Y)`：创建DEBuilder对象用于黑盒求值
+- `convertToPolynomial()`, `convertToRational()`：Firefly结果转换
+
+**实现细节（`src/de_interpolater.tpp`）：**
+
+1. **Firefly黑盒类** `DEBlackBox<T>`：
+   - 在数值点$(X,Y)$：调用`createDEBuilder`，计算数值矩阵，返回扁平化结果
+   - 返回向量顺序：先$A_X$的所有元素，后$A_Y$的所有元素
+
+2. **插值流程**：
+   ```cpp
+   // 创建Reconstructor
+   Reconstructor<DEBlackBox<T>> reconst(2, n_threads, blackbox);
+   
+   // 设置质数并重构
+   FFInt::set_new_prime(prime_);
+   reconst.reconstruct(1);
+   
+   // 获取结果并解析为AX和AY矩阵
+   auto ff_results = reconst.get_result_ff();
+   // 前M*M个结果 -> AX，后M*M个结果 -> AY
+   ```
+
+3. **构造函数行为**：
+   - 计算符号导数：`dRdX_[i][j] = topS_[i+B][j+B].derivativeX()`
+   - 创建临时FBIReducer确定MFBI数量（evaluateTopS(1,1)）
+   - **重要**：此步骤可能在Firefly插值后执行，需确保质数正确
 
 **数学对应：** 数学框架第4.4节，构建微分方程系数矩阵 $A_X$ 和 $A_Y$。
 
-**实现细节：**
-- 在构造时自动计算符号导数：`dRdX_[i][j] = S_[i][j].derivativeX()`
-- 使用Firefly插值在多个数值点上求值，重构为有理函数
-- 类似于PolyFamilyReducer的工作模式
-
-### 3.8 微分方程求解类 (`diffeq.hpp`)
+### 3.10 微分方程求解类 (`diffeq.hpp`)
 
 #### `DiffSystem<T>` 类
 

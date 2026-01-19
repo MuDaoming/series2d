@@ -14,7 +14,7 @@ const std::vector<T>& FBIReducer<T>::getReductionCoeff(const std::vector<int>& n
 
 template<typename T>
 std::vector<T> FBIReducer<T>::reduceFBI(const std::vector<int>& nu, T delta) {
-    int caseNum = family_->getCase(nu);
+    int caseNum = family_.getCase(nu);
     if (caseNum == 0) { return reduceCase0(nu, delta);} 
     else if (caseNum == 1) { return reduceCase1(nu, delta); }
     else if (caseNum == 2) { return reduceCase2(nu, delta); }
@@ -36,7 +36,7 @@ std::vector<T> FBIReducer<T>::reduceCase0(const std::vector<int>& nu, T delta) {
     }
     
     // 是corner，检查是否为主积分
-    int mfbiIndex = family_->getIndexOfMaster(nu);
+    int mfbiIndex = family_.getIndexOfMaster(nu);
     
     if (mfbiIndex == -1) {
         // 不是主积分，但是corner，这不应该发生在case0中
@@ -44,11 +44,11 @@ std::vector<T> FBIReducer<T>::reduceCase0(const std::vector<int>& nu, T delta) {
     }
     
     // 是主积分，获取目标delta
-    T targetDelta = family_->getMasterDelta(mfbiIndex);
+    T targetDelta = family_.getMasterDelta(mfbiIndex);
     
     if (delta == targetDelta) {
         // 4.c: corner且delta相同，返回单位向量
-        int numMFBIs = family_->getNumMaster();
+        int numMFBIs = family_.getNumMaster();
         std::vector<T> result(numMFBIs, T(0));
         result[mfbiIndex] = T(1);
         return result;
@@ -78,10 +78,10 @@ std::vector<T> FBIReducer<T>::case0CornerDimensionShift(const std::vector<int>& 
 // I_ν^delta = ((2*(delta+1) - ν - B) z_0 I_ν^(delta+1)  + Σ z_α I_(ν-e_α)^delta) / C
 template<typename T>
 std::vector<T> FBIReducer<T>::case0CornerDimensionShiftUp(const std::vector<int>& nu, T delta, T targetDelta) {
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    int nuSum = family_->nuSum(nu);
-    const auto* sector = family_->getSector(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    int nuSum = family_.nuSum(nu);
+    const auto* sector = family_.getSector(nu);
     T C = sector->getCSum();
     T z0 = sector->getZ0();
     
@@ -105,7 +105,7 @@ std::vector<T> FBIReducer<T>::case0CornerDimensionShiftUp(const std::vector<int>
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             
@@ -128,10 +128,10 @@ std::vector<T> FBIReducer<T>::case0CornerDimensionShiftUp(const std::vector<int>
 // I_ν^delta = [C I_ν^(delta-1) - Σ z_α I_(ν-e_α)^(delta-1)] / [(2*delta - ν - B) z_0]
 template<typename T>
 std::vector<T> FBIReducer<T>::case0CornerDimensionShiftDown(const std::vector<int>& nu, T delta, T targetDelta) {
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    int nuSum = family_->nuSum(nu);
-    const auto* sector = family_->getSector(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    int nuSum = family_.nuSum(nu);
+    const auto* sector = family_.getSector(nu);
     T C = sector->getCSum();
     T z0 = sector->getZ0();
     
@@ -153,7 +153,7 @@ std::vector<T> FBIReducer<T>::case0CornerDimensionShiftDown(const std::vector<in
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             
@@ -185,11 +185,11 @@ std::vector<T> FBIReducer<T>::case0IBP(const std::vector<int>& nuPlus, T delta) 
     const auto& coeffNu = getReductionCoeff(nu, delta - T(1));
     
     // 构造右侧向量 rhs
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    int numPropsCur = family_->nProps(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    int numPropsCur = family_.nProps(nu);
     int nCur = numBranch + numPropsCur;
-    int numMaster = family_->getNumMaster();
+    int numMaster = family_.getNumMaster();
     std::vector<std::vector<T>> rhs(nCur, std::vector<T>(numMaster));
     
     // rhs 前 B 个元素：-FBI(nu, delta - 1) 的约化系数
@@ -206,7 +206,7 @@ std::vector<T> FBIReducer<T>::case0IBP(const std::vector<int>& nuPlus, T delta) 
             iCur++;
             nuMinusEi = nu;
             nuMinusEi[i]--;
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             const auto& coeffNuMinusEi = getReductionCoeff(nuMinusEi, delta - T(1));
@@ -215,7 +215,7 @@ std::vector<T> FBIReducer<T>::case0IBP(const std::vector<int>& nuPlus, T delta) 
     }
 
     // 使用 invS 求解
-    auto sector = family_->getSector(nu);
+    auto sector = family_.getSector(nu);
     const auto& invS = sector->getInvS();
     std::vector<T> solution(numMaster, T(0));
     
@@ -234,11 +234,11 @@ std::vector<T> FBIReducer<T>::case0IBP(const std::vector<int>& nuPlus, T delta) 
 template<typename T>
 std::vector<T> FBIReducer<T>::case0DimensionShift(const std::vector<int>& nu, T delta) {
 
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    int nuSum = family_->nuSum(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    int nuSum = family_.nuSum(nu);
     const auto& coeffDeltaPlus1 = getReductionCoeff(nu, delta + 1);
-    const auto* sector = family_->getSector(nu);
+    const auto* sector = family_.getSector(nu);
     T C = sector->getCSum();
     T z0 = sector->getZ0();
     T constant = z0 * (T(2) * (delta + 1) - T(nuSum) - T(numBranch));
@@ -258,7 +258,7 @@ std::vector<T> FBIReducer<T>::case0DimensionShift(const std::vector<int>& nu, T 
             T z_i = sector->getZ(iCur);
             nuMinusEi = nu;
             nuMinusEi[i]--;
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             const auto& coeffNuMinusEi = getReductionCoeff(nuMinusEi, delta);
@@ -280,15 +280,15 @@ std::vector<T> FBIReducer<T>::case0DimensionShift(const std::vector<int>& nu, T 
 template<typename T>
 std::vector<T> FBIReducer<T>::reduceCase1(const std::vector<int>& nu, T delta) {
     // Formula: (2*Delta - nu_sum - B)*I_nu^{Delta} = -sum_{alpha=1}^{N} z_alpha * I_{nu-e_alpha}^{Delta-1}
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    int nuSum = family_->nuSum(nu);
-    const auto* sector = family_->getSector(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    int nuSum = family_.nuSum(nu);
+    const auto* sector = family_.getSector(nu);
     
     T factor = T(2) * delta - T(nuSum) - T(numBranch);
     
     std::vector<T> result;
-    result.resize(family_->getNumMaster(), T(0));
+    result.resize(family_.getNumMaster(), T(0));
     
     int iCur = -1;
     for (int i = 0; i < numProps; i++) {
@@ -298,7 +298,7 @@ std::vector<T> FBIReducer<T>::reduceCase1(const std::vector<int>& nu, T delta) {
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             
@@ -319,13 +319,13 @@ std::vector<T> FBIReducer<T>::reduceCase1(const std::vector<int>& nu, T delta) {
 template<typename T>
 std::vector<T> FBIReducer<T>::reduceCase2(const std::vector<int>& nu, T delta) {
 // I(nu, delta) = 1/C sum_i z_i I(nu - e_i, delta)
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    const auto* sector = family_->getSector(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    const auto* sector = family_.getSector(nu);
     T C = sector->getCSum();
 
     std::vector<T> result;
-    result.resize(family_->getNumMaster(), T(0));
+    result.resize(family_.getNumMaster(), T(0));
 
     int iCur = -1;
     for (int i = 0; i < numProps; i++) {
@@ -335,7 +335,7 @@ std::vector<T> FBIReducer<T>::reduceCase2(const std::vector<int>& nu, T delta) {
             T z_i = sector->getZ(iCur);
             nuMinusEi = nu;
             nuMinusEi[i]--;
-            if (family_->nBranch(nuMinusEi) != numBranch) {
+            if (family_.nBranch(nuMinusEi) != numBranch) {
                 continue;
             }
             const auto& coeffNuMinusEi = getReductionCoeff(nuMinusEi, delta);
@@ -358,9 +358,9 @@ std::vector<T> FBIReducer<T>::reduceCase3(const std::vector<int>& nu, T delta) {
 // z_j !=0
 // I(nu ,delta) = - sum_{i!=j} z_i / z_j I(nu + e_j - e_i, delta)
 
-    int numBranch = family_->getNumBranch();
-    int numProps = family_->getNumProps();
-    const auto* sector = family_->getSector(nu);
+    int numBranch = family_.getNumBranch();
+    int numProps = family_.getNumProps();
+    const auto* sector = family_.getSector(nu);
 
     // 找到非零 z_j
     int iCur = -1;
@@ -381,7 +381,7 @@ std::vector<T> FBIReducer<T>::reduceCase3(const std::vector<int>& nu, T delta) {
     }
 
     std::vector<T> result;
-    result.resize(family_->getNumMaster(), T(0));
+    result.resize(family_.getNumMaster(), T(0));
 
     iCur = -1;
     for (int i = 0; i < numProps; i++) {
@@ -393,7 +393,7 @@ std::vector<T> FBIReducer<T>::reduceCase3(const std::vector<int>& nu, T delta) {
             nuMinusEiPlusEj = nu;
             nuMinusEiPlusEj[i]--;
             nuMinusEiPlusEj[j]++;
-            if (family_->nBranch(nuMinusEiPlusEj) != numBranch) {
+            if (family_.nBranch(nuMinusEiPlusEj) != numBranch) {
                 continue;
             }
             const auto& coeffNuMinusEiPlusEj = getReductionCoeff(nuMinusEiPlusEj, delta);
