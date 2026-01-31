@@ -12,7 +12,7 @@
 
 #include <sstream>
 #include <ginac/ginac.h>
-#include "ffType.hpp"
+#include "ff_type.hpp"
 #include "rational.hpp"
 #include "family.hpp"
 

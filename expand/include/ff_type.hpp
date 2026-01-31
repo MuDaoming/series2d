@@ -57,4 +57,4 @@ public:
     std::string to_string() const;
 };
 
-#include "../src/ffType.tpp"
+#include "../src/ff_type.tpp"
