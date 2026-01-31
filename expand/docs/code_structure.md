@@ -18,6 +18,10 @@
 
 ```
 expand/
+├── .clinerules/                   # Cline规则文件
+│   ├── project-overview.md        # 项目概述
+│   ├── coding-rules.md            # 代码规范
+│   └── doc-sync-rules.md          # 文档同步规则
 ├── docs/                          # 文档
 │   ├── problem_and_workflow.md    # 问题定义与计算流程
 │   ├── code_structure.md          # 代码架构（本文档）
