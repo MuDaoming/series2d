@@ -6,7 +6,10 @@
 
 ### 1.1 项目目标
 
-在质数域 $\mathbb{Z}_p$ 下计算二圈Feynman积分（FBI）的二维幂级数展开，使用**逐阶递推**的方法。
+在质数域 $\mathbb{Z}_p$ 下进行端到端计算：
+- FBI 的二维幂级数展开（逐阶递推）
+- FI 被积函数二维级数构造
+- FI 的一维级数输出（对二维级数积分）
 
 ### 1.2 核心方法
 
@@ -33,7 +36,11 @@ expand/
 │   ├── sector.hpp                 # Sector类（含辅助函数）
 │   ├── family.hpp                 # Family类
 │   ├── series_solver.hpp          # SeriesSolver类
-│   └── converter.hpp              # GiNaC到FlintMod类型转换
+│   ├── converter.hpp              # GiNaC到FlintMod类型转换
+│   ├── integrand_expander.hpp     # FI被积函数二维级数构造
+│   ├── series_integrator.hpp      # 二维级数到一维级数积分
+│   ├── io.hpp                     # S/config/target 输入解析
+│   └── fi_pipeline.hpp            # 顶层端到端流程入口
 ├── src/                           # 实现文件（模板实现）
 │   ├── ff_type.tpp
 │   ├── rational.tpp
@@ -41,8 +48,14 @@ expand/
 │   ├── sector.tpp
 │   ├── family.tpp
 │   ├── series_solver.tpp
-│   └── converter.tpp
+│   ├── converter.tpp
+│   ├── integrand_expander.tpp
+│   ├── series_integrator.tpp
+│   ├── io.tpp
+│   └── fi_pipeline.tpp
 └── test/                          # 测试代码
+    ├── onedimseries/              # fi_pipeline_runner构建与入口
+    └── examples/                  # 示例输入与回归校验脚本
 ```
 
 ### 2.2 命名规范
@@ -82,6 +95,12 @@ Sector<RT, PT>    ← 单个sector的处理（S矩阵、RREF、C和z）
 Family<RT, PT, ST> ← 管理所有sector，提供全局信息
     ↓
 SeriesSolver<RT, PT, ST> ← 级数求解器（核心算法）
+    ↓
+IntegrandExpander<RT, PT, ST> ← 构造 FI 被积函数二维级数
+    ↓
+SeriesIntegrator<ST> ← 积分得到 FI 一维级数
+    ↓
+runFI1DSeriesPipeline(...) ← 顶层流程（S/config/target/output）
 ```
 
 ### 3.2 数据流
@@ -108,7 +127,9 @@ SeriesSolver<RT, PT, ST> ← 级数求解器（核心算法）
         主积分: 微分方程递推
         非主积分: IBP约化递推（按需触发）
          ↓
-输出：所有主积分的级数展开
+输出：
+  - 目标 FBI 二维级数（按需）
+  - 目标 FI 一维级数（按 target 顺序写入输出文件）
 ```
 
 ### 3.3 调用关系
@@ -296,6 +317,42 @@ private:
     void solveCandZ();    // 求解C和z系数
 };
 ```
+
+### 4.5 IntegrandExpander 类模板
+
+**文件**：`include/integrand_expander.hpp`，`src/integrand_expander.tpp`
+
+**功能**：构造
+$$
+\text{FIIntegrand}(X,Y)=P(X,Y)\cdot U(X,Y)^\gamma\cdot I_\nu^\Delta(X,Y)
+$$
+的二维级数，其中 `P` 已包含整数幂 `U^\nu`。
+
+关键点：
+- `buildFIPolynomial(nu)` 先在 `(Xr,Yr)` 上构造 `X0,Y0,Z0` 及 Jacobian，再统一 `applyShift`。
+- `expandUPower()` 用 PDE 递推求 `U^\gamma` 的二维级数。
+- `getFI2DSeries(nu)` 返回 FI 被积函数二维级数。
+
+### 4.6 SeriesIntegrator 类模板
+
+**文件**：`include/series_integrator.hpp`，`src/series_integrator.tpp`
+
+**功能**：将二维级数积分为一维级数：
+- 输入：二维系数 `c_{pq}`
+- 输出：一维系数 `s_d`
+- 积分域由 `a,b` 平移参数定义。
+
+### 4.7 IO 与 Pipeline
+
+**IO 文件**：`include/io.hpp`，`src/io.tpp`
+- `InputConfig`：`N,B,deg,p,d,a,b,bc`
+- `TargetConfig`：`nus`
+- 解析三类输入文件：`S`、`config`、`target`
+
+**顶层流程**：`include/fi_pipeline.hpp`，`src/fi_pipeline.tpp`
+- 入口：`runFI1DSeriesPipeline(sPath, configPath, targetPath, outputPath)`
+- 支持相对/绝对路径
+- 按 target 顺序输出一维结果，每行一个 `{c0,...,c_deg}`。
 
 #### 实现要点：RREF与Case判定
 

@@ -31,21 +31,6 @@ void runFI1DSeriesPipeline(const std::string& sPath,
         throw std::runtime_error("S dimension mismatch: expected B+N");
     }
 
-    // Debug check in GiNaC: determinant of top sector S (secvec = {1,...,1}).
-    {
-        const int fullN = static_cast<int>(topS.size());
-        GiNaC::matrix sMat(fullN, fullN);
-        for (int i = 0; i < fullN; ++i) {
-            for (int j = 0; j < fullN; ++j) {
-                sMat(i, j) = topS[i][j];
-            }
-        }
-        GiNaC::ex detTop = GiNaC::normal(sMat.determinant());
-        bool isZero = detTop.is_zero();
-        std::cout << "[GiNaC] det(S, secvec={1,...,1}) = " << detTop << "\n";
-        std::cout << "[GiNaC] det(S) == 0 ? " << (isZero ? "YES" : "NO") << "\n";
-    }
-
     const int numBranch = cfg.B;
     const int numProps = static_cast<int>(topS.size()) - numBranch;
     Family<GiNaC::ex, GiNaC::ex, GiNaC::ex> ginacFamily(topS, numProps, numBranch, X, Y);
