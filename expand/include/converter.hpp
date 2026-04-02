@@ -93,6 +93,15 @@ inline Rational<FlintMod> exToRational(const GiNaC::ex& expr,
     // 转换分子和分母为Polynomial<FlintMod>
     Polynomial<FlintMod> numer_poly = exToPolynomial(numer_ex, X, Y);
     Polynomial<FlintMod> denom_poly = exToPolynomial(denom_ex, X, Y);
+
+    if (denom_poly.isEmpty()) {
+        std::ostringstream oss;
+        oss << "exToRational got zero denominator polynomial. expr=" << expr
+            << ", normalized=" << normalized
+            << ", numer=" << numer_ex
+            << ", denom=" << denom_ex;
+        throw std::runtime_error(oss.str());
+    }
     
     return Rational<FlintMod>(numer_poly, denom_poly);
 }

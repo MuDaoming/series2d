@@ -14,6 +14,7 @@
 #pragma once
 
 #include <vector>
+#include <sstream>
 #include <stdexcept>
 #include <type_traits>
 
@@ -199,7 +200,14 @@ public:
         for (size_t i = 0; i < other.reducedS_.size(); ++i) {
             reducedS_[i].resize(other.reducedS_[i].size());
             for (size_t j = 0; j < other.reducedS_[i].size(); ++j) {
-                reducedS_[i][j] = ratConv(other.reducedS_[i][j]);
+                try {
+                    reducedS_[i][j] = ratConv(other.reducedS_[i][j]);
+                } catch (const std::exception& e) {
+                    std::ostringstream oss;
+                    oss << "Sector convert failed at reducedS[" << i << "][" << j << "], expr="
+                        << other.reducedS_[i][j] << ", reason: " << e.what();
+                    throw std::runtime_error(oss.str());
+                }
             }
         }
         
@@ -208,16 +216,36 @@ public:
         for (size_t i = 0; i < other.rowOperation_.size(); ++i) {
             rowOperation_[i].resize(other.rowOperation_[i].size());
             for (size_t j = 0; j < other.rowOperation_[i].size(); ++j) {
-                rowOperation_[i][j] = ratConv(other.rowOperation_[i][j]);
+                try {
+                    rowOperation_[i][j] = ratConv(other.rowOperation_[i][j]);
+                } catch (const std::exception& e) {
+                    std::ostringstream oss;
+                    oss << "Sector convert failed at rowOperation[" << i << "][" << j << "], expr="
+                        << other.rowOperation_[i][j] << ", reason: " << e.what();
+                    throw std::runtime_error(oss.str());
+                }
             }
         }
         
         // 转换candz_
         candz_.resize(other.candz_.size());
         for (size_t i = 0; i < other.candz_.size(); ++i) {
-            candz_[i] = ratConv(other.candz_[i]);
+            try {
+                candz_[i] = ratConv(other.candz_[i]);
+            } catch (const std::exception& e) {
+                std::ostringstream oss;
+                oss << "Sector convert failed at candz[" << i << "], expr="
+                    << other.candz_[i] << ", reason: " << e.what();
+                throw std::runtime_error(oss.str());
+            }
         }
-        C_ = ratConv(other.C_);
+        try {
+            C_ = ratConv(other.C_);
+        } catch (const std::exception& e) {
+            std::ostringstream oss;
+            oss << "Sector convert failed at C, expr=" << other.C_ << ", reason: " << e.what();
+            throw std::runtime_error(oss.str());
+        }
         
         // 转换分子分母形式
         denoCandZ_ = polyConv(other.denoCandZ_);

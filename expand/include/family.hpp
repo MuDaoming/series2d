@@ -12,6 +12,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <sstream>
 #include "sector.hpp"
 
 template<typename RT, typename PT, typename ST>
@@ -70,8 +71,25 @@ public:
         
         // 转换sectors_
         sectors_.reserve(other.sectors_.size());
-        for (const auto& otherSector : other.sectors_) {
-            sectors_.emplace_back(otherSector, polyConv, ratConv);
+        for (size_t i = 0; i < other.sectors_.size(); ++i) {
+            try {
+                sectors_.emplace_back(other.sectors_[i], polyConv, ratConv);
+            } catch (const std::exception& e) {
+                int secIdx = (i < other.sectorIdxs_.size()) ? other.sectorIdxs_[i] : -1;
+                std::ostringstream oss;
+                oss << "Family convert failed at sector[" << i << "]";
+                if (secIdx >= 0) {
+                    oss << ", idx=" << secIdx << ", secvec={";
+                    std::vector<int> secvec = other.secvecFromIdx(secIdx);
+                    for (size_t k = 0; k < secvec.size(); ++k) {
+                        oss << secvec[k];
+                        if (k + 1 < secvec.size()) oss << ",";
+                    }
+                    oss << "}";
+                }
+                oss << ", reason: " << e.what();
+                throw std::runtime_error(oss.str());
+            }
         }
         
         // 转换masterDeltas_
@@ -103,6 +121,7 @@ public:
     inline const std::vector<int>& getMasterIdxs() const { return masterIdxs_; }
     inline int getCaseByIdx(int idx) const { return (idx >= 0 && idx < (int)cases_.size()) ? cases_[idx] : -1; }
     inline const std::vector<std::vector<PT>>& getTopS() const { return topS_; }
+    inline const std::vector<int>& getBranchIndices() const { return branchIndices_; }
     inline const std::vector<ST>& getMasterDeltas() const { return masterDeltas_; }
     inline ST getMasterDelta(int masterIdx) const { return masterDeltas_[masterIdx]; }
     inline void setMasterDelta(ST Delta) { masterDeltas_.assign(masterIdxs_.size(), Delta); }

@@ -72,6 +72,7 @@ public:
     int getCurrentDeg() const { return currentDeg_; }
     int getTargetDeg() const { return targetDeg_; }
     int getNumMaster() const { return numMaster_; }
+    const Family<RT, PT, ST>& getFamily() const { return family_; }
     const Series<ST>& getMasterSeries(int masterIdx) const;
     size_t getCacheSize() const { return cache_.size(); }
     void clearCache();
