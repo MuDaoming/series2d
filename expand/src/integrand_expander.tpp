@@ -195,6 +195,48 @@ PT IntegrandExpander<RT, PT, ST>::buildFIPolynomial(const std::vector<int>& nu) 
 }
 
 template<typename RT, typename PT, typename ST>
+PT IntegrandExpander<RT, PT, ST>::buildFIPolynomialNoU(const std::vector<int>& nu) const {
+    // 重定义模式: FI = J · W · f̃，不包含 U^{nuTot}
+    const auto& family = solver_.getFamily();
+    const int numBranch = family.getNumBranch();
+    const int numProps = family.getNumProps();
+    if (numBranch != 3) {
+        throw std::invalid_argument("buildFIPolynomialNoU currently expects exactly 3 branches");
+    }
+    if (static_cast<int>(nu.size()) != numProps) {
+        throw std::invalid_argument("nu size must equal number of propagators");
+    }
+    const auto& branchIndices = family.getBranchIndices();
+
+    std::vector<int> nuBranch(numBranch, 0);
+    for (int i = 0; i < numProps; ++i) {
+        nuBranch[branchIndices[i]] += nu[i];
+    }
+
+    const int ex = nuBranch[0] - 1;
+    const int ey = nuBranch[1] - 1;
+    const int ez = nuBranch[2] - 1;
+    if (ex < 0 || ey < 0 || ez < 0) {
+        throw std::invalid_argument("nuX, nuY, nuZ must be >= 1");
+    }
+
+    const PT xVar = makeMonomialPoly(ST(1), 1, 0);
+    const PT yVar = makeMonomialPoly(ST(1), 0, 1);
+    const PT one = makeConstantPoly(ST(1));
+    const PT X0 = xVar;
+    const PT Y0 = multiplyPoly(one + (xVar * ST(-1)), yVar);
+    const PT Z0 = one + (xVar * ST(-1)) + (Y0 * ST(-1));
+    PT J = one + (xVar * ST(-1));
+
+    PT W = powPoly(X0, ex);
+    W = multiplyPoly(W, powPoly(Y0, ey));
+    W = multiplyPoly(W, powPoly(Z0, ez));
+
+    // J · W only, no U
+    return applyShift(multiplyPoly(J, W));
+}
+
+template<typename RT, typename PT, typename ST>
 void IntegrandExpander<RT, PT, ST>::multiplySeries(Series<ST>& result,
                                                    const Series<ST>& a,
                                                    const Series<ST>& b) {
@@ -356,56 +398,23 @@ void IntegrandExpander<RT, PT, ST>::clearCache() {
 
 template<typename RT, typename PT, typename ST>
 Series<ST> IntegrandExpander<RT, PT, ST>::getFI2DSeries(const std::vector<int>& nu) const {
-    auto t0 = std::chrono::steady_clock::now();
     const Series<ST>& fbi = solver_.getFBISeries(nu, fbiDelta_);
-    auto t1 = std::chrono::steady_clock::now();
-
-    PT poly = buildFIPolynomial(nu);
-    auto t2 = std::chrono::steady_clock::now();
-
-    Series<ST> tmp(targetDeg_);
-    Series<ST>::mulPoly(tmp, fbi, poly);
-    auto t3 = std::chrono::steady_clock::now();
 
     if (!redef_) {
-        // 原始模式: result = U^gamma * (P * FBI)
-        const Series<ST>& uPowerSeries = getUPowerSeries();
-        auto t5 = std::chrono::steady_clock::now();
+        // 原始模式: FI = U^gamma · P · FBI, 其中 P = J·W·U^{nuTot}
+        PT poly = buildFIPolynomial(nu);
+        Series<ST> tmp(targetDeg_);
+        Series<ST>::mulPoly(tmp, fbi, poly);
 
+        const Series<ST>& uPowerSeries = getUPowerSeries();
         Series<ST> result(targetDeg_);
         multiplySeries(result, uPowerSeries, tmp);
-        auto t6 = std::chrono::steady_clock::now();
-
-        auto us_total = std::chrono::duration_cast<std::chrono::microseconds>(t6 - t0).count();
-        std::cout << "[timing][FI2D] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
-                  << " total_us=" << us_total << "\n";
         return result;
     } else {
-        // 重定义模式: result = U^{gamma_base} * (P * f̃ * U^{nuTot})
-        // P already has U^{nuTot}, so we need an EXTRA U^{nuTot}
-        int nuTot = 0;
-        for (int v : nu) nuTot += v;
-
-        // Multiply tmp by U^{nuTot} (the extra factor from redefinition)
-        if (nuTot > 0) {
-            PT Upow = powPoly(shiftedU_, nuTot);
-            Series<ST> tmp2(targetDeg_);
-            Series<ST>::mulPoly(tmp2, tmp, Upow);
-            tmp = std::move(tmp2);
-        }
-        auto t4 = std::chrono::steady_clock::now();
-
-        // Multiply by U^{gammaRedef_}
-        const Series<ST>& uPowerRedef = getUPowerRedefSeries();
-        auto t5 = std::chrono::steady_clock::now();
-
+        // 重定义模式: FI = J·W · f̃, 所有 U 已被吸收进 f̃
+        PT poly = buildFIPolynomialNoU(nu);
         Series<ST> result(targetDeg_);
-        multiplySeries(result, uPowerRedef, tmp);
-        auto t6 = std::chrono::steady_clock::now();
-
-        auto us_total = std::chrono::duration_cast<std::chrono::microseconds>(t6 - t0).count();
-        std::cout << "[timing][FI2D][redef] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
-                  << " total_us=" << us_total << "\n";
+        Series<ST>::mulPoly(result, fbi, poly);
         return result;
     }
 }

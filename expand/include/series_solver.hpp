@@ -316,18 +316,16 @@ public:
     // ========================================================================
     static PT multiplyPolys(const PT& a, const PT& b);
     static PT powPolyExpand(const PT& base, int exp);
-    static Series<ST> mulPolyPower(const Series<ST>& series, const PT& poly, int power);
 
 private:
     static int nuTotSum(const std::vector<int>& nu) {
         int s = 0; for (int v : nu) s += v; return s;
     }
 
-    /// 对约化函数的源项应用 ratio 因子（通分 + 预乘 series）
+    /// 对约化函数应用 ratio 因子（通分 D、预乘分子 polys，不改 series）
     void applyRatioFactors(PT& D,
-                           std::vector<const Series<ST>*>& seriesPtrs,
-                           const std::vector<int>& deltaPs,
-                           std::vector<Series<ST>>& tempStorage) const;
+                           std::vector<PT>& polys,
+                           const std::vector<int>& deltaPs) const;
 };
 
 #include "../src/series_solver.tpp"

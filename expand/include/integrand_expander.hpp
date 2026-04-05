@@ -1,8 +1,5 @@
 #pragma once
 
-#include <chrono>
-#include <iostream>
-#include <map>
 #include <stdexcept>
 #include <vector>
 #include "series_solver.hpp"
@@ -60,6 +57,7 @@ private:
 
     PT buildShiftedU() const;
     PT buildFIPolynomial(const std::vector<int>& nu) const;
+    PT buildFIPolynomialNoU(const std::vector<int>& nu) const;
     PT applyShift(const PT& xrYrPoly) const;
 
     Series<ST> expandUPower() const;

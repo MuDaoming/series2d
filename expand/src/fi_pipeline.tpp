@@ -65,24 +65,26 @@ void runFI1DSeriesPipeline(const std::string& sPath,
         solver.setMasterBoundary(i, FlintMod(cfg.bc[i]));
     }
 
-    // 创建 IntegrandExpander (需要在 solve() 之前, 以获取 shiftedU)
+    // 创建 IntegrandExpander
     IntegrandExpander<Rational<FlintMod>, Polynomial<FlintMod>, FlintMod> expander(
         solver, 2, targetDeg, feynmanD, shiftA, shiftB);
 
-    // 创建 Redefinition 并设置到 solver 和 expander
-    // TODO: 可通过配置开关控制是否启用
-    const int numLoops = 2;  // L=2 for 2-loop
-    const FlintMod fbiDelta = FlintMod(numLoops) * feynmanD / FlintMod(2);  // D_in = L * D_Feynman / 2
+    // 创建 Redefinition 并设置
+    const int numLoops = 2;
+    const FlintMod fbiDelta = FlintMod(numLoops) * feynmanD / FlintMod(2);
     Redefinition<Polynomial<FlintMod>, FlintMod> redef(numLoops, fbiDelta, expander.getShiftedU());
     solver.setRedefinition(&redef);
     expander.setRedefinition(&redef);
-    std::cout << "[info] Redefinition enabled: L=" << redef.L << "\n";
 
+    // 求解
     auto tSolve0 = std::chrono::steady_clock::now();
     solver.solve();
     auto tSolve1 = std::chrono::steady_clock::now();
-    auto a_us = std::chrono::duration_cast<std::chrono::microseconds>(tSolve1 - tSolve0).count();
-    std::cout << "[timing][FI1D] a_FBI_recur_solver_solve_us=" << a_us << "\n";
+    auto solve_us = std::chrono::duration_cast<std::chrono::microseconds>(tSolve1 - tSolve0).count();
+    std::cout << "[solver] solve_us=" << solve_us
+              << "  cache_keys=" << solver.getCacheSize() << "\n";
+
+    // 展开与积分
     IntegrationConfig<FlintMod> intCfg{shiftA, shiftB, targetDeg};
     SeriesIntegrator<FlintMod> integrator(intCfg);
 
@@ -92,28 +94,26 @@ void runFI1DSeriesPipeline(const std::string& sPath,
     }
 
     for (const auto& nu : targetCfg.nus) {
-        auto tB0 = std::chrono::steady_clock::now();
+        auto t0 = std::chrono::steady_clock::now();
         Series<FlintMod> fi2d = expander.getFI2DSeries(nu);
-        auto tB1 = std::chrono::steady_clock::now();
-        auto tInt0 = std::chrono::steady_clock::now();
+        auto t1 = std::chrono::steady_clock::now();
         std::vector<FlintMod> oneD = integrator.integrate(fi2d);
-        auto tInt1 = std::chrono::steady_clock::now();
+        auto t2 = std::chrono::steady_clock::now();
 
-        auto tC0 = std::chrono::steady_clock::now();
         out << "{";
         for (int d = 0; d <= targetDeg; ++d) {
             out << oneD[d].get_value();
             if (d < targetDeg) out << ",";
         }
         out << "}\n";
-        auto tC1 = std::chrono::steady_clock::now();
+        auto t3 = std::chrono::steady_clock::now();
 
-        auto b_us = std::chrono::duration_cast<std::chrono::microseconds>(tB1 - tB0).count();
-        auto int_us = std::chrono::duration_cast<std::chrono::microseconds>(tInt1 - tInt0).count();
-        auto c_us = std::chrono::duration_cast<std::chrono::microseconds>(tC1 - tC0).count();
-        std::cout << "[timing][FI1D] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
-                  << " b_get_FI2DSeries_us=" << b_us
-                  << " integrate_us=" << int_us
-                  << " c_write_us=" << c_us << "\n";
+        auto fi2d_us = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
+        auto integ_us = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+        auto write_us = std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2).count();
+        std::cout << "[expand] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
+                  << "  fi2d_us=" << fi2d_us
+                  << "  integrate_us=" << integ_us
+                  << "  write_us=" << write_us << "\n";
     }
 }
