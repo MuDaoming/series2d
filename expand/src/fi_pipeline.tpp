@@ -74,7 +74,6 @@ void runFI1DSeriesPipeline(const std::string& sPath,
     const FlintMod fbiDelta = FlintMod(numLoops) * feynmanD / FlintMod(2);
     Redefinition<Polynomial<FlintMod>, FlintMod> redef(numLoops, fbiDelta, expander.getShiftedU());
     solver.setRedefinition(&redef);
-    expander.setRedefinition(&redef);
 
     // 求解
     auto tSolve0 = std::chrono::steady_clock::now();

@@ -21,7 +21,7 @@ $$
 \text{FI} = \int_0^1 \int_0^1 Q(X, Y) \cdot I_{\vec{\nu}}^{\Delta}(X, Y) \, dX \, dY
 $$
 
-**计算策略**：先求 FBI 的二维幂级数，再构造 FI 被积函数二维级数，最后积分得到 FI 一维级数。
+**计算策略**：先求重定义后FBI的二维幂级数，再构造FI被积函数二维级数，最后积分得到FI一维级数。
 
 ## 2. 数学结构
 
@@ -121,12 +121,6 @@ $$
 首先使用IBP关系。选取最大指数 $\nu_i$，解出 $I^{\Delta}_{\vec{\nu}}$：
 
 $$
-I^{\Delta}_{\vec{\nu}+\vec{e}_i} = \frac{1}{\nu_i}\sum_{j}(S^{-1})_{B+i, j} \cdot \begin{pmatrix} -I_{\vec{\nu}}^{\Delta-1} \\ \vdots \\ -I_{\vec{\nu}}^{\Delta-1} \\ I_{\vec{\nu}-\vec{e}_1}^{\Delta-1} \\ \vdots \\ I_{\vec{\nu}-\vec{e}_N}^{\Delta-1} \end{pmatrix}_j
-$$
-
-展开写成：
-
-$$
 I^{\Delta}_{\vec{\nu}+\vec{e}_i} = \frac{1}{\nu_i} \left[ -\sum_{b=1}^{B} (S^{-1})_{B+i, b} \cdot I_{\vec{\nu}}^{\Delta-1} + \sum_{\alpha=1}^{N} (S^{-1})_{B+i, B+\alpha} \cdot I_{\vec{\nu}-\vec{e}_\alpha}^{\Delta-1} \right]
 $$
 
@@ -136,7 +130,7 @@ $$
 
 若 $\Delta \neq \Delta_{\text{target}}$，使用维度迁移：
 
-- **向上迁移**（$\Delta < \Delta_{\text{target}}$，将 $\Delta$ 替换为 $\Delta+1$）：
+- **向上迁移**（$\Delta < \Delta_{\text{target}}$）：
 
 $$
 I_{\vec{\nu}}^{\Delta} = \frac{1}{C}\left[(2\Delta + 2 - \nu - B) z_0 \cdot I_{\vec{\nu}}^{\Delta+1} + \sum_{\alpha=1}^{N} z_\alpha I_{\vec{\nu}-\vec{e}_\alpha}^{\Delta}\right]
@@ -150,21 +144,15 @@ $$
 
 #### Case 1（$\dim(\text{Null}(S)) = 0$，$C = 0$）
 
-由维度迁移公式（取 $C = 0$）：
-
 $$
 I_{\vec{\nu}}^{\Delta} = \frac{-1}{(2\Delta - \nu - B) z_0} \sum_{\alpha=1}^{N} z_\alpha \cdot I_{\vec{\nu}-\vec{e}_\alpha}^{\Delta-1}
 $$
 
 #### Case 2（$\dim(\text{Null}(S)) > 0$，$C \neq 0$）
 
-由维度迁移公式（取 $z_0 = 0$）：
-
 $$
 I_{\vec{\nu}}^{\Delta} = \frac{1}{C} \sum_{\alpha=1}^{N} z_\alpha \cdot I_{\vec{\nu}-\vec{e}_\alpha}^{\Delta}
 $$
-
-注意：这里右边的维度参数仍为 $\Delta$（不变）。
 
 #### Case 3（$\dim(\text{Null}(S)) > 0$，$C = 0$）
 
@@ -182,10 +170,6 @@ $$
 \frac{\partial I_{\vec{\nu}}^{\Delta}}{\partial X} = \sum_{i,j} \left(-\frac{1}{2}\right) \frac{\partial R_{ij}}{\partial X} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}
 $$
 
-$$
-\frac{\partial I_{\vec{\nu}}^{\Delta}}{\partial Y} = \sum_{i,j} \left(-\frac{1}{2}\right) \frac{\partial R_{ij}}{\partial Y} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}
-$$
-
 其中：
 $$
 \text{factor}_{ij} = \begin{cases}
@@ -195,22 +179,6 @@ $$
 $$
 
 右边的 $I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}$ 需要通过约化（第3节）得到主积分的线性组合。
-
-对于主积分 $I_{\vec{\nu}}^{\Delta}$，设其级数为 $f(X,Y) = \sum_{p,q} f_{pq} X^p Y^q$，则微分方程转化为：
-
-**X方向**（$p > 0$）：
-$$
-f_{p,q} = \frac{1}{p}[\text{rhs}_X]_{p-1,q}
-$$
-
-其中 $\text{rhs}_X = \sum_{i,j} (-\frac{1}{2}) \cdot \frac{\partial R_{ij}}{\partial X} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}$
-
-**Y方向**（$p = 0, q > 0$）：
-$$
-f_{0,q} = \frac{1}{q}[\text{rhs}_Y]_{0,q-1}
-$$
-
-其中 $\text{rhs}_Y = \sum_{i,j} (-\frac{1}{2}) \cdot \frac{\partial R_{ij}}{\partial Y} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}$
 
 ## 5. 计算方法：逐阶递推
 
@@ -224,12 +192,6 @@ $$
 
 1. **约化步**：通过约化公式（第3节）计算其它所需积分的 $\deg = N$ 的项
 2. **微分步**：利用微分方程（第4节）计算主积分导数的 $\deg = N$ 的项，即主积分 $\deg = N+1$ 的项
-
-递推后得到：
-- 主积分的 $\deg \leq N+1$ 的项
-- 其它所需积分的 $\deg < N+1$ 的项
-
-因此只需给定主积分的边界条件（$\deg = 0$ 的项）即可启动递推。
 
 ### 5.2 核心思想
 
@@ -267,18 +229,130 @@ $$
 - $g_{p-a,q-b}$ 是已知的（$p-a+q-b < p+q$）
 - 要求 $D_{00} \neq 0$（常数项非零）
 
-## 6. 完整计算流程
+## 6. FBI 重定义
+
+### 6.1 动机
+
+原始的 FI 被积函数包含 $U^{\gamma} \cdot U^{\nu_{tot}} \cdot I$，其中 $U^{\gamma}$ 需要通过 PDE 递推展开为二维级数，然后与 FBI 级数做级数×级数卷积（$O(\text{deg}^4)$）。这在高阶时是主要瓶颈。
+
+通过引入重定义因子 $R$，将 $U$ 的幂次吸收进 FBI 的定义中，可以完全消除这个瓶颈。
+
+### 6.2 重定义因子
+
+定义重定义后的 FBI：
+
+$$
+\widetilde{I}_\nu^D = U^{\text{pow}_U(\nu, \bar{D})} \cdot I_\nu^D
+$$
+
+其中：
+
+$$
+\text{pow}_U(\nu, \bar{D}) = \nu_{tot} - \frac{(L+1) \bar{D}}{2}
+$$
+
+$\bar{D} = T(D)$ 是对齐函数，将 $D$ 对齐到与 $D_{in}$ 相同的奇偶性：
+
+$$
+T(D) = \begin{cases}
+D & \text{if } (D - D_{in}) \text{ 是偶数} \\
+D + 1 & \text{if } (D - D_{in}) \text{ 是奇数}
+\end{cases}
+$$
+
+### 6.3 约化关系的变化
+
+所有约化关系中，源项 $I_{\nu_s}^{D_s}$ 替换为 $\widetilde{I}_{\nu_s}^{D_s}$ 后，系数需要乘以幂差因子：
+
+$$
+U^{\Delta p_U}, \quad \Delta p_U = \text{pow}_U(\nu_t, \bar{D}_t) - \text{pow}_U(\nu_s, \bar{D}_s)
+$$
+
+$\Delta p_U$ 总是整数。为消除负幂次，等式两侧乘以 $U^m$（$m = \max(0, -\min(\Delta p_i))$），得到：
+
+$$
+D \cdot U^m \cdot \widetilde{I}_T = \sum_i (N_i \cdot U^{\Delta p_i + m}) \cdot \widetilde{I}_{S_i}
+$$
+
+仍为 LRR 形式，只是 $D$ 和 $N_i$ 变成了更高次的多项式。
+
+### 6.4 微分方程的变化
+
+重定义后的微分方程（乘以 $U$ 消除分母后）：
+
+$$
+U \cdot \partial_X \widetilde{I} = \text{pow}_U \cdot (\partial_X U) \cdot \widetilde{I} + \sum_{i,j} \left(-\frac{1}{2}\right) (\partial_X R_{ij} \cdot U^{\Delta p+1}) \cdot \text{factor}_{ij} \cdot \widetilde{I}_{\nu+e_i+e_j}^{D+1}
+$$
+
+逐系数提取的递推公式：
+
+$$
+\widetilde{I}_{p,q} = \frac{1}{U_{00} \cdot p} \left( \text{rhsCoeff} + \text{dlogCoeff} - \text{lhsCorrection} \right)
+$$
+
+- **rhsCoeff**：源项的贡献（使用 $\partial_X R_{ij} \cdot U^L$ 代替原始 $\partial_X R_{ij}$）
+- **dlogCoeff** = $\text{pow}_U \cdot [(\partial_X U) \cdot \widetilde{I}]_{p-1,q}$
+- **lhsCorrection** = $\sum_{(a,b) \neq (0,0)} U_{ab} \cdot (p-a) \cdot \widetilde{I}_{p-a, q-b}$
+
+### 6.5 二圈的简化
+
+对于 $L = 2$，FI 被积函数中 $U$ 的剩余幂次为：
+
+$$
+\nu_{tot} + \gamma - \text{pow}_U = \frac{(L+1)D_F}{2} \cdot \frac{L-2}{2} = 0
+$$
+
+**结论**：二圈时，$\text{FI} = J \cdot W \cdot \widetilde{I}_\nu^{D_{in}}$，完全消除了 $U^{\gamma}$ 级数和 $U^{\nu_{tot}}$ 多项式，不再需要级数×级数卷积。
+
+## 7. 从重定义FBI到FI一维展开
+
+### 7.1 变量替换
+
+原始三变量满足 $X + Y + Z = 1$。先做二维化替换：
+
+$$
+X \to X, \quad Y \to (1-X)Y, \quad Z \to 1 - X - (1-X)Y
+$$
+
+再做局部平移：$X \to X + a, \quad Y \to Y + b$。
+
+所有多项式（$U$、Jacobian、$X_0/Y_0/Z_0$ 幂次）都按此顺序处理。
+
+### 7.2 FI 被积函数的构造
+
+对于目标 $\vec{\nu}$，FI 被积函数的二维级数为：
+
+$$
+\text{FI}(X,Y) = P(X,Y) \cdot \widetilde{I}_\nu^{D_{in}}(X,Y)
+$$
+
+其中多项式因子 $P = J \cdot W$：
+- $J = 1 - X$（Jacobian，变量替换后平移）
+- $W = X_0^{e_X} \cdot Y_0^{e_Y} \cdot Z_0^{e_Z}$（参数幂次，$e_i = \nu_i - 1$）
+
+计算步骤：
+1. 构造平移后的多项式 $P(X,Y)$
+2. 获取重定义后的 FBI 级数 $\widetilde{I}_\nu^{D_{in}}$
+3. 用 `mulPoly` 计算 $P \cdot \widetilde{I}$（多项式×级数，$O(\text{deg}^2 \cdot \text{多项式项数})$）
+
+### 7.3 二维到一维积分
+
+对二维级数 $\sum_{p+q \leq d} c_{pq} X^p Y^q$ 积分得到一维级数 $\sum_d s_d \epsilon^d$：
+
+$$
+s_d = \sum_{p+q=d} c_{pq} \cdot w(p, q)
+$$
+
+其中 $w(p, q)$ 是单项式 $X^p Y^q$ 在积分域上的权重（由平移参数 $a, b$ 决定）。
+
+## 8. 完整计算流程
 
 ```
 输入（四个路径参数）：
   - S_path: 已平移后的 topS(X,Y)（维度应为 B+N）
   - config_path: 包含 N,B,deg,p,d,a,b,bc
   - target_path: 目标 nu 列表（每行一个 {nu_1,...,nu_N}）
-  - output_path: 输出文件路径（支持相对/绝对）
-
-其中 config 字段语义：
-  - deg: 目标一维级数阶数
-  - bc: 主积分边界条件向量，长度必须等于主积分个数
+  - output_path: 输出文件路径
 
 步骤0：Family/Sector 初始化
   0.1 从 topS 构造分支索引 branchIndices
@@ -286,53 +360,31 @@ $$
   0.3 枚举有效 sector 并分类 Case（0/1/2/3）
   0.4 识别主积分集合（Case 0 的角积分）
 
-步骤1：FBI 二维级数求解（SeriesSolver）
-  1.1 根据 bc 设置主积分零阶边界
-  1.2 逐阶递推求解主积分
-  1.3 按需触发约化得到目标 FBI 的二维级数
+步骤1：Redefinition 初始化
+  1.1 构造平移后的 U(X,Y) 多项式
+  1.2 创建 Redefinition 结构体（L, D_in, shiftedU, dUdX, dUdY）
+  1.3 预计算 dRdX·U^L 和 dRdY·U^L（用于重定义后微分方程）
+  1.4 预计算每个主积分的 pow_U 标量值
 
-步骤2：FI 被积函数二维级数构造（IntegrandExpander）
-  2.1 构造 FI 多项式因子（包含 Jacobian、X0/Y0/Z0 幂次与 U^nu）
-  2.2 PDE 递推得到 U^gamma 的二维级数
-  2.3 组合得到 FI 被积函数二维级数
+步骤2：重定义FBI 二维级数求解（SeriesSolver）
+  2.1 根据 bc 设置主积分零阶边界
+  2.2 逐阶递推：
+      - 微分方程求解主积分（使用重定义后的公式）
+      - 按需触发约化（约化关系中乘以 U^{Δp} 幂差因子）
 
-步骤3：二维到一维积分（SeriesIntegrator）
-  3.1 对二维系数积分得到一维系数 {c0,...,c_deg}
-  3.2 按 target 的 nu 顺序写入 output
+步骤3：FI 被积函数构造（IntegrandExpander）
+  3.1 构造 FI 多项式 P = J·W（不含 U 因子）
+  3.2 用 mulPoly 计算 P · Ĩ 得到 FI 二维级数
+
+步骤4：二维到一维积分（SeriesIntegrator）
+  4.1 对二维系数积分得到一维系数 {c0,...,c_deg}
+  4.2 按 target 的 nu 顺序写入 output
 
 输出：
   - 单文件文本
   - 每行一个 nu 对应的一维级数：{c0,...,c_deg}
 ```
 
-## 7. 关键实现要点
-
-### 7.1 多项式系数的存储
-
-IBP和微分方程中的多项式系数需要预先计算并存储：
-- 使用**哈希表**存储稀疏多项式（只存储非零单项式）
-- 多项式结构：`{(x_power, y_power) -> coefficient}`
-
-### 7.2 分子/分母形式的存储
-
-为避免有理函数运算的复杂性，将 $C$, $z$, $S^{-1}$ 等有理函数系数分解为分子和公分母形式：
-- `denoCandZ`：$C$ 和 $z$ 系数的公分母多项式
-- `numeCandZ[i]`：$C_i$ 或 $z_i$ 乘以公分母后的分子多项式
-- `denoInvS[row]`：$S^{-1}$ 第 row 行的公分母
-- `numeInvS[row][col]`：$S^{-1}$ 第 (row,col) 元素乘以行公分母后的分子
-
-### 7.3 级数缓存
-
-使用 `map<(nu, delta), Series>` 缓存已计算的FBI级数：
-- 避免重复计算
-- 支持增量计算（当需要更高度数时继续递推）
-
-### 7.4 数值稳定性
-
-在有限域 $\mathbb{Z}_p$ 中计算时：
-- 确保LRR公式中 $D_{00} \neq 0$（选择合适的质数 $p$）
-- 使用模逆运算进行除法：$a / b \equiv a \cdot b^{-1} \pmod{p}$
-
-## 8. 参考文献
+## 9. 参考文献
 
 [1] Li-Hong Huang, Rui-Jun Huang, and Yan-Qing Ma, "Tame multi-leg Feynman integrals beyond one loop," arXiv:2412.21053v1 [hep-ph], 2024.

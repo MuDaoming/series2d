@@ -1,6 +1,8 @@
 /**
  * SeriesSolver 实现文件
- * 统一处理微分方程求解和IBP约化，直接计算FBI的二维幂级数展开
+ * 统一处理微分方程求解和IBP约化，直接计算重定义后FBI的二维幂级数展开
+ * 
+ * 所有 FBI 均为重定义后的 Ĩ = U^{pow_U} · I
  */
 
 // ============================================================================
@@ -15,7 +17,6 @@ SeriesSolver<RT, PT, ST>::SeriesSolver(Family<RT, PT, ST>& family, int targetDeg
     numBranch_ = family_.getNumBranch();
     numMaster_ = family_.getNumMaster();
     
-    // 提取每个主积分的 nu 和 delta
     masterNus_.reserve(numMaster_);
     masterDeltas_ = family_.getMasterDeltas();
     
@@ -23,7 +24,6 @@ SeriesSolver<RT, PT, ST>::SeriesSolver(Family<RT, PT, ST>& family, int targetDeg
         masterNus_.push_back(family_.secvecFromIdx(idx));
     }
     
-    // 初始化主积分边界条件
     masterBoundary_.resize(numMaster_, ST(0));
 }
 
@@ -33,6 +33,10 @@ SeriesSolver<RT, PT, ST>::SeriesSolver(Family<RT, PT, ST>& family, int targetDeg
 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::solve() {
+    if (!redef_) {
+        throw std::runtime_error("Redefinition must be set before calling solve()");
+    }
+    
     // 初始化主积分零阶系数
     for (int k = 0; k < numMaster_; ++k) {
         auto key = makeKey(masterNus_[k], masterDeltas_[k]);
@@ -49,44 +53,36 @@ void SeriesSolver<RT, PT, ST>::solve() {
 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::solveAtDeg(int deg) {
-    // 对于度数deg，递推所有主积分的系数
-    // 使用微分方程: ∂f/∂X 或 ∂f/∂Y
-    
     for (int p = 0; p <= deg; ++p) {
         int q = deg - p;
-        
-        // 对每个主积分
         for (int k = 0; k < numMaster_; ++k) {
             if (p > 0) {
-                // 使用X方向微分方程
                 solveMasterCoeffX(k, p, q);
             } else if (q > 0) {
-                // p = 0, q > 0：使用Y方向微分方程
                 solveMasterCoeffY(k, q);
             }
-            // p = 0, q = 0 的情况已经在初始化时处理
         }
     }
 }
 
+// ============================================================================
+// 微分方程求解（重定义后）
+// ============================================================================
+
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
-    // 微分方程: ∂f/∂X = rhs
-    // 其中 rhs = Σ_{i,j} (-1/2) * dR_{ij}/dX * factor_{ij} * I_{ν+e_i+e_j}^{Δ+1}
-    // 递推: p * f_{p,q} = [rhs]_{p-1,q}
-    // 即: f_{p,q} = [rhs]_{p-1,q} / p
+    // 重定义后的微分方程:
+    // U · ∂_X Ĩ = pow_U · (∂_X U) · Ĩ + Σ (-1/2) · (dR/dX · U^L) · factor · Ĩ_source
+    // 
+    // 递推:
+    // Ĩ_{p,q} = (rhsCoeff + dlogCoeff - lhsCorr) / (U_00 · p)
     
     const std::vector<int>& nu = masterNus_[masterIdx];
     const ST& delta = masterDeltas_[masterIdx];
     const auto& dRdX = family_.getDRdX();
     
+    // 计算 rhs: Σ (-1/2) · factor · [dRdXModified · Ĩ_source]_{p-1,q}
     ST rhsCoeff = ST(0);
-    
-    // 重定义模式下使用 dRdXModified_ (= dR/dX · U^L)
-    // 因为 DE rhs 含 U^{Δp+1}，对 L=2 偶偏移 Δp+1 = L
-    const auto& dRdXUsed = redef_ ? dRdXModified_ : dRdX;
-    
-    // 计算 [rhs]_{p-1,q}
     for (int i = 0; i < numProps_; ++i) {
         for (int j = 0; j < numProps_; ++j) {
             ST factor_ij;
@@ -103,61 +99,49 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
             nuShifted[j]++;
             
             const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
-            
-            ST convCoeff = polySeriesCoeff(dRdXUsed[i][j], seriesShifted, p - 1, q);
+            ST convCoeff = polySeriesCoeff(dRdXModified_[i][j], seriesShifted, p - 1, q);
             rhsCoeff -= factor_ij * convCoeff / ST(2);
         }
     }
     
     auto key = makeKey(nu, delta);
+    const Series<ST>& masterSeries = cache_.at(key);
+    ST powU = masterPowU_[masterIdx];
     
-    if (!redef_) {
-        // 原始模式: f_{p,q} = rhsCoeff / p
-        cache_[key].setCoeff(p, q, rhsCoeff / ST(p));
-    } else {
-        // 重定义模式:
-        // U·∂_X f̃ = -pow_U·(∂_X U)·f̃ + rhs
-        // f̃_{p,q} = (rhsCoeff - pow_U*[dUdX·f̃]_{p-1,q} - lhsCorr) / (U_00 · p)
-        
-        const Series<ST>& masterSeries = cache_.at(key);
-        ST powU = masterPowU_[masterIdx];
-        
-        // dlogCoeff = +pow_U * [dUdX · f̃]_{p-1,q}
-        ST dlogCoeff = powU * polySeriesCoeff(redef_->dUdX, masterSeries, p - 1, q);
-        
-        // lhsCorrection = Σ_{(a,b)≠(0,0)} U_{ab} · (p-a) · f̃_{p-a, q-b}
-        ST lhsCorr = ST(0);
-        for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
-            int a = it->first.x_power;
-            int b = it->first.y_power;
-            if (a == 0 && b == 0) continue;
-            if (p >= a && q >= b) {
-                lhsCorr += it->second * ST(p - a) * masterSeries.getCoeff(p - a, q - b);
-            }
+    // dlogCoeff = +pow_U * [dUdX · Ĩ]_{p-1,q}
+    ST dlogCoeff = powU * polySeriesCoeff(redef_->dUdX, masterSeries, p - 1, q);
+    
+    // lhsCorrection = Σ_{(a,b)≠(0,0)} U_{ab} · (p-a) · Ĩ_{p-a, q-b}
+    ST lhsCorr = ST(0);
+    for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
+        int a = it->first.x_power;
+        int b = it->first.y_power;
+        if (a == 0 && b == 0) continue;
+        if (p >= a && q >= b) {
+            lhsCorr += it->second * ST(p - a) * masterSeries.getCoeff(p - a, q - b);
         }
-        
-        ST U00 = redef_->shiftedU.getCoeff(0, 0);
-        cache_[key].setCoeff(p, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(p)));
     }
+    
+    ST U00 = redef_->shiftedU.getCoeff(0, 0);
+    cache_[key].setCoeff(p, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(p)));
 }
 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
-    // 微分方程: ∂f/∂Y = rhs
-    // 其中 rhs = Σ_{i,j} (-1/2) * dR_{ij}/dY * factor_{ij} * I_{ν+e_i+e_j}^{Δ+1}
-    // 递推: q * f_{0,q} = [rhs]_{0,q-1}
-    // 即: f_{0,q} = [rhs]_{0,q-1} / q
+    // 重定义后的微分方程 (Y 方向):
+    // U · ∂_Y Ĩ = pow_U · (∂_Y U) · Ĩ + Σ (-1/2) · (dR/dY · U^L) · factor · Ĩ_source
+    // 
+    // 递推 (p=0):
+    // Ĩ_{0,q} = (rhsCoeff + dlogCoeff - lhsCorr) / (U_00 · q)
     
     const std::vector<int>& nu = masterNus_[masterIdx];
     const ST& delta = masterDeltas_[masterIdx];
     const auto& dRdY = family_.getDRdY();
     
+    // 计算 rhs: Σ (-1/2) · factor · [dRdYModified · Ĩ_source]_{0,q-1}
     ST rhsCoeff = ST(0);
-    
-    // 计算 [rhs]_{0,q-1} = Σ_{i,j} (-1/2) * [dR_{ij}/dY * I_{ν+e_i+e_j}^{Δ+1}]_{0,q-1} * factor_{ij}
     for (int i = 0; i < numProps_; ++i) {
         for (int j = 0; j < numProps_; ++j) {
-            // 计算 factor_{ij}
             ST factor_ij;
             if (i != j) {
                 factor_ij = ST(nu[i]) * ST(nu[j]);
@@ -165,75 +149,38 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
                 factor_ij = ST(nu[i]) * ST(nu[i] + 1);
             }
             
-            // 跳过 factor = 0 or dRdY = 0 的情况
             if (isZero(factor_ij) || isZero(dRdY[i][j])) continue;
-
-            // 构造 ν + e_i + e_j
+            
             std::vector<int> nuShifted = nu;
             nuShifted[i]++;
             nuShifted[j]++;
             
-            // 获取 I_{ν+e_i+e_j}^{Δ+1}
             const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
-            
-            // 计算 [dR_{ij}/dY * I_{ν+e_i+e_j}^{Δ+1}]_{0,q-1}
-            ST convCoeff = polySeriesCoeff(dRdY[i][j], seriesShifted, 0, q - 1);
-            
-            // 累加 (-1/2) * factor_ij * convCoeff
+            ST convCoeff = polySeriesCoeff(dRdYModified_[i][j], seriesShifted, 0, q - 1);
             rhsCoeff -= factor_ij * convCoeff / ST(2);
         }
     }
     
     auto key = makeKey(nu, delta);
+    const Series<ST>& masterSeries = cache_.at(key);
+    ST powU = masterPowU_[masterIdx];
     
-    if (!redef_) {
-        // 原始模式: f_{0,q} = rhsCoeff / q
-        cache_[key].setCoeff(0, q, rhsCoeff / ST(q));
-    } else {
-        // 重定义模式:
-        // U·∂_Y f̃ = -pow_U·(∂_Y U)·f̃ + rhs
-        // f̃_{0,q} = (rhsCoeff - pow_U*[dUdY·f̃]_{0,q-1} - lhsCorr) / (U_00 · q)
-        // rhsCoeff 需要用 dRdYModified_，重新计算
-        rhsCoeff = ST(0);
-        const auto& dRdYMod = dRdYModified_;
-        for (int i = 0; i < numProps_; ++i) {
-            for (int j = 0; j < numProps_; ++j) {
-                ST factor_ij;
-                if (i != j) factor_ij = ST(nu[i]) * ST(nu[j]);
-                else factor_ij = ST(nu[i]) * ST(nu[i] + 1);
-                
-                if (isZero(factor_ij) || isZero(dRdY[i][j])) continue;
-                
-                std::vector<int> nuShifted = nu;
-                nuShifted[i]++;
-                nuShifted[j]++;
-                
-                const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
-                ST convCoeff = polySeriesCoeff(dRdYMod[i][j], seriesShifted, 0, q - 1);
-                rhsCoeff -= factor_ij * convCoeff / ST(2);
-            }
+    // dlogCoeff = +pow_U * [dUdY · Ĩ]_{0,q-1}
+    ST dlogCoeff = powU * polySeriesCoeff(redef_->dUdY, masterSeries, 0, q - 1);
+    
+    // lhsCorrection = Σ_{b>0} U_{0,b} · (q-b) · Ĩ_{0, q-b}
+    ST lhsCorr = ST(0);
+    for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
+        int a = it->first.x_power;
+        int b = it->first.y_power;
+        if (a != 0 || b == 0) continue;
+        if (q >= b) {
+            lhsCorr += it->second * ST(q - b) * masterSeries.getCoeff(0, q - b);
         }
-        
-        const Series<ST>& masterSeries = cache_.at(key);
-        ST powU = masterPowU_[masterIdx];
-        
-        // dlogCoeff = +pow_U * [dUdY · f̃]_{0,q-1}
-        ST dlogCoeff = powU * polySeriesCoeff(redef_->dUdY, masterSeries, 0, q - 1);
-        
-        // lhsCorrection = Σ_{b>0} U_{0,b} · (q-b) · f̃_{0, q-b}
-        ST lhsCorr = ST(0);
-        for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
-            int a = it->first.x_power;
-            int b = it->first.y_power;
-            if (a != 0 || b == 0) continue;
-            if (q >= b) {
-                lhsCorr += it->second * ST(q - b) * masterSeries.getCoeff(0, q - b);
-            }
-        }
-        
-        ST U00 = redef_->shiftedU.getCoeff(0, 0);
-        cache_[key].setCoeff(0, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(q)));
     }
+    
+    ST U00 = redef_->shiftedU.getCoeff(0, 0);
+    cache_[key].setCoeff(0, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(q)));
 }
 
 // ============================================================================
@@ -246,10 +193,8 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(const std::vector<int>&
     auto it = cache_.find(key);
     
     if (it != cache_.end()) {
-        // 缓存存在，检查是否需要继续约化到更高度数
         int cachedDeg = cacheCurrentDeg_[key];
         if (cachedDeg < currentDeg_) {
-            // 需要继续约化
             for (int deg = cachedDeg + 1; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
                 reduceFBIAtDeg(it->second, nu, delta, deg);
             }
@@ -258,7 +203,6 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(const std::vector<int>&
         return it->second;
     }
     
-    // 不在缓存中，需要创建并约化
     cache_[key] = Series<ST>(targetDeg_);
     for (int deg = 0; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
         reduceFBIAtDeg(cache_[key], nu, delta, deg);
@@ -274,9 +218,7 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(const std::vector<int>&
 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceFBI(Series<ST>& result, const std::vector<int>& nu, const ST& delta) {
-    // 逐度数约化
-    result.setCoeff(0, 0, ST(0));  // 初始化零阶
-    
+    result.setCoeff(0, 0, ST(0));
     for (int deg = 0; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
         reduceFBIAtDeg(result, nu, delta, deg);
     }
@@ -285,24 +227,13 @@ void SeriesSolver<RT, PT, ST>::reduceFBI(Series<ST>& result, const std::vector<i
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceFBIAtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                 const ST& delta, int deg) {
-    // 根据Case类型选择约化方法
     int caseType = family_.getCase(nu);
-    
     switch (caseType) {
-        case 0:
-            reduceCase0AtDeg(result, nu, delta, deg);
-            break;
-        case 1:
-            reduceCase1AtDeg(result, nu, delta, deg);
-            break;
-        case 2:
-            reduceCase2AtDeg(result, nu, delta, deg);
-            break;
-        case 3:
-            reduceCase3AtDeg(result, nu, delta, deg);
-            break;
-        default:
-            throw std::runtime_error("Invalid case type in reduceFBIAtDeg");
+        case 0: reduceCase0AtDeg(result, nu, delta, deg); break;
+        case 1: reduceCase1AtDeg(result, nu, delta, deg); break;
+        case 2: reduceCase2AtDeg(result, nu, delta, deg); break;
+        case 3: reduceCase3AtDeg(result, nu, delta, deg); break;
+        default: throw std::runtime_error("Invalid case type in reduceFBIAtDeg");
     }
 }
 
@@ -313,12 +244,10 @@ void SeriesSolver<RT, PT, ST>::setMasterBoundary(int masterIdx, const ST& value)
     }
     masterBoundary_[masterIdx] = value;
     
-    // 初始化主积分的cache_和cacheCurrentDeg_
     auto key = makeKey(masterNus_[masterIdx], masterDeltas_[masterIdx]);
     if (cache_.find(key) == cache_.end()) {
         cache_[key] = Series<ST>(targetDeg_);
     }
-    // 主积分通过微分方程求解，设为targetDeg_以避免被约化
     cacheCurrentDeg_[key] = targetDeg_;
 }
 
@@ -397,9 +326,7 @@ void SeriesSolver<RT, PT, ST>::printAllCache() const {
 template<typename RT, typename PT, typename ST>
 bool SeriesSolver<RT, PT, ST>::isCorner(const std::vector<int>& nu) const {
     for (int val : nu) {
-        if (val != 0 && val != 1) {
-            return false;
-        }
+        if (val != 0 && val != 1) return false;
     }
     return true;
 }
@@ -414,12 +341,9 @@ std::pair<int, int> SeriesSolver<RT, PT, ST>::findMaxIndex(const std::vector<int
             maxIdxInTopSector = i;
         }
     }
-    
     int maxIdxInCurrentSector = 0;
     for (int i = 0; i < maxIdxInTopSector; i++) {
-        if (nu[i] > 0) {
-            maxIdxInCurrentSector++;
-        }
+        if (nu[i] > 0) maxIdxInCurrentSector++;
     }
     return std::make_pair(maxIdxInTopSector, maxIdxInCurrentSector);
 }
@@ -431,19 +355,14 @@ std::pair<int, int> SeriesSolver<RT, PT, ST>::findMaxIndex(const std::vector<int
 template<typename RT, typename PT, typename ST>
 ST SeriesSolver<RT, PT, ST>::polySeriesCoeff(const PT& poly, const Series<ST>& series, int p, int q) {
     ST result = ST(0);
-    
-    // 遍历多项式的所有单项式
     for (auto it = poly.begin(); it != poly.end(); ++it) {
         int a = it->first.x_power;
         int b = it->first.y_power;
         const ST& polyCoeff = it->second;
-        
-        // 卷积公式: [P·f]_{p,q} = Σ_{a,b} P_{ab} · f_{p-a, q-b}
         if (p >= a && q >= b) {
             result += polyCoeff * series.getCoeff(p - a, q - b);
         }
     }
-    
     return result;
 }
 
@@ -454,11 +373,9 @@ ST SeriesSolver<RT, PT, ST>::sumPolySeriesCoeff(
     int p, int q)
 {
     ST result = ST(0);
-    
     for (size_t i = 0; i < polys.size() && i < series.size(); ++i) {
         result += polySeriesCoeff(polys[i], *series[i], p, q);
     }
-    
     return result;
 }
 
@@ -475,30 +392,23 @@ void SeriesSolver<RT, PT, ST>::solveLRRAtDeg(
     int deg)
 {
     ST D00 = D.getCoeff(0, 0);
-    
     if (isZero(D00)) {
         throw std::runtime_error("D00 is zero in solveLRRAtDeg");
     }
     
-    // 遍历度数为 deg 的所有项 (p, q) 满足 p + q = deg
     for (int p = 0; p <= deg; ++p) {
         int q = deg - p;
-        
-        // 计算右侧：Σ_i [N_i · f_i]_{p,q}
         ST rhs = sumPolySeriesCoeff(polys, series, p, q);
         
-        // 减去 Σ_{(a,b)≠(0,0)} D_{ab} · g_{p-a,q-b}
         for (auto it = D.begin(); it != D.end(); ++it) {
             int a = it->first.x_power;
             int b = it->first.y_power;
             const ST& Dab = it->second;
-            
             if ((a != 0 || b != 0) && p >= a && q >= b) {
                 rhs -= Dab * g.getCoeff(p - a, q - b);
             }
         }
         
-        // g_{p,q} = rhs / D00
         g.setCoeff(p, q, rhs / D00);
     }
 }
@@ -510,43 +420,31 @@ void SeriesSolver<RT, PT, ST>::solveLRRAtDeg(
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceCase0AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                   const ST& delta, int deg) {
-    // 判断是否为corner（所有元素都是0或1）
     bool corner = isCorner(nu);
     
     if (!corner) {
-        // 如果不是corner，执行IBP
         case0IBPAtDeg(result, nu, delta, deg);
     } else {
-        // 是corner，检查是否为主积分
         int mfbiIndex = family_.getIndexOfMaster(nu);
+        if (mfbiIndex < 0) {
+            throw std::runtime_error("Corner integral in case0 but not a master FBI");
+        }
         
-        if (mfbiIndex >= 0) {
-            // 是主积分
-            ST targetDelta = masterDeltas_[mfbiIndex];
-            
-            if (delta == targetDelta) {
-                // delta相同，直接从cache_复制主积分系数
-                auto masterKey = makeKey(masterNus_[mfbiIndex], masterDeltas_[mfbiIndex]);
-                const Series<ST>& masterSeries = cache_.at(masterKey);
-                for (int p = 0; p <= deg; ++p) {
-                    int q = deg - p;
-                    result.setCoeff(p, q, masterSeries.getCoeff(p, q));
-                }
-            } else {
-                // 比较向上和向下移动的距离
-                ST upDist = targetDelta - delta;
-                ST downDist = delta - targetDelta;
-                
-                if (upDist <= downDist) {
-                    // 向上递推路径更短
-                    case0DimShiftUpAtDeg(result, nu, delta, deg);
-                } else {
-                    // 向下递推路径更短
-                    case0DimShiftDownAtDeg(result, nu, delta, deg);
-                }
+        ST targetDelta = masterDeltas_[mfbiIndex];
+        if (delta == targetDelta) {
+            auto masterKey = makeKey(masterNus_[mfbiIndex], masterDeltas_[mfbiIndex]);
+            const Series<ST>& masterSeries = cache_.at(masterKey);
+            for (int p = 0; p <= deg; ++p) {
+                result.setCoeff(p, deg - p, masterSeries.getCoeff(p, deg - p));
             }
         } else {
-            throw std::runtime_error("Corner integral in case0 but not a master FBI");
+            ST upDist = targetDelta - delta;
+            ST downDist = delta - targetDelta;
+            if (upDist <= downDist) {
+                case0DimShiftUpAtDeg(result, nu, delta, deg);
+            } else {
+                case0DimShiftDownAtDeg(result, nu, delta, deg);
+            }
         }
     }
 }
@@ -554,11 +452,6 @@ void SeriesSolver<RT, PT, ST>::reduceCase0AtDeg(Series<ST>& result, const std::v
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vector<int>& nuPlus, 
                                                const ST& delta, int deg) {
-    // IBP约化公式:
-    // ν_max · denoInvS · I_{nuPlus}^Δ = Σ_j numeInvS[row][j] · rhs_j
-    // 其中 rhs = (-I_ν^{Δ-1}, ..., +I_{ν-e_α}^{Δ-1}, ...)
-    // LRR形式: D = denoInvS * ν_max, N_j = ±numeInvS[row][j], f_j = I...
-
     auto [maxIndex, maxIndexCur] = findMaxIndex(nuPlus);
     std::vector<int> nu = nuPlus;
     nu[maxIndex]--;
@@ -569,57 +462,46 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
     const auto& numeInvS = sector->getNumeInvS();
     
     int row = numBranchCur + maxIndexCur;
-    
-    // 分母多项式 D = denoInvS[row] * ν_max
     PT D = denoInvS[row] * ST(nu[maxIndex]);
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    // 获取 I_{nu}^{delta-1}
     const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, delta - ST(1));
-    
-    // 前B项: -numeInvS[row][j] * I_nu^{delta-1}
     for (int j = 0; j < numBranchCur; ++j) {
         polys.push_back(numeInvS[row][j] * ST(-1));
         seriesPtrs.push_back(&seriesNuDeltaMinus1);
     }
     
-    // 后N项: +numeInvS[row][numBranch+iCur] * I_{nu-e_i}^{delta-1}
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
         if (nu[i] > 0) {
             iCur++;
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
-            
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            
             polys.push_back(numeInvS[row][numBranchCur + iCur]);
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
         }
     }
 
-    // 重定义：应用 ratio 因子（乘到 D 和 polys 上）
-    if (redef_) {
-        int nuTotT = nuTotSum(nuPlus);
-        int nuTotNu = nuTotSum(nu);
-        ST deltaMinus1 = delta - ST(1);
-        std::vector<int> deltaPs;
-        for (int j = 0; j < numBranchCur; ++j)
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu, deltaMinus1));
-        int iC2 = -1;
-        for (int i = 0; i < numProps_; ++i) {
-            if (nu[i] > 0) {
-                iC2++;
-                std::vector<int> nme = nu; nme[i]--;
-                if (family_.nBranch(nme) != numBranchCur) continue;
-                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
-            }
+    // 应用 ratio 因子
+    int nuTotT = nuTotSum(nuPlus);
+    int nuTotNu = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
+    std::vector<int> deltaPs;
+    for (int j = 0; j < numBranchCur; ++j)
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu, deltaMinus1));
+    int iC2 = -1;
+    for (int i = 0; i < numProps_; ++i) {
+        if (nu[i] > 0) {
+            iC2++;
+            std::vector<int> nme = nu; nme[i]--;
+            if (family_.nBranch(nme) != numBranchCur) continue;
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
         }
-        applyRatioFactors(D, polys, deltaPs);
     }
+    applyRatioFactors(D, polys, deltaPs);
 
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
@@ -627,10 +509,6 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                         const ST& delta, int deg) {
-    // 向下维度迁移公式:
-    // (2Δ-ν-B)·z_0 · I_ν^Δ = C·I_ν^{Δ-1} - Σ_α z_α·I_{ν-e_α}^{Δ-1}
-    // LRR形式: D = denoC * (2Δ-ν-B) * z_0, N_0 = numeC, N_i = -numeZ_i
-    
     int nuSum = family_.nuSum(nu);
     int numBranchCur = family_.nBranch(nu);
     const auto* sector = family_.getSector(nu);
@@ -639,53 +517,43 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
     const PT& numeC = sector->getNumeC();
     int z0 = sector->getZ0();
     
-    // 计算因子 (2Δ - ν - B) * z0
     ST factor = ST(z0) * (ST(2) * delta - ST(nuSum) - ST(numBranchCur));
-    
-    // D = denoC * factor
     PT D = denoC * factor;
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    // 第一项: numeC * I_ν^{Δ-1}
     const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, delta - ST(1));
     polys.push_back(numeC);
     seriesPtrs.push_back(&seriesDeltaMinus1);
     
-    // 后续项: -numeZ_i * I_{ν-e_i}^{Δ-1}
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
         if (nu[i] > 0) {
             iCur++;
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
-            
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
         }
     }
     
-    // 重定义：应用 ratio 因子
-    if (redef_) {
-        int nuTotT = nuTotSum(nu);
-        ST deltaMinus1 = delta - ST(1);
-        std::vector<int> deltaPs;
-        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaMinus1));
-        int iC2 = -1;
-        for (int i = 0; i < numProps_; ++i) {
-            if (nu[i] > 0) {
-                iC2++;
-                std::vector<int> nme = nu; nme[i]--;
-                if (family_.nBranch(nme) != numBranchCur) continue;
-                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
-            }
+    // 应用 ratio 因子
+    int nuTotT = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
+    std::vector<int> deltaPs;
+    deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaMinus1));
+    int iC2 = -1;
+    for (int i = 0; i < numProps_; ++i) {
+        if (nu[i] > 0) {
+            iC2++;
+            std::vector<int> nme = nu; nme[i]--;
+            if (family_.nBranch(nme) != numBranchCur) continue;
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
         }
-        applyRatioFactors(D, polys, deltaPs);
     }
+    applyRatioFactors(D, polys, deltaPs);
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
@@ -697,27 +565,14 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                   const ST& delta, int deg) {
-    // Case 1公式 (dimNull=0, C=0):
-    // (2Δ - ν - B) · I_ν^Δ = -Σ_α z_α · I_{ν-e_α}^{Δ-1}
-    // 
-    // LRR形式: D · g = Σ_i N_i · f_i
-    // 其中: D = denoC * (2Δ - ν - B) （作为常数多项式）
-    //       N_i = -numeZ_i
-    //       f_i = I_{ν-e_α}^{Δ-1}
-    
     int nuSum = family_.nuSum(nu);
     int numBranchCur = family_.nBranch(nu);
     const auto* sector = family_.getSector(nu);
     
-    // 计算因子 (2Δ - ν - B)
     ST factor = ST(2) * delta - ST(nuSum) - ST(numBranchCur);
-    
     const PT& denoC = sector->getDenoCandZ();
-    
-    // 构造分母多项式 D = denoC * factor
     PT D = denoC * factor;
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
@@ -727,32 +582,20 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
             iCur++;
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
-            
-            if (family_.nBranch(nuMinusEi) != numBranchCur) {
-                continue;
-            }
-            
-            // N_i = -numeZ_i
-            PT Ni = sector->getNumeZ(iCur) * ST(-1);
-            polys.push_back(Ni);
-            
-            // f_i = I_{ν-e_α}^{Δ-1}
-            const Series<ST>& seriesNuMinusEi = getFBISeries(nuMinusEi, delta - ST(1));
-            seriesPtrs.push_back(&seriesNuMinusEi);
+            if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            polys.push_back(sector->getNumeZ(iCur) * ST(-1));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
         }
     }
     
-    // 重定义：应用 ratio 因子
-    if (redef_) {
-        int nuTotT = nuTotSum(nu);
-        ST deltaMinus1 = delta - ST(1);
-        std::vector<int> deltaPs;
-        for (size_t idx = 0; idx < polys.size(); ++idx)
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
-        applyRatioFactors(D, polys, deltaPs);
-    }
+    // 应用 ratio 因子
+    int nuTotT = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
+    std::vector<int> deltaPs;
+    for (size_t idx = 0; idx < polys.size(); ++idx)
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
+    applyRatioFactors(D, polys, deltaPs);
     
-    // 使用LRR求解器
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
 
@@ -763,15 +606,10 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                   const ST& delta, int deg) {
-    // Case 2公式 (dimNull>0, C≠0):
-    // numeC · I_ν^Δ = Σ_α numeZ_α · I_{ν-e_α}^Δ
-    // LRR形式: D = numeC, N_i = numeZ_i, f_i = I_{ν-e_α}^Δ
-    
     int numBranchCur = family_.nBranch(nu);
     const auto* sector = family_.getSector(nu);
     const PT& numeC = sector->getNumeC();
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
@@ -781,25 +619,21 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
             iCur++;
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
-            
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta));
         }
     }
     
-    // 重定义：应用 ratio 因子（Case2: Δp = 1 for all sources）
-    PT D_c2 = numeC;
-    if (redef_) {
-        int nuTotT = nuTotSum(nu);
-        std::vector<int> deltaPs;
-        for (size_t idx = 0; idx < polys.size(); ++idx)
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
-        applyRatioFactors(D_c2, polys, deltaPs);
-    }
+    // 应用 ratio 因子
+    PT D = numeC;
+    int nuTotT = nuTotSum(nu);
+    std::vector<int> deltaPs;
+    for (size_t idx = 0; idx < polys.size(); ++idx)
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
+    applyRatioFactors(D, polys, deltaPs);
     
-    solveLRRAtDeg(result, D_c2, polys, seriesPtrs, deg);
+    solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
 
 // ============================================================================
@@ -809,14 +643,9 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceCase3AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                   const ST& delta, int deg) {
-    // Case 3公式 (dimNull>0, C=0):
-    // z_β · I_ν^Δ = -Σ_{α≠β} z_α · I_{ν+e_β-e_α}^Δ
-    // LRR形式: D = numeZ_β, N_i = -numeZ_α, f_i = I_{ν+e_β-e_α}^Δ
-    
     int numBranchCur = family_.nBranch(nu);
     const auto* sector = family_.getSector(nu);
     
-    // 找到非零的 z_β
     int jCur = -1;
     int j = -1;
     PT numeZ_j;
@@ -842,7 +671,6 @@ void SeriesSolver<RT, PT, ST>::reduceCase3AtDeg(Series<ST>& result, const std::v
         return;
     }
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
@@ -850,15 +678,13 @@ void SeriesSolver<RT, PT, ST>::reduceCase3AtDeg(Series<ST>& result, const std::v
     for (int i = 0; i < numProps_; ++i) {
         if (nu[i] > 0) {
             iCur++;
-            if (iCur == jCur) continue;  // 跳过 β
+            if (iCur == jCur) continue;
             
             std::vector<int> nuShifted = nu;
             nuShifted[i]--;
             nuShifted[j]++;
-            
             if (family_.nBranch(nuShifted) != numBranchCur) continue;
             
-            // N_i = -numeZ_α
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
             seriesPtrs.push_back(&getFBISeries(nuShifted, delta));
         }
@@ -903,23 +729,19 @@ void SeriesSolver<RT, PT, ST>::applyRatioFactors(
     std::vector<PT>& polys,
     const std::vector<int>& deltaPs) const
 {
-    if (!redef_ || deltaPs.empty()) return;
+    if (deltaPs.empty()) return;
 
-    // Ĩ = U^{pow_U} · I  (设计文档约定)
-    // 原始方程: D · I_T = Σ N_i · I_S_i
+    // Ĩ = U^{pow_U} · I
     // 重定义后: D · Ĩ_T = Σ N_i · U^{Δp_i} · Ĩ_S_i
-    //   其中 Δp_i = pow_T - pow_S_i
     // 若有 Δp_i < 0, 两边乘以 U^m (m = max(0, -min(Δp_i))):
     // D·U^m · Ĩ_T = Σ (N_i · U^{Δp_i + m}) · Ĩ_S_i
     int dpMin = *std::min_element(deltaPs.begin(), deltaPs.end());
     int m = std::max(0, -dpMin);
 
-    // D' = D · U^m
     if (m > 0) {
         D = multiplyPolys(D, powPolyExpand(redef_->shiftedU, m));
     }
 
-    // N_i' = N_i · U^{Δp_i + m}
     for (size_t idx = 0; idx < deltaPs.size() && idx < polys.size(); ++idx) {
         int adjPow = deltaPs[idx] + m;
         if (adjPow > 0) {
@@ -962,14 +784,6 @@ void SeriesSolver<RT, PT, ST>::setRedefinition(const Redefinition<PT, ST>* redef
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                       const ST& delta, int deg) {
-    // 向上维度迁移公式:
-    // C · I_ν^Δ = (2(Δ+1)-ν-B)·z_0·I_ν^{Δ+1} + Σ_α z_α·I_{ν-e_α}^Δ
-    // 
-    // 由于使用 numeC = C * denoCandZ, numeZ = z * denoCandZ，需要统一分母：
-    // numeC · I_ν^Δ = (2(Δ+1)-ν-B)·z_0·denoCandZ·I_ν^{Δ+1} + Σ_α numeZ_α·I_{ν-e_α}^Δ
-    // 
-    // LRR形式: D = numeC, N_0 = (2(Δ+1)-ν-B)*z_0*denoCandZ (常数乘以多项式), N_i = numeZ_i
-    
     int nuSum = family_.nuSum(nu);
     int numBranchCur = family_.nBranch(nu);
     const auto* sector = family_.getSector(nu);
@@ -978,53 +792,44 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
     const PT& denoCandZ = sector->getDenoCandZ();
     int z0 = sector->getZ0();
     
-    // 计算因子 (2(Δ+1) - ν - B) * z0
     ST factor = ST(z0) * (ST(2) * (delta + ST(1)) - ST(nuSum) - ST(numBranchCur));
     
-    // 构造分子多项式和级数指针列表
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    // 第一项: factor * denoCandZ * I_ν^{Δ+1} (factor乘以denoCandZ多项式)
     const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, delta + ST(1));
-    PT factorPoly = denoCandZ * factor;  // 乘以denoCandZ以统一分母
+    PT factorPoly = denoCandZ * factor;
     polys.push_back(factorPoly);
     seriesPtrs.push_back(&seriesDeltaPlus1);
     
-    // 后续项: numeZ_i * I_{ν-e_i}^Δ
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
         if (nu[i] > 0) {
             iCur++;
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
-            
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta));
         }
     }
     
-    // 重定义：应用 ratio 因子
-    PT D_dsu = numeC;
-    if (redef_) {
-        int nuTotT = nuTotSum(nu);
-        ST deltaPlus1 = delta + ST(1);
-        std::vector<int> deltaPs;
-        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaPlus1));
-        int iC2 = -1;
-        for (int i = 0; i < numProps_; ++i) {
-            if (nu[i] > 0) {
-                iC2++;
-                std::vector<int> nme = nu; nme[i]--;
-                if (family_.nBranch(nme) != numBranchCur) continue;
-                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
-            }
+    // 应用 ratio 因子
+    PT D = numeC;
+    int nuTotT = nuTotSum(nu);
+    ST deltaPlus1 = delta + ST(1);
+    std::vector<int> deltaPs;
+    deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaPlus1));
+    int iC2 = -1;
+    for (int i = 0; i < numProps_; ++i) {
+        if (nu[i] > 0) {
+            iC2++;
+            std::vector<int> nme = nu; nme[i]--;
+            if (family_.nBranch(nme) != numBranchCur) continue;
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
         }
-        applyRatioFactors(D_dsu, polys, deltaPs);
     }
+    applyRatioFactors(D, polys, deltaPs);
     
-    solveLRRAtDeg(result, D_dsu, polys, seriesPtrs, deg);
+    solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
-

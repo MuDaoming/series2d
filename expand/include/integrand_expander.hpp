@@ -4,6 +4,13 @@
 #include <vector>
 #include "series_solver.hpp"
 
+/**
+ * IntegrandExpander - 被积函数展开器
+ * 
+ * 将重定义后的 FBI 级数 Ĩ 组合成 Feynman 积分的被积函数:
+ *   FI = J · W · Ĩ
+ * 其中 J 是 Jacobian, W = X^{e_X} · Y^{e_Y} · Z^{e_Z}
+ */
 template<typename RT, typename PT, typename ST>
 class IntegrandExpander {
 private:
@@ -16,17 +23,7 @@ private:
     ST shiftA_;
     ST shiftB_;
 
-    ST gamma_;
     PT shiftedU_;
-
-    mutable Series<ST> uPowerSeriesCache_;
-    mutable bool uPowerSeriesCached_;
-
-    // Redefinition 支持
-    const Redefinition<PT, ST>* redef_ = nullptr;
-    ST gammaRedef_;    // gamma_base = gamma - (L+1)*D_in/2
-    mutable Series<ST> uPowerRedefCache_;
-    mutable bool uPowerRedefCached_;
 
 public:
     IntegrandExpander(SeriesSolver<RT, PT, ST>& solver,
@@ -36,37 +33,24 @@ public:
                       const ST& shiftA,
                       const ST& shiftB);
 
-    // Build FI integrand 2D series:
-    // P(X,Y) * U(X,Y)^gamma * I_nu^Delta(X,Y),
-    // where P already includes the integer power U^nu.
+    /// 构建 FI 被积函数的二维级数: FI = J·W · Ĩ_nu
     Series<ST> getFI2DSeries(const std::vector<int>& nu) const;
 
     const PT& getShiftedU() const { return shiftedU_; }
-    ST getGamma() const { return gamma_; }
     ST getFeynmanD() const { return feynmanD_; }
     ST getFBIDelta() const { return fbiDelta_; }
-    const Series<ST>& getUPowerSeries() const;
-    const Series<ST>& getUPowerRedefSeries() const;
-
-    void setRedefinition(const Redefinition<PT, ST>* redef);
-    void clearCache();
 
 private:
     ST computeFBIDelta() const;
-    ST computeGamma() const;
 
     PT buildShiftedU() const;
     PT buildFIPolynomial(const std::vector<int>& nu) const;
-    PT buildFIPolynomialNoU(const std::vector<int>& nu) const;
     PT applyShift(const PT& xrYrPoly) const;
-
-    Series<ST> expandUPower() const;
 
     static PT makeConstantPoly(const ST& c);
     static PT makeMonomialPoly(const ST& c, int xPow, int yPow);
     static PT multiplyPoly(const PT& a, const PT& b);
     static PT powPoly(PT base, int exp);
-    static void multiplySeries(Series<ST>& result, const Series<ST>& a, const Series<ST>& b);
 };
 
 #include "../src/integrand_expander.tpp"
