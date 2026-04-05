@@ -1,5 +1,7 @@
 #pragma once
 
+#include <chrono>
+#include <iostream>
 #include <map>
 #include <stdexcept>
 #include <vector>
@@ -23,6 +25,12 @@ private:
     mutable Series<ST> uPowerSeriesCache_;
     mutable bool uPowerSeriesCached_;
 
+    // Redefinition 支持
+    const Redefinition<PT, ST>* redef_ = nullptr;
+    ST gammaRedef_;    // gamma_base = gamma - (L+1)*D_in/2
+    mutable Series<ST> uPowerRedefCache_;
+    mutable bool uPowerRedefCached_;
+
 public:
     IntegrandExpander(SeriesSolver<RT, PT, ST>& solver,
                       int numLoops,
@@ -41,7 +49,9 @@ public:
     ST getFeynmanD() const { return feynmanD_; }
     ST getFBIDelta() const { return fbiDelta_; }
     const Series<ST>& getUPowerSeries() const;
+    const Series<ST>& getUPowerRedefSeries() const;
 
+    void setRedefinition(const Redefinition<PT, ST>* redef);
     void clearCache();
 
 private:

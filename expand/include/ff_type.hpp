@@ -50,6 +50,9 @@ public:
     // 获取原始值
     mp_limb_t get_value() const;
     
+    // 获取模数（静态方法）
+    static mp_limb_t get_modulus();
+    
     // 输出支持
     friend std::ostream& operator<<(std::ostream& os, const FlintMod& fm);
     

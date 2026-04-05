@@ -82,10 +82,12 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
     
     ST rhsCoeff = ST(0);
     
-    // 计算 [rhs]_{p-1,q} = Σ_{i,j} (-1/2) * [dR_{ij}/dX * I_{ν+e_i+e_j}^{Δ+1}]_{p-1,q} * factor_{ij}
+    // 注意：重定义模式下，DE 的 rhs 仍然使用原始 dRdX（不是 dRdXModified_）
+    // 因为对 L=2，U 的幂次恰好抵消：p_source - p_target + 1 = 2 - L = 0
+    
+    // 计算 [rhs]_{p-1,q}
     for (int i = 0; i < numProps_; ++i) {
         for (int j = 0; j < numProps_; ++j) {
-            // 计算 factor_{ij}
             ST factor_ij;
             if (i != j) {
                 factor_ij = ST(nu[i]) * ST(nu[j]);
@@ -93,30 +95,49 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
                 factor_ij = ST(nu[i]) * ST(nu[i] + 1);
             }
             
-            // 跳过 factor = 0 or dRdX = 0 的情况
             if (isZero(factor_ij) || isZero(dRdX[i][j])) continue;
             
-            // 构造 ν + e_i + e_j
             std::vector<int> nuShifted = nu;
             nuShifted[i]++;
             nuShifted[j]++;
             
-            // 获取 I_{ν+e_i+e_j}^{Δ+1}
             const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
             
-            // 计算 [dR_{ij}/dX * I_{ν+e_i+e_j}^{Δ+1}]_{p-1,q}
             ST convCoeff = polySeriesCoeff(dRdX[i][j], seriesShifted, p - 1, q);
-            
-            // 累加 (-1/2) * factor_ij * convCoeff
-            // 注意: 在有限域中 -1/2 需要特殊处理
-            // -1/2 = -(p+1)/2 mod p，但这里简化用 ST(-1)/ST(2)
             rhsCoeff -= factor_ij * convCoeff / ST(2);
         }
     }
     
-    // f_{p,q} = rhsCoeff / p
     auto key = makeKey(nu, delta);
-    cache_[key].setCoeff(p, q, rhsCoeff / ST(p));
+    
+    if (!redef_) {
+        // 原始模式: f_{p,q} = rhsCoeff / p
+        cache_[key].setCoeff(p, q, rhsCoeff / ST(p));
+    } else {
+        // 重定义模式:
+        // U·∂_X f̃ = -pow_U·(∂_X U)·f̃ + rhs
+        // f̃_{p,q} = (rhsCoeff - pow_U*[dUdX·f̃]_{p-1,q} - lhsCorr) / (U_00 · p)
+        
+        const Series<ST>& masterSeries = cache_.at(key);
+        ST powU = masterPowU_[masterIdx];
+        
+        // dlogCoeff = -pow_U * [dUdX · f̃]_{p-1,q}  (注意负号!)
+        ST dlogCoeff = ST(-1) * powU * polySeriesCoeff(redef_->dUdX, masterSeries, p - 1, q);
+        
+        // lhsCorrection = Σ_{(a,b)≠(0,0)} U_{ab} · (p-a) · f̃_{p-a, q-b}
+        ST lhsCorr = ST(0);
+        for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
+            int a = it->first.x_power;
+            int b = it->first.y_power;
+            if (a == 0 && b == 0) continue;
+            if (p >= a && q >= b) {
+                lhsCorr += it->second * ST(p - a) * masterSeries.getCoeff(p - a, q - b);
+            }
+        }
+        
+        ST U00 = redef_->shiftedU.getCoeff(0, 0);
+        cache_[key].setCoeff(p, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(p)));
+    }
 }
 
 template<typename RT, typename PT, typename ST>
@@ -162,9 +183,37 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
         }
     }
     
-    // f_{0,q} = rhsCoeff / q
     auto key = makeKey(nu, delta);
-    cache_[key].setCoeff(0, q, rhsCoeff / ST(q));
+    
+    if (!redef_) {
+        // 原始模式: f_{0,q} = rhsCoeff / q
+        cache_[key].setCoeff(0, q, rhsCoeff / ST(q));
+    } else {
+        // 重定义模式:
+        // U·∂_Y f̃ = -pow_U·(∂_Y U)·f̃ + rhs
+        // f̃_{0,q} = (rhsCoeff - pow_U*[dUdY·f̃]_{0,q-1} - lhsCorr) / (U_00 · q)
+        // rhsCoeff 已经使用原始 dRdY 计算好了（L=2 时 U 幂次抵消）
+        
+        const Series<ST>& masterSeries = cache_.at(key);
+        ST powU = masterPowU_[masterIdx];
+        
+        // dlogCoeff = -pow_U * [dUdY · f̃]_{0,q-1}  (注意负号!)
+        ST dlogCoeff = ST(-1) * powU * polySeriesCoeff(redef_->dUdY, masterSeries, 0, q - 1);
+        
+        // lhsCorrection = Σ_{b>0} U_{0,b} · (q-b) · f̃_{0, q-b}
+        ST lhsCorr = ST(0);
+        for (auto it = redef_->shiftedU.begin(); it != redef_->shiftedU.end(); ++it) {
+            int a = it->first.x_power;
+            int b = it->first.y_power;
+            if (a != 0 || b == 0) continue;
+            if (q >= b) {
+                lhsCorr += it->second * ST(q - b) * masterSeries.getCoeff(0, q - b);
+            }
+        }
+        
+        ST U00 = redef_->shiftedU.getCoeff(0, 0);
+        cache_[key].setCoeff(0, q, (rhsCoeff + dlogCoeff - lhsCorr) / (U00 * ST(q)));
+    }
 }
 
 // ============================================================================
@@ -532,6 +581,29 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
         }
     }
 
+    // 重定义：应用 ratio 因子
+    std::vector<Series<ST>> tempStorage;
+    if (redef_) {
+        int nuTotT = nuTotSum(nuPlus);
+        int nuTotNu = nuTotSum(nu);
+        ST deltaMinus1 = delta - ST(1);
+        std::vector<int> deltaPs;
+        // 前B项 source = (nu, delta-1)
+        for (int j = 0; j < numBranchCur; ++j)
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu, deltaMinus1));
+        // 后续项 source = (nuMinusEi, delta-1)
+        int iC2 = -1;
+        for (int i = 0; i < numProps_; ++i) {
+            if (nu[i] > 0) {
+                iC2++;
+                std::vector<int> nme = nu; nme[i]--;
+                if (family_.nBranch(nme) != numBranchCur) continue;
+                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
+            }
+        }
+        applyRatioFactors(D, seriesPtrs, deltaPs, tempStorage);
+    }
+
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
 
@@ -578,6 +650,25 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
         }
+    }
+    
+    // 重定义：应用 ratio 因子
+    std::vector<Series<ST>> tempStorageDSD;
+    if (redef_) {
+        int nuTotT = nuTotSum(nu);
+        ST deltaMinus1 = delta - ST(1);
+        std::vector<int> deltaPs;
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaMinus1));
+        int iC2 = -1;
+        for (int i = 0; i < numProps_; ++i) {
+            if (nu[i] > 0) {
+                iC2++;
+                std::vector<int> nme = nu; nme[i]--;
+                if (family_.nBranch(nme) != numBranchCur) continue;
+                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
+            }
+        }
+        applyRatioFactors(D, seriesPtrs, deltaPs, tempStorageDSD);
     }
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
@@ -635,6 +726,17 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
         }
     }
     
+    // 重定义：应用 ratio 因子
+    std::vector<Series<ST>> tempStorageC1;
+    if (redef_) {
+        int nuTotT = nuTotSum(nu);
+        ST deltaMinus1 = delta - ST(1);
+        std::vector<int> deltaPs;
+        for (size_t idx = 0; idx < seriesPtrs.size(); ++idx)
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
+        applyRatioFactors(D, seriesPtrs, deltaPs, tempStorageC1);
+    }
+    
     // 使用LRR求解器
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
 }
@@ -672,7 +774,18 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
         }
     }
     
-    solveLRRAtDeg(result, numeC, polys, seriesPtrs, deg);
+    // 重定义：应用 ratio 因子（Case2: Δp = 1 for all sources）
+    PT D_c2 = numeC;
+    std::vector<Series<ST>> tempStorageC2;
+    if (redef_) {
+        int nuTotT = nuTotSum(nu);
+        std::vector<int> deltaPs;
+        for (size_t idx = 0; idx < seriesPtrs.size(); ++idx)
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
+        applyRatioFactors(D_c2, seriesPtrs, deltaPs, tempStorageC2);
+    }
+    
+    solveLRRAtDeg(result, D_c2, polys, seriesPtrs, deg);
 }
 
 // ============================================================================
@@ -740,6 +853,115 @@ void SeriesSolver<RT, PT, ST>::reduceCase3AtDeg(Series<ST>& result, const std::v
     solveLRRAtDeg(result, numeZ_j, polys, seriesPtrs, deg);
 }
 
+// ============================================================================
+// 多项式辅助函数 + Redefinition 支持
+// ============================================================================
+
+template<typename RT, typename PT, typename ST>
+PT SeriesSolver<RT, PT, ST>::multiplyPolys(const PT& a, const PT& b) {
+    PT result;
+    for (const auto& [pa, ca] : a) {
+        for (const auto& [pb, cb] : b) {
+            result.addMonomial(ca * cb, Power(pa.x_power + pb.x_power, pa.y_power + pb.y_power));
+        }
+    }
+    return result;
+}
+
+template<typename RT, typename PT, typename ST>
+PT SeriesSolver<RT, PT, ST>::powPolyExpand(const PT& base, int exp) {
+    PT result;
+    result.addMonomial(ST(1), Power(0, 0));
+    if (exp <= 0) return result;
+    PT cur = base;
+    int e = exp;
+    while (e > 0) {
+        if (e & 1) result = multiplyPolys(result, cur);
+        e >>= 1;
+        if (e > 0) cur = multiplyPolys(cur, cur);
+    }
+    return result;
+}
+
+template<typename RT, typename PT, typename ST>
+Series<ST> SeriesSolver<RT, PT, ST>::mulPolyPower(const Series<ST>& series, const PT& poly, int power) {
+    if (power <= 0) return series;
+    Series<ST> result(series.getDeg());
+    Series<ST>::mulPoly(result, series, poly);
+    for (int k = 1; k < power; ++k) {
+        Series<ST> tmp(series.getDeg());
+        Series<ST>::mulPoly(tmp, result, poly);
+        result = std::move(tmp);
+    }
+    return result;
+}
+
+template<typename RT, typename PT, typename ST>
+void SeriesSolver<RT, PT, ST>::applyRatioFactors(
+    PT& D,
+    std::vector<const Series<ST>*>& seriesPtrs,
+    const std::vector<int>& deltaPs,
+    std::vector<Series<ST>>& tempStorage) const
+{
+    if (!redef_ || deltaPs.empty()) return;
+
+    // 原始方程: D · I_T = Σ N_i · I_S_i
+    // 重定义后: D · f̃_T = Σ N_i · U^{-Δp_i} · f̃_S_i
+    // 为消除 U 的负幂次，两边乘以 U^m (m = max(0, max(Δp_i)))
+    // 得: D·U^m · f̃_T = Σ N_i · U^{m - Δp_i} · f̃_S_i
+    int dpMax = *std::max_element(deltaPs.begin(), deltaPs.end());
+    int m = std::max(0, dpMax);
+
+    // 将 U^m 乘到 D 上
+    if (m > 0) {
+        D = multiplyPolys(D, powPolyExpand(redef_->shiftedU, m));
+    }
+
+    // 每个源 f̃_i 预乘 U^{m - Δp_i}（总是非负）
+    int numTemp = 0;
+    for (int dp : deltaPs) { if (m - dp > 0) numTemp++; }
+    tempStorage.reserve(numTemp);
+
+    for (size_t idx = 0; idx < deltaPs.size(); ++idx) {
+        int adjPow = m - deltaPs[idx];
+        if (adjPow > 0) {
+            tempStorage.push_back(mulPolyPower(*seriesPtrs[idx], redef_->shiftedU, adjPow));
+            seriesPtrs[idx] = &tempStorage.back();
+        }
+    }
+}
+
+template<typename RT, typename PT, typename ST>
+void SeriesSolver<RT, PT, ST>::setRedefinition(const Redefinition<PT, ST>* redef) {
+    redef_ = redef;
+    if (!redef_) return;
+
+    // 预计算 dRdX * U^L 和 dRdY * U^L
+    const auto& dRdX = family_.getDRdX();
+    const auto& dRdY = family_.getDRdY();
+    PT UL = powPolyExpand(redef_->shiftedU, redef_->L);
+
+    dRdXModified_.resize(numProps_);
+    dRdYModified_.resize(numProps_);
+    for (int i = 0; i < numProps_; ++i) {
+        dRdXModified_[i].resize(numProps_);
+        dRdYModified_[i].resize(numProps_);
+        for (int j = 0; j < numProps_; ++j) {
+            if (!isZero(dRdX[i][j]))
+                dRdXModified_[i][j] = multiplyPolys(dRdX[i][j], UL);
+            if (!isZero(dRdY[i][j]))
+                dRdYModified_[i][j] = multiplyPolys(dRdY[i][j], UL);
+        }
+    }
+
+    // 预计算每个主积分的 pow_U
+    masterPowU_.resize(numMaster_);
+    for (int k = 0; k < numMaster_; ++k) {
+        int nuTot = nuTotSum(masterNus_[k]);
+        masterPowU_[k] = redef_->powUScalar(nuTot, masterDeltas_[k]);
+    }
+}
+
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                       const ST& delta, int deg) {
@@ -787,6 +1009,28 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
         }
     }
     
-    solveLRRAtDeg(result, numeC, polys, seriesPtrs, deg);
+    // 重定义：应用 ratio 因子
+    PT D_dsu = numeC;
+    std::vector<Series<ST>> tempStorageDSU;
+    if (redef_) {
+        int nuTotT = nuTotSum(nu);
+        ST deltaPlus1 = delta + ST(1);
+        std::vector<int> deltaPs;
+        // 第一项 source = (nu, delta+1)
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaPlus1));
+        // 后续项 source = (nuMinusEi, delta)
+        int iC2 = -1;
+        for (int i = 0; i < numProps_; ++i) {
+            if (nu[i] > 0) {
+                iC2++;
+                std::vector<int> nme = nu; nme[i]--;
+                if (family_.nBranch(nme) != numBranchCur) continue;
+                deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
+            }
+        }
+        applyRatioFactors(D_dsu, seriesPtrs, deltaPs, tempStorageDSU);
+    }
+    
+    solveLRRAtDeg(result, D_dsu, polys, seriesPtrs, deg);
 }
 

@@ -15,7 +15,10 @@ IntegrandExpander<RT, PT, ST>::IntegrandExpander(SeriesSolver<RT, PT, ST>& solve
       gamma_(computeGamma()),
       shiftedU_(buildShiftedU()),
       uPowerSeriesCache_(targetDeg),
-      uPowerSeriesCached_(false) {
+      uPowerSeriesCached_(false),
+      gammaRedef_(ST(0)),
+      uPowerRedefCache_(targetDeg),
+      uPowerRedefCached_(false) {
     if (numLoops_ <= 0) {
         throw std::invalid_argument("numLoops must be positive");
     }
@@ -288,20 +291,121 @@ const Series<ST>& IntegrandExpander<RT, PT, ST>::getUPowerSeries() const {
 }
 
 template<typename RT, typename PT, typename ST>
+void IntegrandExpander<RT, PT, ST>::setRedefinition(const Redefinition<PT, ST>* redef) {
+    redef_ = redef;
+    if (redef_) {
+        // gamma_base = gamma_orig - (L+1)*D_in/2
+        gammaRedef_ = gamma_ - ST(redef_->L + 1) * redef_->D_in / ST(2);
+        uPowerRedefCached_ = false;
+    }
+}
+
+template<typename RT, typename PT, typename ST>
+const Series<ST>& IntegrandExpander<RT, PT, ST>::getUPowerRedefSeries() const {
+    if (!uPowerRedefCached_) {
+        // Expand U^{gammaRedef_} using the same PDE approach but with gammaRedef_ instead of gamma_
+        Series<ST> F(targetDeg_);
+        F.setZero();
+        F.setCoeff(0, 0, ST(1));
+
+        const PT dUx = shiftedU_.derivativeX();
+        const PT dUy = shiftedU_.derivativeY();
+        const ST U00 = shiftedU_.getCoeff(0, 0);
+
+        for (int deg = 1; deg <= targetDeg_; ++deg) {
+            for (int p = 1; p <= deg; ++p) {
+                int q = deg - p;
+                ST rhs = gammaRedef_ * SeriesSolver<RT, PT, ST>::polySeriesCoeff(dUx, F, p - 1, q);
+                ST known = ST(0);
+                for (const auto& [power, coeff] : shiftedU_) {
+                    int a = power.x_power, b = power.y_power;
+                    if (a == 0 && b == 0) continue;
+                    if (p >= a && q >= b) {
+                        int px = p - a, qy = q - b;
+                        if (px > 0) known += coeff * ST(px) * F.getCoeff(px, qy);
+                    }
+                }
+                F.setCoeff(p, q, (rhs - known) / (U00 * ST(p)));
+            }
+            int q = deg;
+            ST rhs = gammaRedef_ * SeriesSolver<RT, PT, ST>::polySeriesCoeff(dUy, F, 0, q - 1);
+            ST known = ST(0);
+            for (const auto& [power, coeff] : shiftedU_) {
+                int a = power.x_power, b = power.y_power;
+                if (a == 0 && b == 0) continue;
+                if (a == 0 && q >= b) {
+                    int qy = q - b;
+                    if (qy > 0) known += coeff * ST(qy) * F.getCoeff(0, qy);
+                }
+            }
+            F.setCoeff(0, q, (rhs - known) / (U00 * ST(q)));
+        }
+        uPowerRedefCache_ = std::move(F);
+        uPowerRedefCached_ = true;
+    }
+    return uPowerRedefCache_;
+}
+
+template<typename RT, typename PT, typename ST>
 void IntegrandExpander<RT, PT, ST>::clearCache() {
     uPowerSeriesCache_.setZero();
     uPowerSeriesCached_ = false;
+    uPowerRedefCache_.setZero();
+    uPowerRedefCached_ = false;
 }
 
 template<typename RT, typename PT, typename ST>
 Series<ST> IntegrandExpander<RT, PT, ST>::getFI2DSeries(const std::vector<int>& nu) const {
-    PT poly = buildFIPolynomial(nu);
+    auto t0 = std::chrono::steady_clock::now();
     const Series<ST>& fbi = solver_.getFBISeries(nu, fbiDelta_);
+    auto t1 = std::chrono::steady_clock::now();
+
+    PT poly = buildFIPolynomial(nu);
+    auto t2 = std::chrono::steady_clock::now();
 
     Series<ST> tmp(targetDeg_);
     Series<ST>::mulPoly(tmp, fbi, poly);
+    auto t3 = std::chrono::steady_clock::now();
 
-    Series<ST> result(targetDeg_);
-    multiplySeries(result, getUPowerSeries(), tmp);
-    return result;
+    if (!redef_) {
+        // 原始模式: result = U^gamma * (P * FBI)
+        const Series<ST>& uPowerSeries = getUPowerSeries();
+        auto t5 = std::chrono::steady_clock::now();
+
+        Series<ST> result(targetDeg_);
+        multiplySeries(result, uPowerSeries, tmp);
+        auto t6 = std::chrono::steady_clock::now();
+
+        auto us_total = std::chrono::duration_cast<std::chrono::microseconds>(t6 - t0).count();
+        std::cout << "[timing][FI2D] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
+                  << " total_us=" << us_total << "\n";
+        return result;
+    } else {
+        // 重定义模式: result = U^{gamma_base} * (P * f̃ * U^{nuTot})
+        // P already has U^{nuTot}, so we need an EXTRA U^{nuTot}
+        int nuTot = 0;
+        for (int v : nu) nuTot += v;
+
+        // Multiply tmp by U^{nuTot} (the extra factor from redefinition)
+        if (nuTot > 0) {
+            PT Upow = powPoly(shiftedU_, nuTot);
+            Series<ST> tmp2(targetDeg_);
+            Series<ST>::mulPoly(tmp2, tmp, Upow);
+            tmp = std::move(tmp2);
+        }
+        auto t4 = std::chrono::steady_clock::now();
+
+        // Multiply by U^{gammaRedef_}
+        const Series<ST>& uPowerRedef = getUPowerRedefSeries();
+        auto t5 = std::chrono::steady_clock::now();
+
+        Series<ST> result(targetDeg_);
+        multiplySeries(result, uPowerRedef, tmp);
+        auto t6 = std::chrono::steady_clock::now();
+
+        auto us_total = std::chrono::duration_cast<std::chrono::microseconds>(t6 - t0).count();
+        std::cout << "[timing][FI2D][redef] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
+                  << " total_us=" << us_total << "\n";
+        return result;
+    }
 }

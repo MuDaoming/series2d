@@ -16,11 +16,66 @@
 #include <vector>
 #include <map>
 #include <tuple>
+#include <algorithm>
 #include <stdexcept>
 #include <iostream>
 #include "family.hpp"
 #include "series.hpp"
 #include "rational.hpp"
+
+// ============================================================================
+// Redefinition 辅助结构体
+// ============================================================================
+
+template<typename PT, typename ST>
+struct Redefinition {
+    ST D_in;           // 主积分 delta = L * D_Feynman / 2
+    int L;             // 圈数
+    PT shiftedU;       // 平移后的 U(X,Y) 多项式
+    PT dUdX;           // ∂U/∂X
+    PT dUdY;           // ∂U/∂Y
+
+    Redefinition(int L_, const ST& D_in_, const PT& U_)
+        : D_in(D_in_), L(L_), shiftedU(U_),
+          dUdX(U_.derivativeX()), dUdY(U_.derivativeY()) {}
+
+    /// 将 Z_p 中的值转为小有符号整数（|val| << p）
+    static int toSignedInt(const ST& val) {
+        mp_limb_t v = val.get_value();
+        mp_limb_t p = ST::get_modulus();
+        if (v > p / 2) return static_cast<int64_t>(v) - static_cast<int64_t>(p);
+        return static_cast<int64_t>(v);
+    }
+
+    /// D 与 D_in 是否同奇偶
+    bool sameParity(const ST& D) const {
+        int offset = toSignedInt(D - D_in);
+        return (offset % 2 == 0);
+    }
+
+    int etaMinus(const ST& D) const { return sameParity(D) ? 0 : 2; }
+    int etaPlus(const ST& D) const { return sameParity(D) ? -2 : 0; }
+
+    /// 计算幂差 Δp_U（整数）
+    int deltaPowU(int nuTotT, const ST& DT, int nuTotS, const ST& DS) const {
+        int offsetT = toSignedInt(DT - D_in);
+        int offsetS = toSignedInt(DS - D_in);
+        bool parityT = (offsetT % 2 == 0);
+        bool parityS = (offsetS % 2 == 0);
+        int DbarT = offsetT + (parityT ? 0 : 1);
+        int DbarS = offsetS + (parityS ? 0 : 1);
+        int DbarDiff = DbarT - DbarS;
+        return (nuTotT - nuTotS) - (L + 1) * DbarDiff / 2;
+    }
+
+    /// pow_U 在 Z_p 中的标量值（微分方程 dlog 系数）
+    ST powUScalar(int nuTot, const ST& D) const {
+        int offset = toSignedInt(D - D_in);
+        bool parity = (offset % 2 == 0);
+        int Dbar_offset = offset + (parity ? 0 : 1);
+        return ST(nuTot) - ST(L + 1) * (D_in + ST(Dbar_offset)) / ST(2);
+    }
+};
 
 // ============================================================================
 // SeriesSolver 类
@@ -240,6 +295,39 @@ private:
                           const ST& delta, int deg);
     void reduceCase3AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                           const ST& delta, int deg);
+
+    // ========================================================================
+    // FBI 重定义支持
+    // ========================================================================
+
+    const Redefinition<PT, ST>* redef_ = nullptr;
+
+    // 预计算：dRdX * U^L 和 dRdY * U^L（用于重定义后的微分方程）
+    std::vector<std::vector<PT>> dRdXModified_;
+    std::vector<std::vector<PT>> dRdYModified_;
+    // 每个主积分的 pow_U 标量值
+    std::vector<ST> masterPowU_;
+
+public:
+    void setRedefinition(const Redefinition<PT, ST>* redef);
+
+    // ========================================================================
+    // 多项式辅助函数（静态）
+    // ========================================================================
+    static PT multiplyPolys(const PT& a, const PT& b);
+    static PT powPolyExpand(const PT& base, int exp);
+    static Series<ST> mulPolyPower(const Series<ST>& series, const PT& poly, int power);
+
+private:
+    static int nuTotSum(const std::vector<int>& nu) {
+        int s = 0; for (int v : nu) s += v; return s;
+    }
+
+    /// 对约化函数的源项应用 ratio 因子（通分 + 预乘 series）
+    void applyRatioFactors(PT& D,
+                           std::vector<const Series<ST>*>& seriesPtrs,
+                           const std::vector<int>& deltaPs,
+                           std::vector<Series<ST>>& tempStorage) const;
 };
 
 #include "../src/series_solver.tpp"

@@ -118,6 +118,14 @@ mp_limb_t FlintMod::get_value() const {
     return value; 
 }
 
+// 获取模数
+mp_limb_t FlintMod::get_modulus() {
+    if (!ctx_initialized) {
+        throw std::runtime_error("FlintMod context not initialized. Call set_modulus first.");
+    }
+    return mod_ctx.n;
+}
+
 // 输出支持
 std::ostream& operator<<(std::ostream& os, const FlintMod& fm) {
     os << fm.value;
