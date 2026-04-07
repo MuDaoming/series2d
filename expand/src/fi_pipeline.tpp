@@ -92,12 +92,10 @@ void runFI1DSeriesPipeline(const std::string& sPath,
         throw std::runtime_error("Cannot open output file: " + outFile.string());
     }
 
+    auto tInteg0 = std::chrono::steady_clock::now();
     for (const auto& nu : targetCfg.nus) {
-        auto t0 = std::chrono::steady_clock::now();
         Series<FlintMod> fi2d = expander.getFI2DSeries(nu);
-        auto t1 = std::chrono::steady_clock::now();
         std::vector<FlintMod> oneD = integrator.integrate(fi2d);
-        auto t2 = std::chrono::steady_clock::now();
 
         out << "{";
         for (int d = 0; d <= targetDeg; ++d) {
@@ -105,14 +103,9 @@ void runFI1DSeriesPipeline(const std::string& sPath,
             if (d < targetDeg) out << ",";
         }
         out << "}\n";
-        auto t3 = std::chrono::steady_clock::now();
-
-        auto fi2d_us = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
-        auto integ_us = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
-        auto write_us = std::chrono::duration_cast<std::chrono::microseconds>(t3 - t2).count();
-        std::cout << "[expand] nu={" << nu[0] << "," << nu[1] << "," << nu[2] << "}"
-                  << "  fi2d_us=" << fi2d_us
-                  << "  integrate_us=" << integ_us
-                  << "  write_us=" << write_us << "\n";
     }
+    auto tInteg1 = std::chrono::steady_clock::now();
+    auto integ_us = std::chrono::duration_cast<std::chrono::microseconds>(tInteg1 - tInteg0).count();
+    std::cout << "[integrate] integrate_us=" << integ_us << "\n";
+    std::cout << "[integrate] cache_keys=" << solver.getCacheSize() << "\n";
 }
