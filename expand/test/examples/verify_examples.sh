@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
-RUNNER_DIR="${ROOT_DIR}/expand/test/fi_pipeline_runner_generator"
+RUNNER_DIR="${ROOT_DIR}/expand/test/generator/fi_pipeline_runner"
 RUNNER="${RUNNER_DIR}/fi_pipeline_runner"
 
 echo "[1/4] Rebuilding fi_pipeline_runner..."

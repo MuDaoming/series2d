@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 
-#include "../../include/fi_pipeline.hpp"
+#include "../../../include/fi_pipeline.hpp"
 
 int main(int argc, char** argv) {
     if (argc != 5) {

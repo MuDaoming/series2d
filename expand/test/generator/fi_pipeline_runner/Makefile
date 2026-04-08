@@ -1,9 +1,9 @@
 CXX := g++
-CXXFLAGS := -std=c++17 -O2 -I../../include
+CXXFLAGS := -std=c++17 -O2 -I../../../include
 LDFLAGS := -lginac -lcln -lflint -lgmp
 
 TARGET := fi_pipeline_runner
-SRC := fi_pipeline_runner_generator.cpp
+SRC := *.cpp
 
 .PHONY: all clean run
 
