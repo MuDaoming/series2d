@@ -101,7 +101,7 @@ runFI1DSeriesPipeline(...) ← 顶层流程
     SeriesSolver.setRedefinition()
       → 预计算 dRdX·U^L, dRdY·U^L, masterPowU_
          ↓
-    SeriesSolver.solve() → 逐阶递推（重定义后微分方程+约化）
+    SeriesSolver.getFBISeries(...) → 按需递归（重定义后微分方程+约化）
          ↓
     IntegrandExpander.getFI2DSeries(nu)
       → P·Ĩ（多项式×级数，无需U^gamma）
@@ -112,23 +112,31 @@ runFI1DSeriesPipeline(...) ← 顶层流程
 ### 3.3 调用关系
 
 ```
-SeriesSolver::solve()
-    │
-    ├── solveAtDeg(deg)
-    │       ├── solveMasterCoeffX(k, p, q)   [重定义后DE]
-    │       │     ├── i,j 仅在当前 master 所在 sector 的活跃传播子指标上求和
-    │       │     ├── getFBISeries(nu+e_i+e_j, delta+1) → 触发约化
-    │       │     ├── dlogCoeff: pow_U * [dUdX · Ĩ]
-    │       │     └── lhsCorrection: U非常数项修正
-    │       └── solveMasterCoeffY(k, q)       [重定义后DE]
-    │
-    └── getFBISeries(nu, delta) → reduceFBIAtDeg()
-            ├── case0IBPAtDeg()        + applyRatioFactors()
-            ├── case0DimShiftUp/Down() + applyRatioFactors()
-            ├── reduceCase1AtDeg()     + applyRatioFactors()
-            ├── reduceCase2AtDeg()     + applyRatioFactors()
-            └── reduceCase3AtDeg()     [Δp=0, 无需ratio]
-                    └── solveLRRAtDeg()
+IntegrandExpander::getFI2DSeries(nu_target)
+    └── SeriesSolver::getFBISeries(nu_target, delta_in)
+            ├── cache命中且阶数充足: 直接返回
+            └── cache缺失或阶数不足:
+                └── reduceFBIAtDeg(result, nu, delta, deg)
+                    ├── reduceCase0AtDeg
+                    │   ├── corner 且 delta==targetDelta:
+                    │   │   ├── 先检查 masterKey 是否在 cache_，且 cacheCurrentDeg_ 是否 >= deg
+                    │   │   ├── 若不足: solveMasterAtDeg(masterIdx, deg)
+                    │   │   │   ├── deg=0: 从 masterBoundary_ 写入 (0,0)
+                    │   │   │   └── deg>0:
+                    │   │   │       ├── solveMasterCoeffX(masterIdx,p,q)
+                    │   │   │       │   ├── i,j 仅在当前 master 所在 sector 的活跃传播子指标上求和
+                    │   │   │       │   └── getFBISeries(nu+e_i+e_j, delta+1)
+                    │   │   │       └── solveMasterCoeffY(masterIdx,q)
+                    │   │   │           ├── i,j 仅在当前 master 所在 sector 的活跃传播子指标上求和
+                    │   │   │           └── getFBISeries(nu+e_i+e_j, delta+1)
+                    │   │   └── 从 master cache 拷贝该 deg 系数到 result
+                    │   ├── case0IBPAtDeg
+                    │   ├── case0DimShiftUpAtDeg
+                    │   └── case0DimShiftDownAtDeg
+                    ├── reduceCase1AtDeg
+                    ├── reduceCase2AtDeg
+                    └── reduceCase3AtDeg
+                        └── solveLRRAtDeg(g, D, polys, seriesPtrs, deg)
 ```
 
 ## 4. 核心类详解
@@ -262,7 +270,7 @@ class SeriesSolver {
 
 public:
     void setRedefinition(const Redefinition<PT, ST>* redef);  // 必须在solve()前调用
-    void solve();
+    void solve();  // 可选：全量预计算模式
     const Series<ST>& getFBISeries(const std::vector<int>& nu, const ST& delta);
     
     static void solveLRRAtDeg(Series<ST>& g, const PT& D,
@@ -272,6 +280,7 @@ public:
     static PT powPolyExpand(const PT& base, int exp);
 
 private:
+    void solveMasterAtDeg(int masterIdx, int deg);            // 按需补单个master某一阶
     void solveMasterCoeffX(int masterIdx, int p, int q);  // 重定义后DE
     void solveMasterCoeffY(int masterIdx, int q);          // 重定义后DE
     void applyRatioFactors(PT& D, std::vector<PT>& polys,
@@ -284,9 +293,11 @@ private:
 
 1. **`setRedefinition()`**：预计算 `dRdXModified_[i][j] = dRdX[i][j] · U^L`（避免运行时重复乘）、`masterPowU_[k]`。
 
-2. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_` 代替原始 `dRdX`，并按当前 $\nu$ 所在 sector 的活跃传播子索引取子块求和（等价于使用该 sector 子 family 的 $R$ 子矩阵）；额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_and_workflow.md`](./problem_and_workflow.md) §6.4。
+2. **按需主积分补阶（`solveMasterAtDeg`）**：主积分不再默认全量预计算；触发点放在 `reduceCase0AtDeg` 的 corner 且 `delta==targetDelta` 分支。先检查 `masterKey` 是否已在缓存且阶数达到 `deg`，若不足再调用 `solveMasterAtDeg(masterIdx,deg)`。其中 `deg=0` 直接读取 `masterBoundary_`，`deg>0` 通过 `solveMasterCoeffX/Y` 计算该层。
 
-3. **约化函数（`case0IBP/DimShift/Case1-3`）**：构造 LRR 后调用 `applyRatioFactors(D, polys, deltaPs)`，该函数将 $U^{m}$ 乘到 $D$、$U^{\Delta p_i + m}$ 乘到各 $N_i$，统一为非负幂次的多项式。
+3. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_` 代替原始 `dRdX`，并按当前 $\nu$ 所在 sector 的活跃传播子索引取子块求和（等价于使用该 sector 子 family 的 $R$ 子矩阵）；额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_and_workflow.md`](./problem_and_workflow.md) §6.4。
+
+4. **约化函数（`case0IBP/DimShift/Case1-3`）**：构造 LRR 后调用 `applyRatioFactors(D, polys, deltaPs)`，该函数将 $U^{m}$ 乘到 $D$、$U^{\Delta p_i + m}$ 乘到各 $N_i$，统一为非负幂次的多项式。
 
 ### 4.8 IntegrandExpander 类模板
 

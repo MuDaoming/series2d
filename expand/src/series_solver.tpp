@@ -41,6 +41,7 @@ void SeriesSolver<RT, PT, ST>::solve() {
     for (int k = 0; k < numMaster_; ++k) {
         auto key = makeKey(masterNus_[k], masterDeltas_[k]);
         cache_[key].setCoeff(0, 0, masterBoundary_[k]);
+        cacheCurrentDeg_[key] = 0;
     }
     currentDeg_ = 0;
     
@@ -63,6 +64,54 @@ void SeriesSolver<RT, PT, ST>::solveAtDeg(int deg) {
             }
         }
     }
+}
+
+template<typename RT, typename PT, typename ST>
+void SeriesSolver<RT, PT, ST>::solveMasterAtDeg(int masterIdx, int deg) {
+    if (masterIdx < 0 || masterIdx >= numMaster_) {
+        throw std::runtime_error("Invalid master index in solveMasterAtDeg");
+    }
+    if (deg < 0 || deg > targetDeg_) {
+        throw std::runtime_error("Invalid degree in solveMasterAtDeg");
+    }
+
+    const auto key = makeKey(masterNus_[masterIdx], masterDeltas_[masterIdx]);
+    if (cache_.find(key) == cache_.end()) {
+        cache_[key] = Series<ST>(targetDeg_);
+    }
+
+    int cachedDeg = -1;
+    auto itDeg = cacheCurrentDeg_.find(key);
+    if (itDeg != cacheCurrentDeg_.end()) {
+        cachedDeg = itDeg->second;
+    }
+    if (cachedDeg >= deg) {
+        return;
+    }
+
+    if (cachedDeg < 0) {
+        cache_[key].setCoeff(0, 0, masterBoundary_[masterIdx]);
+        cachedDeg = 0;
+        cacheCurrentDeg_[key] = 0;
+    }
+    if (deg == 0) {
+        return;
+    }
+
+    int prevCurrentDeg = currentDeg_;
+    for (int d = cachedDeg + 1; d <= deg; ++d) {
+        currentDeg_ = d;
+        for (int p = 0; p <= d; ++p) {
+            int q = d - p;
+            if (p > 0) {
+                solveMasterCoeffX(masterIdx, p, q);
+            } else if (q > 0) {
+                solveMasterCoeffY(masterIdx, q);
+            }
+        }
+        cacheCurrentDeg_[key] = d;
+    }
+    currentDeg_ = prevCurrentDeg;
 }
 
 // ============================================================================
@@ -100,7 +149,7 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
             nuShifted[i]++;
             nuShifted[j]++;
             
-            const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
+            const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1), p + q - 1);
             ST convCoeff = polySeriesCoeff(dRdXModified_[i][j], seriesShifted, p - 1, q);
             rhsCoeff -= factor_ij * convCoeff / ST(2);
         }
@@ -159,7 +208,7 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
             nuShifted[i]++;
             nuShifted[j]++;
             
-            const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1));
+            const Series<ST>& seriesShifted = getFBISeries(nuShifted, delta + ST(1), q - 1);
             ST convCoeff = polySeriesCoeff(dRdYModified_[i][j], seriesShifted, 0, q - 1);
             rhsCoeff -= factor_ij * convCoeff / ST(2);
         }
@@ -192,27 +241,39 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
 // ============================================================================
 
 template<typename RT, typename PT, typename ST>
-const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(const std::vector<int>& nu, const ST& delta) {
+const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
+    const std::vector<int>& nu, const ST& delta, int needDeg) {
+    const int targetNeedDeg = std::min(
+        targetDeg_, (needDeg >= 0 ? needDeg : std::max(currentDeg_, 0)));
     auto key = makeKey(nu, delta);
-    auto it = cache_.find(key);
-    
-    if (it != cache_.end()) {
-        int cachedDeg = cacheCurrentDeg_[key];
-        if (cachedDeg < currentDeg_) {
-            for (int deg = cachedDeg + 1; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
-                reduceFBIAtDeg(it->second, nu, delta, deg);
-            }
-            cacheCurrentDeg_[key] = std::min(currentDeg_, targetDeg_);
+
+    if (cache_.find(key) == cache_.end()) {
+        cache_[key] = Series<ST>(targetDeg_);
+        cacheCurrentDeg_[key] = -1;
+    } else if (cacheCurrentDeg_.find(key) == cacheCurrentDeg_.end()) {
+        cacheCurrentDeg_[key] = -1;
+    }
+
+    int cachedDeg = cacheCurrentDeg_[key];
+    if (cachedDeg >= targetNeedDeg) {
+        return cache_[key];
+    }
+
+    bool isMasterKey = false;
+    int masterIdx = -1;
+    if (family_.isMaster(nu)) {
+        masterIdx = family_.getIndexOfMaster(nu);
+        isMasterKey = (masterIdx >= 0 && delta == masterDeltas_[masterIdx]);
+    }
+
+    for (int deg = cachedDeg + 1; deg <= targetNeedDeg; ++deg) {
+        if (isMasterKey) {
+            solveMasterAtDeg(masterIdx, deg);
+        } else {
+            reduceFBIAtDeg(cache_[key], nu, delta, deg);
+            cacheCurrentDeg_[key] = deg;
         }
-        return it->second;
     }
-    
-    cache_[key] = Series<ST>(targetDeg_);
-    for (int deg = 0; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
-        reduceFBIAtDeg(cache_[key], nu, delta, deg);
-    }
-    cacheCurrentDeg_[key] = std::min(currentDeg_, targetDeg_);
-    
     return cache_[key];
 }
 
@@ -252,7 +313,8 @@ void SeriesSolver<RT, PT, ST>::setMasterBoundary(int masterIdx, const ST& value)
     if (cache_.find(key) == cache_.end()) {
         cache_[key] = Series<ST>(targetDeg_);
     }
-    cacheCurrentDeg_[key] = targetDeg_;
+    cache_[key].setCoeff(0, 0, value);
+    cacheCurrentDeg_[key] = 0;
 }
 
 template<typename RT, typename PT, typename ST>
@@ -278,6 +340,7 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getMasterSeries(int masterIdx) const
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::clearCache() {
     cache_.clear();
+    cacheCurrentDeg_.clear();
 }
 
 template<typename RT, typename PT, typename ST>
@@ -424,31 +487,35 @@ void SeriesSolver<RT, PT, ST>::solveLRRAtDeg(
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceCase0AtDeg(Series<ST>& result, const std::vector<int>& nu, 
                                                   const ST& delta, int deg) {
-    bool corner = isCorner(nu);
-    
-    if (!corner) {
+    if (!isCorner(nu)) {
         case0IBPAtDeg(result, nu, delta, deg);
-    } else {
-        int mfbiIndex = family_.getIndexOfMaster(nu);
-        if (mfbiIndex < 0) {
-            throw std::runtime_error("Corner integral in case0 but not a master FBI");
+        return;
+    }
+    int mfbiIndex = family_.getIndexOfMaster(nu);
+    if (mfbiIndex < 0) {
+        throw std::runtime_error("Corner integral in case0 but not a master FBI");
+    }
+
+    ST targetDelta = masterDeltas_[mfbiIndex];
+    if (delta == targetDelta) {
+        auto masterKey = makeKey(masterNus_[mfbiIndex], masterDeltas_[mfbiIndex]);
+        if (cache_.find(masterKey) == cache_.end() ||
+            cacheCurrentDeg_.find(masterKey) == cacheCurrentDeg_.end() ||
+            cacheCurrentDeg_[masterKey] < deg) {
+            const Series<ST>& ensured = getFBISeries(masterNus_[mfbiIndex], masterDeltas_[mfbiIndex], deg);
+            (void)ensured;
         }
-        
-        ST targetDelta = masterDeltas_[mfbiIndex];
-        if (delta == targetDelta) {
-            auto masterKey = makeKey(masterNus_[mfbiIndex], masterDeltas_[mfbiIndex]);
-            const Series<ST>& masterSeries = cache_.at(masterKey);
-            for (int p = 0; p <= deg; ++p) {
-                result.setCoeff(p, deg - p, masterSeries.getCoeff(p, deg - p));
-            }
+        const Series<ST>& masterSeries = cache_.at(masterKey);
+        for (int p = 0; p <= deg; ++p) {
+            result.setCoeff(p, deg - p, masterSeries.getCoeff(p, deg - p));
+        }
+    } else {
+        ST upDist = targetDelta - delta;
+        ST downDist = delta - targetDelta;
+        if (upDist <= downDist) {
+            case0DimShiftUpAtDeg(result, nu, delta, deg);
         } else {
-            ST upDist = targetDelta - delta;
-            ST downDist = delta - targetDelta;
-            if (upDist <= downDist) {
-                case0DimShiftUpAtDeg(result, nu, delta, deg);
-            } else {
-                case0DimShiftDownAtDeg(result, nu, delta, deg);
-            }
+            case0DimShiftDownAtDeg(result, nu, delta, deg);
         }
     }
 }
@@ -471,7 +538,7 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, delta - ST(1));
+    const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, delta - ST(1), deg);
     for (int j = 0; j < numBranchCur; ++j) {
         polys.push_back(numeInvS[row][j] * ST(-1));
         seriesPtrs.push_back(&seriesNuDeltaMinus1);
@@ -485,7 +552,7 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
             polys.push_back(numeInvS[row][numBranchCur + iCur]);
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
         }
     }
 
@@ -527,7 +594,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, delta - ST(1));
+    const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, delta - ST(1), deg);
     polys.push_back(numeC);
     seriesPtrs.push_back(&seriesDeltaMinus1);
     
@@ -539,7 +606,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
         }
     }
     
@@ -588,7 +655,7 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1)));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
         }
     }
     
@@ -625,7 +692,7 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
             polys.push_back(sector->getNumeZ(iCur));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
         }
     }
     
@@ -690,7 +757,7 @@ void SeriesSolver<RT, PT, ST>::reduceCase3AtDeg(Series<ST>& result, const std::v
             if (family_.nBranch(nuShifted) != numBranchCur) continue;
             
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
-            seriesPtrs.push_back(&getFBISeries(nuShifted, delta));
+            seriesPtrs.push_back(&getFBISeries(nuShifted, delta, deg));
         }
     }
     
@@ -801,7 +868,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
     
-    const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, delta + ST(1));
+    const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, delta + ST(1), deg);
     PT factorPoly = denoCandZ * factor;
     polys.push_back(factorPoly);
     seriesPtrs.push_back(&seriesDeltaPlus1);
@@ -814,7 +881,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
             polys.push_back(sector->getNumeZ(iCur));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
         }
     }
     

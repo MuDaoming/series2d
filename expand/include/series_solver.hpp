@@ -99,7 +99,7 @@ public:
     void solve();
     
     /// 获取FBI的级数展开（递归调用,会触发约化）
-    const Series<ST>& getFBISeries(const std::vector<int>& nu, const ST& delta);
+    const Series<ST>& getFBISeries(const std::vector<int>& nu, const ST& delta, int needDeg = -1);
     
     // ========================================================================
     // 访问器
@@ -203,6 +203,7 @@ private:
     // ========================================================================
     
     void solveAtDeg(int deg);
+    void solveMasterAtDeg(int masterIdx, int deg);
     void solveMasterCoeffX(int masterIdx, int p, int q);
     void solveMasterCoeffY(int masterIdx, int q);
     
