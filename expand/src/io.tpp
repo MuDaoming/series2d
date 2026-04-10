@@ -56,6 +56,16 @@ InputConfig parseConfigFile(const std::string& path) {
     cfg.a = static_cast<mp_limb_t>(std::stoull(need("a")));
     cfg.b = static_cast<mp_limb_t>(std::stoull(need("b")));
     cfg.d = static_cast<mp_limb_t>(std::stoull(need("d")));
+    if (kv.count("reduce_mode")) {
+        std::string mode = trim(kv["reduce_mode"]);
+        for (char& c : mode) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+        if (mode == "maximalcut") mode = "maximal_cut";
+        if (mode != "normal" && mode != "maximal_cut") {
+            throw std::runtime_error("Invalid reduce_mode in config: " + mode +
+                                     " (expected normal or maximal_cut)");
+        }
+        cfg.reduceMode = mode;
+    }
     cfg.bc = parseU64List(need("bc"));
     return cfg;
 }

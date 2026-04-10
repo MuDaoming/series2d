@@ -273,6 +273,22 @@ void SeriesSolver<RT, PT, ST>::setAllMasterBoundary(const ST& value) {
 }
 
 template<typename RT, typename PT, typename ST>
+void SeriesSolver<RT, PT, ST>::setReduceMode(const std::string& modeName) {
+    std::string s = modeName;
+    for (char& c : s) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    if (s == "normal") {
+        reduceMode_ = ReduceMode::Normal;
+        return;
+    }
+    if (s == "maximal_cut" || s == "maximalcut") {
+        reduceMode_ = ReduceMode::MaximalCut;
+        return;
+    }
+    throw std::runtime_error("Unknown reduce mode: " + modeName +
+                             " (expected normal or maximal_cut)");
+}
+
+template<typename RT, typename PT, typename ST>
 const Series<ST>& SeriesSolver<RT, PT, ST>::getMasterSeries(int masterIdx) const {
     if (masterIdx < 0 || masterIdx >= numMaster_) {
         throw std::runtime_error("Invalid master index in getMasterSeries");
@@ -344,6 +360,29 @@ bool SeriesSolver<RT, PT, ST>::isCorner(const std::vector<int>& nu) const {
         if (val != 0 && val != 1) return false;
     }
     return true;
+}
+
+template<typename RT, typename PT, typename ST>
+bool SeriesSolver<RT, PT, ST>::isStrictSubsector(const std::vector<int>& sourceNu,
+                                                   const std::vector<int>& targetNu) const {
+    if (sourceNu.size() != targetNu.size()) {
+        throw std::runtime_error("Nu size mismatch in isStrictSubsector");
+    }
+    bool strict = false;
+    for (size_t i = 0; i < sourceNu.size(); ++i) {
+        bool s = sourceNu[i] > 0;
+        bool t = targetNu[i] > 0;
+        if (s && !t) return false;
+        if (!s && t) strict = true;
+    }
+    return strict;
+}
+
+template<typename RT, typename PT, typename ST>
+bool SeriesSolver<RT, PT, ST>::shouldDropInMaximalCut(const std::vector<int>& targetNu,
+                                                        const std::vector<int>& sourceNu) const {
+    if (reduceMode_ != ReduceMode::MaximalCut) return false;
+    return isStrictSubsector(sourceNu, targetNu);
 }
 
 template<typename RT, typename PT, typename ST>
@@ -485,11 +524,19 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
     
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
+    std::vector<int> deltaPs;
+
+    int nuTotT = nuTotSum(nuPlus);
+    int nuTotNu = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
     
-    const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, delta - ST(1), deg);
-    for (int j = 0; j < numBranchCur; ++j) {
-        polys.push_back(numeInvS[row][j] * ST(-1));
-        seriesPtrs.push_back(&seriesNuDeltaMinus1);
+    if (!shouldDropInMaximalCut(nuPlus, nu)) {
+        const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, deltaMinus1, deg);
+        for (int j = 0; j < numBranchCur; ++j) {
+            polys.push_back(numeInvS[row][j] * ST(-1));
+            seriesPtrs.push_back(&seriesNuDeltaMinus1);
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu, deltaMinus1));
+        }
     }
     
     int iCur = -1;
@@ -499,27 +546,14 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            if (shouldDropInMaximalCut(nuPlus, nuMinusEi)) continue;
             polys.push_back(numeInvS[row][numBranchCur + iCur]);
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
         }
     }
 
     // 应用 ratio 因子
-    int nuTotT = nuTotSum(nuPlus);
-    int nuTotNu = nuTotSum(nu);
-    ST deltaMinus1 = delta - ST(1);
-    std::vector<int> deltaPs;
-    for (int j = 0; j < numBranchCur; ++j)
-        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu, deltaMinus1));
-    int iC2 = -1;
-    for (int i = 0; i < numProps_; ++i) {
-        if (nu[i] > 0) {
-            iC2++;
-            std::vector<int> nme = nu; nme[i]--;
-            if (family_.nBranch(nme) != numBranchCur) continue;
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
-        }
-    }
     applyRatioFactors(D, polys, deltaPs);
 
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
@@ -541,10 +575,17 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
     
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
+    std::vector<int> deltaPs;
+
+    int nuTotT = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
     
-    const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, delta - ST(1), deg);
-    polys.push_back(numeC);
-    seriesPtrs.push_back(&seriesDeltaMinus1);
+    if (!shouldDropInMaximalCut(nu, nu)) {
+        const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, deltaMinus1, deg);
+        polys.push_back(numeC);
+        seriesPtrs.push_back(&seriesDeltaMinus1);
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaMinus1));
+    }
     
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
@@ -553,25 +594,14 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
         }
     }
     
     // 应用 ratio 因子
-    int nuTotT = nuTotSum(nu);
-    ST deltaMinus1 = delta - ST(1);
-    std::vector<int> deltaPs;
-    deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaMinus1));
-    int iC2 = -1;
-    for (int i = 0; i < numProps_; ++i) {
-        if (nu[i] > 0) {
-            iC2++;
-            std::vector<int> nme = nu; nme[i]--;
-            if (family_.nBranch(nme) != numBranchCur) continue;
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
-        }
-    }
     applyRatioFactors(D, polys, deltaPs);
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
@@ -594,6 +624,9 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
     
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
+    std::vector<int> deltaPs;
+    int nuTotT = nuTotSum(nu);
+    ST deltaMinus1 = delta - ST(1);
     
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
@@ -602,17 +635,14 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
-            seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta - ST(1), deg));
+            seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
         }
     }
     
     // 应用 ratio 因子
-    int nuTotT = nuTotSum(nu);
-    ST deltaMinus1 = delta - ST(1);
-    std::vector<int> deltaPs;
-    for (size_t idx = 0; idx < polys.size(); ++idx)
-        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
     applyRatioFactors(D, polys, deltaPs);
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
@@ -631,6 +661,8 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
     
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
+    std::vector<int> deltaPs;
+    int nuTotT = nuTotSum(nu);
     
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
@@ -639,17 +671,15 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
         }
     }
     
     // 应用 ratio 因子
     PT D = numeC;
-    int nuTotT = nuTotSum(nu);
-    std::vector<int> deltaPs;
-    for (size_t idx = 0; idx < polys.size(); ++idx)
-        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
     applyRatioFactors(D, polys, deltaPs);
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);
@@ -815,11 +845,17 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
     
     std::vector<PT> polys;
     std::vector<const Series<ST>*> seriesPtrs;
+    std::vector<int> deltaPs;
     
-    const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, delta + ST(1), deg);
-    PT factorPoly = denoCandZ * factor;
-    polys.push_back(factorPoly);
-    seriesPtrs.push_back(&seriesDeltaPlus1);
+    int nuTotT = nuTotSum(nu);
+    ST deltaPlus1 = delta + ST(1);
+    if (!shouldDropInMaximalCut(nu, nu)) {
+        const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, deltaPlus1, deg);
+        PT factorPoly = denoCandZ * factor;
+        polys.push_back(factorPoly);
+        seriesPtrs.push_back(&seriesDeltaPlus1);
+        deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaPlus1));
+    }
     
     int iCur = -1;
     for (int i = 0; i < numProps_; ++i) {
@@ -828,26 +864,15 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
+            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
+            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
         }
     }
     
     // 应用 ratio 因子
     PT D = numeC;
-    int nuTotT = nuTotSum(nu);
-    ST deltaPlus1 = delta + ST(1);
-    std::vector<int> deltaPs;
-    deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT, deltaPlus1));
-    int iC2 = -1;
-    for (int i = 0; i < numProps_; ++i) {
-        if (nu[i] > 0) {
-            iC2++;
-            std::vector<int> nme = nu; nme[i]--;
-            if (family_.nBranch(nme) != numBranchCur) continue;
-            deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
-        }
-    }
     applyRatioFactors(D, polys, deltaPs);
     
     solveLRRAtDeg(result, D, polys, seriesPtrs, deg);

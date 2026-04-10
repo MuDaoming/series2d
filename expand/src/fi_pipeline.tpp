@@ -43,6 +43,7 @@ void runFI1DSeriesPipeline(const std::string& sPath,
 
     const int targetDeg = cfg.deg;
     SeriesSolver<Rational<FlintMod>, Polynomial<FlintMod>, FlintMod> solver(family, targetDeg);
+    solver.setReduceMode(cfg.reduceMode);
     if (cfg.bc.size() != static_cast<size_t>(solver.getNumMaster())) {
         std::ostringstream oss;
         oss << "config.bc size mismatch: got " << cfg.bc.size()

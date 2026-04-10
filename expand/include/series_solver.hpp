@@ -17,8 +17,10 @@
 #include <map>
 #include <tuple>
 #include <algorithm>
+#include <cctype>
 #include <stdexcept>
 #include <iostream>
+#include <string>
 #include "family.hpp"
 #include "series.hpp"
 #include "rational.hpp"
@@ -83,6 +85,10 @@ struct Redefinition {
 template<typename RT, typename PT, typename ST>
 class SeriesSolver {
 public:
+    enum class ReduceMode {
+        Normal,
+        MaximalCut
+    };
     // ========================================================================
     // 构造与基本接口
     // ========================================================================
@@ -91,6 +97,9 @@ public:
     
     void setMasterBoundary(int masterIdx, const ST& value);
     void setAllMasterBoundary(const ST& value);
+    void setReduceMode(ReduceMode mode) { reduceMode_ = mode; }
+    void setReduceMode(const std::string& modeName);
+    ReduceMode getReduceMode() const { return reduceMode_; }
     
     /// 设置重定义（必须在调用 getFBISeries() 之前调用）
     void setRedefinition(const Redefinition<PT, ST>* redef);
@@ -163,6 +172,7 @@ private:
     
     mutable std::map<CacheKey, Series<ST>> cache_;
     mutable std::map<CacheKey, int> cacheCurrentDeg_;
+    ReduceMode reduceMode_ = ReduceMode::Normal;
     
     // ========================================================================
     // Redefinition 相关
@@ -182,6 +192,10 @@ private:
     }
     
     bool isCorner(const std::vector<int>& nu) const;
+    bool isStrictSubsector(const std::vector<int>& sourceNu,
+                           const std::vector<int>& targetNu) const;
+    bool shouldDropInMaximalCut(const std::vector<int>& targetNu,
+                                const std::vector<int>& sourceNu) const;
     std::pair<int, int> findMaxIndex(const std::vector<int>& nu) const;
     
     static int nuTotSum(const std::vector<int>& nu) {
