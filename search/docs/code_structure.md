@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-`search` 模块实现 `problem_solution.md` 中的两阶段关系搜索。
+`search` 模块实现 `problem_solution.md` 中的两阶段关系搜索，并在第一阶段支持零空间不缩小检验（nullspace non-shrink check）。
 
 第一阶段对应 `problem_solution.md` 第 3 节：给定截断级数数据，构造
 
@@ -15,6 +15,8 @@ $$
 $$
 x_{\vec{\nu},k} = c_k^{\vec{\nu}}.
 $$
+
+在启用检验时，第一阶段先用训练阶数窗口求解，再用保留的高阶窗口做“是否缩小”布尔判定。只有判定为不缩小时，才进入输出关系与第二阶段。
 
 第二阶段对应 `problem_solution.md` 第 4 节：从第一阶段零空间生成具体系数赋值，构造 FI 关系
 
@@ -76,7 +78,12 @@ search/
 │   └── search_pipeline.tpp
 └── test/
     ├── search_relations/
-    └── FI_solve/
+    ├── FI_solve/
+    ├── generator/
+    │   ├── poly_relation_searcher/
+    │   └── fi_solver/
+    ├── db/
+    └── dp/
 ```
 
 ### 2.2 Symbol table
@@ -88,6 +95,8 @@ search/
 | $FI_{\vec{\nu}}^{(b)}(\delta)$ truncated series | `SeriesSample<T>` | `coeffs[r] = a_r^{\vec{\nu},(b)}` |
 | $d$ | `degreeD` | `int` |
 | $m$ | `maxDeltaDegreeM` | `int` |
+| $n_{\mathrm{check}}$ | `ncheck` | `int` (`>=1`, default `1`) |
+| $d_{\mathrm{train}} = d - n_{\mathrm{check}}$ | `trainDegree` | `int` |
 | $N_{\mathrm{bc}}$ | `numFBIMasters` | `int` |
 | $c_k^{\vec{\nu}}$ | `RelationVariable{integral, k}` | first-stage variable |
 | $A^{(\delta)}$ | `std::vector<std::vector<T>>` from `RelationMatrixBuilder` | first-stage matrix |
@@ -146,7 +155,7 @@ std::vector<FIRelation<T>>
 ### 3.2 Data flow
 
 ```text
-config / target / max degree / series files
+config(includes optional ncheck, default=1) / target / max degree / series files
     ↓
 parseSearchConfigFile / parseSearchTargetFile / parseSeriesFile
     ↓
@@ -154,13 +163,18 @@ SearchInput<FlintMod>
     ↓
 RelationMatrixBuilder<FlintMod>::buildVariables()
     ↓
-RelationMatrixBuilder<FlintMod>::buildMatrix()
+RelationMatrixBuilder<FlintMod>::buildMatrix() on train window [0..d_train]
     ↓
-A^(delta)
+A_train^(delta)
     ↓
 LinearSystem<FlintMod>::eliminate()
     ↓
 RelationSearchResult<FlintMod>
+    ↓
+Nullspace shrink bool-check on held-out rows [d_train+1..d]
+    ↓
+if shrink: stop with "no certified solution"
+if non-shrink: continue
     ↓
 CoefficientRelationExpander<FlintMod>::expandAssignments()
     ↓
@@ -191,8 +205,10 @@ runRelationSearchPipeline(...)
     -> parseSeriesFile<FlintMod>(...) [for each boundary condition]
     -> RelationSearcher<FlintMod>::search()
          -> RelationMatrixBuilder<FlintMod>::buildVariables()
-         -> RelationMatrixBuilder<FlintMod>::buildMatrix(...)
+         -> RelationMatrixBuilder<FlintMod>::buildMatrix(...) [train rows]
          -> LinearSystem<FlintMod>::eliminate()
+    -> Stage-I shrink bool-check(...) [check rows]
+         -> if shrink: write no-certified-solution and return
     -> CoefficientRelationExpander<FlintMod>::expandAssignments(...)
     -> CoefficientRelationExpander<FlintMod>::buildFIRelations(...)
     -> FIReductionSearcher<FlintMod>::search()
@@ -383,7 +399,7 @@ buildMatrix(variables):
 
 **File**: `search/include/relation_searcher.hpp`, `search/src/relation_searcher.tpp`
 
-**Purpose**: 封装第一阶段完整搜索，对应 `problem_solution.md` 第 3.4 节。
+**Purpose**: 封装第一阶段训练窗口求解，对应 `problem_solution.md` 第 3.4 节。
 
 ```cpp
 template<typename T>
@@ -400,10 +416,53 @@ private:
 
 - **Pre**: `RelationMatrixBuilder<T>` 的前置条件全部满足。
 - **Post**:
-  - `result.variables` 与第一阶段矩阵列严格对应。
-  - `result.rrefMatrix`、`pivotColumns`、`freeColumns` 对应 $A^{(\delta)}$ 的 RREF 结构。
+  - `result.variables` 与训练窗口矩阵列严格对应。
+  - `result.rrefMatrix`、`pivotColumns`、`freeColumns` 对应 $A_{\mathrm{train}}^{(\delta)}$ 的 RREF 结构。
 
-### 4.6 `CoefficientRelationExpander<T>`
+### 4.6 Stage-I non-shrink bool check
+
+**Files**: `search/test/generator/poly_relation_searcher/*.cpp`（runner 层）
+
+**Purpose**: 只判定“零空间是否缩小”，不构造缩小后的新零空间基。
+
+设
+
+$$
+A_{\mathrm{full}}^{(\delta)}=
+\begin{bmatrix}
+A_{\mathrm{train}}^{(\delta)}\\
+A_{\mathrm{check}}^{(\delta)}
+\end{bmatrix}.
+$$
+
+由于目标是布尔量 `isNullShrink`，采用最直接判定：
+
+$$
+\mathrm{isNullShrink}
+\Longleftrightarrow
+\operatorname{rank}\!\left(A_{\mathrm{full}}^{(\delta)}\right)
+>
+\operatorname{rank}\!\left(A_{\mathrm{train}}^{(\delta)}\right).
+$$
+
+实现上不需要显式求 $\ker(A_{\mathrm{full}}^{(\delta)})$；只需检测 check 行是否带来秩增即可。对应三步：
+
+1. 用训练窗口得到 `A_train` 的 RREF（以及 pivot 列）。
+2. 把每一条 check 行按这些 pivot 做消元。
+3. 只要出现一条消元后非零行，就判定 `isNullShrink=true`；否则 `false`。
+
+**Critical method pseudocode**:
+
+```text
+checkNullShrink(A_train_rref, check_rows):
+    for row in check_rows:
+        reduced = eliminate_by_train_pivots(row, A_train_rref, pivot_columns)
+        if reduced is non-zero:
+            return true   # shrink detected
+    return false          # no shrink within checked window
+```
+
+### 4.7 `CoefficientRelationExpander<T>`
 
 **File**: `search/include/coefficient_relation_expander.hpp`, `search/src/coefficient_relation_expander.tpp`
 
@@ -456,7 +515,7 @@ buildFIRelations(assignments):
     return relations
 ```
 
-### 4.7 `FIReductionBuilder<T>`
+### 4.8 `FIReductionBuilder<T>`
 
 **File**: `search/include/fi_reduction_builder.hpp`, `search/src/fi_reduction_builder.tpp`
 
@@ -505,7 +564,7 @@ buildMatrix(integrals):
     return matrix
 ```
 
-### 4.8 `FIReductionSearcher<T>`
+### 4.9 `FIReductionSearcher<T>`
 
 **File**: `search/include/fi_reduction_searcher.hpp`, `search/src/fi_reduction_searcher.tpp`
 
@@ -530,7 +589,7 @@ private:
   - `result.freeColumns` 给出当前关系集下的自由积分，即 master candidates。
   - `result.pivotColumns` 给出可由更简单 FI 表示的积分。
 
-### 4.9 `RelationFormatter<T>`
+### 4.10 `RelationFormatter<T>`
 
 **File**: `search/include/relation_formatter.hpp`, `search/src/relation_formatter.tpp`
 
@@ -587,7 +646,7 @@ public:
 
 - `writeFIMasterBasis()` 已存在，但当前 `runRelationSearchPipeline(...)` 未调用它；保留该接口是为了显式输出主积分候选集合。
 
-### 4.10 `io.hpp`
+### 4.11 `io.hpp`
 
 **File**: `search/include/io.hpp`, `search/src/io.tpp`
 
@@ -598,6 +657,7 @@ struct SearchConfig {
     int nuSize = 0;
     int degreeD = 0;
     int numFBIMasters = 0;
+    int ncheck = 1;
     mp_limb_t p = 0;
 };
 
@@ -614,13 +674,13 @@ std::vector<SeriesSample<T>> parseSeriesFile(
 ```
 
 - **Pre**:
-  - config 文件提供 `N`、`deg`、`bc`、`p`。
+  - config 文件提供 `N`、`deg`、`bc`、`p`，并可选提供 `ncheck`（默认 `1`）。
   - target 文件中的每行都能解析为一个 `nu`。
   - series 文件行数与 target 数目一致。
 - **Post**:
   - 解析结果足以无损构造 `SearchInput<T>`。
 
-### 4.11 `runRelationSearchPipeline(...)`
+### 4.12 `runRelationSearchPipeline(...)`
 
 **File**: `search/include/search_pipeline.hpp`, `search/src/search_pipeline.tpp`
 
@@ -638,17 +698,20 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
   - `seriesPaths.size() == cfg.numFBIMasters`
   - `outputPath` 可写
 - **Post**:
-  - 输出文件按固定顺序包含两阶段结果
+  - 若第一阶段判定零空间缩小，则输出 no-certified-solution 状态并终止后续阶段
+  - 若第一阶段判定零空间不缩小，则输出文件按固定顺序包含两阶段结果
   - 顶层调用始终使用 `FlintMod` 作为有限域标量类型
 
 **Execution order pseudocode**:
 
 ```text
-read config / degree / targets
+read config (including optional ncheck, default=1) / degree / targets
 set modulus
 parse all series files
 assemble SearchInput<FlintMod>
-run first-stage search
+run first-stage search on train rows
+run shrink bool-check on held-out rows
+if shrink: write no-certified-solution and stop
 expand assignments
 build FI relations
 run second-stage reduction search
@@ -682,6 +745,9 @@ write summaries, relations, assignments, reductions, and RREF blocks
 2. 矩阵行数等于 $(d+1)N_{\mathrm{bc}}$；
 3. `freeColumns.size()` 与人工预期一致；
 4. 至少一条显式 `c_k^{\vec{\nu}}` relation 与人工分析一致。
+5. `ncheck` 缺省时等价于 `ncheck=1`。
+6. 当 check 行导致秩增时，`isNullShrink=true` 且流程不进入第二阶段。
+7. 当 check 行不导致秩增时，`isNullShrink=false` 且流程进入第二阶段。
 
 ### 5.3 Stage-II checks
 

@@ -9,6 +9,7 @@
 //   N   = 6                      # nu vector length
 //   deg = 200                    # how many orders to use (must be <= series deg)
 //   m   = 4                      # polynomial degree bound for searched relations
+//   ncheck = 1                   # optional, default 1
 //   p   = 2305843009213693951    # prime modulus
 //
 // G_file:
@@ -35,6 +36,7 @@
 
 #include "ff_type.hpp"
 #include "io.hpp"
+#include "relation_matrix_builder.hpp"
 #include "relation_formatter.hpp"
 #include "relation_searcher.hpp"
 #include "relation_types.hpp"
@@ -47,6 +49,7 @@ struct Stage1Config {
     int nuSize = 0;
     int deg    = 0;
     int m      = 0;
+    int ncheck = 1;
     mp_limb_t p = 0;
 };
 
@@ -84,6 +87,12 @@ static Stage1Config parseConfig(const std::string& path) {
     cfg.nuSize = std::stoi(need("N"));
     cfg.deg    = std::stoi(need("deg"));
     cfg.m      = std::stoi(need("m"));
+    {
+        auto it = kv.find("ncheck");
+        if (it != kv.end()) cfg.ncheck = std::stoi(it->second);
+    }
+    if (cfg.ncheck < 0)
+        throw std::runtime_error("ncheck must be >= 0");
     cfg.p      = static_cast<mp_limb_t>(std::stoull(need("p")));
     return cfg;
 }
@@ -206,6 +215,53 @@ parseSeriesForG(const std::string& seriesPath,
     return result;
 }
 
+static std::vector<SeriesSample<FlintMod>>
+truncateSamplesForTrain(const std::vector<SeriesSample<FlintMod>>& samples,
+                        int trainDeg) {
+    std::vector<SeriesSample<FlintMod>> out = samples;
+    for (auto& s : out) {
+        if (static_cast<int>(s.coeffs.size()) < trainDeg + 1) {
+            throw std::runtime_error("series coeff count smaller than trainDeg+1");
+        }
+        s.coeffs.resize(trainDeg + 1);
+    }
+    return out;
+}
+
+static bool checkNullspaceShrink(
+    const std::vector<std::vector<FlintMod>>& trainRREF,
+    const std::vector<int>& pivotColumns,
+    const std::vector<std::vector<FlintMod>>& checkRows) {
+    const FlintMod zero(0ULL);
+    if (trainRREF.empty() || pivotColumns.empty()) {
+        for (const auto& row : checkRows) {
+            for (const auto& x : row) {
+                if (x != zero) return true;
+            }
+        }
+        return false;
+    }
+
+    for (const auto& rawRow : checkRows) {
+        std::vector<FlintMod> row = rawRow;
+        for (int r = 0; r < static_cast<int>(trainRREF.size()); ++r) {
+            const int pc = pivotColumns[r];
+            if (pc < 0 || pc >= static_cast<int>(row.size())) continue;
+            const FlintMod factor = row[pc];
+            if (factor == zero) continue;
+            for (int c = pc; c < static_cast<int>(row.size()); ++c) {
+                row[c] = row[c] - factor * trainRREF[r][c];
+            }
+        }
+        for (const auto& x : row) {
+            if (x != zero) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
@@ -224,6 +280,10 @@ int main(int argc, char** argv) {
 
     try {
         const Stage1Config cfg = parseConfig(configPath);
+        if (cfg.ncheck > cfg.deg) {
+            throw std::runtime_error("ncheck must satisfy ncheck <= deg");
+        }
+        const int trainDeg = cfg.deg - cfg.ncheck;
         FlintMod::set_modulus(cfg.p);
 
         const auto G          = parseSearchTargetFile(gPath, cfg.nuSize);
@@ -233,7 +293,8 @@ int main(int argc, char** argv) {
         std::cerr << "[stage1] G size = " << G.size()
                   << ", numBC = " << numBC
                   << ", deg = " << cfg.deg
-                  << ", m = " << cfg.m << "\n";
+                  << ", m = " << cfg.m
+                  << ", ncheck = " << cfg.ncheck << "\n";
 
         SearchInput<FlintMod> input;
         input.degreeD         = cfg.deg;
@@ -252,9 +313,33 @@ int main(int argc, char** argv) {
                                  samples.begin(), samples.end());
         }
 
-        std::cerr << "[stage1] building and solving A^(delta)...\n";
-        RelationSearcher<FlintMod> searcher(input);
+        SearchInput<FlintMod> trainInput = input;
+        trainInput.degreeD = trainDeg;
+        trainInput.samples = truncateSamplesForTrain(input.samples, trainDeg);
+
+        std::cerr << "[stage1] solving train window: [0.." << trainDeg << "]\n";
+        RelationSearcher<FlintMod> searcher(trainInput);
         const auto result = searcher.search();
+
+        bool isNullShrink = false;
+        if (cfg.ncheck > 0) {
+            std::cerr << "[stage1] checking held-out window: ["
+                      << (trainDeg + 1) << ".." << cfg.deg << "]\n";
+            RelationMatrixBuilder<FlintMod> fullBuilder(input);
+            const auto fullMatrix = fullBuilder.buildMatrix(result.variables);
+            std::vector<std::vector<FlintMod>> checkRows;
+            checkRows.reserve(static_cast<size_t>(numBC * cfg.ncheck));
+            for (int b = 0; b < numBC; ++b) {
+                for (int n = trainDeg + 1; n <= cfg.deg; ++n) {
+                    const int rowIdx = b * (cfg.deg + 1) + n;
+                    checkRows.push_back(fullMatrix[rowIdx]);
+                }
+            }
+            isNullShrink = checkNullspaceShrink(
+                result.rrefMatrix, result.pivotColumns, checkRows);
+        } else {
+            std::cerr << "[stage1] ncheck=0, skip held-out check.\n";
+        }
 
         std::ofstream out(outputPath);
         if (!out.is_open())
@@ -262,6 +347,15 @@ int main(int argc, char** argv) {
 
         out << "# p = " << cfg.p << "\n";
         out << "# m = " << cfg.m << "\n";
+        out << "# ncheck = " << cfg.ncheck << "\n";
+        out << "# train_deg = " << trainDeg << "\n";
+        out << "# nullspace_shrink = " << (isNullShrink ? 1 : 0) << "\n";
+        if (isNullShrink) {
+            out << "[status]\n";
+            out << "no-certified-solution\n";
+            std::cerr << "[stage1] shrink detected on held-out rows; no certified solution.\n";
+            out << "\n";
+        }
         RelationFormatter<FlintMod>::writeSummary(out, result);
         out << "\n";
         RelationFormatter<FlintMod>::writeRelations(out, result);

@@ -15,6 +15,7 @@ struct SearchConfig {
     int nuSize = 0;
     int degreeD = 0;
     int numFBIMasters = 0;
+    int ncheck = 1;
     mp_limb_t p = 0;
 };
 

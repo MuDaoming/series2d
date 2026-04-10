@@ -1,5 +1,5 @@
 CXX      := g++
-CXXFLAGS := -std=c++17 -O2 -I../../include -I../../../expand/include -I../../../reconstruct/include
+CXXFLAGS := -std=c++17 -O2 -I../../../include -I../../../../expand/include -I../../../../reconstruct/include
 LDFLAGS  := -lflint -lgmp
 
 TARGET := fi_solver

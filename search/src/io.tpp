@@ -53,6 +53,15 @@ SearchConfig parseSearchConfigFile(const std::string& path) {
     cfg.nuSize = std::stoi(need("N"));
     cfg.degreeD = std::stoi(need("deg"));
     cfg.numFBIMasters = static_cast<int>(parseSearchU64List(need("bc")).size());
+    {
+        auto it = kv.find("ncheck");
+        if (it != kv.end()) {
+            cfg.ncheck = std::stoi(it->second);
+        }
+    }
+    if (cfg.ncheck < 0) {
+        throw std::runtime_error("ncheck must be >= 0");
+    }
     cfg.p = static_cast<mp_limb_t>(std::stoull(need("p")));
     return cfg;
 }

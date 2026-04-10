@@ -237,6 +237,42 @@ $$
 
 这一阶段的结果仍然是关于系数 $c_k^{\vec{\nu}}$ 的关系，而不是最终的 FI 约化关系。
 
+### 3.5 Nullspace non-shrink criterion under finite-order data
+
+原则上，Problem I 想得到的是对无穷阶 $FI_{\vec{\nu}}(\delta)$ 都成立的关系。若记使用到 $\delta^0,\dots,\delta^N$ 阶方程构造的矩阵为 $A_N$，则理想条件是存在某个 $N_\star$ 使得
+
+$$
+\ker(A_{N_\star})=\ker(A_{N_\star+1})=\ker(A_{N_\star+2})=\cdots=\ker(A_\infty).
+$$
+
+也就是随着阶数增加，零空间不再缩小。
+
+但在实际计算中只能访问有限阶数据，因此采用有限窗口稳定性准则。给定整数 $n_{\mathrm{check}}\ge 1$，先用较低阶窗口求解，再用后续连续 $n_{\mathrm{check}}$ 个阶数窗口检验是否继续缩小。
+
+设训练截止阶为 $N_{\mathrm{train}}$，并定义
+
+$$
+K_t:=\ker(A_{N_{\mathrm{train}}+t}),\qquad t=0,1,\dots,n_{\mathrm{check}}.
+$$
+
+因为增加方程只会增加约束，必有
+
+$$
+K_{t+1}\subseteq K_t.
+$$
+
+检验目标是判断是否发生严格缩小。等价地，可检查是否存在
+
+$$
+\dim K_{t+1}<\dim K_t.
+$$
+
+若在 $t=0,\dots,n_{\mathrm{check}}-1$ 上都不缩小（即维数始终不变），则在当前工作假设下接受“零空间已稳定”；否则判定“当前阶数下尚未通过稳定性检验”，不输出可认证关系。
+
+该准则的核心是布尔判定“是否缩小”，而非比较缩小后的具体基表示。实现上只要判定新增阶方程是否提升秩（等价于是否使零空间维数下降）即可。
+
+此外需要注意, 上面所说的阶数都是指 $FI(\delta)$ 展开的阶数, 而非拟设的多项式关系中的阶数, 后者在本部分中, 是讨论一开始就被设定的用以定义问题的参数.
+
 ## 4. Problem II: from $FI_{\vec{\nu}}(\delta)$ relations to $FI_{\vec{\nu}} = FI_{\vec{\nu}}(1)$ reductions
 
 ### 4.1 From nullspace basis to concrete polynomial relations
