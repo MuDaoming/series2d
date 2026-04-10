@@ -92,20 +92,16 @@ public:
     void setMasterBoundary(int masterIdx, const ST& value);
     void setAllMasterBoundary(const ST& value);
     
-    /// 设置重定义（必须在 solve() 之前调用）
+    /// 设置重定义（必须在调用 getFBISeries() 之前调用）
     void setRedefinition(const Redefinition<PT, ST>* redef);
-    
-    /// 主求解函数：按度数递推求解所有主积分的级数
-    void solve();
-    
-    /// 获取FBI的级数展开（递归调用,会触发约化）
-    const Series<ST>& getFBISeries(const std::vector<int>& nu, const ST& delta, int needDeg = -1);
+
+    /// 获取FBI的级数展开（递归调用,会触发约化），并确保至少到 needDeg
+    const Series<ST>& getFBISeries(const std::vector<int>& nu, const ST& delta, int needDeg);
     
     // ========================================================================
     // 访问器
     // ========================================================================
     
-    int getCurrentDeg() const { return currentDeg_; }
     int getTargetDeg() const { return targetDeg_; }
     int getNumMaster() const { return numMaster_; }
     const Family<RT, PT, ST>& getFamily() const { return family_; }
@@ -147,7 +143,6 @@ private:
     
     Family<RT, PT, ST>& family_;
     int targetDeg_;
-    int currentDeg_;
     int numMaster_;
     int numProps_;
     int numBranch_;
@@ -202,7 +197,6 @@ private:
     // 主求解逻辑
     // ========================================================================
     
-    void solveAtDeg(int deg);
     void solveMasterAtDeg(int masterIdx, int deg);
     void solveMasterCoeffX(int masterIdx, int p, int q);
     void solveMasterCoeffY(int masterIdx, int q);
@@ -211,7 +205,6 @@ private:
     // 约化逻辑
     // ========================================================================
     
-    void reduceFBI(Series<ST>& result, const std::vector<int>& nu, const ST& delta);
     void reduceFBIAtDeg(Series<ST>& result, const std::vector<int>& nu, 
                         const ST& delta, int deg);
     

@@ -75,9 +75,8 @@ void runFI1DSeriesPipeline(const std::string& sPath,
     Redefinition<Polynomial<FlintMod>, FlintMod> redef(numLoops, fbiDelta, expander.getShiftedU());
     solver.setRedefinition(&redef);
 
-    // 求解
+    // 记录按需求解总耗时（实际求解由 getFI2DSeries -> getFBISeries 触发）
     auto tSolve0 = std::chrono::steady_clock::now();
-    solver.solve();
     auto tSolve1 = std::chrono::steady_clock::now();
     auto solve_us = std::chrono::duration_cast<std::chrono::microseconds>(tSolve1 - tSolve0).count();
     std::cout << "[solver] solve_us=" << solve_us

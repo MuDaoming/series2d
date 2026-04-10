@@ -11,7 +11,7 @@
 
 template<typename RT, typename PT, typename ST>
 SeriesSolver<RT, PT, ST>::SeriesSolver(Family<RT, PT, ST>& family, int targetDeg)
-    : family_(family), targetDeg_(targetDeg), currentDeg_(-1)
+    : family_(family), targetDeg_(targetDeg)
 {
     numProps_ = family_.getNumProps();
     numBranch_ = family_.getNumBranch();
@@ -25,45 +25,6 @@ SeriesSolver<RT, PT, ST>::SeriesSolver(Family<RT, PT, ST>& family, int targetDeg
     }
     
     masterBoundary_.resize(numMaster_, ST(0));
-}
-
-// ============================================================================
-// 主求解函数
-// ============================================================================
-
-template<typename RT, typename PT, typename ST>
-void SeriesSolver<RT, PT, ST>::solve() {
-    if (!redef_) {
-        throw std::runtime_error("Redefinition must be set before calling solve()");
-    }
-    
-    // 初始化主积分零阶系数
-    for (int k = 0; k < numMaster_; ++k) {
-        auto key = makeKey(masterNus_[k], masterDeltas_[k]);
-        cache_[key].setCoeff(0, 0, masterBoundary_[k]);
-        cacheCurrentDeg_[key] = 0;
-    }
-    currentDeg_ = 0;
-    
-    // 逐度数递推
-    for (int deg = 1; deg <= targetDeg_; ++deg) {
-        solveAtDeg(deg);
-        currentDeg_ = deg;
-    }
-}
-
-template<typename RT, typename PT, typename ST>
-void SeriesSolver<RT, PT, ST>::solveAtDeg(int deg) {
-    for (int p = 0; p <= deg; ++p) {
-        int q = deg - p;
-        for (int k = 0; k < numMaster_; ++k) {
-            if (p > 0) {
-                solveMasterCoeffX(k, p, q);
-            } else if (q > 0) {
-                solveMasterCoeffY(k, q);
-            }
-        }
-    }
 }
 
 template<typename RT, typename PT, typename ST>
@@ -98,9 +59,7 @@ void SeriesSolver<RT, PT, ST>::solveMasterAtDeg(int masterIdx, int deg) {
         return;
     }
 
-    int prevCurrentDeg = currentDeg_;
     for (int d = cachedDeg + 1; d <= deg; ++d) {
-        currentDeg_ = d;
         for (int p = 0; p <= d; ++p) {
             int q = d - p;
             if (p > 0) {
@@ -111,7 +70,6 @@ void SeriesSolver<RT, PT, ST>::solveMasterAtDeg(int masterIdx, int deg) {
         }
         cacheCurrentDeg_[key] = d;
     }
-    currentDeg_ = prevCurrentDeg;
 }
 
 // ============================================================================
@@ -243,8 +201,13 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
 template<typename RT, typename PT, typename ST>
 const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
     const std::vector<int>& nu, const ST& delta, int needDeg) {
-    const int targetNeedDeg = std::min(
-        targetDeg_, (needDeg >= 0 ? needDeg : std::max(currentDeg_, 0)));
+    if (!redef_) {
+        throw std::runtime_error("Redefinition must be set before calling getFBISeries()");
+    }
+    if (needDeg < 0) {
+        throw std::runtime_error("getFBISeries requires needDeg >= 0");
+    }
+    const int targetNeedDeg = std::min(targetDeg_, needDeg);
     auto key = makeKey(nu, delta);
 
     if (cache_.find(key) == cache_.end()) {
@@ -280,14 +243,6 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
 // ============================================================================
 // 约化主逻辑
 // ============================================================================
-
-template<typename RT, typename PT, typename ST>
-void SeriesSolver<RT, PT, ST>::reduceFBI(Series<ST>& result, const std::vector<int>& nu, const ST& delta) {
-    result.setCoeff(0, 0, ST(0));
-    for (int deg = 0; deg <= currentDeg_ && deg <= targetDeg_; ++deg) {
-        reduceFBIAtDeg(result, nu, delta, deg);
-    }
-}
 
 template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::reduceFBIAtDeg(Series<ST>& result, const std::vector<int>& nu, 
@@ -347,7 +302,7 @@ template<typename RT, typename PT, typename ST>
 void SeriesSolver<RT, PT, ST>::printCacheInfo() const {
     std::cout << "\n========== SeriesSolver Cache Info ==========\n";
     std::cout << "Total cached FBI series: " << cache_.size() << "\n";
-    std::cout << "Current degree: " << currentDeg_ << " / " << targetDeg_ << "\n";
+    std::cout << "Target degree: " << targetDeg_ << "\n";
     std::cout << "============================================\n\n";
 }
 
