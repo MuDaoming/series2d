@@ -116,6 +116,7 @@ SeriesSolver::solve()
     │
     ├── solveAtDeg(deg)
     │       ├── solveMasterCoeffX(k, p, q)   [重定义后DE]
+    │       │     ├── i,j 仅在当前 master 所在 sector 的活跃传播子指标上求和
     │       │     ├── getFBISeries(nu+e_i+e_j, delta+1) → 触发约化
     │       │     ├── dlogCoeff: pow_U * [dUdX · Ĩ]
     │       │     └── lhsCorrection: U非常数项修正
@@ -283,7 +284,7 @@ private:
 
 1. **`setRedefinition()`**：预计算 `dRdXModified_[i][j] = dRdX[i][j] · U^L`（避免运行时重复乘）、`masterPowU_[k]`。
 
-2. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_` 代替原始 `dRdX`，额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_and_workflow.md`](./problem_and_workflow.md) §6.4。
+2. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_` 代替原始 `dRdX`，并按当前 $\nu$ 所在 sector 的活跃传播子索引取子块求和（等价于使用该 sector 子 family 的 $R$ 子矩阵）；额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_and_workflow.md`](./problem_and_workflow.md) §6.4。
 
 3. **约化函数（`case0IBP/DimShift/Case1-3`）**：构造 LRR 后调用 `applyRatioFactors(D, polys, deltaPs)`，该函数将 $U^{m}$ 乘到 $D$、$U^{\Delta p_i + m}$ 乘到各 $N_i$，统一为非负幂次的多项式。
 

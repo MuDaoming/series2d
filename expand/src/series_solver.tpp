@@ -84,7 +84,9 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffX(int masterIdx, int p, int q) {
     // 计算 rhs: Σ (-1/2) · factor · [dRdXModified · Ĩ_source]_{p-1,q}
     ST rhsCoeff = ST(0);
     for (int i = 0; i < numProps_; ++i) {
+        if (nu[i] <= 0) continue;
         for (int j = 0; j < numProps_; ++j) {
+            if (nu[j] <= 0) continue;
             ST factor_ij;
             if (i != j) {
                 factor_ij = ST(nu[i]) * ST(nu[j]);
@@ -141,7 +143,9 @@ void SeriesSolver<RT, PT, ST>::solveMasterCoeffY(int masterIdx, int q) {
     // 计算 rhs: Σ (-1/2) · factor · [dRdYModified · Ĩ_source]_{0,q-1}
     ST rhsCoeff = ST(0);
     for (int i = 0; i < numProps_; ++i) {
+        if (nu[i] <= 0) continue;
         for (int j = 0; j < numProps_; ++j) {
+            if (nu[j] <= 0) continue;
             ST factor_ij;
             if (i != j) {
                 factor_ij = ST(nu[i]) * ST(nu[j]);

@@ -170,6 +170,8 @@ $$
 \frac{\partial I_{\vec{\nu}}^{\Delta}}{\partial X} = \sum_{i,j} \left(-\frac{1}{2}\right) \frac{\partial R_{ij}}{\partial X} \cdot \text{factor}_{ij} \cdot I_{\vec{\nu}+\vec{e}_i+\vec{e}_j}^{\Delta+1}
 $$
 
+对给定 $\vec{\nu}$ 建立方程时，这里的 $R$ 应理解为该 $\vec{\nu}$ 所在 sector 对应子 family 的 $R$（即由该 sector 活跃传播子选出的子矩阵）。
+
 其中：
 $$
 \text{factor}_{ij} = \begin{cases}
