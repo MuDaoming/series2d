@@ -263,13 +263,6 @@ void SeriesSolver<RT, PT, ST>::setMasterBoundary(int masterIdx, const ST& value)
         throw std::runtime_error("Invalid master index in setMasterBoundary");
     }
     masterBoundary_[masterIdx] = value;
-    
-    auto key = makeKey(masterNus_[masterIdx], masterDeltas_[masterIdx]);
-    if (cache_.find(key) == cache_.end()) {
-        cache_[key] = Series<ST>(targetDeg_);
-    }
-    cache_[key].setCoeff(0, 0, value);
-    cacheCurrentDeg_[key] = 0;
 }
 
 template<typename RT, typename PT, typename ST>
