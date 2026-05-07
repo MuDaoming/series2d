@@ -49,11 +49,13 @@ namespace firefly {
 
 template<typename T>
 DEInterpolater<T>::DEInterpolater(const std::vector<std::vector<Polynomial<T>>>& topS,
+                                  const Polynomial<T>& UPoly,
                                   int numProps,
                                   int numBranch,
                                   T delta,
                                   uint64_t prime)
     : topS_(topS),
+      UPoly_(UPoly),
       numProps_(numProps),
       numBranch_(numBranch),
       delta_(delta),
@@ -62,6 +64,8 @@ DEInterpolater<T>::DEInterpolater(const std::vector<std::vector<Polynomial<T>>>&
     
     // 计算符号导数矩阵
     computeSymbolicDerivatives();
+    dUdXPoly_ = UPoly_.derivativeX();
+    dUdYPoly_ = UPoly_.derivativeY();
     
     // 计算master FBI数量（和FBIInterpolater一样，只创建FBIReducer）
     auto numTopS = evaluateTopS(T(1), T(1));
@@ -131,7 +135,25 @@ DEBuilder<T> DEInterpolater<T>::createDEBuilder(const T& X, const T& Y) const {
     auto numTopS = evaluateTopS(X, Y);
     auto numDRdX = evaluateDRdX(X, Y);
     auto numDRdY = evaluateDRdY(X, Y);
-    return DEBuilder<T>(numTopS, numDRdX, numDRdY, numProps_, numBranch_, delta_);
+    auto U = evaluateU(X, Y);
+    auto dUdX = evaluateDUdX(X, Y);
+    auto dUdY = evaluateDUdY(X, Y);
+    return DEBuilder<T>(numTopS, numDRdX, numDRdY, U, dUdX, dUdY, numProps_, numBranch_, delta_);
+}
+
+template<typename T>
+T DEInterpolater<T>::evaluateU(const T& X, const T& Y) const {
+    return UPoly_.evaluate(X, Y);
+}
+
+template<typename T>
+T DEInterpolater<T>::evaluateDUdX(const T& X, const T& Y) const {
+    return dUdXPoly_.evaluate(X, Y);
+}
+
+template<typename T>
+T DEInterpolater<T>::evaluateDUdY(const T& X, const T& Y) const {
+    return dUdYPoly_.evaluate(X, Y);
 }
 
 template<typename T>

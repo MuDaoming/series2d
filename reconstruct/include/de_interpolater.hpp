@@ -56,6 +56,7 @@ public:
     /// @param delta delta 参数
     /// @param prime 有限域的素数模数
     DEInterpolater(const std::vector<std::vector<Polynomial<T>>>& topS,
+                   const Polynomial<T>& UPoly,
                    int numProps,
                    int numBranch,
                    T delta,
@@ -75,8 +76,11 @@ public:
 
 private:
     std::vector<std::vector<Polynomial<T>>> topS_;      ///< 多项式形式的topS矩阵
+    Polynomial<T> UPoly_;                               ///< 符号形式的 U(X,Y)
     std::vector<std::vector<Polynomial<T>>> dRdX_;      ///< 符号形式的dR/dX矩阵
     std::vector<std::vector<Polynomial<T>>> dRdY_;      ///< 符号形式的dR/dY矩阵
+    Polynomial<T> dUdXPoly_;                            ///< 符号形式的 dU/dX
+    Polynomial<T> dUdYPoly_;                            ///< 符号形式的 dU/dY
     int numProps_;                                       ///< 传播子数量
     int numBranch_;                                      ///< Branch数量
     T delta_;                                            ///< delta参数
@@ -92,6 +96,9 @@ private:
     
     /// 在数值点求值dRdY
     std::vector<std::vector<T>> evaluateDRdY(const T& X, const T& Y) const;
+    T evaluateU(const T& X, const T& Y) const;
+    T evaluateDUdX(const T& X, const T& Y) const;
+    T evaluateDUdY(const T& X, const T& Y) const;
     
     /// 计算符号导数矩阵
     void computeSymbolicDerivatives();

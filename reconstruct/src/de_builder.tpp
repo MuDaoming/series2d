@@ -1,5 +1,8 @@
 #include <stdexcept>
 #include <iostream>
+#include <cstdlib>
+#include <string>
+#include <algorithm>
 
 // DEBuilder 实现
 
@@ -7,12 +10,18 @@ template<typename T>
 DEBuilder<T>::DEBuilder(const std::vector<std::vector<T>>& topS,
                         const std::vector<std::vector<T>>& dRdX,
                         const std::vector<std::vector<T>>& dRdY,
+                        const T& U,
+                        const T& dUdX,
+                        const T& dUdY,
                         int numProps,
                         int numBranch,
                         T delta)
     : reducer_(topS, numProps, numBranch, delta),
       dRdX_(dRdX),
       dRdY_(dRdY),
+      U_(U),
+      dUdX_(dUdX),
+      dUdY_(dUdY),
       numProps_(numProps),
       numBranch_(numBranch) {
     
@@ -52,6 +61,93 @@ void DEBuilder<T>::buildDEMatrices(std::vector<std::vector<T>>& AX,
             }
         }
     }
+
+    // Precompute master nu sums (also used for output ordering)
+    const auto& masterNus = reducer_.getMasterNus();
+    std::vector<int> nuSums(numMasterFBI_, 0);
+    for (int i = 0; i < numMasterFBI_; ++i) {
+        for (int v : masterNus[i]) nuSums[i] += v;
+    }
+
+    // Apply redefinition: I_tilde_i = U^(sum(nu_i)-3/2*delta) * I_i
+    // A_tilde = (dD) D^{-1} + D A D^{-1}
+    // Debug mode via env SETDE_REDEF_MODE:
+    // - off  : do not apply redefinition
+    // - diag : only add diagonal dlog(U) term
+    // - full : full transform (default)
+    std::string redefMode = "full";
+    if (const char* mode = std::getenv("SETDE_REDEF_MODE")) {
+        redefMode = mode;
+    }
+    auto reorderToMMAOrder = [&]() {
+        // MMA order matches stable ascending order by Total[nu]
+        std::vector<int> perm(numMasterFBI_);
+        for (int i = 0; i < numMasterFBI_; ++i) perm[i] = i;
+        std::stable_sort(perm.begin(), perm.end(), [&](int i, int j) {
+            return nuSums[i] < nuSums[j];
+        });
+
+        std::vector<std::vector<T>> AXOrd(numMasterFBI_, std::vector<T>(numMasterFBI_, T(0)));
+        std::vector<std::vector<T>> AYOrd(numMasterFBI_, std::vector<T>(numMasterFBI_, T(0)));
+        for (int i = 0; i < numMasterFBI_; ++i) {
+            for (int j = 0; j < numMasterFBI_; ++j) {
+                AXOrd[i][j] = AX[perm[i]][perm[j]];
+                AYOrd[i][j] = AY[perm[i]][perm[j]];
+            }
+        }
+        AX.swap(AXOrd);
+        AY.swap(AYOrd);
+    };
+
+    if (redefMode == "off") {
+        reorderToMMAOrder();
+        return;
+    }
+
+    if (U_ == T(0)) {
+        throw std::runtime_error("U(X,Y)=0 at evaluation point; cannot apply redefinition.");
+    }
+
+    const auto& masterDeltas = reducer_.getMasterDeltas();
+    T delta = masterDeltas.empty() ? T(0) : masterDeltas[0];
+    T threeHalfDelta = (T(3) * delta) / T(2);
+
+    auto powInt = [&](int exp) -> T {
+        if (exp == 0) return T(1);
+        bool neg = (exp < 0);
+        int e = neg ? -exp : exp;
+        T base = U_;
+        T res = T(1);
+        while (e > 0) {
+            if (e & 1) res *= base;
+            base *= base;
+            e >>= 1;
+        }
+        return neg ? (T(1) / res) : res;
+    };
+
+    std::vector<std::vector<T>> AXNew = AX;
+    std::vector<std::vector<T>> AYNew = AY;
+
+    for (int i = 0; i < numMasterFBI_; ++i) {
+        T powI = T(nuSums[i]) - threeHalfDelta;
+        T dlogX = powI * dUdX_ / U_;
+        T dlogY = powI * dUdY_ / U_;
+        AXNew[i][i] += dlogX;
+        AYNew[i][i] += dlogY;
+
+        if (redefMode == "diag") continue;
+        for (int j = 0; j < numMasterFBI_; ++j) {
+            int diff = nuSums[i] - nuSums[j];
+            T scale = powInt(diff);
+            AXNew[i][j] *= scale;
+            AYNew[i][j] *= scale;
+        }
+    }
+
+    AX.swap(AXNew);
+    AY.swap(AYNew);
+    reorderToMMAOrder();
 }
 
 template<typename T>

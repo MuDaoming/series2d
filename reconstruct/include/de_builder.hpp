@@ -20,6 +20,9 @@ public:
     DEBuilder(const std::vector<std::vector<T>>& topS,
               const std::vector<std::vector<T>>& dRdX,
               const std::vector<std::vector<T>>& dRdY,
+              const T& U,
+              const T& dUdX,
+              const T& dUdY,
               int numProps,
               int numBranch,
               T delta);
@@ -44,6 +47,9 @@ private:
     FBIReducer<T> reducer_;                  // 持有约化器
     std::vector<std::vector<T>> dRdX_;      // dR/dX 矩阵（N×N）
     std::vector<std::vector<T>> dRdY_;      // dR/dY 矩阵（N×N）
+    T U_;                                    // 该点的 U(X,Y)
+    T dUdX_;                                 // 该点的 dU/dX
+    T dUdY_;                                 // 该点的 dU/dY
     
     int numMasterFBI_;
     int numProps_;
