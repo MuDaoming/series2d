@@ -4,7 +4,7 @@ cppBeforeCandZLength = 11
 cppAfterCandZLength = 11
 
 C before_convert vs MMA: OK
-C after_convert  vs MMA: DIFF
+C after_convert  vs MMA: OK
 
 c_i before_convert vs MMA:
 c1: OK
@@ -12,8 +12,8 @@ c2: OK
 c3: OK
 
 c_i after_convert vs MMA:
-c1: DIFF
-c2: DIFF
+c1: OK
+c2: OK
 c3: OK
 
 Z before_convert vs MMA:
@@ -38,5 +38,5 @@ z8: OK
 
 CandZ before total diff count = 0
 CandZ before diff positions = {}
-CandZ after  total diff count = 2
-CandZ after  diff positions = {1, 2}
+CandZ after  total diff count = 0
+CandZ after  diff positions = {}

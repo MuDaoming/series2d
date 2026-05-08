@@ -7,6 +7,22 @@ FlintMod::FlintMod() : value(0) {}
 
 FlintMod::FlintMod(const FlintMod& other) : value(other.value) {}
 
+FlintMod::FlintMod(const std::string& val) {
+    if (!ctx_initialized) {
+        throw std::runtime_error("FlintMod context not initialized. Call set_modulus first.");
+    }
+
+    fmpz_t z;
+    fmpz_init(z);
+    if (fmpz_set_str(z, val.c_str(), 10) != 0) {
+        fmpz_clear(z);
+        throw std::runtime_error("Invalid integer string for FlintMod: " + val);
+    }
+
+    value = fmpz_fdiv_ui(z, mod_ctx.n);
+    fmpz_clear(z);
+}
+
 // 模板构造函数支持所有整数类型
 template<typename IntType>
 FlintMod::FlintMod(IntType val, std::enable_if_t<std::is_integral_v<IntType>>*) {

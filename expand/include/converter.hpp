@@ -16,6 +16,12 @@
 #include "rational.hpp"
 #include "family.hpp"
 
+inline std::string ginacNumericToString(const GiNaC::numeric& num) {
+    std::ostringstream oss;
+    oss << num;
+    return oss.str();
+}
+
 /**
  * 将GiNaC::ex多项式转换为Polynomial<FlintMod>
  * @param expr GiNaC表达式（必须是关于X,Y的多项式）
@@ -48,15 +54,13 @@ inline Polynomial<FlintMod> exToPolynomial(const GiNaC::ex& expr,
                 numeric num = ex_to<numeric>(coeff);
                 // 转换为整数（如果是有理数，需要在有限域中处理）
                 if (num.is_integer()) {
-                    long val = num.to_long();
-                    if (val != 0) {
-                        result.addMonomial(FlintMod(val), Power(i, j));
+                    if (!num.is_zero()) {
+                        result.addMonomial(FlintMod(ginacNumericToString(num)), Power(i, j));
                     }
                 } else if (num.is_rational()) {
                     // 有理数系数：numer/denom，在有限域中计算
-                    long numer = num.numer().to_long();
-                    long denom = num.denom().to_long();
-                    FlintMod val = FlintMod(numer) / FlintMod(denom);
+                    FlintMod val = FlintMod(ginacNumericToString(num.numer())) /
+                                   FlintMod(ginacNumericToString(num.denom()));
                     result.addMonomial(val, Power(i, j));
                 }
             } else if (!coeff.is_zero()) {
@@ -122,9 +126,10 @@ inline FlintMod exToScalar(const GiNaC::ex& expr) {
     
     numeric num = ex_to<numeric>(expr);
     if (num.is_integer()) {
-        return FlintMod(num.to_long());
+        return FlintMod(ginacNumericToString(num));
     } else if (num.is_rational()) {
-        return FlintMod(num.numer().to_long()) / FlintMod(num.denom().to_long());
+        return FlintMod(ginacNumericToString(num.numer())) /
+               FlintMod(ginacNumericToString(num.denom()));
     }
     
     return FlintMod(0);

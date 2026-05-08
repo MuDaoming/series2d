@@ -18,6 +18,7 @@ public:
     // 构造函数
     FlintMod();
     FlintMod(const FlintMod& other);
+    explicit FlintMod(const std::string& val);
     
     // 模板构造函数支持所有整数类型
     template<typename IntType>

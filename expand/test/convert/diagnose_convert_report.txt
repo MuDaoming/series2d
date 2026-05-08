@@ -13,7 +13,7 @@ numerator_terms = 30, numerator_outside_long = 11
   example: X^3 Y^1 coeff=15380095962725927966 to_long=-3066648110983623650
   example: X^3 Y^2 coeff=-34824622359544744018 to_long=2068865787874359214
 denominator_terms = 6, denominator_outside_long = 0
-source_exToRational_vs_safe = DIFF (DIFF at (1,1): current=1691643023624555253 safe=1663496678481197132)
+source_exToRational_vs_safe = OK (OK on 7 sample points)
 
 [c2]
 numerator_terms = 42, numerator_outside_long = 42
@@ -28,7 +28,7 @@ denominator_terms = 12, denominator_outside_long = 12
   example: X^0 Y^2 coeff=-25735585084135343146500 to_long=-2377101310518642180
   example: X^0 Y^3 coeff=7371579756093653112500 to_long=-7117873390167533900
   example: X^1 Y^0 coeff=10165362964729613984576 to_long=1206980115651044160
-source_exToRational_vs_safe = DIFF (DIFF at (0,0): current=985464247414418391 safe=1781120482096949122)
+source_exToRational_vs_safe = OK (OK on 7 sample points)
 
 [c3]
 numerator_terms = 0, numerator_outside_long = 0
@@ -48,7 +48,7 @@ denominator_terms = 12, denominator_outside_long = 12
   example: X^0 Y^2 coeff=-25735585084135343146500 to_long=-2377101310518642180
   example: X^0 Y^3 coeff=7371579756093653112500 to_long=-7117873390167533900
   example: X^1 Y^0 coeff=10165362964729613984576 to_long=1206980115651044160
-source_exToRational_vs_safe = DIFF (DIFF at (0,0): current=1178983855609761107 safe=1527175543420111381)
+source_exToRational_vs_safe = OK (OK on 7 sample points)
 
 [z1]
 numerator_terms = 12, numerator_outside_long = 0
