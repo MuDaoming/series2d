@@ -1,0 +1,42 @@
+p = 2305843009213693951
+mmaCandZLength = 11
+cppBeforeCandZLength = 11
+cppAfterCandZLength = 11
+
+C before_convert vs MMA: OK
+C after_convert  vs MMA: DIFF
+
+c_i before_convert vs MMA:
+c1: OK
+c2: OK
+c3: OK
+
+c_i after_convert vs MMA:
+c1: DIFF
+c2: DIFF
+c3: OK
+
+Z before_convert vs MMA:
+z1: OK
+z2: OK
+z3: OK
+z4: OK
+z5: OK
+z6: OK
+z7: OK
+z8: OK
+
+Z after_convert vs MMA:
+z1: OK
+z2: OK
+z3: OK
+z4: OK
+z5: OK
+z6: OK
+z7: OK
+z8: OK
+
+CandZ before total diff count = 0
+CandZ before diff positions = {}
+CandZ after  total diff count = 2
+CandZ after  diff positions = {1, 2}

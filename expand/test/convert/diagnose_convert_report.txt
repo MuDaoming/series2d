@@ -1,0 +1,91 @@
+input_dir = expand/test/2dseries/dp_planar
+p = 2305843009213693951
+N = 8, B = 3
+The comparison below calls the existing source exToRational and compares it
+against a local diagnostic converter that reduces decimal GiNaC integers
+mod p without going through long/to_long().
+
+[c1]
+numerator_terms = 30, numerator_outside_long = 11
+  example: X^2 Y^2 coeff=11601456425899298122 to_long=-6845287647810253494
+  example: X^2 Y^3 coeff=-22037830804544671200 to_long=-3591086730835119584
+  example: X^2 Y^4 coeff=16681904936980756500 to_long=-1764839136728795116
+  example: X^3 Y^1 coeff=15380095962725927966 to_long=-3066648110983623650
+  example: X^3 Y^2 coeff=-34824622359544744018 to_long=2068865787874359214
+denominator_terms = 6, denominator_outside_long = 0
+source_exToRational_vs_safe = DIFF (DIFF at (1,1): current=1691643023624555253 safe=1663496678481197132)
+
+[c2]
+numerator_terms = 42, numerator_outside_long = 42
+  example: X^0 Y^0 coeff=1570192927044706665000 to_long=2219680779394777640
+  example: X^0 Y^1 coeff=3939556403591159002500 to_long=-8046828182685043324
+  example: X^0 Y^2 coeff=-9467255375814055218750 to_long=-4075666001055239742
+  example: X^0 Y^3 coeff=-7522659611352217765625 to_long=3611970721279293703
+  example: X^0 Y^4 coeff=25176464249574896484375 to_long=-3341411038641471465
+denominator_terms = 12, denominator_outside_long = 12
+  example: X^0 Y^0 coeff=-12647814950176488287696 to_long=6651484388264120880
+  example: X^0 Y^1 coeff=30646038905815576142400 to_long=5996999384010908224
+  example: X^0 Y^2 coeff=-25735585084135343146500 to_long=-2377101310518642180
+  example: X^0 Y^3 coeff=7371579756093653112500 to_long=-7117873390167533900
+  example: X^1 Y^0 coeff=10165362964729613984576 to_long=1206980115651044160
+source_exToRational_vs_safe = DIFF (DIFF at (0,0): current=985464247414418391 safe=1781120482096949122)
+
+[c3]
+numerator_terms = 0, numerator_outside_long = 0
+denominator_terms = 1, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[C_sum]
+numerator_terms = 42, numerator_outside_long = 42
+  example: X^0 Y^0 coeff=2867983202807272420200 to_long=8737871382291919720
+  example: X^0 Y^1 coeff=2774851740634905202500 to_long=7840129578472460100
+  example: X^0 Y^2 coeff=-14608181810960527658750 to_long=1639495417437221122
+  example: X^0 Y^3 coeff=413734783054686984375 to_long=7906413433076848823
+  example: X^0 Y^4 coeff=23864700844589828671875 to_long=-5385986790331119229
+denominator_terms = 12, denominator_outside_long = 12
+  example: X^0 Y^0 coeff=-12647814950176488287696 to_long=6651484388264120880
+  example: X^0 Y^1 coeff=30646038905815576142400 to_long=5996999384010908224
+  example: X^0 Y^2 coeff=-25735585084135343146500 to_long=-2377101310518642180
+  example: X^0 Y^3 coeff=7371579756093653112500 to_long=-7117873390167533900
+  example: X^1 Y^0 coeff=10165362964729613984576 to_long=1206980115651044160
+source_exToRational_vs_safe = DIFF (DIFF at (0,0): current=1178983855609761107 safe=1527175543420111381)
+
+[z1]
+numerator_terms = 12, numerator_outside_long = 0
+denominator_terms = 9, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z2]
+numerator_terms = 12, numerator_outside_long = 0
+denominator_terms = 9, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z3]
+numerator_terms = 12, numerator_outside_long = 0
+denominator_terms = 9, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z4]
+numerator_terms = 1, numerator_outside_long = 0
+denominator_terms = 1, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z5]
+numerator_terms = 15, numerator_outside_long = 0
+denominator_terms = 15, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z6]
+numerator_terms = 15, numerator_outside_long = 0
+denominator_terms = 15, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z7]
+numerator_terms = 15, numerator_outside_long = 0
+denominator_terms = 15, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
+
+[z8]
+numerator_terms = 15, numerator_outside_long = 0
+denominator_terms = 15, denominator_outside_long = 0
+source_exToRational_vs_safe = OK (OK on 7 sample points)
