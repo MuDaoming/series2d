@@ -62,6 +62,16 @@ InputConfig parseConfigFile(const std::string& path) {
         kv[key] = val;
     }
 
+    static const std::unordered_set<std::string> allowedKeys = {
+        "B", "N", "deg", "p", "a", "b", "d", "bc",
+        "reduceMode", "print2DMode", "sector"
+    };
+    for (const auto& it : kv) {
+        if (!allowedKeys.count(it.first)) {
+            throw std::runtime_error("Unknown key in config: " + it.first);
+        }
+    }
+
     auto need = [&](const std::string& k) -> std::string {
         if (!kv.count(k)) throw std::runtime_error("Missing key in config: " + k);
         return kv[k];
@@ -77,17 +87,14 @@ InputConfig parseConfigFile(const std::string& path) {
     cfg.d = static_cast<mp_limb_t>(std::stoull(need("d")));
     if (kv.count("reduceMode")) {
         std::string mode = trim(kv["reduceMode"]);
-        for (char& c : mode) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-        if (mode == "maximalcut") mode = "maximal_cut";
-        if (mode != "normal" && mode != "maximal_cut") {
+        if (mode != "normal" && mode != "maximalcut") {
             throw std::runtime_error("Invalid reduceMode in config: " + mode +
-                                     " (expected normal or maximal_cut)");
+                                     " (expected normal or maximalcut)");
         }
         cfg.reduceMode = mode;
     }
     if (kv.count("print2DMode")) {
         std::string mode = trim(kv["print2DMode"]);
-        for (char& c : mode) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
         if (mode != "target" && mode != "cache") {
             throw std::runtime_error("Invalid print2DMode in config: " + mode +
                                      " (expected target or cache)");

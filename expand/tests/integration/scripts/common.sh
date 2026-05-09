@@ -31,6 +31,7 @@ normalize_config_keys() {
   if grep -q '^reduce_mode[[:space:]]*=' "$file"; then
     local v
     v=$(sed -n 's/^reduce_mode[[:space:]]*=[[:space:]]*//p' "$file" | head -n1)
+    sed -i '/^reduce_mode[[:space:]]*=/d' "$file"
     set_config_kv "$file" "reduceMode" "$v"
   fi
 }
@@ -159,4 +160,3 @@ check_expected_all() {
   fi
   echo "integration check passed"
 }
-

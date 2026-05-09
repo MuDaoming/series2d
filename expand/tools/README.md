@@ -27,7 +27,7 @@ Required keys:
 - `a = <uint64>`
 - `b = <uint64>`
 - `d = <uint64>`
-- `reduceMode = normal | maximal_cut`
+- `reduceMode = normal | maximalcut`
 - `bc = {u0,u1,...}`  (size must match number of masters)
 
 Optional keys:

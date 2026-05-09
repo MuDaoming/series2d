@@ -1,16 +1,20 @@
 CXX      := g++
-CXXFLAGS := -std=c++17 -O2 -I../../include -I../../../expand/include -I../../../reconstruct/include
+CXXFLAGS := -std=c++17 -O2 -MMD -MP -I../../include -I../../../expand/include -I../../../reconstruct/include
 LDFLAGS  := -lflint -lgmp
 
 TARGET := fi_solver
 SRC    := fi_solver.cpp
+OBJ    := $(SRC:.cpp=.o)
+DEPS   := $(OBJ:.o=.d)
 
 .PHONY: all clean
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) $< -o $@ $(LDFLAGS)
+$(TARGET): $(OBJ)
+	$(CXX) $(OBJ) -o $@ $(LDFLAGS)
+
+-include $(DEPS)
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJ) $(DEPS)
