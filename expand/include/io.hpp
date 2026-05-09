@@ -19,6 +19,8 @@ struct InputConfig {
     mp_limb_t b = 0;
     mp_limb_t d = 0;
     std::string reduceMode = "normal";
+    std::string print2DMode = "target";
+    std::vector<int> sector;
     std::vector<mp_limb_t> bc;
 };
 

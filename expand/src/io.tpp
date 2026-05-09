@@ -25,6 +25,25 @@ static std::vector<mp_limb_t> parseU64List(const std::string& raw) {
     return vals;
 }
 
+static std::vector<int> parseI32List(const std::string& raw) {
+    std::string s = trim(raw);
+    size_t l = s.find('{');
+    size_t r = s.rfind('}');
+    if (l == std::string::npos || r == std::string::npos || r <= l) {
+        throw std::runtime_error("List must be in braces: " + raw);
+    }
+    std::string body = s.substr(l + 1, r - l - 1);
+    std::vector<int> vals;
+    std::stringstream ss(body);
+    std::string tok;
+    while (std::getline(ss, tok, ',')) {
+        tok = trim(tok);
+        if (tok.empty()) continue;
+        vals.push_back(std::stoi(tok));
+    }
+    return vals;
+}
+
 InputConfig parseConfigFile(const std::string& path) {
     std::ifstream in(path);
     if (!in.is_open()) {
@@ -56,15 +75,27 @@ InputConfig parseConfigFile(const std::string& path) {
     cfg.a = static_cast<mp_limb_t>(std::stoull(need("a")));
     cfg.b = static_cast<mp_limb_t>(std::stoull(need("b")));
     cfg.d = static_cast<mp_limb_t>(std::stoull(need("d")));
-    if (kv.count("reduce_mode")) {
-        std::string mode = trim(kv["reduce_mode"]);
+    if (kv.count("reduceMode")) {
+        std::string mode = trim(kv["reduceMode"]);
         for (char& c : mode) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
         if (mode == "maximalcut") mode = "maximal_cut";
         if (mode != "normal" && mode != "maximal_cut") {
-            throw std::runtime_error("Invalid reduce_mode in config: " + mode +
+            throw std::runtime_error("Invalid reduceMode in config: " + mode +
                                      " (expected normal or maximal_cut)");
         }
         cfg.reduceMode = mode;
+    }
+    if (kv.count("print2DMode")) {
+        std::string mode = trim(kv["print2DMode"]);
+        for (char& c : mode) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+        if (mode != "target" && mode != "cache") {
+            throw std::runtime_error("Invalid print2DMode in config: " + mode +
+                                     " (expected target or cache)");
+        }
+        cfg.print2DMode = mode;
+    }
+    if (kv.count("sector")) {
+        cfg.sector = parseI32List(kv["sector"]);
     }
     cfg.bc = parseU64List(need("bc"));
     return cfg;
