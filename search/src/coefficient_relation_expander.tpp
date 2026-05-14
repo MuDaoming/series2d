@@ -37,28 +37,67 @@ std::vector<CoefficientAssignment<T>> CoefficientRelationExpander<T>::expandAssi
 
 template<typename T>
 std::vector<FIRelation<T>> CoefficientRelationExpander<T>::buildFIRelations(
-    const std::vector<CoefficientAssignment<T>>& assignments) const {
+    const std::vector<CoefficientAssignment<T>>& assignments,
+    const T& deltaValue) const {
     std::vector<FIRelation<T>> relations;
     relations.reserve(assignments.size());
 
+    if (assignments.empty()) {
+        return relations;
+    }
+
+    const auto& variables = assignments.front().variables;
+    const size_t numVars = variables.size();
+
+    int maxK = 0;
+    for (const auto& var : variables) {
+        maxK = std::max(maxK, var.k);
+    }
+
+    std::vector<T> deltaPowers(static_cast<size_t>(maxK + 1), T(1));
+    for (int k = 1; k <= maxK; ++k) {
+        deltaPowers[static_cast<size_t>(k)] =
+            deltaPowers[static_cast<size_t>(k - 1)] * deltaValue;
+    }
+
+    std::vector<T> varWeights;
+    varWeights.reserve(numVars);
+    for (const auto& var : variables) {
+        varWeights.push_back(deltaPowers[static_cast<size_t>(var.k)]);
+    }
+
+    std::vector<IntegralLabel> integrals;
+    std::vector<size_t> varToIntegralIdx(numVars, 0);
+    for (size_t i = 0; i < numVars; ++i) {
+        const auto& integral = variables[i].integral;
+        auto it = std::find_if(
+            integrals.begin(),
+            integrals.end(),
+            [&](const IntegralLabel& label) {
+                return equalNu(label.nu, integral.nu);
+            });
+
+        if (it == integrals.end()) {
+            varToIntegralIdx[i] = integrals.size();
+            integrals.push_back(integral);
+        } else {
+            varToIntegralIdx[i] = static_cast<size_t>(it - integrals.begin());
+        }
+    }
+
     for (const auto& assignment : assignments) {
         FIRelation<T> relation;
-        for (size_t i = 0; i < assignment.variables.size(); ++i) {
-            const auto& integral = assignment.variables[i].integral;
-            auto it = std::find_if(
-                relation.integrals.begin(),
-                relation.integrals.end(),
-                [&](const IntegralLabel& label) {
-                    return equalNu(label.nu, integral.nu);
-                });
+        relation.integrals = integrals;
+        relation.coeffs.assign(integrals.size(), T(0));
 
-            if (it == relation.integrals.end()) {
-                relation.integrals.push_back(integral);
-                relation.coeffs.push_back(assignment.values[i]);
-            } else {
-                const size_t idx = static_cast<size_t>(it - relation.integrals.begin());
-                relation.coeffs[idx] = relation.coeffs[idx] + assignment.values[i];
+        for (size_t i = 0; i < numVars; ++i) {
+            const T& value = assignment.values[i];
+            if (value == T(0)) {
+                continue;
             }
+
+            const size_t idx = varToIntegralIdx[i];
+            relation.coeffs[idx] = relation.coeffs[idx] + value * varWeights[i];
         }
         relations.push_back(std::move(relation));
     }

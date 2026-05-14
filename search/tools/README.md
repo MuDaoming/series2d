@@ -63,13 +63,13 @@ Purpose:
 Usage:
 
 ```bash
-./fi_solver <G_path> <poly_relation_path> [output_path]
+./fi_solver <G_path> <poly_relation_path> <delta_value> [output_path]
 ```
 
 - Default `output_path`: `fi_solution`
 
 Output order in `fi_solution`:
-1. `# p`, `# m`, `# |G|`
+1. `# p`, `# m`, `# delta`, `# |G|`
 2. `# FI variables`, `# FI pivot columns`, `# FI free columns`
 3. `#MIs`
 4. `[fi_reductions]`

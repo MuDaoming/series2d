@@ -14,6 +14,7 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
                                const std::string& configPath,
                                const std::string& targetPath,
                                const std::string& maxSearchDegPath,
-                               const std::string& outputPath);
+                               const std::string& outputPath,
+                               const std::string& deltaValueText);
 
 #include "../src/search_pipeline.tpp"

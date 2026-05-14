@@ -11,7 +11,8 @@ public:
         const RelationSearchResult<T>& result) const;
 
     std::vector<FIRelation<T>> buildFIRelations(
-        const std::vector<CoefficientAssignment<T>>& assignments) const;
+        const std::vector<CoefficientAssignment<T>>& assignments,
+        const T& deltaValue) const;
 };
 
 #include "../src/coefficient_relation_expander.tpp"

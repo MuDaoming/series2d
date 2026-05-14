@@ -5,7 +5,8 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
                                const std::string& configPath,
                                const std::string& targetPath,
                                const std::string& maxSearchDegPath,
-                               const std::string& outputPath) {
+                               const std::string& outputPath,
+                               const std::string& deltaValueText) {
     namespace fs = std::filesystem;
 
     fs::path cfgP = fs::path(configPath);
@@ -22,6 +23,7 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
 
     SearchConfig cfg = parseSearchConfigFile(cfgP.string());
     FlintMod::set_modulus(cfg.p);
+    const FlintMod deltaValue(static_cast<unsigned long long>(std::stoull(deltaValueText)));
     const int maxSearchDeg = parseMaxSearchDegreeFile(degP.string());
     auto targets = parseSearchTargetFile(tgtP.string(), cfg.nuSize);
 
@@ -47,7 +49,7 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
     auto result = searcher.search();
     CoefficientRelationExpander<FlintMod> expander;
     auto assignments = expander.expandAssignments(result);
-    auto fiRelations = expander.buildFIRelations(assignments);
+    auto fiRelations = expander.buildFIRelations(assignments, deltaValue);
     FIReductionSearcher<FlintMod> fiSearcher(fiRelations);
     auto fiReduction = fiSearcher.search();
 
@@ -57,6 +59,7 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
     }
 
     RelationFormatter<FlintMod>::writeSummary(out, result);
+    out << "# delta = " << deltaValue << "\n";
     out << "\n";
     RelationFormatter<FlintMod>::writeRelations(out, result);
     out << "\n";

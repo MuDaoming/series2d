@@ -141,15 +141,17 @@ std::vector<std::vector<FlintMod>> parseRREFRows(const std::string& polyPath) {
 }  // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 3 && argc != 4) {
-        std::cerr << "Usage: " << argv[0] << " <G_path> <poly_relation_path> [output_path]\n";
+    if (argc != 4 && argc != 5) {
+        std::cerr << "Usage: " << argv[0]
+                  << " <G_path> <poly_relation_path> <delta_value> [output_path]\n";
         std::cerr << "Default output_path: fi_solution\n";
         return 1;
     }
 
     const std::string gPath = argv[1];
     const std::string polyPath = argv[2];
-    const std::string outPath = (argc == 4) ? argv[3] : "fi_solution";
+    const std::string deltaText = argv[3];
+    const std::string outPath = (argc == 5) ? argv[4] : "fi_solution";
 
     try {
         const int nuSize = inferNuSize(gPath);
@@ -164,6 +166,7 @@ int main(int argc, char** argv) {
             std::cerr << "[fi_solver] Warning: '# p = ...' not found. Use default p=" << p << "\n";
         }
         FlintMod::set_modulus(p);
+        const FlintMod deltaValue(static_cast<unsigned long long>(std::stoull(deltaText)));
 
         int m = -1;
         auto mIt = kv.find("m");
@@ -234,7 +237,7 @@ int main(int argc, char** argv) {
 
         CoefficientRelationExpander<FlintMod> expander;
         const auto assignments = expander.expandAssignments(stage1);
-        const auto fiRelations = expander.buildFIRelations(assignments);
+        const auto fiRelations = expander.buildFIRelations(assignments, deltaValue);
 
         std::ofstream out(outPath);
         if (!out.is_open()) {
@@ -243,6 +246,7 @@ int main(int argc, char** argv) {
 
         out << "# p = " << p << "\n";
         out << "# m = " << m << "\n";
+        out << "# delta = " << deltaValue << "\n";
         out << "# |G| = " << G.size() << "\n\n";
         if (fiRelations.empty()) {
             out << "# FI variables = 0\n";
@@ -255,6 +259,7 @@ int main(int argc, char** argv) {
 
             std::cerr << "[fi_solver] G size = " << G.size()
                       << ", m = " << m
+                      << ", delta = " << deltaValue
                       << ", FI relations = 0"
                       << ", FI free columns = 0 (no free columns in stage I)"
                       << "\n";
@@ -275,6 +280,7 @@ int main(int argc, char** argv) {
 
         std::cerr << "[fi_solver] G size = " << G.size()
                   << ", m = " << m
+                  << ", delta = " << deltaValue
                   << ", FI relations = " << fiRelations.size()
                   << ", FI free columns = " << fiResult.freeColumns.size()
                   << "\n";
