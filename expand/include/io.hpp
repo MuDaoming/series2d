@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <ginac/ginac.h>
+#include "integral_tag.hpp"
 
 struct InputConfig {
     int N = 0;
@@ -26,7 +27,7 @@ struct InputConfig {
 };
 
 struct TargetConfig {
-    std::vector<std::vector<int>> nus;
+    std::vector<IntegralTag> targets;
 };
 
 InputConfig parseConfigFile(const std::string& path);

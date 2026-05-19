@@ -168,7 +168,7 @@ PT IntegrandExpander<RT, PT, ST>::buildFIPolynomial(const std::vector<int>& nu) 
 // ============================================================================
 
 template<typename RT, typename PT, typename ST>
-Series<ST> IntegrandExpander<RT, PT, ST>::getFI2DSeries(const std::vector<int>& nu) const {
+Series<ST> IntegrandExpander<RT, PT, ST>::getIntegrand2DSeries(const std::vector<int>& nu) const {
     // FI = J·W · Ĩ（所有 U 已被吸收进 Ĩ）
     const Series<ST>& fbi = solver_.getFBISeries(nu, fbiDelta_, targetDeg_);
     PT poly = buildFIPolynomial(nu);

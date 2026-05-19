@@ -44,6 +44,62 @@ static std::vector<int> parseI32List(const std::string& raw) {
     return vals;
 }
 
+static IntegralHead parseIntegralHead(const std::string& raw) {
+    if (raw == "FI") return IntegralHead::FI;
+    if (raw == "BFI") return IntegralHead::BFI;
+    if (raw == "BBFI") return IntegralHead::BBFI;
+    throw std::runtime_error("Invalid integral head: " + raw);
+}
+
+static BoundaryTag parseBoundaryTag(const std::string& raw) {
+    std::string s = trim(raw);
+    if (s.size() != 2) {
+        throw std::runtime_error("Invalid boundary tag: " + raw);
+    }
+    BoundaryTag tag;
+    if (s[0] == 'X') tag.axis = BoundaryAxis::X;
+    else if (s[0] == 'Y') tag.axis = BoundaryAxis::Y;
+    else throw std::runtime_error("Invalid boundary axis: " + raw);
+
+    if (s[1] == 'U') tag.side = BoundarySide::U;
+    else if (s[1] == 'D') tag.side = BoundarySide::D;
+    else throw std::runtime_error("Invalid boundary side: " + raw);
+    return tag;
+}
+
+static std::vector<BoundaryTag> parseBoundaryList(const std::string& raw) {
+    std::vector<BoundaryTag> tags;
+    std::stringstream ss(raw);
+    std::string tok;
+    while (std::getline(ss, tok, ',')) {
+        tok = trim(tok);
+        if (!tok.empty()) tags.push_back(parseBoundaryTag(tok));
+    }
+    return tags;
+}
+
+static void validateIntegralTag(const IntegralTag& tag, const std::string& line) {
+    auto fail = [&](const std::string& msg) {
+        throw std::runtime_error(msg + " in target line: " + line);
+    };
+    if (tag.head == IntegralHead::FI) {
+        if (!tag.boundaries.empty()) fail("FI must not have boundary tags");
+        return;
+    }
+    if (tag.head == IntegralHead::BFI) {
+        if (tag.boundaries.size() != 1) fail("BFI must have exactly one boundary tag");
+        return;
+    }
+    if (tag.boundaries.size() != 2) fail("BBFI must have exactly two boundary tags");
+    bool hasX = false;
+    bool hasY = false;
+    for (const auto& b : tag.boundaries) {
+        hasX = hasX || b.axis == BoundaryAxis::X;
+        hasY = hasY || b.axis == BoundaryAxis::Y;
+    }
+    if (!hasX || !hasY) fail("BBFI must have one X boundary and one Y boundary");
+}
+
 InputConfig parseConfigFile(const std::string& path) {
     std::ifstream in(path);
     if (!in.is_open()) {
@@ -123,28 +179,47 @@ TargetConfig parseTargetFile(const std::string& path, int expectedNuSize) {
         // Backward compatible: ignore legacy "deg = ..." in target
         if (line.rfind("deg", 0) == 0) continue;
 
+        IntegralTag tag;
+
         size_t l = line.find('{');
         size_t r = line.rfind('}');
         if (l == std::string::npos || r == std::string::npos || r <= l) {
             throw std::runtime_error("Invalid nu line in target file: " + line);
         }
 
+        std::string prefix = trim(line.substr(0, l));
+        if (prefix.empty()) {
+            tag.head = IntegralHead::FI;
+        } else {
+            size_t lb = prefix.find('[');
+            if (lb == std::string::npos) {
+                tag.head = parseIntegralHead(prefix);
+            } else {
+                size_t rb = prefix.rfind(']');
+                if (rb == std::string::npos || rb <= lb || rb + 1 != prefix.size()) {
+                    throw std::runtime_error("Invalid boundary list in target file: " + line);
+                }
+                tag.head = parseIntegralHead(trim(prefix.substr(0, lb)));
+                tag.boundaries = parseBoundaryList(prefix.substr(lb + 1, rb - lb - 1));
+            }
+        }
+
         std::string body = line.substr(l + 1, r - l - 1);
-        std::vector<int> nu;
         std::stringstream ss(body);
         std::string tok;
         while (std::getline(ss, tok, ',')) {
             tok = trim(tok);
             if (tok.empty()) continue;
-            nu.push_back(std::stoi(tok));
+            tag.nu.push_back(std::stoi(tok));
         }
-        if (static_cast<int>(nu.size()) != expectedNuSize) {
+        if (static_cast<int>(tag.nu.size()) != expectedNuSize) {
             throw std::runtime_error("nu length mismatch in target file");
         }
-        targets.nus.push_back(std::move(nu));
+        validateIntegralTag(tag, line);
+        targets.targets.push_back(std::move(tag));
     }
 
-    if (targets.nus.empty()) {
+    if (targets.targets.empty()) {
         throw std::runtime_error("No nu entries in target file");
     }
     return targets;

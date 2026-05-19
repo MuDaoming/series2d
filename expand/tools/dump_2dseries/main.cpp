@@ -93,11 +93,11 @@ int main(int argc, char** argv) {
             }
 
             out << "{\n";
-            for (size_t i = 0; i < targetCfg.nus.size(); ++i) {
-                const auto& nu = targetCfg.nus[i];
+            for (size_t i = 0; i < targetCfg.targets.size(); ++i) {
+                const auto& nu = targetCfg.targets[i].nu;
                 const auto& series = solver.getFBISeries(nu, fbiDelta, cfg.deg);
                 out << "  {" << series.toString() << "}";
-                if (i + 1 < targetCfg.nus.size()) out << ",";
+                if (i + 1 < targetCfg.targets.size()) out << ",";
                 out << "\n";
             }
             out << "}\n";
@@ -106,8 +106,8 @@ int main(int argc, char** argv) {
             return 0;
         }
 
-        for (const auto& nu : targetCfg.nus) {
-            (void)solver.getFBISeries(nu, fbiDelta, cfg.deg);
+        for (const auto& tag : targetCfg.targets) {
+            (void)solver.getFBISeries(tag.nu, fbiDelta, cfg.deg);
         }
 
         std::ostringstream cacheOss;

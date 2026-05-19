@@ -76,16 +76,16 @@ void runFI1DSeriesPipeline(const std::string& sPath,
     Redefinition<Polynomial<FlintMod>, FlintMod> redef(numLoops, fbiDelta, expander.getShiftedU());
     solver.setRedefinition(&redef);
 
-    // 记录按需求解总耗时（实际求解由 getFI2DSeries -> getFBISeries 触发）
+    // 记录按需求解总耗时（实际求解由 getIntegrand2DSeries -> getFBISeries 触发）
     auto tSolve0 = std::chrono::steady_clock::now();
     auto tSolve1 = std::chrono::steady_clock::now();
     auto solve_us = std::chrono::duration_cast<std::chrono::microseconds>(tSolve1 - tSolve0).count();
     std::cout << "[solver] solve_us=" << solve_us
               << "  cache_keys=" << solver.getCacheSize() << "\n";
 
-    // 展开与积分
-    IntegrationConfig<FlintMod> intCfg{shiftA, shiftB, targetDeg};
-    SeriesIntegrator<FlintMod> integrator(intCfg);
+    // 展开与投影
+    DeltaProjectionConfig<FlintMod> projCfg{shiftA, shiftB, targetDeg};
+    DeltaProjector<FlintMod> projector(projCfg);
 
     std::ofstream out(outFile.string());
     if (!out.is_open()) {
@@ -93,14 +93,18 @@ void runFI1DSeriesPipeline(const std::string& sPath,
     }
 
     auto tInteg0 = std::chrono::steady_clock::now();
-    for (const auto& nu : targetCfg.nus) {
-        Series<FlintMod> fi2d = expander.getFI2DSeries(nu);
-        std::vector<FlintMod> oneD = integrator.integrate(fi2d);
+    std::map<std::vector<int>, Series<FlintMod>> integrand2DCache;
+    for (const auto& tag : targetCfg.targets) {
+        auto it = integrand2DCache.find(tag.nu);
+        if (it == integrand2DCache.end()) {
+            it = integrand2DCache.emplace(tag.nu, expander.getIntegrand2DSeries(tag.nu)).first;
+        }
+        std::vector<FlintMod> oneD = projector.project(it->second, tag);
 
         out << "{";
-        for (int d = 0; d <= targetDeg; ++d) {
+        for (size_t d = 0; d < oneD.size(); ++d) {
             out << oneD[d].get_value();
-            if (d < targetDeg) out << ",";
+            if (d + 1 < oneD.size()) out << ",";
         }
         out << "}\n";
     }

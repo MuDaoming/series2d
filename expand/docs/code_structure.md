@@ -2,14 +2,14 @@
 
 ## 1. 概述
 
-本文档详细描述项目的代码结构和实现细节。完整的数学理论背景请参考 [`problem_and_workflow.md`](./problem_and_workflow.md)。
+本文档详细描述项目的代码结构和实现细节。完整的数学理论背景请参考 [`problem_solution.md`](./problem_solution.md)。
 
 ### 1.1 项目目标
 
 在质数域 $\mathbb{Z}_p$ 下进行端到端计算：
 - 重定义后 FBI（$\widetilde{I} = U^{\text{pow}_U} \cdot I$）的二维幂级数展开（逐阶递推）
-- FI 被积函数二维级数构造（$P \cdot \widetilde{I}$，无需 $U^\gamma$ 级数）
-- FI 的一维级数输出（对二维级数积分）
+- 统一二维被积函数级数构造（$G_{\nu}=P \cdot \widetilde{I}$，无需 $U^\gamma$ 级数）
+- FI、BFI、BBFI 的一维 $\delta$ 级数输出（对同一个二维级数采用不同投影规则）
 
 ### 1.2 核心方法
 
@@ -22,7 +22,7 @@
 ```
 expand/
 ├── docs/                          # 文档
-│   ├── problem_and_workflow.md    # 问题定义与计算流程
+│   ├── problem_solution.md        # 问题定义与计算流程
 │   ├── code_structure.md          # 代码架构（本文档）
 │   └── todo.md                    # 待办事项
 ├── include/                       # 头文件（类声明）
@@ -33,8 +33,9 @@ expand/
 │   ├── family.hpp                 # Family类
 │   ├── series_solver.hpp          # SeriesSolver类 + Redefinition结构体
 │   ├── converter.hpp              # GiNaC到FlintMod类型转换
-│   ├── integrand_expander.hpp     # FI被积函数二维级数构造
-│   ├── series_integrator.hpp      # 二维级数到一维级数积分
+│   ├── integral_tag.hpp           # FI/BFI/BBFI target tag
+│   ├── integrand_expander.hpp     # 统一二维被积函数级数构造
+│   ├── delta_projector.hpp        # 二维级数到FI/BFI/BBFI一维delta级数
 │   ├── io.hpp                     # S/config/target 输入解析
 │   └── fi_pipeline.hpp            # 顶层端到端流程入口
 ├── src/                           # 实现文件（模板实现）
@@ -80,9 +81,11 @@ Redefinition<PT, ST> ← FBI重定义参数（pow_U、幂差计算）
     ↓
 SeriesSolver<RT, PT, ST> ← 级数求解器（重定义后的约化+微分方程）
     ↓
-IntegrandExpander<RT, PT, ST> ← 构造 FI = P·Ĩ 二维级数
+IntegrandExpander<RT, PT, ST> ← 构造 Gν = P·Ĩ 二维级数
     ↓
-SeriesIntegrator<ST> ← 积分得到 FI 一维级数
+IntegralTag / TargetConfig ← 描述 FI/BFI/BBFI 目标对象
+    ↓
+DeltaProjector<ST> ← 投影得到 FI/BFI/BBFI 一维 delta 级数
     ↓
 runFI1DSeriesPipeline(...) ← 顶层流程
 ```
@@ -101,19 +104,19 @@ runFI1DSeriesPipeline(...) ← 顶层流程
     SeriesSolver.setRedefinition()
       → 预计算 dRdX·U^L, dRdY·U^L, masterPowU_
          ↓
-    IntegrandExpander.getFI2DSeries(nu)
+    IntegrandExpander.getIntegrand2DSeries(nu)
       → SeriesSolver.getFBISeries(nu, delta_in, targetDeg)
       → 按需递归（重定义后微分方程+约化）
          ↓
-    P·Ĩ（多项式×级数，无需U^gamma）
+    Gν = P·Ĩ（多项式×级数，无需U^gamma）
          ↓
-    SeriesIntegrator.integrate() → 一维级数输出
+    DeltaProjector.project(Gν, tag) → FI/BFI/BBFI 一维 delta 级数输出
 ```
 
 ### 3.3 调用关系
 
 ```
-IntegrandExpander::getFI2DSeries(nu_target)
+IntegrandExpander::getIntegrand2DSeries(nu_target)
     └── SeriesSolver::getFBISeries(nu_target, delta_in, needDeg=targetDeg)
             ├── cache命中且阶数充足: 直接返回
             └── cache缺失或阶数不足:
@@ -299,15 +302,63 @@ private:
 
 3. **主积分补阶（`solveMasterAtDeg`）**：`deg=0` 直接读取 `masterBoundary_`；`deg>0` 时逐个 `(p,q)` 调用 `solveMasterCoeffX/Y` 计算该层系数。
 
-4. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_`/`dRdYModified_`（即 `dRdX·U^L`/`dRdY·U^L`），并按当前 $\nu$ 所在 sector 的活跃传播子索引取子块求和（等价于使用该 sector 子 family 的 $R$ 子矩阵）；额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_and_workflow.md`](./problem_and_workflow.md) §6.4。
+4. **微分方程（`solveMasterCoeffX/Y`）**：使用 `dRdXModified_`/`dRdYModified_`（即 `dRdX·U^L`/`dRdY·U^L`），并按当前 $\nu$ 所在 sector 的活跃传播子索引取子块求和（等价于使用该 sector 子 family 的 $R$ 子矩阵）；额外计算 `dlogCoeff`（$\text{pow}_U \cdot [\partial U \cdot \widetilde{I}]$）和 `lhsCorrection`（$U$ 非常数项修正），递推公式参见 [`problem_solution.md`](./problem_solution.md) §6.4。
 
 5. **约化函数（`case0IBP/DimShift/Case1-3`）**：构造 LRR 后调用 `applyRatioFactors(D, polys, deltaPs)`，该函数将 $U^{m}$ 乘到 $D$、$U^{\Delta p_i + m}$ 乘到各 $N_i$，统一为非负幂次的多项式。
 
-### 4.8 IntegrandExpander 类模板
+### 4.8 IntegralTag 与 TargetConfig
+
+**文件**：`include/integral_tag.hpp`，`src/io.tpp`
+
+**功能**：描述 target 文件中的积分对象。每个 target 由 head、边界信息和传播子指数 $\vec{\nu}$ 组成。
+
+```cpp
+enum class IntegralHead {
+    FI,      // two integrations
+    BFI,     // one boundary, one integration
+    BBFI     // two boundaries, no integration
+};
+
+enum class BoundaryAxis { X, Y };
+enum class BoundarySide { U, D };
+
+struct BoundaryTag {
+    BoundaryAxis axis;
+    BoundarySide side;
+};
+
+struct IntegralTag {
+    IntegralHead head;
+    std::vector<BoundaryTag> boundaries;  // FI:0, BFI:1, BBFI:2
+    std::vector<int> nu;
+};
+
+struct TargetConfig {
+    std::vector<IntegralTag> targets;
+};
+```
+
+Target 文件格式支持显式 head：
+
+```text
+FI{1,1,1}
+BFI[XU]{1,1,1}
+BFI[XD]{1,1,1}
+BFI[YU]{1,1,1}
+BFI[YD]{1,1,1}
+BBFI[XU,YU]{1,1,1}
+BBFI[XU,YD]{1,1,1}
+BBFI[XD,YU]{1,1,1}
+BBFI[XD,YD]{1,1,1}
+```
+
+为兼容旧输入，只有 `{...}` 的行解析为 `FI{...}`。`nu` 始终只表示传播子指数，head 和 boundary 不编码进 `nu`。
+
+### 4.9 IntegrandExpander 类模板
 
 **文件**：`include/integrand_expander.hpp`，`src/integrand_expander.tpp`
 
-**功能**：构造 $\text{FI}(X,Y) = P(X,Y) \cdot \widetilde{I}_\nu^{D_{in}}(X,Y)$ 的二维级数。
+**功能**：构造统一二维级数 $G_{\nu}(X,Y) = P(X,Y) \cdot \widetilde{I}_\nu^{D_{in}}(X,Y)$。FI、BFI、BBFI 对同一个 $\nu$ 共用该二维级数。
 
 ```cpp
 template<typename RT, typename PT, typename ST>
@@ -322,8 +373,8 @@ public:
                       int numLoops, int targetDeg,
                       const ST& feynmanD, const ST& shiftA, const ST& shiftB);
     
-    /// FI = J·W · Ĩ（多项式×级数，无需U^gamma）
-    Series<ST> getFI2DSeries(const std::vector<int>& nu) const;
+    /// Gν = J·W · Ĩ（多项式×级数，无需U^gamma）
+    Series<ST> getIntegrand2DSeries(const std::vector<int>& nu) const;
     const PT& getShiftedU() const;
 
 private:
@@ -336,19 +387,63 @@ private:
 #### 实现要点
 
 - `buildFIPolynomial(nu)`：在 $(X_r, Y_r)$ 上构造 $J \cdot X_0^{e_X} \cdot Y_0^{e_Y} \cdot Z_0^{e_Z}$，然后 `applyShift` 到平移坐标。不包含 $U^{\nu_{tot}}$（已被吸收进 $\widetilde{I}$）。
-- `getFI2DSeries(nu)`：调用 `solver_.getFBISeries(nu, fbiDelta_, targetDeg_)` 获取 $\widetilde{I}$，然后用 `Series::mulPoly` 乘以多项式 $P$。
+- `getIntegrand2DSeries(nu)`：调用 `solver_.getFBISeries(nu, fbiDelta_, targetDeg_)` 获取 $\widetilde{I}$，然后用 `Series::mulPoly` 乘以多项式 $P$。
+- 顶层 pipeline 按 `nu` 缓存该二维级数；同一个 `nu` 的 FI、四个 BFI、四个 BBFI 不重复触发 `getFBISeries` 和 `mulPoly`。
 
-### 4.9 SeriesIntegrator 类模板
+### 4.10 DeltaProjector 类模板
 
-**文件**：`include/series_integrator.hpp`，`src/series_integrator.tpp`
+**文件**：`include/delta_projector.hpp`，`src/delta_projector.tpp`
 
-**功能**：将二维级数积分为一维级数（积分域由平移参数 $a, b$ 定义）。
+**功能**：将二维级数 $G_{\nu}(X,Y)$ 投影为一维 $\delta$ 级数。投影规则由 `IntegralTag` 决定。
 
-### 4.10 IO 与 Pipeline
+```cpp
+template<typename ST>
+struct DeltaProjectionConfig {
+    ST shiftA;
+    ST shiftB;
+    int degree;
+};
 
-**IO**：`include/io.hpp` — 解析 S、config、target 三类输入文件。
+template<typename ST>
+class DeltaProjector {
+public:
+    explicit DeltaProjector(const DeltaProjectionConfig<ST>& config);
+    std::vector<ST> project(const Series<ST>& series, const IntegralTag& tag) const;
 
-**Pipeline**：`include/fi_pipeline.hpp`，`src/fi_pipeline.tpp` — 顶层入口 `runFI1DSeriesPipeline()`，串联所有步骤：Family构造 → IntegrandExpander → Redefinition → `solver.setRedefinition()` → `getFI2DSeries`（内部按需触发 `getFBISeries`）→ integrate → 输出。
+private:
+    std::vector<ST> intX_, intY_;
+    std::vector<ST> xUpper_, xLower_, yUpper_, yLower_;
+};
+```
+
+#### 实现要点
+
+- 构造时预计算所有 $0 \leq k \leq \deg$ 的边界幂和积分权重：
+  - $(-a)^k$、$(1-a)^k$、$(-b)^k$、$(1-b)^k$
+  - $\frac{(1-a)^{k+1}-(-a)^{k+1}}{k+1}$
+  - $\frac{(1-b)^{k+1}-(-b)^{k+1}}{k+1}$
+- `project` 只遍历二维系数一次，根据 head 选择权重并写入对应的 $\delta$ 阶：
+  - FI 写到 $p+q+2$
+  - BFI 写到 $p+q+1$
+  - BBFI 写到 $p+q$
+- 若二维级数计算到总度数 `deg`，投影后的一维级数只保留 `{c0,...,c_deg}`。FI 的前两个零和 BFI 的前一个零显式保留；超过 `deg` 的项不由当前二维展开确定，因此不输出。
+
+### 4.11 IO 与 Pipeline
+
+**IO**：`include/io.hpp` — 解析 S、config、target 三类输入文件。target 解析为 `IntegralTag` 列表，并兼容旧的 `{nu}` 语法。
+
+**Pipeline**：`include/fi_pipeline.hpp`，`src/fi_pipeline.tpp` — 顶层入口 `runFI1DSeriesPipeline()`，串联所有步骤：
+
+```
+Family 构造
+  → IntegrandExpander
+  → Redefinition
+  → solver.setRedefinition()
+  → 按 target 顺序处理 IntegralTag
+      → 按 nu 查询/构造 Gν 二维级数 cache
+      → DeltaProjector.project(Gν, tag)
+      → 写出 {c0,...,c_deg}
+```
 
 ## 5. 参考文献
 

@@ -2,7 +2,7 @@
 
 ## 1. 研究目标
 
-本项目的最终目标是**在质数域 $\mathbb{Z}_p$ 下，端到端计算二圈Feynman积分（FI）的一维级数展开**。
+本项目的最终目标是**在质数域 $\mathbb{Z}_p$ 下，端到端计算二圈Feynman积分（FI）及其边界对象（BFI、BBFI）的一维级数展开**。
 
 二圈Feynman积分具有如下形式：
 
@@ -21,7 +21,7 @@ $$
 \text{FI} = \int_0^1 \int_0^1 Q(X, Y) \cdot I_{\vec{\nu}}^{\Delta}(X, Y) \, dX \, dY
 $$
 
-**计算策略**：先求重定义后FBI的二维幂级数，再构造FI被积函数二维级数，最后积分得到FI一维级数。
+**计算策略**：先求重定义后FBI的二维幂级数，再构造共同的二维被积函数级数，最后按目标对象的 head（FI、BFI、BBFI）采用不同投影规则得到一维 $\delta$ 级数。
 
 ## 2. 数学结构
 
@@ -306,26 +306,46 @@ $$
 
 **结论**：二圈时，$\text{FI} = J \cdot W \cdot \widetilde{I}_\nu^{D_{in}}$，完全消除了 $U^{\gamma}$ 级数和 $U^{\nu_{tot}}$ 多项式，不再需要级数×级数卷积。
 
-## 7. 从重定义FBI到FI一维展开
+## 7. 从重定义FBI到FI/BFI/BBFI一维展开
 
-### 7.1 变量替换
+### 7.1 变量替换与 $\delta$ 的引入
 
-原始三变量满足 $X + Y + Z = 1$。先做二维化替换：
+原始三变量满足 $X + Y + Z = 1$。首先利用 $\delta(1-X-Y-Z)$ 积掉 $Z$，得到二维积分区域。
+
+随后重标度二维区域到单位正方形：
 
 $$
 X \to X, \quad Y \to (1-X)Y, \quad Z \to 1 - X - (1-X)Y
 $$
 
-再做局部平移：$X \to X + a, \quad Y \to Y + b$。
+此时 $(X,Y)$ 的积分区域为 $[0,1]\times[0,1]$。为了得到局部 $\delta$ 展开，引入参数 $\delta$，将积分区域变为：
+
+$$
+X \in [a-a\delta,\; a+(1-a)\delta],\quad
+Y \in [b-b\delta,\; b+(1-b)\delta].
+$$
+
+最后做局部平移，令：
+
+$$
+X \to X+a,\quad Y \to Y+b,
+$$
+
+于是积分区域变为：
+
+$$
+X \in [-a\delta,\; (1-a)\delta],\quad
+Y \in [-b\delta,\; (1-b)\delta].
+$$
 
 所有多项式（$U$、Jacobian、$X_0/Y_0/Z_0$ 幂次）都按此顺序处理。
 
-### 7.2 FI 被积函数的构造
+### 7.2 统一二维被积函数的构造
 
-对于目标 $\vec{\nu}$，FI 被积函数的二维级数为：
+对于目标 $\vec{\nu}$，先构造统一的二维级数：
 
 $$
-\text{FI}(X,Y) = P(X,Y) \cdot \widetilde{I}_\nu^{D_{in}}(X,Y)
+G_{\vec{\nu}}(X,Y) = P(X,Y) \cdot \widetilde{I}_\nu^{D_{in}}(X,Y)
 $$
 
 其中多项式因子 $P = J \cdot W$：
@@ -337,15 +357,90 @@ $$
 2. 获取重定义后的 FBI 级数 $\widetilde{I}_\nu^{D_{in}}$
 3. 用 `mulPoly` 计算 $P \cdot \widetilde{I}$（多项式×级数，$O(\text{deg}^2 \cdot \text{多项式项数})$）
 
-### 7.3 二维到一维积分
+FI、BFI、BBFI 对同一个 $\vec{\nu}$ 共享这个二维级数 $G_{\vec{\nu}}(X,Y)$。三者的区别只在最后一步如何把二维级数投影成一维 $\delta$ 级数。
 
-对二维级数 $\sum_{p+q \leq d} c_{pq} X^p Y^q$ 积分得到一维级数 $\sum_d s_d \epsilon^d$：
+### 7.3 FI、BFI、BBFI 的定义
+
+记局部积分边界为：
 
 $$
-s_d = \sum_{p+q=d} c_{pq} \cdot w(p, q)
+X_D=-a\delta,\quad X_U=(1-a)\delta,\quad
+Y_D=-b\delta,\quad Y_U=(1-b)\delta.
 $$
 
-其中 $w(p, q)$ 是单项式 $X^p Y^q$ 在积分域上的权重（由平移参数 $a, b$ 决定）。
+则：
+
+$$
+\text{FI}_{\vec{\nu}}(\delta)
+= \int_{X_D}^{X_U} dX \int_{Y_D}^{Y_U} dY\; G_{\vec{\nu}}(X,Y).
+$$
+
+BFI（Boundary FI）去掉一个积分并把相应变量取在边界上：
+
+$$
+\begin{aligned}
+\text{BFI}_{XU,\vec{\nu}}(\delta) &= \int_{Y_D}^{Y_U} dY\; G_{\vec{\nu}}(X_U,Y),\\
+\text{BFI}_{XD,\vec{\nu}}(\delta) &= \int_{Y_D}^{Y_U} dY\; G_{\vec{\nu}}(X_D,Y),\\
+\text{BFI}_{YU,\vec{\nu}}(\delta) &= \int_{X_D}^{X_U} dX\; G_{\vec{\nu}}(X,Y_U),\\
+\text{BFI}_{YD,\vec{\nu}}(\delta) &= \int_{X_D}^{X_U} dX\; G_{\vec{\nu}}(X,Y_D).
+\end{aligned}
+$$
+
+BBFI（Boundary-Boundary FI）去掉两个积分，即在角点取值：
+
+$$
+\begin{aligned}
+\text{BBFI}_{XU,YU,\vec{\nu}}(\delta) &= G_{\vec{\nu}}(X_U,Y_U),\\
+\text{BBFI}_{XU,YD,\vec{\nu}}(\delta) &= G_{\vec{\nu}}(X_U,Y_D),\\
+\text{BBFI}_{XD,YU,\vec{\nu}}(\delta) &= G_{\vec{\nu}}(X_D,Y_U),\\
+\text{BBFI}_{XD,YD,\vec{\nu}}(\delta) &= G_{\vec{\nu}}(X_D,Y_D).
+\end{aligned}
+$$
+
+这里 $XU/XD$ 表示 $X$ 变量取上/下边界，$YU/YD$ 表示 $Y$ 变量取上/下边界。
+
+### 7.4 二维到一维投影
+
+设：
+
+$$
+G_{\vec{\nu}}(X,Y)=\sum_{p,q} c_{pq} X^pY^q.
+$$
+
+预计算以下权重：
+
+$$
+\begin{aligned}
+I_X(p) &= \frac{(1-a)^{p+1}-(-a)^{p+1}}{p+1},&
+I_Y(q) &= \frac{(1-b)^{q+1}-(-b)^{q+1}}{q+1},\\
+U_X(p) &= (1-a)^p,&
+D_X(p) &= (-a)^p,\\
+U_Y(q) &= (1-b)^q,&
+D_Y(q) &= (-b)^q.
+\end{aligned}
+$$
+
+则各对象的一维 $\delta$ 级数由下列单项式规则给出：
+
+| Head | 单项式 $c_{pq}X^pY^q$ 的贡献 |
+|------|------------------------------|
+| FI | $c_{pq} I_X(p) I_Y(q)\delta^{p+q+2}$ |
+| BFI-XU | $c_{pq} U_X(p) I_Y(q)\delta^{p+q+1}$ |
+| BFI-XD | $c_{pq} D_X(p) I_Y(q)\delta^{p+q+1}$ |
+| BFI-YU | $c_{pq} I_X(p) U_Y(q)\delta^{p+q+1}$ |
+| BFI-YD | $c_{pq} I_X(p) D_Y(q)\delta^{p+q+1}$ |
+| BBFI-XU-YU | $c_{pq} U_X(p) U_Y(q)\delta^{p+q}$ |
+| BBFI-XU-YD | $c_{pq} U_X(p) D_Y(q)\delta^{p+q}$ |
+| BBFI-XD-YU | $c_{pq} D_X(p) U_Y(q)\delta^{p+q}$ |
+| BBFI-XD-YD | $c_{pq} D_X(p) D_Y(q)\delta^{p+q}$ |
+ 
+若二维级数计算到总度数 $\deg$，一维级数只输出当前二维展开能够确定的阶数：
+
+$$
+\{s_0,s_1,\ldots,s_{\deg}\}.
+$$
+
+FI 的前两项为零，BFI 的前一项为零。输出中仍显式写出这些零项。超过 $\deg$ 的系数不由当前二维展开确定，因此不输出，也不补零。
 
 ## 8. 完整计算流程
 
@@ -374,17 +469,20 @@ $$
       - 微分方程求解主积分（使用重定义后的公式）
       - 按需触发约化（约化关系中乘以 U^{Δp} 幂差因子）
 
-步骤3：FI 被积函数构造（IntegrandExpander）
-  3.1 构造 FI 多项式 P = J·W（不含 U 因子）
-  3.2 用 mulPoly 计算 P · Ĩ 得到 FI 二维级数
+步骤3：统一二维被积函数构造（IntegrandExpander）
+  3.1 构造多项式 P = J·W（不含 U 因子）
+  3.2 用 mulPoly 计算 P · Ĩ 得到 G_nu(X,Y) 二维级数
+  3.3 同一个 nu 的 FI/BFI/BBFI 共用 G_nu(X,Y)
 
-步骤4：二维到一维积分（SeriesIntegrator）
-  4.1 对二维系数积分得到一维系数 {c0,...,c_deg}
-  4.2 按 target 的 nu 顺序写入 output
+步骤4：二维到一维投影（DeltaProjector）
+  4.1 根据 target 的 head 选择 FI/BFI/BBFI 投影规则
+  4.2 对二维系数投影得到一维系数 {c0,...,c_deg}
+  4.3 按 target 顺序写入 output
 
 输出：
   - 单文件文本
-  - 每行一个 nu 对应的一维级数：{c0,...,c_deg}
+  - 每行一个 target 对应的一维级数：{c0,...,c_deg}
+  - 所有 head 都显式输出从 delta^0 到 delta^deg 的系数
 ```
 
 ## 9. 参考文献

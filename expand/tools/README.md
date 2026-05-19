@@ -35,8 +35,11 @@ Optional keys:
 - `sector = {n1,n2,...,nN}` (used by `dump_cz`; if omitted, topsector `{1,...,1}`)
 
 ### `target`
-- One integral index vector per line, e.g. `{1,1,1,1}`.
-- Each vector length must be `N`.
+- One integral tag per line, e.g. `FI{1,1,1,1}`, `BFI[XU]{1,1,1,1}`,
+  or `BBFI[XU,YD]{1,1,1,1}`.
+- The index vector length must be `N`.
+- A bare vector such as `{1,1,1,1}` is accepted as legacy input and means
+  `FI{1,1,1,1}`.
 
 ## Tools
 
@@ -45,7 +48,7 @@ Optional keys:
 Path: `expand/tools/fi_pipeline_runner`
 
 Purpose:
-- Compute final FI 1D series for all entries in `target`.
+- Compute final FI/BFI/BBFI delta series for all entries in `target`.
 
 Usage:
 
@@ -54,15 +57,20 @@ Usage:
 ```
 
 Output:
-- `<output_path>`: one FI 1D series per target line.
+- `<output_path>`: one delta series per target line.
+- For 2D expansion degree `deg`, each output line contains the determined
+  coefficients of `delta^0` through `delta^deg`.
 
 ### 2) `dump_2dseries`
 
 Path: `expand/tools/dump_2dseries`
 
 Purpose:
-- Dump FBI 2D series.
+- Dump FBI 2D integrand/cache series.
 - Behavior controlled by `print2DMode` in `config`.
+- Only the index vector `nu` is used. If a target line contains `FI`, `BFI`,
+  or `BBFI`, that head and boundary tag are ignored for this 2D dump. Prefer
+  `FI{...}` or bare `{...}` target lines for this tool.
 
 Usage:
 
@@ -72,7 +80,7 @@ Usage:
 
 Output:
 - If `print2DMode = target`:
-  - `<output_path>` contains 2D series for each target integral.
+  - `<output_path>` contains 2D series for each target `nu`.
 - If `print2DMode = cache`:
   - `<output_path>` contains full cache dump.
   - `<output_path>.keys` contains extracted cache keys (`nu;delta`).
@@ -96,23 +104,6 @@ Output:
 - `<output_prefix>_data.wl`: Mathematica data for comparison.
 
 ---
-
-
-### 4) `dump_masters`
-
-Path: `expand/tools/dump_masters`
-
-Purpose:
-- Detect and dump master sectors (`nu`) for a family.
-
-Usage:
-
-```bash
-./dump_masters <S_path> <config_path> <output_path>
-```
-
-Output:
-- `<output_path>`: one master `nu` per line, e.g. `{1,0,1,...}`.
 
 
 ### 4) `dump_masters`

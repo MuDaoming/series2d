@@ -20,6 +20,9 @@
 
 - `stage4_series`:
   - compare `series_deg20.txt` by `diff`.
+  - checks FI/BFI/BBFI delta-series projection. For 2D expansion degree `deg`,
+    each line contains the determined coefficients of `delta^0` through
+    `delta^deg`.
 
 Typical usage:
 

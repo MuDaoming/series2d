@@ -33,8 +33,8 @@ public:
                       const ST& shiftA,
                       const ST& shiftB);
 
-    /// 构建 FI 被积函数的二维级数: FI = J·W · Ĩ_nu
-    Series<ST> getFI2DSeries(const std::vector<int>& nu) const;
+    /// 构建统一二维被积函数级数: G_nu = J·W · Ĩ_nu
+    Series<ST> getIntegrand2DSeries(const std::vector<int>& nu) const;
 
     const PT& getShiftedU() const { return shiftedU_; }
     ST getFeynmanD() const { return feynmanD_; }

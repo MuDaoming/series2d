@@ -1,2 +1,10 @@
-{1,1,1}
-{2,2,2}
+FI{1,1,1}
+FI{2,2,2}
+BFI[XU]{1,1,1}
+BFI[XD]{1,1,1}
+BFI[YU]{1,1,1}
+BFI[YD]{1,1,1}
+BBFI[XU,YU]{1,1,1}
+BBFI[XU,YD]{1,1,1}
+BBFI[XD,YU]{1,1,1}
+BBFI[XD,YD]{1,1,1}

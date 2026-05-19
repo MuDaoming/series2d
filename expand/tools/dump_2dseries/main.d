@@ -1,16 +1,12 @@
-main.o: main.cpp ../../include/fi_pipeline.hpp \
- ../../include/converter.hpp ../../include/ff_type.hpp \
+main.o: main.cpp ../../include/converter.hpp ../../include/ff_type.hpp \
  ../../include/../src/ff_type.tpp ../../include/rational.hpp \
  ../../include/../src/rational.tpp ../../include/family.hpp \
  ../../include/sector.hpp ../../include/../src/sector.tpp \
- ../../include/../src/family.tpp ../../include/delta_projector.hpp \
- ../../include/integral_tag.hpp ../../include/series.hpp \
- ../../include/../src/series.tpp ../../include/../src/delta_projector.tpp \
- ../../include/integrand_expander.hpp ../../include/series_solver.hpp \
- ../../include/../src/series_solver.tpp \
+ ../../include/../src/family.tpp ../../include/integrand_expander.hpp \
+ ../../include/series_solver.hpp ../../include/series.hpp \
+ ../../include/../src/series.tpp ../../include/../src/series_solver.tpp \
  ../../include/../src/integrand_expander.tpp ../../include/io.hpp \
- ../../include/../src/io.tpp ../../include/../src/fi_pipeline.tpp
-../../include/fi_pipeline.hpp:
+ ../../include/integral_tag.hpp ../../include/../src/io.tpp
 ../../include/converter.hpp:
 ../../include/ff_type.hpp:
 ../../include/../src/ff_type.tpp:
@@ -20,15 +16,12 @@ main.o: main.cpp ../../include/fi_pipeline.hpp \
 ../../include/sector.hpp:
 ../../include/../src/sector.tpp:
 ../../include/../src/family.tpp:
-../../include/delta_projector.hpp:
-../../include/integral_tag.hpp:
-../../include/series.hpp:
-../../include/../src/series.tpp:
-../../include/../src/delta_projector.tpp:
 ../../include/integrand_expander.hpp:
 ../../include/series_solver.hpp:
+../../include/series.hpp:
+../../include/../src/series.tpp:
 ../../include/../src/series_solver.tpp:
 ../../include/../src/integrand_expander.tpp:
 ../../include/io.hpp:
+../../include/integral_tag.hpp:
 ../../include/../src/io.tpp:
-../../include/../src/fi_pipeline.tpp:
