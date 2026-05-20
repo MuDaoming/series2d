@@ -10,7 +10,7 @@
 
 #include "coefficient_relation_expander.hpp"
 #include "ff_type.hpp"
-#include "fi_reduction_searcher.hpp"
+#include "integral_reduction_searcher.hpp"
 #include "io.hpp"
 #include "relation_formatter.hpp"
 #include "relation_types.hpp"
@@ -144,14 +144,14 @@ int main(int argc, char** argv) {
     if (argc != 4 && argc != 5) {
         std::cerr << "Usage: " << argv[0]
                   << " <G_path> <poly_relation_path> <delta_value> [output_path]\n";
-        std::cerr << "Default output_path: fi_solution\n";
+        std::cerr << "Default output_path: integral_solution\n";
         return 1;
     }
 
     const std::string gPath = argv[1];
     const std::string polyPath = argv[2];
     const std::string deltaText = argv[3];
-    const std::string outPath = (argc == 5) ? argv[4] : "fi_solution";
+    const std::string outPath = (argc == 5) ? argv[4] : "integral_solution";
 
     try {
         const int nuSize = inferNuSize(gPath);
@@ -163,7 +163,7 @@ int main(int argc, char** argv) {
         if (pIt != kv.end()) {
             p = static_cast<mp_limb_t>(std::stoull(pIt->second));
         } else {
-            std::cerr << "[fi_solver] Warning: '# p = ...' not found. Use default p=" << p << "\n";
+            std::cerr << "[integral_solver] Warning: '# p = ...' not found. Use default p=" << p << "\n";
         }
         FlintMod::set_modulus(p);
         const FlintMod deltaValue(static_cast<unsigned long long>(std::stoull(deltaText)));
@@ -237,7 +237,7 @@ int main(int argc, char** argv) {
 
         CoefficientRelationExpander<FlintMod> expander;
         const auto assignments = expander.expandAssignments(stage1);
-        const auto fiRelations = expander.buildFIRelations(assignments, deltaValue);
+        const auto integralRelations = expander.buildIntegralRelations(assignments, deltaValue);
 
         std::ofstream out(outPath);
         if (!out.is_open()) {
@@ -248,41 +248,41 @@ int main(int argc, char** argv) {
         out << "# m = " << m << "\n";
         out << "# delta = " << deltaValue << "\n";
         out << "# |G| = " << G.size() << "\n\n";
-        if (fiRelations.empty()) {
-            out << "# FI variables = 0\n";
-            out << "# FI pivot columns = 0\n";
-            out << "# FI free columns = 0\n";
+        if (integralRelations.empty()) {
+            out << "# integral variables = 0\n";
+            out << "# integral pivot columns = 0\n";
+            out << "# integral free columns = 0\n";
             out << "#MIs\n\n";
-            out << "[fi_reductions]\n\n";
-            out << "[fi_relations]\n\n";
-            out << "[fi_rref]\n";
+            out << "[reductions]\n\n";
+            out << "[relations]\n\n";
+            out << "[integral_rref]\n";
 
-            std::cerr << "[fi_solver] G size = " << G.size()
+            std::cerr << "[integral_solver] G size = " << G.size()
                       << ", m = " << m
                       << ", delta = " << deltaValue
-                      << ", FI relations = 0"
-                      << ", FI free columns = 0 (no free columns in stage I)"
+                      << ", integral relations = 0"
+                      << ", integral free columns = 0 (no free columns in stage I)"
                       << "\n";
             return 0;
         }
 
-        FIReductionSearcher<FlintMod> fiSearcher(fiRelations);
-        const auto fiResult = fiSearcher.search();
+        IntegralReductionSearcher<FlintMod> integralSearcher(integralRelations);
+        const auto integralResult = integralSearcher.search();
 
-        RelationFormatter<FlintMod>::writeFIReductionSummary(out, fiResult);
-        RelationFormatter<FlintMod>::writeFIMasterBasis(out, fiResult);
+        RelationFormatter<FlintMod>::writeIntegralReductionSummary(out, integralResult);
+        RelationFormatter<FlintMod>::writeIntegralMasterBasis(out, integralResult);
         out << "\n";
-        RelationFormatter<FlintMod>::writeFIReductions(out, fiResult);
+        RelationFormatter<FlintMod>::writeIntegralReductions(out, integralResult);
         out << "\n";
-        RelationFormatter<FlintMod>::writeFIRelations(out, fiRelations);
+        RelationFormatter<FlintMod>::writeIntegralRelations(out, integralRelations);
         out << "\n";
-        RelationFormatter<FlintMod>::writeFIRREF(out, fiResult);
+        RelationFormatter<FlintMod>::writeIntegralRREF(out, integralResult);
 
-        std::cerr << "[fi_solver] G size = " << G.size()
+        std::cerr << "[integral_solver] G size = " << G.size()
                   << ", m = " << m
                   << ", delta = " << deltaValue
-                  << ", FI relations = " << fiRelations.size()
-                  << ", FI free columns = " << fiResult.freeColumns.size()
+                  << ", integral relations = " << integralRelations.size()
+                  << ", integral free columns = " << integralResult.freeColumns.size()
                   << "\n";
         return 0;
     } catch (const std::exception& e) {

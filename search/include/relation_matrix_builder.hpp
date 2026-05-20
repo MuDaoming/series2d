@@ -16,7 +16,7 @@ public:
 private:
     const SearchInput<T>& input_;
 
-    const SeriesSample<T>& findSample(const std::vector<int>& nu, int bcIndex) const;
+    const SeriesSample<T>& findSample(const IntegralLabel& label, int bcIndex) const;
 };
 
 #include "../src/relation_matrix_builder.tpp"

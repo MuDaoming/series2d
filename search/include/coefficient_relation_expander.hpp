@@ -10,7 +10,7 @@ public:
     std::vector<CoefficientAssignment<T>> expandAssignments(
         const RelationSearchResult<T>& result) const;
 
-    std::vector<FIRelation<T>> buildFIRelations(
+    std::vector<IntegralRelation<T>> buildIntegralRelations(
         const std::vector<CoefficientAssignment<T>>& assignments,
         const T& deltaValue) const;
 };

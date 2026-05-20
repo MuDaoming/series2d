@@ -23,25 +23,25 @@ public:
         std::ostream& out,
         const std::vector<CoefficientAssignment<T>>& assignments);
 
-    static void writeFIRelations(
+    static void writeIntegralRelations(
         std::ostream& out,
-        const std::vector<FIRelation<T>>& relations);
+        const std::vector<IntegralRelation<T>>& relations);
 
-    static void writeFIReductionSummary(
+    static void writeIntegralReductionSummary(
         std::ostream& out,
-        const FIReductionResult<T>& result);
+        const IntegralReductionResult<T>& result);
 
-    static void writeFIMasterBasis(
+    static void writeIntegralMasterBasis(
         std::ostream& out,
-        const FIReductionResult<T>& result);
+        const IntegralReductionResult<T>& result);
 
-    static void writeFIReductions(
+    static void writeIntegralReductions(
         std::ostream& out,
-        const FIReductionResult<T>& result);
+        const IntegralReductionResult<T>& result);
 
-    static void writeFIRREF(
+    static void writeIntegralRREF(
         std::ostream& out,
-        const FIReductionResult<T>& result);
+        const IntegralReductionResult<T>& result);
 };
 
 #include "../src/relation_formatter.tpp"

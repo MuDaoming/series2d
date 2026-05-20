@@ -1,236 +1,93 @@
-# `search` 模块 `code_structure`
+# `search` Code Structure
 
 ## 1. Overview
 
-`search` 模块实现 `problem_solution.md` 中的两阶段关系搜索，并在第一阶段支持零空间不缩小检验（nullspace non-shrink check）。
+`search` implements two-stage linear algebra for integral tags:
 
-第一阶段对应 `problem_solution.md` 第 3 节：给定截断级数数据，构造
+1. Find polynomial relations among delta series.
+2. Evaluate those relations at a chosen delta value and solve reductions among integral tags.
 
-$$
-A^{(\delta)} x = 0,
-$$
+An integral tag is represented by a head, optional boundary tags, and a `nu` vector:
 
-其中未知量是
-
-$$
-x_{\vec{\nu},k} = c_k^{\vec{\nu}}.
-$$
-
-在启用检验时，第一阶段先用训练阶数窗口求解，再用保留的高阶窗口做“是否缩小”布尔判定。只有判定为不缩小时，才进入输出关系与第二阶段。
-
-第二阶段对应 `problem_solution.md` 第 4 节：从第一阶段零空间生成具体系数赋值，构造 FI 关系
-
-$$
-\sum_{\vec{\nu} \in G} r_{\vec{\nu}} FI_{\vec{\nu}} = 0,
-$$
-
-再将这些关系组织成矩阵
-
-$$
-A^{(FI)} y = 0,
-$$
-
-并做第二次消元，输出主积分候选集合与 reduction 关系。
-
-顶层入口函数是
-
-```cpp
-void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
-                               const std::string& configPath,
-                               const std::string& targetPath,
-                               const std::string& maxSearchDegPath,
-                               const std::string& outputPath);
+```text
+FI{nu}
+BFI[XU]{nu}
+BBFI[XU,YD]{nu}
 ```
 
-它按固定顺序执行：输入读取 -> 第一阶段矩阵构造与消元 -> 具体赋值展开 -> 第二阶段矩阵构造与消元 -> 结果格式化输出。
+The FBI terminology is retained only for the boundary-condition count `numFBIMasters`; it refers to the upstream FBI-series basis and is independent of whether the final tag is FI, BFI, or BBFI.
 
-## 2. Code conventions
-
-### 2.1 File layout
+## 2. Files
 
 ```text
 search/
-├── docs/
-│   ├── problem_solution.md
-│   ├── code_structure.md
-│   └── code_structure.backup.md
 ├── include/
-│   ├── linear.hpp
-│   ├── io.hpp
 │   ├── relation_types.hpp
+│   ├── io.hpp
+│   ├── linear.hpp
 │   ├── relation_matrix_builder.hpp
 │   ├── relation_searcher.hpp
 │   ├── coefficient_relation_expander.hpp
-│   ├── fi_reduction_builder.hpp
-│   ├── fi_reduction_searcher.hpp
+│   ├── integral_reduction_builder.hpp
+│   ├── integral_reduction_searcher.hpp
 │   ├── relation_formatter.hpp
 │   └── search_pipeline.hpp
 ├── src/
-│   ├── linear.tpp
-│   ├── io.tpp
 │   ├── relation_types.tpp
+│   ├── io.tpp
+│   ├── linear.tpp
 │   ├── relation_matrix_builder.tpp
 │   ├── relation_searcher.tpp
 │   ├── coefficient_relation_expander.tpp
-│   ├── fi_reduction_builder.tpp
-│   ├── fi_reduction_searcher.tpp
+│   ├── integral_reduction_builder.tpp
+│   ├── integral_reduction_searcher.tpp
 │   ├── relation_formatter.tpp
 │   └── search_pipeline.tpp
-└── test/
-    ├── search_relations/
-    ├── FI_solve/
-    ├── generator/
-    │   ├── poly_relation_searcher/
-    │   └── fi_solver/
-    ├── db/
-    └── dp/
+└── tools/
+    ├── poly_relation_searcher/
+    └── integral_solver/
 ```
 
-### 2.2 Symbol table
+## 3. Core Types
 
-| Math symbol | Code name | Type / carrier |
-|:---|:---|:---|
-| $\vec{\nu}$ | `IntegralLabel::nu` | `std::vector<int>` |
-| $(\vec{\nu}, b)$ | `SeriesLabel` | `IntegralLabel` + `int` |
-| $FI_{\vec{\nu}}^{(b)}(\delta)$ truncated series | `SeriesSample<T>` | `coeffs[r] = a_r^{\vec{\nu},(b)}` |
-| $d$ | `degreeD` | `int` |
-| $m$ | `maxDeltaDegreeM` | `int` |
-| $n_{\mathrm{check}}$ | `ncheck` | `int` (`>=1`, default `1`) |
-| $d_{\mathrm{train}} = d - n_{\mathrm{check}}$ | `trainDegree` | `int` |
-| $N_{\mathrm{bc}}$ | `numFBIMasters` | `int` |
-| $c_k^{\vec{\nu}}$ | `RelationVariable{integral, k}` | first-stage variable |
-| $A^{(\delta)}$ | `std::vector<std::vector<T>>` from `RelationMatrixBuilder` | first-stage matrix |
-| $\ker A^{(\delta)}$ | `RelationSearchResult<T>` | first-stage elimination result |
-| one concrete coefficient solution | `CoefficientAssignment<T>` | free-column assignment |
-| $r_{\vec{\nu}} = \sum_{k=0}^{m} c_k^{\vec{\nu}}$ | `FIRelation<T>::coeffs` | second-stage relation coefficient |
-| $A^{(FI)}$ | `std::vector<std::vector<T>>` from `FIReductionBuilder` | second-stage matrix |
-| free FI variables | `FIReductionResult<T>::freeColumns` | master candidates |
+### 3.1 Integral Tags
 
-### 2.3 Ordering convention
-
-变量按 `problem_solution.md` 第 2.5 节的复杂度规则排序。
-
-- 第一阶段排序器：`RelationVariableMoreComplexFirst`
-- 第二阶段排序器：`IntegralLabelMoreComplexFirst`
-
-排序规则必须保持：
-
-1. `props` 大者在前；
-2. 若 `props` 相同，`dots` 大者在前；
-3. 第一阶段中若积分相同，较大的 $k$ 在前；
-4. 最后按固定字典序比较 `nu`。
-
-### 2.4 Template design
-
-除顶层 pipeline 入口外，搜索模块的核心组件都以 `template<typename T>` 编写，当前实际标量类型为 `FlintMod`。因此所有算法层都只依赖如下抽象能力：
-
-- `T(0)` 与 `T(1)`
-- 加减乘
-- 相等比较
-- 流输出
-
-## 3. Architecture
-
-### 3.1 Class hierarchy
-
-```text
-SearchInput<T>
-    ├── RelationMatrixBuilder<T>
-    │       └── RelationSearcher<T>
-    │               └── RelationSearchResult<T>
-    │                       └── CoefficientRelationExpander<T>
-    │                               ├── CoefficientAssignment<T>
-    │                               └── FIRelation<T>
-    └── RelationFormatter<T>
-
-std::vector<FIRelation<T>>
-    ├── FIReductionBuilder<T>
-    │       └── FIReductionSearcher<T>
-    │               └── FIReductionResult<T>
-    └── RelationFormatter<T>
-```
-
-`LinearSystem<T>` 是两阶段共同依赖的底层消元组件，不承载业务语义，只负责对给定矩阵做消元并暴露 RREF、pivot 列和 free 列。
-
-### 3.2 Data flow
-
-```text
-config(includes optional ncheck, default=1) / target / max degree / series files
-    ↓
-parseSearchConfigFile / parseSearchTargetFile / parseSeriesFile
-    ↓
-SearchInput<FlintMod>
-    ↓
-RelationMatrixBuilder<FlintMod>::buildVariables()
-    ↓
-RelationMatrixBuilder<FlintMod>::buildMatrix() on train window [0..d_train]
-    ↓
-A_train^(delta)
-    ↓
-LinearSystem<FlintMod>::eliminate()
-    ↓
-RelationSearchResult<FlintMod>
-    ↓
-Nullspace shrink bool-check on held-out rows [d_train+1..d]
-    ↓
-if shrink: stop with "no certified solution"
-if non-shrink: continue
-    ↓
-CoefficientRelationExpander<FlintMod>::expandAssignments()
-    ↓
-CoefficientRelationExpander<FlintMod>::buildFIRelations()
-    ↓
-std::vector<FIRelation<FlintMod>>
-    ↓
-FIReductionBuilder<FlintMod>::buildIntegralVariables()
-    ↓
-FIReductionBuilder<FlintMod>::buildMatrix()
-    ↓
-A^(FI)
-    ↓
-LinearSystem<FlintMod>::eliminate()
-    ↓
-FIReductionResult<FlintMod>
-    ↓
-RelationFormatter<FlintMod>
-```
-
-### 3.3 Call graph
-
-```text
-runRelationSearchPipeline(...)
-    -> parseSearchConfigFile(...)
-    -> parseMaxSearchDegreeFile(...)
-    -> parseSearchTargetFile(...)
-    -> parseSeriesFile<FlintMod>(...) [for each boundary condition]
-    -> RelationSearcher<FlintMod>::search()
-         -> RelationMatrixBuilder<FlintMod>::buildVariables()
-         -> RelationMatrixBuilder<FlintMod>::buildMatrix(...) [train rows]
-         -> LinearSystem<FlintMod>::eliminate()
-    -> Stage-I shrink bool-check(...) [check rows]
-         -> if shrink: write no-certified-solution and return
-    -> CoefficientRelationExpander<FlintMod>::expandAssignments(...)
-    -> CoefficientRelationExpander<FlintMod>::buildFIRelations(...)
-    -> FIReductionSearcher<FlintMod>::search()
-         -> FIReductionBuilder<FlintMod>::buildIntegralVariables()
-         -> FIReductionBuilder<FlintMod>::buildMatrix(...)
-         -> LinearSystem<FlintMod>::eliminate()
-    -> RelationFormatter<FlintMod>::write*(...)
-```
-
-## 4. Class-by-class specification
-
-### 4.1 `IntegralLabel`, `SeriesLabel`, `SeriesSample<T>`, `SearchInput<T>`
-
-**Files**: `search/include/relation_types.hpp`, `search/src/relation_types.tpp`
-
-**Purpose**: 表示第一阶段输入数据与标签系统，对应 `problem_solution.md` 第 2.1–2.4 节。
+Defined in `include/relation_types.hpp`:
 
 ```cpp
-struct IntegralLabel {
-    std::vector<int> nu;
+enum class IntegralHead {
+    FI,
+    BFI,
+    BBFI
 };
 
+enum class BoundaryAxis {
+    X,
+    Y
+};
+
+enum class BoundarySide {
+    U,
+    D
+};
+
+struct BoundaryTag {
+    BoundaryAxis axis;
+    BoundarySide side;
+};
+
+struct IntegralLabel {
+    IntegralHead head = IntegralHead::FI;
+    std::vector<BoundaryTag> boundaries;
+    std::vector<int> nu;
+};
+```
+
+`IntegralLabel` is the identity of a search object. Equality compares head, boundary tags, and `nu`. Matching by `nu` alone is not valid.
+
+### 3.2 Series and Search Input
+
+```cpp
 struct SeriesLabel {
     IntegralLabel integral;
     int bcIndex = 0;
@@ -252,18 +109,9 @@ struct SearchInput {
 };
 ```
 
-- **Pre**:
-  - 所有 `targets` 的 `nu` 维度一致。
-  - `samples` 覆盖全部 `(target, bcIndex)` 组合。
-  - 每条 `coeffs` 长度为 `degreeD + 1`。
-- **Post**:
-  - `SearchInput<T>` 足以唯一确定第一阶段矩阵构造。
+`numFBIMasters` is the number of FBI boundary-condition series files. It is not renamed when FI is extended to BFI/BBFI.
 
-### 4.2 `RelationVariable`, `RelationSearchResult<T>`, `CoefficientAssignment<T>`, `FIRelation<T>`, `FIReductionResult<T>`
-
-**Files**: `search/include/relation_types.hpp`, `search/src/relation_types.tpp`
-
-**Purpose**: 承载两阶段中间结果和最终结果。
+### 3.3 Relation Variables and Results
 
 ```cpp
 struct RelationVariable {
@@ -285,15 +133,19 @@ struct CoefficientAssignment {
     std::vector<T> values;
     int chosenFreeColumn = -1;
 };
+```
 
+### 3.4 Integral Relations and Reductions
+
+```cpp
 template<typename T>
-struct FIRelation {
+struct IntegralRelation {
     std::vector<IntegralLabel> integrals;
     std::vector<T> coeffs;
 };
 
 template<typename T>
-struct FIReductionResult {
+struct IntegralReductionResult {
     std::vector<IntegralLabel> integrals;
     std::vector<std::vector<T>> rrefMatrix;
     std::vector<int> pivotColumns;
@@ -301,497 +153,195 @@ struct FIReductionResult {
 };
 ```
 
-- **Implements**:
-  - `RelationVariable`: `problem_solution.md` 第 3.1 节
-  - `RelationSearchResult<T>`: `problem_solution.md` 第 3.4 节
-  - `CoefficientAssignment<T>` 与 `FIRelation<T>`: `problem_solution.md` 第 4.1–4.2 节
-  - `FIReductionResult<T>`: `problem_solution.md` 第 4.4 节
+These replace the old FI-only names. The second-stage solver works on general integral tags.
 
-### 4.3 `RelationVariableMoreComplexFirst` 与 `IntegralLabelMoreComplexFirst`
+## 4. Ordering
 
-**Files**: `search/include/relation_types.hpp`, `search/src/relation_types.tpp`
-
-**Purpose**: 实现 `problem_solution.md` 第 2.5 节的复杂度排序规则。
+The reduction order is implemented by:
 
 ```cpp
-struct RelationVariableMoreComplexFirst {
-    bool operator()(const RelationVariable& lhs,
-                    const RelationVariable& rhs) const;
-};
-
-struct IntegralLabelMoreComplexFirst {
-    bool operator()(const IntegralLabel& lhs,
-                    const IntegralLabel& rhs) const;
-};
+RelationVariableMoreComplexFirst
+IntegralLabelMoreComplexFirst
+IntegralLabelLess
 ```
 
-- **Pre**: `lhs`、`rhs` 的 `nu` 维度可比较。
-- **Post**:
-  - 排序结果稳定。
-  - 第一阶段比较器额外使用 `k` 打破同一积分上的顺序。
-
-### 4.4 `RelationMatrixBuilder<T>`
-
-**File**: `search/include/relation_matrix_builder.hpp`, `search/src/relation_matrix_builder.tpp`
-
-**Purpose**: 实现 `problem_solution.md` 第 3.2–3.3 节，把截断级数数据变成第一阶段线性系统。
-
-```cpp
-template<typename T>
-class RelationMatrixBuilder {
-public:
-    explicit RelationMatrixBuilder(const SearchInput<T>& input);
-
-    std::vector<RelationVariable> buildVariables() const;
-    std::vector<std::vector<T>> buildMatrix(
-        const std::vector<RelationVariable>& variables) const;
-
-private:
-    const SearchInput<T>& input_;
-
-    const SeriesSample<T>& findSample(const std::vector<int>& nu, int bcIndex) const;
-};
-```
-
-- **Pre**:
-  - `input_.targets` 非空。
-  - `input_.samples` 完整覆盖所有 `(target, bcIndex)`。
-  - 每条 `coeffs` 长度为 `input_.degreeD + 1`。
-- **Post**:
-  - `buildVariables()` 返回全部 $(\vec{\nu},k)$，数量为 $|G|(m+1)$。
-  - `buildMatrix()` 返回矩阵大小为 $(d+1)N_{\mathrm{bc}} \times |G|(m+1)$。
-  - 矩阵元满足
-
-    $$
-    A^{(\delta)}_{(b,n),(\vec{\nu},k)} =
-    \begin{cases}
-    a_{n-k}^{\vec{\nu},(b)}, & n \ge k, \\
-    0, & n < k.
-    \end{cases}
-    $$
-
-**Critical method pseudocode**:
+Complexity order:
 
 ```text
-buildVariables():
-    vars = []
-    for target in input_.targets:
-        for k in [0, maxDeltaDegreeM]:
-            vars.push_back((target, k))
-    sort vars by RelationVariableMoreComplexFirst
-    return vars
-
-buildMatrix(variables):
-    matrix = []
-    for bcIndex in [0, numFBIMasters):
-        for n in [0, degreeD]:
-            row = zero vector of length variables.size()
-            for col, var in enumerate(variables):
-                if n < var.k:
-                    continue
-                sample = findSample(var.integral.nu, bcIndex)
-                row[col] = sample.coeffs[n - var.k]
-            matrix.push_back(row)
-    return matrix
+FI > BFI > BBFI
 ```
 
-### 4.5 `RelationSearcher<T>`
+Within the same head, compare `nu` by:
 
-**File**: `search/include/relation_searcher.hpp`, `search/src/relation_searcher.tpp`
+1. larger `props` first;
+2. larger `dots` first;
+3. reverse lexicographic `nu` tie-break.
 
-**Purpose**: 封装第一阶段训练窗口求解，对应 `problem_solution.md` 第 3.4 节。
+Boundary tags are only deterministic tie-breaks. `IntegralLabelLess` is a stable map key order and is not the reduction complexity order.
 
-```cpp
-template<typename T>
-class RelationSearcher {
-public:
-    explicit RelationSearcher(const SearchInput<T>& input);
+For `RelationVariable`, compare the integral tag first, then larger delta power `k` first.
 
-    RelationSearchResult<T> search() const;
+## 5. IO
 
-private:
-    const SearchInput<T>& input_;
-};
-```
+Implemented in `include/io.hpp` and `src/io.tpp`.
 
-- **Pre**: `RelationMatrixBuilder<T>` 的前置条件全部满足。
-- **Post**:
-  - `result.variables` 与训练窗口矩阵列严格对应。
-  - `result.rrefMatrix`、`pivotColumns`、`freeColumns` 对应 $A_{\mathrm{train}}^{(\delta)}$ 的 RREF 结构。
+### 5.1 Config
 
-### 4.6 Stage-I non-shrink bool check
-
-**Files**: `search/test/generator/poly_relation_searcher/*.cpp`（runner 层）
-
-**Purpose**: 只判定“零空间是否缩小”，不构造缩小后的新零空间基。
-
-设
-
-$$
-A_{\mathrm{full}}^{(\delta)}=
-\begin{bmatrix}
-A_{\mathrm{train}}^{(\delta)}\\
-A_{\mathrm{check}}^{(\delta)}
-\end{bmatrix}.
-$$
-
-由于目标是布尔量 `isNullShrink`，采用最直接判定：
-
-$$
-\mathrm{isNullShrink}
-\Longleftrightarrow
-\operatorname{rank}\!\left(A_{\mathrm{full}}^{(\delta)}\right)
->
-\operatorname{rank}\!\left(A_{\mathrm{train}}^{(\delta)}\right).
-$$
-
-实现上不需要显式求 $\ker(A_{\mathrm{full}}^{(\delta)})$；只需检测 check 行是否带来秩增即可。对应三步：
-
-1. 用训练窗口得到 `A_train` 的 RREF（以及 pivot 列）。
-2. 把每一条 check 行按这些 pivot 做消元。
-3. 只要出现一条消元后非零行，就判定 `isNullShrink=true`；否则 `false`。
-
-**Critical method pseudocode**:
+`parseSearchConfigFile` reads:
 
 ```text
-checkNullShrink(A_train_rref, check_rows):
-    for row in check_rows:
-        reduced = eliminate_by_train_pivots(row, A_train_rref, pivot_columns)
-        if reduced is non-zero:
-            return true   # shrink detected
-    return false          # no shrink within checked window
+N
+deg
+bc
+ncheck
+p
 ```
 
-### 4.7 `CoefficientRelationExpander<T>`
+`bc` is used only to count `numFBIMasters`.
 
-**File**: `search/include/coefficient_relation_expander.hpp`, `search/src/coefficient_relation_expander.tpp`
+### 5.2 Targets
 
-**Purpose**: 实现 `problem_solution.md` 第 4.1–4.2 节，从零空间参数化结果构造具体关系，并在 $\delta = 1$ 处得到 FI 关系。
-
-```cpp
-template<typename T>
-class CoefficientRelationExpander {
-public:
-    std::vector<CoefficientAssignment<T>> expandAssignments(
-        const RelationSearchResult<T>& result) const;
-
-    std::vector<FIRelation<T>> buildFIRelations(
-        const std::vector<CoefficientAssignment<T>>& assignments) const;
-};
-```
-
-- **Pre**:
-  - `result.rrefMatrix` 与 `result.variables` 列数一致。
-  - `pivotColumns` 与 `freeColumns` 来自合法 RREF。
-- **Post**:
-  - 每个自由列生成一组具体 `CoefficientAssignment<T>`。
-  - 每组赋值满足“所选自由列取 1，其余自由列取 0”。
-  - 每条 `FIRelation<T>` 的系数等于同一积分上所有 $k$ 系数之和。
-
-**Critical method pseudocode**:
+`parseSearchTargetFile` supports:
 
 ```text
-expandAssignments(result):
-    assignments = []
-    for freeCol in result.freeColumns:
-        assignment.values = zero vector
-        assignment.values[freeCol] = 1
-        for row from last pivot row downto first:
-            pivotCol = result.pivotColumns[row]
-            sum = 0
-            for col in (pivotCol + 1) .. end:
-                sum += result.rrefMatrix[row][col] * assignment.values[col]
-            assignment.values[pivotCol] = -sum
-        assignments.push_back(assignment)
-    return assignments
-
-buildFIRelations(assignments):
-    relations = []
-    for assignment in assignments:
-        relation = empty coefficient map indexed by IntegralLabel
-        for i in [0, assignment.variables.size()):
-            relation[assignment.variables[i].integral] += assignment.values[i]
-        relations.push_back(relation)
-    return relations
+FI{1,1,1}
+BFI[XU]{1,1,1}
+BBFI[XU,YD]{1,1,1}
+{1,1,1}
 ```
 
-### 4.8 `FIReductionBuilder<T>`
+Bare `{...}` is parsed as legacy `FI{...}`.
 
-**File**: `search/include/fi_reduction_builder.hpp`, `search/src/fi_reduction_builder.tpp`
-
-**Purpose**: 实现 `problem_solution.md` 第 4.3 节，构造第二阶段矩阵 $A^{(FI)}$。
-
-```cpp
-template<typename T>
-class FIReductionBuilder {
-public:
-    explicit FIReductionBuilder(const std::vector<FIRelation<T>>& relations);
-
-    std::vector<IntegralLabel> buildIntegralVariables() const;
-    std::vector<std::vector<T>> buildMatrix(
-        const std::vector<IntegralLabel>& integrals) const;
-
-private:
-    const std::vector<FIRelation<T>>& relations_;
-};
-```
-
-- **Pre**: 每条 `FIRelation<T>` 中 `integrals.size() == coeffs.size()`。
-- **Post**:
-  - `buildIntegralVariables()` 收集第二阶段出现的全部积分并去重排序。
-  - `buildMatrix()` 逐行写入每条 FI 关系的系数。
-
-**Critical method pseudocode**:
+Validation rules:
 
 ```text
-buildIntegralVariables():
-    integrals = []
-    for relation in relations_:
-        for integral in relation.integrals:
-            if integral not yet present:
-                integrals.push_back(integral)
-    sort integrals by IntegralLabelMoreComplexFirst
-    return integrals
-
-buildMatrix(integrals):
-    matrix = []
-    for relation in relations_:
-        row = zero vector of length integrals.size()
-        for col, integral in enumerate(integrals):
-            if integral occurs in relation:
-                row[col] = matching coefficient
-        matrix.push_back(row)
-    return matrix
+FI   : no boundary tags
+BFI  : exactly one boundary tag
+BBFI : exactly two boundary tags, one X* and one Y*
 ```
 
-### 4.9 `FIReductionSearcher<T>`
+### 5.3 Series
 
-**File**: `search/include/fi_reduction_searcher.hpp`, `search/src/fi_reduction_searcher.tpp`
+`parseSeriesFile` reads line-aligned series for a given target list. The tool-level `poly_relation_searcher` can also read a large series target and filter it to a smaller `G`; this filtering uses full `IntegralLabel` identity.
 
-**Purpose**: 封装第二阶段完整消元，对应 `problem_solution.md` 第 4.4 节。
+## 6. Stage I Components
 
-```cpp
-template<typename T>
-class FIReductionSearcher {
-public:
-    explicit FIReductionSearcher(const std::vector<FIRelation<T>>& relations);
+### 6.1 `RelationMatrixBuilder<T>`
 
-    FIReductionResult<T> search() const;
-
-private:
-    const std::vector<FIRelation<T>>& relations_;
-};
-```
-
-- **Pre**: `FIReductionBuilder<T>` 的前置条件满足。
-- **Post**:
-  - `result.integrals` 与第二阶段矩阵列严格对应。
-  - `result.freeColumns` 给出当前关系集下的自由积分，即 master candidates。
-  - `result.pivotColumns` 给出可由更简单 FI 表示的积分。
-
-### 4.10 `RelationFormatter<T>`
-
-**File**: `search/include/relation_formatter.hpp`, `search/src/relation_formatter.tpp`
-
-**Purpose**: 将两阶段结果转成可读文本输出。
-
-```cpp
-template<typename T>
-class RelationFormatter {
-public:
-    static void writeSummary(
-        std::ostream& out,
-        const RelationSearchResult<T>& result);
-
-    static void writeRelations(
-        std::ostream& out,
-        const RelationSearchResult<T>& result);
-
-    static void writeRREF(
-        std::ostream& out,
-        const RelationSearchResult<T>& result);
-
-    static void writeAssignments(
-        std::ostream& out,
-        const std::vector<CoefficientAssignment<T>>& assignments);
-
-    static void writeFIRelations(
-        std::ostream& out,
-        const std::vector<FIRelation<T>>& relations);
-
-    static void writeFIReductionSummary(
-        std::ostream& out,
-        const FIReductionResult<T>& result);
-
-    static void writeFIMasterBasis(
-        std::ostream& out,
-        const FIReductionResult<T>& result);
-
-    static void writeFIReductions(
-        std::ostream& out,
-        const FIReductionResult<T>& result);
-
-    static void writeFIRREF(
-        std::ostream& out,
-        const FIReductionResult<T>& result);
-};
-```
-
-- **Pre**: 所有结果对象内部列顺序一致。
-- **Post**:
-  - 第一阶段输出包含摘要、relation、RREF、具体赋值。
-  - 第二阶段输出包含 FI relations、FI reduction 摘要、reduction、FI RREF。
-
-**Note**:
-
-- `writeFIMasterBasis()` 已存在，但当前 `runRelationSearchPipeline(...)` 未调用它；保留该接口是为了显式输出主积分候选集合。
-
-### 4.11 `io.hpp`
-
-**File**: `search/include/io.hpp`, `search/src/io.tpp`
-
-**Purpose**: 读取配置、目标积分、最大搜索次数和 series 文件，构造第一阶段输入。
-
-```cpp
-struct SearchConfig {
-    int nuSize = 0;
-    int degreeD = 0;
-    int numFBIMasters = 0;
-    int ncheck = 1;
-    mp_limb_t p = 0;
-};
-
-SearchConfig parseSearchConfigFile(const std::string& path);
-int parseMaxSearchDegreeFile(const std::string& path);
-std::vector<IntegralLabel> parseSearchTargetFile(const std::string& path, int expectedNuSize);
-
-template<typename T>
-std::vector<SeriesSample<T>> parseSeriesFile(
-    const std::string& path,
-    const std::vector<IntegralLabel>& targets,
-    int degreeD,
-    int bcIndex);
-```
-
-- **Pre**:
-  - config 文件提供 `N`、`deg`、`bc`、`p`，并可选提供 `ncheck`（默认 `1`）。
-  - target 文件中的每行都能解析为一个 `nu`。
-  - series 文件行数与 target 数目一致。
-- **Post**:
-  - 解析结果足以无损构造 `SearchInput<T>`。
-
-### 4.12 `runRelationSearchPipeline(...)`
-
-**File**: `search/include/search_pipeline.hpp`, `search/src/search_pipeline.tpp`
-
-**Purpose**: 提供顶层固定工作流。
-
-```cpp
-void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
-                               const std::string& configPath,
-                               const std::string& targetPath,
-                               const std::string& maxSearchDegPath,
-                               const std::string& outputPath);
-```
-
-- **Pre**:
-  - `seriesPaths.size() == cfg.numFBIMasters`
-  - `outputPath` 可写
-- **Post**:
-  - 若第一阶段判定零空间缩小，则输出 no-certified-solution 状态并终止后续阶段
-  - 若第一阶段判定零空间不缩小，则输出文件按固定顺序包含两阶段结果
-  - 顶层调用始终使用 `FlintMod` 作为有限域标量类型
-
-**Execution order pseudocode**:
+Builds variables:
 
 ```text
-read config (including optional ncheck, default=1) / degree / targets
-set modulus
-parse all series files
-assemble SearchInput<FlintMod>
-run first-stage search on train rows
-run shrink bool-check on held-out rows
-if shrink: write no-certified-solution and stop
-expand assignments
-build FI relations
-run second-stage reduction search
-write summaries, relations, assignments, reductions, and RREF blocks
+(IntegralLabel, k), 0 <= k <= m
 ```
 
-## 5. Verification strategy
+and constructs the matrix rows:
 
-### 5.1 Unit checks
+```text
+row = (bcIndex, delta order n)
+column = (integral tag alpha, polynomial degree k)
+```
 
-- `relation_types.*`
-  - 验证 `countProps()`、`countDots()` 与复杂度排序
-  - 验证 `equalNu()` 与字符串化函数
-- `io.*`
-  - 验证合法输入可完整解析
-  - 验证维度不匹配、行数不匹配、文件缺失时抛异常
-- `relation_matrix_builder.*`
-  - 对手工小例子检查矩阵尺寸和卷积条目
-- `coefficient_relation_expander.*`
-  - 对手工 RREF 检查回代
-  - 检查同一积分不同 $k$ 的系数确实求和为 $r_{\vec{\nu}}$
-- `fi_reduction_builder.*`
-  - 检查积分去重与排序
-  - 检查每条 FI relation 都被正确写入第二阶段矩阵
+Matrix entry:
 
-### 5.2 Stage-I checks
+```text
+sample(alpha, bcIndex).coeffs[n-k], if n >= k
+0, otherwise
+```
 
-`test/search_relations/` 必须至少验证：
+Samples are found by full integral tag.
 
-1. 变量总数等于 $|G|(m+1)$；
-2. 矩阵行数等于 $(d+1)N_{\mathrm{bc}}$；
-3. `freeColumns.size()` 与人工预期一致；
-4. 至少一条显式 `c_k^{\vec{\nu}}` relation 与人工分析一致。
-5. `ncheck` 缺省时等价于 `ncheck=1`。
-6. 当 check 行导致秩增时，`isNullShrink=true` 且流程不进入第二阶段。
-7. 当 check 行不导致秩增时，`isNullShrink=false` 且流程进入第二阶段。
+### 6.2 `RelationSearcher<T>`
 
-### 5.3 Stage-II checks
+Uses `LinearSystem<T>` to compute the RREF of the stage-I matrix. The `poly_relation_searcher` tool adds the train/check split for nullspace non-shrink validation.
 
-`test/FI_solve/` 必须至少验证：
+## 7. Stage II Components
 
-1. 每个自由列都生成一条具体赋值；
-2. `buildFIRelations()` 后的系数与 $\sum_k c_k^{\vec{\nu}}$ 一致；
-3. 第二阶段排序与复杂度规则一致；
-4. `writeFIReductions()` 输出的 pivot FI 只依赖排在其后的更简单 FI。
+### 7.1 `CoefficientRelationExpander<T>`
 
-### 5.4 Regression outputs
+`expandAssignments` converts free columns of the stage-I RREF into concrete coefficient assignments.
 
-顶层 pipeline 输出至少检查以下区段：
+`buildIntegralRelations` evaluates each assignment at a finite-field delta value:
 
-- `[relations]`
-- `[assignments]`
-- `[fi_relations]`
-- `[fi_reductions]`
-- `[fi_rref]`
-- `[rref]`
+```text
+r_alpha = sum_k c_{alpha,k} delta^k
+```
 
-### 5.5 Incremental verification order
+The result is an `IntegralRelation<T>`.
 
-推荐自底向上的验证顺序：
+### 7.2 `IntegralReductionBuilder<T>`
 
-1. `relation_types.*`
-2. `io.*`
-3. `relation_matrix_builder.*`
-4. `relation_searcher.*`
-5. `coefficient_relation_expander.*`
-6. `fi_reduction_builder.*`
-7. `fi_reduction_searcher.*`
-8. `relation_formatter.*`
-9. `search_pipeline.*`
+Collects all integral tags from all `IntegralRelation<T>` objects, sorts them by `IntegralLabelMoreComplexFirst`, and builds the second-stage reduction matrix.
 
-## 6. References
+### 7.3 `IntegralReductionSearcher<T>`
 
-- `search/docs/problem_solution.md`
-- `search/include/relation_types.hpp`
-- `search/include/relation_matrix_builder.hpp`
-- `search/include/relation_searcher.hpp`
-- `search/include/coefficient_relation_expander.hpp`
-- `search/include/fi_reduction_builder.hpp`
-- `search/include/fi_reduction_searcher.hpp`
-- `search/include/relation_formatter.hpp`
-- `search/include/io.hpp`
-- `search/include/search_pipeline.hpp`
+Runs `LinearSystem<T>` on the second-stage matrix and returns an `IntegralReductionResult<T>`. Free columns are master integrals.
+
+## 8. Formatting
+
+Implemented in `relation_formatter`.
+
+Stage-I output sections:
+
+```text
+[relations]
+[rref]
+```
+
+Stage-II output sections:
+
+```text
+# integral variables
+# integral pivot columns
+# integral free columns
+#MIs
+[reductions]
+[relations]
+[integral_rref]
+```
+
+Integral variables are printed as full tags, for example:
+
+```text
+FI{1,1,1}
+BFI[XU]{1,1,1}
+BBFI[XU,YD]{1,1,1}
+```
+
+## 9. Tools
+
+### 9.1 `poly_relation_searcher`
+
+```bash
+poly_relation_searcher <config> <G_file> <series_list> <output>
+```
+
+`series_list` contains one line per FBI boundary condition:
+
+```text
+series_path target_path
+```
+
+The target file for the series may contain more tags than `G`. Filtering uses full integral tags.
+
+### 9.2 `integral_solver`
+
+```bash
+integral_solver <G_path> <poly_relation_path> <delta_value> [output_path]
+```
+
+It reconstructs the stage-I variable order from `G` and `m`, reads the stage-I RREF, evaluates at `delta_value`, and solves the integral reduction system.
+
+Default output path:
+
+```text
+integral_solution
+```
+
+## 10. Current Validation Pattern
+
+The current validation checks include:
+
+1. FI-only vac, dp, and dp_planar runs reproduce the previous master sets and reductions after normalizing output names.
+2. Mixed FI/BFI/BBFI dp and dp_planar runs produce master files grouped by `nu`.
+3. For dp dot3 with `deg=1000`, `m=10`, and `delta=571`, the mixed search gives 43 master integrals.
+4. For dp_planar dot2 with `deg=500`, `m=10`, and `delta=571`, the mixed search gives 32 master integrals.

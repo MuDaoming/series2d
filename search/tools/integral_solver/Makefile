@@ -2,8 +2,8 @@ CXX      := g++
 CXXFLAGS := -std=c++17 -O2 -MMD -MP -I../../include -I../../../expand/include -I../../../reconstruct/include
 LDFLAGS  := -lflint -lgmp
 
-TARGET := fi_solver
-SRC    := fi_solver.cpp
+TARGET := integral_solver
+SRC    := integral_solver.cpp
 OBJ    := $(SRC:.cpp=.o)
 DEPS   := $(OBJ:.o=.d)
 

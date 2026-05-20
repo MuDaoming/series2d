@@ -15,7 +15,10 @@ make
 
 ### `G`
 - Search target integral list.
-- One `nu` vector per line, e.g. `{1,1,1,1}`.
+- One integral tag per line, e.g. `FI{1,1,1,1}`, `BFI[XU]{1,1,1,1}`,
+  or `BBFI[XU,YD]{1,1,1,1}`.
+- A bare vector such as `{1,1,1,1}` is accepted as legacy input and means
+  `FI{1,1,1,1}`.
 
 ### `config`
 (Used by `poly_relation_searcher`)
@@ -29,7 +32,7 @@ make
 - 1D expansion input for integrals in `G`.
 
 ### `poly_relation`
-(Used by `fi_solver`)
+(Used by `integral_solver`)
 - Output of `poly_relation_searcher`.
 - Must contain header fields and `[rref]` block.
 
@@ -40,8 +43,8 @@ make
 Path: `search/tools/poly_relation_searcher`
 
 Purpose:
-- Build and solve polynomial-relation system from `G` and 2D expansion data.
-- Output relation matrix / RREF for next-stage FI solving.
+- Build and solve polynomial-relation system from `G` and 1D delta expansion data.
+- Output relation matrix / RREF for next-stage integral reduction solving.
 
 Usage:
 
@@ -52,26 +55,27 @@ Usage:
 Output:
 - `<output_path>` with metadata header and `[rref]` block.
 
-### 2) `fi_solver`
+### 2) `integral_solver`
 
-Path: `search/tools/fi_solver`
+Path: `search/tools/integral_solver`
 
 Purpose:
 - Consume `G` and stage-I `poly_relation` result.
-- Build FI-level reductions and FI relations.
+- Evaluate polynomial relations at a chosen delta value and build reductions
+  among the integral tags in `G`.
 
 Usage:
 
 ```bash
-./fi_solver <G_path> <poly_relation_path> <delta_value> [output_path]
+./integral_solver <G_path> <poly_relation_path> <delta_value> [output_path]
 ```
 
-- Default `output_path`: `fi_solution`
+- Default `output_path`: `integral_solution`
 
-Output order in `fi_solution`:
+Output order in `integral_solution`:
 1. `# p`, `# m`, `# delta`, `# |G|`
-2. `# FI variables`, `# FI pivot columns`, `# FI free columns`
+2. `# integral variables`, `# integral pivot columns`, `# integral free columns`
 3. `#MIs`
-4. `[fi_reductions]`
-5. `[fi_relations]`
-6. `[fi_rref]`
+4. `[reductions]`
+5. `[relations]`
+6. `[integral_rref]`

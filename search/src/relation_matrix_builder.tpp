@@ -24,17 +24,17 @@ std::vector<RelationVariable> RelationMatrixBuilder<T>::buildVariables() const {
 
 template<typename T>
 const SeriesSample<T>& RelationMatrixBuilder<T>::findSample(
-    const std::vector<int>& nu,
+    const IntegralLabel& label,
     int bcIndex) const {
     for (const auto& sample : input_.samples) {
         if (sample.label.bcIndex == bcIndex &&
-            equalNu(sample.label.integral.nu, nu)) {
+            equalIntegralLabel(sample.label.integral, label)) {
             return sample;
         }
     }
     throw std::runtime_error(
         "Missing series sample for bcIndex=" + std::to_string(bcIndex) +
-        ", nu=" + nuToString(nu));
+        ", integral=" + integralLabelToString(label));
 }
 
 template<typename T>
@@ -51,7 +51,7 @@ std::vector<std::vector<T>> RelationMatrixBuilder<T>::buildMatrix(
                 if (n < var.k) {
                     continue;
                 }
-                const auto& sample = findSample(var.integral.nu, bcIndex);
+                const auto& sample = findSample(var.integral, bcIndex);
                 row[col] = sample.coeffs[n - var.k];
             }
             matrix.push_back(std::move(row));

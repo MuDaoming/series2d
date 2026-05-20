@@ -85,10 +85,10 @@ void RelationFormatter<T>::writeAssignments(
 }
 
 template<typename T>
-void RelationFormatter<T>::writeFIRelations(
+void RelationFormatter<T>::writeIntegralRelations(
     std::ostream& out,
-    const std::vector<FIRelation<T>>& relations) {
-    out << "[fi_relations]\n";
+    const std::vector<IntegralRelation<T>>& relations) {
+    out << "[relations]\n";
     for (const auto& relation : relations) {
         bool first = true;
         for (size_t i = 0; i < relation.integrals.size(); ++i) {
@@ -100,7 +100,7 @@ void RelationFormatter<T>::writeFIRelations(
             }
             std::ostringstream oss;
             oss << relation.coeffs[i];
-            out << oss.str() << "*" << fiVariableToString(relation.integrals[i]);
+            out << oss.str() << "*" << integralVariableToString(relation.integrals[i]);
             first = false;
         }
         if (first) {
@@ -111,31 +111,31 @@ void RelationFormatter<T>::writeFIRelations(
 }
 
 template<typename T>
-void RelationFormatter<T>::writeFIReductionSummary(
+void RelationFormatter<T>::writeIntegralReductionSummary(
     std::ostream& out,
-    const FIReductionResult<T>& result) {
+    const IntegralReductionResult<T>& result) {
     int pivotCount = 0;
     for (int col : result.pivotColumns) {
         if (col >= 0) {
             ++pivotCount;
         }
     }
-    out << "# FI variables = " << result.integrals.size() << "\n";
-    out << "# FI pivot columns = " << pivotCount << "\n";
-    out << "# FI free columns = " << result.freeColumns.size() << "\n";
+    out << "# integral variables = " << result.integrals.size() << "\n";
+    out << "# integral pivot columns = " << pivotCount << "\n";
+    out << "# integral free columns = " << result.freeColumns.size() << "\n";
 }
 
 template<typename T>
-void RelationFormatter<T>::writeFIMasterBasis(
+void RelationFormatter<T>::writeIntegralMasterBasis(
     std::ostream& out,
-    const FIReductionResult<T>& result) {
+    const IntegralReductionResult<T>& result) {
     out << "#MIs\n";
     for (size_t i = 0; i < result.freeColumns.size(); ++i) {
         const int col = result.freeColumns[i];
         if (col < 0 || col >= static_cast<int>(result.integrals.size())) {
             continue;
         }
-        out << nuToString(result.integrals[col].nu);
+        out << integralLabelToString(result.integrals[col]);
         if (i + 1 < result.freeColumns.size()) {
             out << ",";
         }
@@ -144,17 +144,17 @@ void RelationFormatter<T>::writeFIMasterBasis(
 }
 
 template<typename T>
-void RelationFormatter<T>::writeFIReductions(
+void RelationFormatter<T>::writeIntegralReductions(
     std::ostream& out,
-    const FIReductionResult<T>& result) {
-    out << "[fi_reductions]\n";
+    const IntegralReductionResult<T>& result) {
+    out << "[reductions]\n";
     for (size_t row = 0; row < result.pivotColumns.size(); ++row) {
         const int pivotCol = result.pivotColumns[row];
         if (pivotCol < 0) {
             continue;
         }
 
-        out << fiVariableToString(result.integrals[pivotCol]) << " = ";
+        out << integralVariableToString(result.integrals[pivotCol]) << " = ";
         bool first = true;
         for (size_t col = static_cast<size_t>(pivotCol + 1); col < result.integrals.size(); ++col) {
             const T coeff = result.rrefMatrix[row][col];
@@ -166,7 +166,7 @@ void RelationFormatter<T>::writeFIReductions(
             }
             std::ostringstream oss;
             oss << (T(0) - coeff);
-            out << oss.str() << "*" << fiVariableToString(result.integrals[col]);
+            out << oss.str() << "*" << integralVariableToString(result.integrals[col]);
             first = false;
         }
         if (first) {
@@ -177,10 +177,10 @@ void RelationFormatter<T>::writeFIReductions(
 }
 
 template<typename T>
-void RelationFormatter<T>::writeFIRREF(
+void RelationFormatter<T>::writeIntegralRREF(
     std::ostream& out,
-    const FIReductionResult<T>& result) {
-    out << "[fi_rref]\n";
+    const IntegralReductionResult<T>& result) {
+    out << "[integral_rref]\n";
     for (const auto& row : result.rrefMatrix) {
         out << "{";
         for (size_t j = 0; j < row.size(); ++j) {

@@ -1,11 +1,11 @@
 #include <algorithm>
 
 template<typename T>
-FIReductionBuilder<T>::FIReductionBuilder(const std::vector<FIRelation<T>>& relations)
+IntegralReductionBuilder<T>::IntegralReductionBuilder(const std::vector<IntegralRelation<T>>& relations)
     : relations_(relations) {}
 
 template<typename T>
-std::vector<IntegralLabel> FIReductionBuilder<T>::buildIntegralVariables() const {
+std::vector<IntegralLabel> IntegralReductionBuilder<T>::buildIntegralVariables() const {
     std::vector<IntegralLabel> integrals;
     for (const auto& relation : relations_) {
         for (const auto& integral : relation.integrals) {
@@ -13,7 +13,7 @@ std::vector<IntegralLabel> FIReductionBuilder<T>::buildIntegralVariables() const
                 integrals.begin(),
                 integrals.end(),
                 [&](const IntegralLabel& label) {
-                    return equalNu(label.nu, integral.nu);
+                    return equalIntegralLabel(label, integral);
                 });
             if (it == integrals.end()) {
                 integrals.push_back(integral);
@@ -26,7 +26,7 @@ std::vector<IntegralLabel> FIReductionBuilder<T>::buildIntegralVariables() const
 }
 
 template<typename T>
-std::vector<std::vector<T>> FIReductionBuilder<T>::buildMatrix(
+std::vector<std::vector<T>> IntegralReductionBuilder<T>::buildMatrix(
     const std::vector<IntegralLabel>& integrals) const {
     std::vector<std::vector<T>> matrix;
     matrix.reserve(relations_.size());
@@ -38,7 +38,7 @@ std::vector<std::vector<T>> FIReductionBuilder<T>::buildMatrix(
                 relation.integrals.begin(),
                 relation.integrals.end(),
                 [&](const IntegralLabel& label) {
-                    return equalNu(label.nu, integrals[col].nu);
+                    return equalIntegralLabel(label, integrals[col]);
                 });
             if (it != relation.integrals.end()) {
                 const size_t idx = static_cast<size_t>(it - relation.integrals.begin());

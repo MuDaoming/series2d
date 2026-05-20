@@ -36,10 +36,10 @@ std::vector<CoefficientAssignment<T>> CoefficientRelationExpander<T>::expandAssi
 }
 
 template<typename T>
-std::vector<FIRelation<T>> CoefficientRelationExpander<T>::buildFIRelations(
+std::vector<IntegralRelation<T>> CoefficientRelationExpander<T>::buildIntegralRelations(
     const std::vector<CoefficientAssignment<T>>& assignments,
     const T& deltaValue) const {
-    std::vector<FIRelation<T>> relations;
+    std::vector<IntegralRelation<T>> relations;
     relations.reserve(assignments.size());
 
     if (assignments.empty()) {
@@ -74,7 +74,7 @@ std::vector<FIRelation<T>> CoefficientRelationExpander<T>::buildFIRelations(
             integrals.begin(),
             integrals.end(),
             [&](const IntegralLabel& label) {
-                return equalNu(label.nu, integral.nu);
+                return equalIntegralLabel(label, integral);
             });
 
         if (it == integrals.end()) {
@@ -86,7 +86,7 @@ std::vector<FIRelation<T>> CoefficientRelationExpander<T>::buildFIRelations(
     }
 
     for (const auto& assignment : assignments) {
-        FIRelation<T> relation;
+        IntegralRelation<T> relation;
         relation.integrals = integrals;
         relation.coeffs.assign(integrals.size(), T(0));
 

@@ -1,9 +1,34 @@
 #pragma once
 
+#include <algorithm>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
+enum class IntegralHead {
+    FI,
+    BFI,
+    BBFI
+};
+
+enum class BoundaryAxis {
+    X,
+    Y
+};
+
+enum class BoundarySide {
+    U,
+    D
+};
+
+struct BoundaryTag {
+    BoundaryAxis axis;
+    BoundarySide side;
+};
+
 struct IntegralLabel {
+    IntegralHead head = IntegralHead::FI;
+    std::vector<BoundaryTag> boundaries;
     std::vector<int> nu;
 };
 
@@ -48,13 +73,13 @@ struct CoefficientAssignment {
 };
 
 template<typename T>
-struct FIRelation {
+struct IntegralRelation {
     std::vector<IntegralLabel> integrals;
     std::vector<T> coeffs;
 };
 
 template<typename T>
-struct FIReductionResult {
+struct IntegralReductionResult {
     std::vector<IntegralLabel> integrals;
     std::vector<std::vector<T>> rrefMatrix;
     std::vector<int> pivotColumns;
@@ -64,9 +89,19 @@ struct FIReductionResult {
 int countProps(const std::vector<int>& nu);
 int countDots(const std::vector<int>& nu);
 bool equalNu(const std::vector<int>& lhs, const std::vector<int>& rhs);
+bool equalBoundaryTag(const BoundaryTag& lhs, const BoundaryTag& rhs);
+bool equalIntegralLabel(const IntegralLabel& lhs, const IntegralLabel& rhs);
 std::string nuToString(const std::vector<int>& nu);
+std::string integralHeadToString(IntegralHead head);
+std::string boundaryTagToString(const BoundaryTag& tag);
+std::string integralLabelToString(const IntegralLabel& label);
 std::string relationVariableToString(const RelationVariable& var);
-std::string fiVariableToString(const IntegralLabel& label);
+std::string integralVariableToString(const IntegralLabel& label);
+
+struct IntegralLabelLess {
+    bool operator()(const IntegralLabel& lhs,
+                    const IntegralLabel& rhs) const;
+};
 
 struct RelationVariableMoreComplexFirst {
     bool operator()(const RelationVariable& lhs,

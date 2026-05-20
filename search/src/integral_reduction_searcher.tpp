@@ -1,11 +1,11 @@
 template<typename T>
-FIReductionSearcher<T>::FIReductionSearcher(const std::vector<FIRelation<T>>& relations)
+IntegralReductionSearcher<T>::IntegralReductionSearcher(const std::vector<IntegralRelation<T>>& relations)
     : relations_(relations) {}
 
 template<typename T>
-FIReductionResult<T> FIReductionSearcher<T>::search() const {
-    FIReductionBuilder<T> builder(relations_);
-    FIReductionResult<T> result;
+IntegralReductionResult<T> IntegralReductionSearcher<T>::search() const {
+    IntegralReductionBuilder<T> builder(relations_);
+    IntegralReductionResult<T> result;
     result.integrals = builder.buildIntegralVariables();
 
     auto matrix = builder.buildMatrix(result.integrals);

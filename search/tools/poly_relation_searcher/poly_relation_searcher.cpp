@@ -1,6 +1,6 @@
 // poly_relation_searcher.cpp
 //
-// Stage I of IBP search: find polynomial relations among FI(delta).
+// Stage I of IBP search: find polynomial relations among I(delta).
 //
 // Usage:
 //   ./stage1_runner <config> <G_file> <series_list> <output>
@@ -13,8 +13,10 @@
 //   p   = 2305843009213693951    # prime modulus
 //
 // G_file:
-//   one integral per line, same format as expand target, e.g.
-//     {1, 1, 1, 1, 1, 1}
+//   one integral tag per line, same format as expand target, e.g.
+//     FI{1, 1, 1, 1, 1, 1}
+//     BFI[XU]{1, 1, 1, 1, 1, 1}
+//     BBFI[XU,YD]{1, 1, 1, 1, 1, 1}
 //   G must be a subset of each series' own target.
 //
 // series_list:
@@ -140,16 +142,16 @@ parseSeriesForG(const std::string& seriesPath,
     const int nuSize = static_cast<int>(G[0].nu.size());
     const auto fullTarget = parseSearchTargetFile(seriesTargetPath, nuSize);
 
-    // 2. Build set: nu -> index in G.
-    std::map<std::vector<int>, int> nuToGIdx;
+    // 2. Build set: integral tag -> index in G.
+    std::map<IntegralLabel, int, IntegralLabelLess> labelToGIdx;
     for (int i = 0; i < static_cast<int>(G.size()); ++i)
-        nuToGIdx[G[i].nu] = i;
+        labelToGIdx[G[i]] = i;
 
     // 3. Map each fullTarget position to a G index (-1 if absent).
     std::vector<int> fullToG(fullTarget.size(), -1);
     for (int i = 0; i < static_cast<int>(fullTarget.size()); ++i) {
-        auto it = nuToGIdx.find(fullTarget[i].nu);
-        if (it != nuToGIdx.end())
+        auto it = labelToGIdx.find(fullTarget[i]);
+        if (it != labelToGIdx.end())
             fullToG[i] = it->second;
     }
 
@@ -208,8 +210,8 @@ parseSeriesForG(const std::string& seriesPath,
     for (int i = 0; i < static_cast<int>(G.size()); ++i) {
         if (result[i].coeffs.empty())
             throw std::runtime_error(
-                "Integral in G not found in series target " + seriesTargetPath +
-                ": " + nuToString(G[i].nu));
+                "Integral tag in G not found in series target " + seriesTargetPath +
+                ": " + integralLabelToString(G[i]));
     }
 
     return result;
@@ -299,7 +301,7 @@ int main(int argc, char** argv) {
         SearchInput<FlintMod> input;
         input.degreeD         = cfg.deg;
         input.maxDeltaDegreeM = cfg.m;
-        input.numFBIMasters   = numBC;
+        input.numFBIMasters = numBC;
         input.targets         = G;
 
         for (int b = 0; b < numBC; ++b) {

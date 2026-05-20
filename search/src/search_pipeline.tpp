@@ -49,9 +49,9 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
     auto result = searcher.search();
     CoefficientRelationExpander<FlintMod> expander;
     auto assignments = expander.expandAssignments(result);
-    auto fiRelations = expander.buildFIRelations(assignments, deltaValue);
-    FIReductionSearcher<FlintMod> fiSearcher(fiRelations);
-    auto fiReduction = fiSearcher.search();
+    auto integralRelations = expander.buildIntegralRelations(assignments, deltaValue);
+    IntegralReductionSearcher<FlintMod> integralSearcher(integralRelations);
+    auto integralReduction = integralSearcher.search();
 
     std::ofstream out(outP.string());
     if (!out.is_open()) {
@@ -65,13 +65,13 @@ void runRelationSearchPipeline(const std::vector<std::string>& seriesPaths,
     out << "\n";
     RelationFormatter<FlintMod>::writeAssignments(out, assignments);
     out << "\n";
-    RelationFormatter<FlintMod>::writeFIRelations(out, fiRelations);
+    RelationFormatter<FlintMod>::writeIntegralRelations(out, integralRelations);
     out << "\n";
-    RelationFormatter<FlintMod>::writeFIReductionSummary(out, fiReduction);
+    RelationFormatter<FlintMod>::writeIntegralReductionSummary(out, integralReduction);
     out << "\n";
-    RelationFormatter<FlintMod>::writeFIReductions(out, fiReduction);
+    RelationFormatter<FlintMod>::writeIntegralReductions(out, integralReduction);
     out << "\n";
-    RelationFormatter<FlintMod>::writeFIRREF(out, fiReduction);
+    RelationFormatter<FlintMod>::writeIntegralRREF(out, integralReduction);
     out << "\n";
     RelationFormatter<FlintMod>::writeRREF(out, result);
 }

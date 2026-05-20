@@ -1,436 +1,195 @@
-# FI 关于 $\delta$ 的多项式关系搜索与 FI 约化
+# Integral-tag polynomial relation search and reduction
 
-## 1. Research objective
+## 1. Research Objective
 
-设 $G$ 是一组待处理的 Feynman 积分标签集合，每个元素记为 $\vec{\nu}$。对每个 $\vec{\nu} \in G$，考虑其一参数形变积分
+`search` consumes one-dimensional delta expansions produced by `expand` and searches linear relations among a finite set of integral tags.
 
-$$
-FI_{\vec{\nu}}(\delta).
-$$
+An integral tag is one of:
 
-已知的是这些积分在若干组独立边界条件下关于 $\delta$ 的一维截断级数展开。目标不是重新计算这些展开，而是利用这些展开搜索积分之间的线性关系，并最终得到原始积分
+```text
+FI{nu}
+BFI[XU]{nu}
+BFI[XD]{nu}
+BFI[YU]{nu}
+BFI[YD]{nu}
+BBFI[XU,YU]{nu}
+BBFI[XU,YD]{nu}
+BBFI[XD,YU]{nu}
+BBFI[XD,YD]{nu}
+```
 
-$$
-FI_{\vec{\nu}} := FI_{\vec{\nu}}(1)
-$$
+Here `nu` is the propagator-index vector. `FI`, `BFI`, and `BBFI` are part of the integral identity; two tags with the same `nu` but different heads or boundary tags are different search variables.
 
-之间的约化公式。
-
-整个研究目标分成两个顺序相连的问题。
-
-### 1.1 Problem I: search polynomial relations among $FI_{\vec{\nu}}(\delta)$
-
-搜索非平凡关系
-
-$$
-\sum_{\vec{\nu} \in G}
-P_{\vec{\nu}}(\delta) \, FI_{\vec{\nu}}(\delta) = 0,
-$$
-
-其中
+The input set is
 
 $$
-P_{\vec{\nu}}(\delta) = \sum_{k=0}^{m} c_k^{\vec{\nu}} \delta^k,
-\qquad c_k^{\vec{\nu}} \in Z_p.
+G = \{\alpha_1,\ldots,\alpha_{N_G}\},
 $$
 
-这里 $m$ 是预先给定的多项式次数上界，未知量是全部 $c_k^{\vec{\nu}}$。
-
-### 1.2 Problem II: derive undeformed FI relations and solve reductions
-
-从 Problem I 得到的系数空间零空间出发，构造具体的多项式关系；然后在这些关系中取 $\delta = 1$，得到原始积分 $FI_{\vec{\nu}}$ 之间的线性关系；最后对这些关系再做一次消元，得到把复杂积分表示为简单积分、进一步表示为主积分的约化式。
-
-目标形式是
+where each $\alpha$ is a full integral tag. For each $\alpha \in G$, consider its delta-dependent object
 
 $$
-FI_{\vec{\nu}_{\mathrm{comp}}}
-=
-\sum_{\vec{\mu} \in M}
-R_{\vec{\nu}_{\mathrm{comp}},\vec{\mu}} \, FI_{\vec{\mu}},
+I_\alpha(\delta).
 $$
 
-其中 $M$ 可以是预先给定的主积分集合，也可以是第二次消元后剩下的自由积分集合。
+The goal has two stages:
 
-## 2. Mathematical structures
+1. Search polynomial-coefficient relations among the $I_\alpha(\delta)$.
+2. Evaluate those relations at a chosen finite-field value of $\delta$ and solve reductions among the $I_\alpha(\delta_0)$.
 
-### 2.1 Integral set
+## 2. Stage I: Polynomial Relations in Delta
 
-记待研究积分集合为
-
-$$
-G = \{\vec{\nu}^{(1)}, \dots, \vec{\nu}^{(N_G)}\}.
-$$
-
-这里 $N_G = |G|$。
-
-### 2.2 Boundary conditions
-
-设共有 $N_{\mathrm{bc}}$ 组独立边界条件，编号为
+For a fixed polynomial degree bound $m$, search relations of the form
 
 $$
-b = 1,2,\dots,N_{\mathrm{bc}}.
+\sum_{\alpha \in G}
+P_\alpha(\delta) I_\alpha(\delta)=0,
 $$
 
-在目标应用中，通常希望
+where
 
 $$
-N_{\mathrm{bc}} = N_{\mathrm{master}},
+P_\alpha(\delta)=\sum_{k=0}^m c_{\alpha,k}\delta^k,
+\qquad c_{\alpha,k}\in \mathbb{Z}_p.
 $$
 
-并把这组边界条件理解为主积分空间中的一组基。但对本文档的数学形式化而言，只要求这些边界条件线性独立即可。
-
-### 2.3 Truncated series data
-
-对每个 $\vec{\nu} \in G$ 以及每个边界条件 $b$，已知截断展开
+For each FBI boundary condition $b$, the known truncated series is
 
 $$
-FI_{\vec{\nu}}^{(b)}(\delta)
-=
-\sum_{r=0}^{d} a_r^{\vec{\nu},(b)} \delta^r,
-\qquad a_r^{\vec{\nu},(b)} \in Z_p.
+I_\alpha^{(b)}(\delta)
+=\sum_{r=0}^{d} a_{\alpha,b,r}\delta^r.
 $$
 
-其中 $d$ 是已知展开的最高阶。
-
-### 2.4 Polynomial degree bound
-
-给定非负整数 $m$，并只搜索次数不超过 $m$ 的多项式系数：
+Substituting the series into the ansatz gives, for every $b$ and every $0\le n\le d$,
 
 $$
-P_{\vec{\nu}}(\delta) = \sum_{k=0}^{m} c_k^{\vec{\nu}} \delta^k.
-$$
-
-通常假设
-
-$$
-d > m,
-$$
-
-以保证已知级数包含足够信息来约束所搜索的关系。
-
-### 2.5 Complexity ordering on integral labels
-
-为了把最终结果整理成“复杂积分由简单积分表示”的形式，需要在积分标签上固定一个复杂度顺序。
-
-对每个 $\vec{\nu}$ 定义
-
-$$
-\mathrm{props}(\vec{\nu}) := \#\{i \mid \nu_i \neq 0\},
-$$
-
-以及
-
-$$
-\mathrm{dots}(\vec{\nu}) := \sum_i \nu_i - \mathrm{props}(\vec{\nu}).
-$$
-
-其中：
-
-- $\mathrm{props}(\vec{\nu})$ 表示非零 propagator 幂次数目；
-- $\mathrm{dots}(\vec{\nu})$ 表示总幂次超出 $1$ 的部分。
-
-规定 $\vec{\mu}$ 比 $\vec{\nu}$ 更简单，当且仅当依次满足如下比较规则：
-
-1. $\mathrm{props}(\vec{\mu}) < \mathrm{props}(\vec{\nu})$；
-2. 若 $\mathrm{props}$ 相同，则 $\mathrm{dots}(\vec{\mu}) < \mathrm{dots}(\vec{\nu})$；
-3. 若两者仍相同，则用固定的标签比较规则打破平局。
-
-在 Problem I 中，变量是 $(\vec{\nu}, k)$，因此在积分标签相同的情况下，再把较大的 $k$ 视为更复杂，从而在消元中优先消去高次 $\delta$ 系数。
-
-## 3. Problem I: polynomial relation search for $FI_{\vec{\nu}}(\delta)$
-
-### 3.1 Unknown variables
-
-对每个 $\vec{\nu} \in G$ 与每个 $0 \le k \le m$，定义未知量
-
-$$
-x_{\vec{\nu},k} := c_k^{\vec{\nu}}.
-$$
-
-因此未知量总数为
-
-$$
-N_{\mathrm{var}} = |G|(m+1).
-$$
-
-### 3.2 Polynomial ansatz
-
-目标关系写为
-
-$$
-\sum_{\vec{\nu} \in G}
-\left(\sum_{k=0}^{m} c_k^{\vec{\nu}} \delta^k\right)
-FI_{\vec{\nu}}(\delta) = 0.
-$$
-
-对固定的边界条件 $b$，代入截断展开
-
-$$
-FI_{\vec{\nu}}^{(b)}(\delta)
-=
-\sum_{r=0}^{d} a_r^{\vec{\nu},(b)} \delta^r,
-$$
-
-得到
-
-$$
-\sum_{\vec{\nu} \in G}
-\left(\sum_{k=0}^{m} c_k^{\vec{\nu}} \delta^k\right)
-\left(\sum_{r=0}^{d} a_r^{\vec{\nu},(b)} \delta^r\right).
-$$
-
-展开后，$\delta^n$ 的系数为
-
-$$
-\sum_{\vec{\nu} \in G}
+\sum_{\alpha\in G}
 \sum_{k=0}^{\min(n,m)}
-c_k^{\vec{\nu}} a_{n-k}^{\vec{\nu},(b)}.
+c_{\alpha,k}a_{\alpha,b,n-k}=0.
 $$
 
-由于目标关系必须对每一组边界条件同时成立，因此对所有 $b = 1,\dots,N_{\mathrm{bc}}$ 和 $n = 0,1,\dots,d$ 都要求
+This is a homogeneous linear system
 
 $$
-\sum_{\vec{\nu} \in G}
-\sum_{k=0}^{\min(n,m)}
-c_k^{\vec{\nu}} a_{n-k}^{\vec{\nu},(b)} = 0.
+A^{(\delta)}x=0.
 $$
 
-### 3.3 Linear system for Problem I
-
-把全部方程堆叠起来，得到齐次线性系统
+Rows are indexed by $(b,n)$, columns by $(\alpha,k)$, and
 
 $$
-A^{(\delta)} x = 0.
-$$
-
-行指标记为 $(b,n)$，列指标记为 $(\vec{\nu},k)$，则矩阵元为
-
-$$
-A^{(\delta)}_{(b,n),(\vec{\nu},k)} =
+A^{(\delta)}_{(b,n),(\alpha,k)} =
 \begin{cases}
-a_{n-k}^{\vec{\nu},(b)}, & n \ge k, \\
-0, & n < k.
+a_{\alpha,b,n-k}, & n\ge k,\\
+0, & n<k.
 \end{cases}
 $$
 
-矩阵规模为
+The number of rows is $(d+1)N_{\mathrm{bc}}$, where $N_{\mathrm{bc}}$ is carried in code as `numFBIMasters`, because these boundary conditions come from the FBI layer.
+
+## 3. Nullspace Non-shrink Check
+
+Finite-order data can create accidental relations. To detect this, the stage-I search can split the available orders into a training window and a held-out check window.
+
+Given `ncheck`, define
 
 $$
-\#\mathrm{rows} = (d+1)N_{\mathrm{bc}},
-\qquad
-\#\mathrm{cols} = |G|(m+1).
+d_{\mathrm{train}}=d-\mathrm{ncheck}.
 $$
 
-### 3.4 Output of Problem I
+The solver computes the nullspace using rows up to $d_{\mathrm{train}}$, then checks whether the same nullspace satisfies the held-out rows $d_{\mathrm{train}}+1,\ldots,d$.
 
-Problem I 的直接输出是零空间
+If the nullspace shrinks on the held-out rows, the output is marked as no certified solution. Otherwise, the relation data are written as an RREF and can be consumed by the second-stage solver.
 
-$$
-\ker A^{(\delta)}.
-$$
+## 4. Stage II: Delta Evaluation and Integral Reductions
 
-等价地，也可以输出以下任一形式：
-
-1. 零空间的一组基向量；
-2. $A^{(\delta)}$ 的行最简形以及主元列、自由列信息；
-3. 把主变量写成自由变量线性组合的显式表达。
-
-这一阶段的结果仍然是关于系数 $c_k^{\vec{\nu}}$ 的关系，而不是最终的 FI 约化关系。
-
-### 3.5 Nullspace non-shrink criterion under finite-order data
-
-原则上，Problem I 想得到的是对无穷阶 $FI_{\vec{\nu}}(\delta)$ 都成立的关系。若记使用到 $\delta^0,\dots,\delta^N$ 阶方程构造的矩阵为 $A_N$，则理想条件是存在某个 $N_\star$ 使得
+Given one stage-I nullspace basis vector, evaluate its polynomial coefficients at a chosen finite-field value $\delta_0$:
 
 $$
-\ker(A_{N_\star})=\ker(A_{N_\star+1})=\ker(A_{N_\star+2})=\cdots=\ker(A_\infty).
+r_\alpha =
+\sum_{k=0}^{m} c_{\alpha,k}\delta_0^k.
 $$
 
-也就是随着阶数增加，零空间不再缩小。
-
-但在实际计算中只能访问有限阶数据，因此采用有限窗口稳定性准则。给定整数 $n_{\mathrm{check}}\ge 1$，先用较低阶窗口求解，再用后续连续 $n_{\mathrm{check}}$ 个阶数窗口检验是否继续缩小。
-
-设训练截止阶为 $N_{\mathrm{train}}$，并定义
+This produces a relation among integral tags:
 
 $$
-K_t:=\ker(A_{N_{\mathrm{train}}+t}),\qquad t=0,1,\dots,n_{\mathrm{check}}.
+\sum_{\alpha\in G} r_\alpha I_\alpha(\delta_0)=0.
 $$
 
-因为增加方程只会增加约束，必有
+All such relations are assembled into a second linear system
 
 $$
-K_{t+1}\subseteq K_t.
+A^{(I)}y=0,
 $$
 
-检验目标是判断是否发生严格缩小。等价地，可检查是否存在
+whose columns are full integral tags $\alpha$. Gaussian elimination then expresses more complex integral tags in terms of simpler tags. Free columns are reported as master integrals.
 
-$$
-\dim K_{t+1}<\dim K_t.
-$$
+The output sections are:
 
-若在 $t=0,\dots,n_{\mathrm{check}}-1$ 上都不缩小（即维数始终不变），则在当前工作假设下接受“零空间已稳定”；否则判定“当前阶数下尚未通过稳定性检验”，不输出可认证关系。
+```text
+#MIs
+[reductions]
+[relations]
+[integral_rref]
+```
 
-该准则的核心是布尔判定“是否缩小”，而非比较缩小后的具体基表示。实现上只要判定新增阶方程是否提升秩（等价于是否使零空间维数下降）即可。
+## 5. Integral Ordering
 
-此外需要注意, 上面所说的阶数都是指 $FI(\delta)$ 展开的阶数, 而非拟设的多项式关系中的阶数, 后者在本部分中, 是讨论一开始就被设定的用以定义问题的参数.
+The reduction ordering is defined on full integral tags.
 
-## 4. Problem II: from $FI_{\vec{\nu}}(\delta)$ relations to $FI_{\vec{\nu}} = FI_{\vec{\nu}}(1)$ reductions
+The head is compared first:
 
-### 4.1 From nullspace basis to concrete polynomial relations
+```text
+FI > BFI > BBFI
+```
 
-取 $\ker A^{(\delta)}$ 的一组基。为了从参数化的零空间结果得到具体关系，对每一个自由变量分别执行：
+Thus BFI is always simpler than FI, and BBFI is always simpler than BFI, regardless of `nu`.
 
-1. 令该自由变量取值为 $1$；
-2. 令其余自由变量取值为 $0$；
-3. 用行最简形回代出全部主变量。
+If the head is the same, compare the `nu` vector:
 
-于是得到一组具体系数
+1. Larger `props(nu)` is more complex.
+2. If `props` is equal, larger `dots(nu)` is more complex.
+3. If still tied, use reverse lexicographic comparison of `nu`.
 
-$$
-\{c_k^{\vec{\nu}}\}_{\vec{\nu} \in G,\, 0 \le k \le m},
-$$
+Boundary tags do not represent physical complexity in this ordering. They are used only as deterministic tie-breaks.
 
-并从而得到一条具体的多项式关系
+For stage-I variables $(\alpha,k)$, compare $\alpha$ first. If the integral tag is identical, larger $k$ is more complex.
 
-$$
-\sum_{\vec{\nu} \in G}
-\left(\sum_{k=0}^{m} c_k^{\vec{\nu}} \delta^k\right)
-FI_{\vec{\nu}}(\delta) = 0.
-$$
+## 6. Target and Series Matching
 
-### 4.2 Specialization at $\delta = 1$
+The target file `G` contains one integral tag per line. Supported forms are:
 
-把上述关系在 $\delta = 1$ 处求值，定义
+```text
+FI{1,1,1}
+BFI[XU]{1,1,1}
+BBFI[XU,YD]{1,1,1}
+```
 
-$$
-r_{\vec{\nu}} := \sum_{k=0}^{m} c_k^{\vec{\nu}}.
-$$
+A bare vector is accepted as legacy input:
 
-于是得到原始积分之间的线性关系
+```text
+{1,1,1}
+```
 
-$$
-\sum_{\vec{\nu} \in G} r_{\vec{\nu}} FI_{\vec{\nu}} = 0.
-$$
+and is interpreted as:
 
-这一步把系数空间问题转成了原始积分空间问题，是第二次消元的输入。
+```text
+FI{1,1,1}
+```
 
-### 4.3 Linear system for FI relations
+Series files are line-aligned with their own target files. When a stage-I `G` is a subset of a larger series target, matching is done by full integral tag, not only by `nu`. This is essential because `FI{nu}`, `BFI[XU]{nu}`, and `BBFI[XU,YD]{nu}` are distinct objects.
 
-把所有由 4.1 和 4.2 得到的 FI 关系堆叠起来，得到第二个齐次线性系统
+## 7. Tool Flow
 
-$$
-A^{(FI)} y = 0,
-$$
+Stage I:
 
-其中向量 $y$ 的分量直接由 $FI_{\vec{\nu}}$ 标记。
+```bash
+poly_relation_searcher <config> <G_file> <series_list> <output>
+```
 
-每一行对应一条具体 FI 关系；在 $\vec{\nu}$ 这一列上的矩阵元就是该关系中 $FI_{\vec{\nu}}$ 的系数 $r_{\vec{\nu}}$。
+Stage II:
 
-### 4.4 Reduction target and masters
+```bash
+integral_solver <G_path> <poly_relation_path> <delta_value> [output_path]
+```
 
-对 $A^{(FI)}$ 按积分复杂度顺序做消元后，希望读出的结果形如
-
-$$
-FI_{\vec{\nu}_{\mathrm{comp}}}
-=
-\sum_{\vec{\mu}\text{ simpler}}
-R_{\vec{\nu}_{\mathrm{comp}},\vec{\mu}} FI_{\vec{\mu}}.
-$$
-
-如果关系系统足够完备，则最后保留下来的自由积分集合可视为主积分集合 $M$，此时上式可写为
-
-$$
-FI_{\vec{\nu}_{\mathrm{comp}}}
-=
-\sum_{\vec{\mu} \in M}
-R_{\vec{\nu}_{\mathrm{comp}},\vec{\mu}} FI_{\vec{\mu}}.
-$$
-
-因此，求解将 $FI$ 表示为主积分，可以被理解为第二次消元的最终目标；而如果在具体数据中尚不能唯一识别外部给定的主积分集合，那么至少也能得到复杂积分表示为最终自由积分的 reduction 形式。
-
-## 5. Implementation-specific extensions
-
-### 5.1 Problem decomposition
-
-整个任务分为两个顺序阶段：
-
-1. 从截断级数数据中构造并求解关于 $c_k^{\vec{\nu}}$ 的齐次线性系统；
-2. 从第一阶段得到的具体关系中导出原始积分之间的关系，并再次消元得到 reduction。
-
-在第二阶段中，可以再细分为三个子步骤：
-
-1. 从零空间得到具体多项式关系；
-2. 令 $\delta = 1$ 得到 FI 关系；
-3. 再次消元得到 reduction。
-
-### 5.2 Default interpretation of masters
-
-本文档默认采用下面的解释：
-
-- 若先验指定主积分集合，则第二阶段的目标是把其余积分表示成该集合的线性组合；
-- 若未先验指定主积分集合，则第二阶段消元后的自由积分集合就是当前数据下自然得到的 master-like set。
-
-### 5.3 Data sufficiency caveat
-
-本文档只形式化：如果已有这些截断级数数据，应如何构造两个线性系统并读取最终关系。
-
-本文档不证明：
-
-1. 给定的 $d$ 和 $m$ 一定足够恢复全部目标关系；
-2. 给定的边界条件数一定足够区分所有待搜索关系；
-3. 单个有限域 $Z_p$ 上的结果一定足以恢复最终有理系数结构。
-
-这些问题属于后续分析或实现验证问题，不属于当前 phase-a 主体。
-
-## 6. Complete computation flow
-
-### 6.1 Stage I: search polynomial relations for $FI_{\vec{\nu}}(\delta)$
-
-1. 固定积分集合 $G$。
-2. 固定独立边界条件 $b = 1,\dots,N_{\mathrm{bc}}$。
-3. 读入全部截断级数
-
-   $$
-   FI_{\vec{\nu}}^{(b)}(\delta) = \sum_{r=0}^{d} a_r^{\vec{\nu},(b)} \delta^r.
-   $$
-
-4. 固定多项式次数上界 $m$。
-5. 引入全部未知量 $c_k^{\vec{\nu}}$。
-6. 依据第 3 节中的卷积公式构造矩阵 $A^{(\delta)}$。
-7. 求解 $A^{(\delta)}x = 0$ 的零空间。
-8. 输出零空间基，或者输出其 RREF 与自由变量信息。
-
-### 6.2 Stage II: derive and solve undeformed FI relations
-
-9. 对每一个自由变量，构造一组具体系数赋值：该自由变量取 $1$，其余自由变量取 $0$。
-10. 用回代求得全部 $c_k^{\vec{\nu}}$。
-11. 对每个 $\vec{\nu}$ 计算
-
-    $$
-    r_{\vec{\nu}} = \sum_{k=0}^{m} c_k^{\vec{\nu}}.
-    $$
-
-12. 构造具体 FI 关系
-
-    $$
-    \sum_{\vec{\nu} \in G} r_{\vec{\nu}} FI_{\vec{\nu}} = 0.
-    $$
-
-13. 把所有此类关系堆叠成第二个矩阵 $A^{(FI)}$。
-14. 按复杂到简单的顺序排列积分变量。
-15. 对 $A^{(FI)}$ 做消元。
-16. 读出复杂积分关于简单积分或主积分的线性表示。
-
-## 7. References
-
-- `search/docs/problem_and_workflow.md`
-
-## 8. Review request
-
-请只从数学正确性角度审查本文档，重点检查以下几点：
-
-1. 第 3 节中由截断级数导出 $A^{(\delta)}$ 的公式是否符合预期；
-2. 第 4.1 节中由零空间自由变量逐个取值生成具体关系的方法是否就是所需构造；
-3. 第 4.2 节中在该阶段令 $\delta = 1$ 是否在目标应用中是正确且充分的；
-4. 第 4.4 节中把第二次消元后的自由集合解释为主积分集合的做法是否符合预期含义。
-
-在这四点得到确认之前，不建议进入 phase b。
+`poly_relation_searcher` writes the stage-I RREF. `integral_solver` rebuilds the same ordered stage-I variables from `G` and `m`, evaluates coefficients at `delta_value`, solves the integral reduction system, and writes the master basis and reductions.
