@@ -153,7 +153,7 @@ struct IntegralReductionResult {
 };
 ```
 
-These replace the old FI-only names. The second-stage solver works on general integral tags.
+The second-stage solver works on general integral tags.
 
 ## 4. Ordering
 
@@ -248,7 +248,13 @@ sample(alpha, bcIndex).coeffs[n-k], if n >= k
 0, otherwise
 ```
 
-Samples are found by full integral tag.
+Samples are found by full integral tag and cached by `(bcIndex, target)` while
+building rows, so matrix construction does not scan the full sample list for
+every matrix entry.
+
+`buildRowsForDegreeWindow` constructs only a requested delta-order window.
+The held-out certifier uses this path to build only check rows instead of
+building the full matrix and slicing it afterward.
 
 ### 6.2 `RelationSearcher<T>`
 
@@ -312,10 +318,10 @@ BBFI[XU,YD]{1,1,1}
 ### 9.1 `poly_relation_searcher`
 
 ```bash
-poly_relation_searcher <config> <G_file> <series_list> <output>
+poly_relation_searcher <config_path> <G_path> <series_list_path> <output_path>
 ```
 
-`series_list` contains one line per FBI boundary condition:
+`series_list_path` contains one line per FBI boundary condition:
 
 ```text
 series_path target_path
@@ -326,22 +332,42 @@ The target file for the series may contain more tags than `G`. Filtering uses fu
 ### 9.2 `integral_solver`
 
 ```bash
-integral_solver <G_path> <poly_relation_path> <delta_value> [output_path]
+integral_solver <G_path> <poly_relation_path> <delta_value> <output_path>
 ```
 
 It reconstructs the stage-I variable order from `G` and `m`, reads the stage-I RREF, evaluates at `delta_value`, and solves the integral reduction system.
 
-Default output path:
+### 9.3 `search_de`
+
+```bash
+search_de <config_path> <G_path> <series_list_path> <masters_path> <output_path> [shift]
+```
+
+For each master integral, `search_de` searches a polynomial relation between
+`dM/delta` and the full master set. The derivative object is represented
+internally by shifting the same integral label by `nu -> nu + shift`, and the
+output maps the shifted label back to `d(M)`.
+
+The `m` value in `config_path` is treated as the maximum polynomial degree.
+The tool tries degrees with an exponential schedule:
 
 ```text
-integral_solution
+0, 1, 2, 4, 8, ...
 ```
+
+and appends the configured maximum degree if the exponential sequence would
+skip it. It stops at the first certified relation and does not search for the
+minimal working degree.
+
+Since the derivative series uses one fewer coefficient, the effective degree is
+`deg - 1`. The train window is `0..deg-1-ncheck`, and the held-out window is
+checked before a relation is written as certified.
 
 ## 10. Current Validation Pattern
 
 The current validation checks include:
 
-1. FI-only vac, dp, and dp_planar runs reproduce the previous master sets and reductions after normalizing output names.
+1. Pure-FI vac, dp, and dp_planar runs reproduce the previous master sets and reductions after normalizing output names.
 2. Mixed FI/BFI/BBFI dp and dp_planar runs produce master files grouped by `nu`.
 3. For dp dot3 with `deg=1000`, `m=10`, and `delta=571`, the mixed search gives 43 master integrals.
 4. For dp_planar dot2 with `deg=500`, `m=10`, and `delta=571`, the mixed search gives 32 master integrals.

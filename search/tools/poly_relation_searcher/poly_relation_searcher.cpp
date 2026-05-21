@@ -3,7 +3,7 @@
 // Stage I of IBP search: find polynomial relations among I(delta).
 //
 // Usage:
-//   ./stage1_runner <config> <G_file> <series_list> <output>
+//   ./poly_relation_searcher <config_path> <G_path> <series_list_path> <output_path>
 //
 // config format:
 //   N   = 6                      # nu vector length
@@ -38,6 +38,7 @@
 
 #include "ff_type.hpp"
 #include "io.hpp"
+#include "relation_certifier.hpp"
 #include "relation_matrix_builder.hpp"
 #include "relation_formatter.hpp"
 #include "relation_searcher.hpp"
@@ -217,53 +218,6 @@ parseSeriesForG(const std::string& seriesPath,
     return result;
 }
 
-static std::vector<SeriesSample<FlintMod>>
-truncateSamplesForTrain(const std::vector<SeriesSample<FlintMod>>& samples,
-                        int trainDeg) {
-    std::vector<SeriesSample<FlintMod>> out = samples;
-    for (auto& s : out) {
-        if (static_cast<int>(s.coeffs.size()) < trainDeg + 1) {
-            throw std::runtime_error("series coeff count smaller than trainDeg+1");
-        }
-        s.coeffs.resize(trainDeg + 1);
-    }
-    return out;
-}
-
-static bool checkNullspaceShrink(
-    const std::vector<std::vector<FlintMod>>& trainRREF,
-    const std::vector<int>& pivotColumns,
-    const std::vector<std::vector<FlintMod>>& checkRows) {
-    const FlintMod zero(0ULL);
-    if (trainRREF.empty() || pivotColumns.empty()) {
-        for (const auto& row : checkRows) {
-            for (const auto& x : row) {
-                if (x != zero) return true;
-            }
-        }
-        return false;
-    }
-
-    for (const auto& rawRow : checkRows) {
-        std::vector<FlintMod> row = rawRow;
-        for (int r = 0; r < static_cast<int>(trainRREF.size()); ++r) {
-            const int pc = pivotColumns[r];
-            if (pc < 0 || pc >= static_cast<int>(row.size())) continue;
-            const FlintMod factor = row[pc];
-            if (factor == zero) continue;
-            for (int c = pc; c < static_cast<int>(row.size()); ++c) {
-                row[c] = row[c] - factor * trainRREF[r][c];
-            }
-        }
-        for (const auto& x : row) {
-            if (x != zero) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
@@ -271,7 +225,7 @@ static bool checkNullspaceShrink(
 int main(int argc, char** argv) {
     if (argc != 5) {
         std::cerr << "Usage: " << argv[0]
-                  << " <config> <G_file> <series_list> <output>\n";
+                  << " <config_path> <G_path> <series_list_path> <output_path>\n";
         return 1;
     }
 
@@ -282,10 +236,7 @@ int main(int argc, char** argv) {
 
     try {
         const Stage1Config cfg = parseConfig(configPath);
-        if (cfg.ncheck > cfg.deg) {
-            throw std::runtime_error("ncheck must satisfy ncheck <= deg");
-        }
-        const int trainDeg = cfg.deg - cfg.ncheck;
+        const DegreeWindow window = makeDegreeWindow(cfg.deg, cfg.ncheck);
         FlintMod::set_modulus(cfg.p);
 
         const auto G          = parseSearchTargetFile(gPath, cfg.nuSize);
@@ -316,27 +267,18 @@ int main(int argc, char** argv) {
         }
 
         SearchInput<FlintMod> trainInput = input;
-        trainInput.degreeD = trainDeg;
-        trainInput.samples = truncateSamplesForTrain(input.samples, trainDeg);
+        trainInput.degreeD = window.trainDeg;
 
-        std::cerr << "[stage1] solving train window: [0.." << trainDeg << "]\n";
+        std::cerr << "[stage1] solving train window: [0.." << window.trainDeg << "]\n";
         RelationSearcher<FlintMod> searcher(trainInput);
         const auto result = searcher.search();
 
         bool isNullShrink = false;
         if (cfg.ncheck > 0) {
             std::cerr << "[stage1] checking held-out window: ["
-                      << (trainDeg + 1) << ".." << cfg.deg << "]\n";
-            RelationMatrixBuilder<FlintMod> fullBuilder(input);
-            const auto fullMatrix = fullBuilder.buildMatrix(result.variables);
-            std::vector<std::vector<FlintMod>> checkRows;
-            checkRows.reserve(static_cast<size_t>(numBC * cfg.ncheck));
-            for (int b = 0; b < numBC; ++b) {
-                for (int n = trainDeg + 1; n <= cfg.deg; ++n) {
-                    const int rowIdx = b * (cfg.deg + 1) + n;
-                    checkRows.push_back(fullMatrix[rowIdx]);
-                }
-            }
+                      << window.checkStart << ".." << window.checkEnd << "]\n";
+            const auto checkRows = buildCheckRows(
+                input, result.variables, window.checkStart, window.checkEnd);
             isNullShrink = checkNullspaceShrink(
                 result.rrefMatrix, result.pivotColumns, checkRows);
         } else {
@@ -350,7 +292,7 @@ int main(int argc, char** argv) {
         out << "# p = " << cfg.p << "\n";
         out << "# m = " << cfg.m << "\n";
         out << "# ncheck = " << cfg.ncheck << "\n";
-        out << "# train_deg = " << trainDeg << "\n";
+        out << "# train_deg = " << window.trainDeg << "\n";
         out << "# nullspace_shrink = " << (isNullShrink ? 1 : 0) << "\n";
         if (isNullShrink) {
             out << "[status]\n";

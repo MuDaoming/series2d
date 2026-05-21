@@ -12,6 +12,10 @@ public:
     std::vector<RelationVariable> buildVariables() const;
     std::vector<std::vector<T>> buildMatrix(
         const std::vector<RelationVariable>& variables) const;
+    std::vector<std::vector<T>> buildRowsForDegreeWindow(
+        const std::vector<RelationVariable>& variables,
+        int startDegree,
+        int endDegree) const;
 
 private:
     const SearchInput<T>& input_;

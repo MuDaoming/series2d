@@ -183,13 +183,13 @@ Series files are line-aligned with their own target files. When a stage-I `G` is
 Stage I:
 
 ```bash
-poly_relation_searcher <config> <G_file> <series_list> <output>
+poly_relation_searcher <config_path> <G_path> <series_list_path> <output_path>
 ```
 
 Stage II:
 
 ```bash
-integral_solver <G_path> <poly_relation_path> <delta_value> [output_path]
+integral_solver <G_path> <poly_relation_path> <delta_value> <output_path>
 ```
 
 `poly_relation_searcher` writes the stage-I RREF. `integral_solver` rebuilds the same ordered stage-I variables from `G` and `m`, evaluates coefficients at `delta_value`, solves the integral reduction system, and writes the master basis and reductions.

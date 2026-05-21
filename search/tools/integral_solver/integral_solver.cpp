@@ -141,17 +141,16 @@ std::vector<std::vector<FlintMod>> parseRREFRows(const std::string& polyPath) {
 }  // namespace
 
 int main(int argc, char** argv) {
-    if (argc != 4 && argc != 5) {
+    if (argc != 5) {
         std::cerr << "Usage: " << argv[0]
-                  << " <G_path> <poly_relation_path> <delta_value> [output_path]\n";
-        std::cerr << "Default output_path: integral_solution\n";
+                  << " <G_path> <poly_relation_path> <delta_value> <output_path>\n";
         return 1;
     }
 
     const std::string gPath = argv[1];
     const std::string polyPath = argv[2];
     const std::string deltaText = argv[3];
-    const std::string outPath = (argc == 5) ? argv[4] : "integral_solution";
+    const std::string outPath = argv[4];
 
     try {
         const int nuSize = inferNuSize(gPath);
