@@ -207,8 +207,9 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
     if (needDeg < 0) {
         throw std::runtime_error("getFBISeries requires needDeg >= 0");
     }
+    const std::vector<int> canonicalNu = family_.canonicalizeNu(nu);
     const int targetNeedDeg = std::min(targetDeg_, needDeg);
-    auto key = makeKey(nu, delta);
+    auto key = makeKey(canonicalNu, delta);
 
     if (cache_.find(key) == cache_.end()) {
         cache_[key] = Series<ST>(targetDeg_);
@@ -221,11 +222,15 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
     if (cachedDeg >= targetNeedDeg) {
         return cache_[key];
     }
+    if (reduceMode_ == ReduceMode::Cut && shouldDropInCut(canonicalNu)) {
+        cacheCurrentDeg_[key] = targetNeedDeg;
+        return cache_[key];
+    }
 
     bool isMasterKey = false;
     int masterIdx = -1;
-    if (family_.isMaster(nu)) {
-        masterIdx = family_.getIndexOfMaster(nu);
+    if (family_.isMaster(canonicalNu)) {
+        masterIdx = family_.getIndexOfMaster(canonicalNu);
         isMasterKey = (masterIdx >= 0 && delta == masterDeltas_[masterIdx]);
     }
 
@@ -233,7 +238,7 @@ const Series<ST>& SeriesSolver<RT, PT, ST>::getFBISeries(
         if (isMasterKey) {
             solveMasterAtDeg(masterIdx, deg);
         } else {
-            reduceFBIAtDeg(cache_[key], nu, delta, deg);
+            reduceFBIAtDeg(cache_[key], canonicalNu, delta, deg);
             cacheCurrentDeg_[key] = deg;
         }
     }
@@ -280,12 +285,24 @@ void SeriesSolver<RT, PT, ST>::setReduceMode(const std::string& modeName) {
         reduceMode_ = ReduceMode::Normal;
         return;
     }
-    if (s == "maximal_cut" || s == "maximalcut") {
-        reduceMode_ = ReduceMode::MaximalCut;
+    if (s == "cut") {
+        reduceMode_ = ReduceMode::Cut;
         return;
     }
     throw std::runtime_error("Unknown reduce mode: " + modeName +
-                             " (expected normal or maximal_cut)");
+                             " (expected normal or cut)");
+}
+
+template<typename RT, typename PT, typename ST>
+void SeriesSolver<RT, PT, ST>::setCutSector(const std::vector<int>& sector) {
+    if (static_cast<int>(sector.size()) != numProps_) {
+        throw std::runtime_error("Cut sector size mismatch");
+    }
+    std::vector<int> normalized(sector.size());
+    for (size_t i = 0; i < sector.size(); ++i) {
+        normalized[i] = sector[i] > 0 ? 1 : 0;
+    }
+    cutSector_ = family_.canonicalizeSector(normalized);
 }
 
 template<typename RT, typename PT, typename ST>
@@ -363,26 +380,37 @@ bool SeriesSolver<RT, PT, ST>::isCorner(const std::vector<int>& nu) const {
 }
 
 template<typename RT, typename PT, typename ST>
-bool SeriesSolver<RT, PT, ST>::isStrictSubsector(const std::vector<int>& sourceNu,
-                                                   const std::vector<int>& targetNu) const {
-    if (sourceNu.size() != targetNu.size()) {
-        throw std::runtime_error("Nu size mismatch in isStrictSubsector");
+bool SeriesSolver<RT, PT, ST>::sourceContainsCutSector(
+    const std::vector<int>& sourceNu) const {
+    if (cutSector_.empty()) {
+        throw std::runtime_error("Cut sector is not configured");
     }
-    bool strict = false;
-    for (size_t i = 0; i < sourceNu.size(); ++i) {
-        bool s = sourceNu[i] > 0;
-        bool t = targetNu[i] > 0;
-        if (s && !t) return false;
-        if (!s && t) strict = true;
+    const std::vector<int> canonicalSource = family_.canonicalizeNu(sourceNu);
+    if (canonicalSource.size() != cutSector_.size()) {
+        throw std::runtime_error("Nu size mismatch in sourceContainsCutSector");
     }
-    return strict;
+    auto containsSector = [](const std::vector<int>& source,
+                             const std::vector<int>& cut) {
+        for (size_t i = 0; i < source.size(); ++i) {
+            if (cut[i] && source[i] <= 0) return false;
+        }
+        return true;
+    };
+
+    if (containsSector(canonicalSource, cutSector_)) return true;
+
+    const auto& sectorMap = family_.getSectorMap();
+    for (const auto& entry : sectorMap.entries()) {
+        if (sectorMap.canonicalizeSector(entry.source) != cutSector_) continue;
+        if (containsSector(canonicalSource, entry.source)) return true;
+    }
+    return false;
 }
 
 template<typename RT, typename PT, typename ST>
-bool SeriesSolver<RT, PT, ST>::shouldDropInMaximalCut(const std::vector<int>& targetNu,
-                                                        const std::vector<int>& sourceNu) const {
-    if (reduceMode_ != ReduceMode::MaximalCut) return false;
-    return isStrictSubsector(sourceNu, targetNu);
+bool SeriesSolver<RT, PT, ST>::shouldDropInCut(const std::vector<int>& sourceNu) const {
+    if (reduceMode_ != ReduceMode::Cut) return false;
+    return !sourceContainsCutSector(sourceNu);
 }
 
 template<typename RT, typename PT, typename ST>
@@ -530,7 +558,7 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
     int nuTotNu = nuTotSum(nu);
     ST deltaMinus1 = delta - ST(1);
     
-    if (!shouldDropInMaximalCut(nuPlus, nu)) {
+    if (!shouldDropInCut(nu)) {
         const Series<ST>& seriesNuDeltaMinus1 = getFBISeries(nu, deltaMinus1, deg);
         for (int j = 0; j < numBranchCur; ++j) {
             polys.push_back(numeInvS[row][j] * ST(-1));
@@ -546,7 +574,7 @@ void SeriesSolver<RT, PT, ST>::case0IBPAtDeg(Series<ST>& result, const std::vect
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            if (shouldDropInMaximalCut(nuPlus, nuMinusEi)) continue;
+            if (shouldDropInCut(nuMinusEi)) continue;
             polys.push_back(numeInvS[row][numBranchCur + iCur]);
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
             deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotNu - 1, deltaMinus1));
@@ -580,7 +608,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
     int nuTotT = nuTotSum(nu);
     ST deltaMinus1 = delta - ST(1);
     
-    if (!shouldDropInMaximalCut(nu, nu)) {
+    if (!shouldDropInCut(nu)) {
         const Series<ST>& seriesDeltaMinus1 = getFBISeries(nu, deltaMinus1, deg);
         polys.push_back(numeC);
         seriesPtrs.push_back(&seriesDeltaMinus1);
@@ -594,7 +622,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftDownAtDeg(Series<ST>& result, const 
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
+            if (shouldDropInCut(nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
             deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
@@ -635,7 +663,7 @@ void SeriesSolver<RT, PT, ST>::reduceCase1AtDeg(Series<ST>& result, const std::v
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
+            if (shouldDropInCut(nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur) * ST(-1));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, deltaMinus1, deg));
             deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, deltaMinus1));
@@ -671,7 +699,7 @@ void SeriesSolver<RT, PT, ST>::reduceCase2AtDeg(Series<ST>& result, const std::v
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
+            if (shouldDropInCut(nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
             deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));
@@ -849,7 +877,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
     
     int nuTotT = nuTotSum(nu);
     ST deltaPlus1 = delta + ST(1);
-    if (!shouldDropInMaximalCut(nu, nu)) {
+    if (!shouldDropInCut(nu)) {
         const Series<ST>& seriesDeltaPlus1 = getFBISeries(nu, deltaPlus1, deg);
         PT factorPoly = denoCandZ * factor;
         polys.push_back(factorPoly);
@@ -864,7 +892,7 @@ void SeriesSolver<RT, PT, ST>::case0DimShiftUpAtDeg(Series<ST>& result, const st
             std::vector<int> nuMinusEi = nu;
             nuMinusEi[i]--;
             if (family_.nBranch(nuMinusEi) != numBranchCur) continue;
-            if (shouldDropInMaximalCut(nu, nuMinusEi)) continue;
+            if (shouldDropInCut(nuMinusEi)) continue;
             polys.push_back(sector->getNumeZ(iCur));
             seriesPtrs.push_back(&getFBISeries(nuMinusEi, delta, deg));
             deltaPs.push_back(redef_->deltaPowU(nuTotT, delta, nuTotT - 1, delta));

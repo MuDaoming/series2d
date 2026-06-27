@@ -30,6 +30,7 @@ expand/
 │   ├── rational.hpp               # 多项式 Polynomial 和有理函数 Rational
 │   ├── series.hpp                 # 二维幂级数 Series
 │   ├── sector.hpp                 # Sector类（含辅助函数）
+│   ├── sector_map.hpp             # sector及传播子指标映射
 │   ├── family.hpp                 # Family类
 │   ├── series_solver.hpp          # SeriesSolver类 + Redefinition结构体
 │   ├── converter.hpp              # GiNaC到FlintMod类型转换
@@ -430,12 +431,22 @@ private:
 
 ### 4.11 IO 与 Pipeline
 
-**IO**：`include/io.hpp` — 解析 S、config、target 三类输入文件。target 解析为 `IntegralTag` 列表，并兼容旧的 `{nu}` 语法。
+**IO**：`include/io.hpp` — 解析 S、config、target 三类输入文件。config
+可选 `sectorMap` 路径；相对路径以 config 所在目录为基准。target 解析为
+`IntegralTag` 列表，并兼容旧的 `{nu}` 语法。
+
+**SectorMap**：`include/sector_map.hpp`，`src/sector_map.tpp` — 读取
+`source sector -> target sector` 及传播子位置映射。`Family` 持有该对象，
+并在映射装入后重建 master 列表，只保留不在 source 端的 Case 0
+角积分。`SeriesSolver` 在查缓存、判定 master、约化和 cut 检查前规范化
+完整的 `nu`；`IntegrandExpander` 使用同一个规范化结果构造 FBI 和 FI
+分支因子。
 
 **Pipeline**：`include/fi_pipeline.hpp`，`src/fi_pipeline.tpp` — 顶层入口 `runFI1DSeriesPipeline()`，串联所有步骤：
 
 ```
 Family 构造
+  → 可选 SectorMap 装入并重建 master
   → IntegrandExpander
   → Redefinition
   → solver.setRedefinition()

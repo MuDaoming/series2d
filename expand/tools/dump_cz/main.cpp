@@ -68,6 +68,9 @@ int main(int argc, char** argv) {
         }
 
         Family<GiNaC::ex, GiNaC::ex, GiNaC::ex> ginacFamily(topS, cfg.N, cfg.B, X, Y);
+        if (!cfg.sectorMapPath.empty()) {
+            ginacFamily.setSectorMap(SectorMap::fromFile(cfg.sectorMapPath, cfg.N));
+        }
         const auto* ginacSector = ginacFamily.getSector(nu);
         if (!ginacSector) {
             throw std::runtime_error("sector was not found before convert");

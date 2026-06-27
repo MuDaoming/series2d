@@ -63,6 +63,9 @@ int main(int argc, char** argv) {
         const int numBranch = cfg.B;
         const int numProps = static_cast<int>(topS.size()) - numBranch;
         Family<GiNaC::ex, GiNaC::ex, GiNaC::ex> ginacFamily(topS, numProps, numBranch, X, Y);
+        if (!cfg.sectorMapPath.empty()) {
+            ginacFamily.setSectorMap(SectorMap::fromFile(cfg.sectorMapPath, numProps));
+        }
         auto family = convertFamily(ginacFamily, X, Y);
 
         const FlintMod feynmanD(cfg.d);
@@ -74,6 +77,23 @@ int main(int argc, char** argv) {
         solver.setReduceMode(cfg.reduceMode);
         if (cfg.bc.size() != static_cast<size_t>(solver.getNumMaster())) {
             throw std::runtime_error("config.bc size mismatch with number of masters");
+        }
+        if (cfg.reduceMode == "cut") {
+            int nonzeroIdx = -1;
+            for (int i = 0; i < solver.getNumMaster(); ++i) {
+                if (cfg.bc[i] == 0) continue;
+                if (nonzeroIdx >= 0) {
+                    throw std::runtime_error(
+                        "cut mode requires config.bc to have exactly one nonzero element");
+                }
+                nonzeroIdx = i;
+            }
+            if (nonzeroIdx < 0) {
+                throw std::runtime_error(
+                    "cut mode requires config.bc to have exactly one nonzero element");
+            }
+            const int familySectorIdx = family.getMasterIdxs().at(nonzeroIdx);
+            solver.setCutSector(family.secvecFromIdx(familySectorIdx));
         }
         for (int i = 0; i < solver.getNumMaster(); ++i) {
             solver.setMasterBoundary(i, FlintMod(cfg.bc[i]));

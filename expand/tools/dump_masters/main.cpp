@@ -37,6 +37,9 @@ int main(int argc, char** argv) {
         }
 
         Family<GiNaC::ex, GiNaC::ex, GiNaC::ex> family(topS, cfg.N, cfg.B, X, Y);
+        if (!cfg.sectorMapPath.empty()) {
+            family.setSectorMap(SectorMap::fromFile(cfg.sectorMapPath, cfg.N));
+        }
         const std::vector<int>& masterIdxs = family.getMasterIdxs();
 
         std::ofstream out(outputPath.string());

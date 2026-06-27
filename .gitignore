@@ -1,4 +1,6 @@
 .agents/
 .claude/
 .codex
-
+ref/
+search_like_blade/
+SKILL/

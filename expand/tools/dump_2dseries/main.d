@@ -2,6 +2,7 @@ main.o: main.cpp ../../include/converter.hpp ../../include/ff_type.hpp \
  ../../include/../src/ff_type.tpp ../../include/rational.hpp \
  ../../include/../src/rational.tpp ../../include/family.hpp \
  ../../include/sector.hpp ../../include/../src/sector.tpp \
+ ../../include/sector_map.hpp ../../include/../src/sector_map.tpp \
  ../../include/../src/family.tpp ../../include/integrand_expander.hpp \
  ../../include/series_solver.hpp ../../include/series.hpp \
  ../../include/../src/series.tpp ../../include/../src/series_solver.tpp \
@@ -15,6 +16,8 @@ main.o: main.cpp ../../include/converter.hpp ../../include/ff_type.hpp \
 ../../include/family.hpp:
 ../../include/sector.hpp:
 ../../include/../src/sector.tpp:
+../../include/sector_map.hpp:
+../../include/../src/sector_map.tpp:
 ../../include/../src/family.tpp:
 ../../include/integrand_expander.hpp:
 ../../include/series_solver.hpp:

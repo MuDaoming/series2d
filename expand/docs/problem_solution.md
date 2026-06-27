@@ -72,7 +72,11 @@ Sector 需要满足**有效性条件**：所有 $B$ 个分支都必须被覆盖�
 | 2 | $>0$ | $\neq 0$ | 无主积分 |
 | 3 | $>0$ | $=0$ | 无主积分 |
 
-**主积分（MFBI）**：Case 0 的角积分（所有 $\nu_i \in \{0, 1\}$）称为主积分（Master FBI），构成约化的基。所有其他FBI都可以表示为MFBI的线性组合（系数为有理函数）。
+**主积分（MFBI）**：没有 sector 映射时，Case 0 的角积分（所有
+$\nu_i \in \{0, 1\}$）构成主积分集合。给定 sector 映射后，source
+端的 Case 0 角积分连同传播子指标一起映射到 target 代表，最终 master
+只指映射后仍保留的 Case 0 角积分。所有其他 FBI 都约化到这一组
+MFBI，边界条件也只按这一组 master 输入。
 
 ### 2.5 C 和 z 系数
 
@@ -447,7 +451,7 @@ FI 的前两项为零，BFI 的前一项为零。输出中仍显式写出这些�
 ```
 输入（四个路径参数）：
   - S_path: 已平移后的 topS(X,Y)（维度应为 B+N）
-  - config_path: 包含 N,B,deg,p,d,a,b,bc
+  - config_path: 包含 N,B,deg,p,d,a,b,bc，可选 sectorMap
   - target_path: 目标 nu 列表（每行一个 {nu_1,...,nu_N}）
   - output_path: 输出文件路径
 
@@ -455,7 +459,8 @@ FI 的前两项为零，BFI 的前一项为零。输出中仍显式写出这些�
   0.1 从 topS 构造分支索引 branchIndices
   0.2 计算 dR/dX 和 dR/dY
   0.3 枚举有效 sector 并分类 Case（0/1/2/3）
-  0.4 识别主积分集合（Case 0 的角积分）
+  0.4 若配置 sectorMap，读取 sector及传播子指标映射
+  0.5 识别映射后保留的主积分集合（非 source 的 Case 0 角积分）
 
 步骤1：Redefinition 初始化
   1.1 构造平移后的 U(X,Y) 多项式

@@ -343,10 +343,15 @@ It reconstructs the stage-I variable order from `G` and `m`, reads the stage-I R
 search_de <config_path> <G_path> <series_list_path> <masters_path> <output_path> [shift]
 ```
 
-For each master integral, `search_de` searches a polynomial relation between
-`dM/delta` and the full master set. The derivative object is represented
-internally by shifting the same integral label by `nu -> nu + shift`, and the
-output maps the shifted label back to `d(M)`.
+For each DE target integral listed in `G_path`, `search_de` searches a
+polynomial relation between `dM/delta` and the full master basis from
+`masters_path`. Every `G_path` entry must also appear in `masters_path`.
+The derivative object is represented internally by shifting the same integral
+label by `nu -> nu + shift`, and the output maps the shifted label back to
+`d(M)`.
+
+`G_path` controls which differential equations are built. `masters_path`
+controls the full master basis allowed on the right-hand side.
 
 The `m` value in `config_path` is treated as the maximum polynomial degree.
 The tool tries degrees with an exponential schedule:

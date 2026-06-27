@@ -264,6 +264,22 @@ static bool sameVariable(const RelationVariable& var, const IntegralLabel& label
     return equalIntegralLabel(var.integral, label);
 }
 
+static void validateTargetsInMasters(
+    const std::vector<IntegralLabel>& deTargets,
+    const std::vector<IntegralLabel>& masters) {
+    std::map<IntegralLabel, bool, IntegralLabelLess> masterSet;
+    for (const auto& master : masters) {
+        masterSet[master] = true;
+    }
+    for (const auto& target : deTargets) {
+        if (masterSet.find(target) == masterSet.end()) {
+            throw std::runtime_error(
+                "G_path contains a DE target not present in masters_path: " +
+                integralLabelToString(target));
+        }
+    }
+}
+
 static int findChosenFreeColumn(
     const RelationSearchResult<FlintMod>& result,
     const IntegralLabel& derivativeLabel) {
@@ -389,8 +405,9 @@ int main(int argc, char** argv) {
         }
         const DegreeWindow window = makeDegreeWindow(derivativeDegree, cfg.ncheck);
 
-        (void)parseSearchTargetFile(argv[2], cfg.nuSize);
+        const auto deTargets = parseSearchTargetFile(argv[2], cfg.nuSize);
         const auto masters = parseMastersFile(mastersPath, cfg.nuSize);
+        validateTargetsInMasters(deTargets, masters);
 
         std::vector<SeriesByLabel> masterSeriesByBC;
         masterSeriesByBC.reserve(numBC);
@@ -414,16 +431,17 @@ int main(int argc, char** argv) {
         out << "# m_max = " << cfg.maxM << "\n";
         out << "# m_schedule = exponential\n";
         out << "# shift = " << shift << "\n";
+        out << "# de_targets = " << deTargets.size() << "\n";
         out << "# masters = " << masters.size() << "\n\n";
         out.flush();
 
         const auto mSchedule = buildExponentialMSchedule(cfg.maxM);
 
-        for (size_t masterIdx = 0; masterIdx < masters.size(); ++masterIdx) {
-            const auto& master = masters[masterIdx];
+        for (size_t masterIdx = 0; masterIdx < deTargets.size(); ++masterIdx) {
+            const auto& master = deTargets[masterIdx];
             const std::string masterName = integralLabelToString(master);
-            std::cout << "[search_de] master " << (masterIdx + 1)
-                      << "/" << masters.size() << ": "
+            std::cout << "[search_de] target " << (masterIdx + 1)
+                      << "/" << deTargets.size() << ": "
                       << masterName << "\n";
 
             const IntegralLabel dLabel = shiftedLabel(master, shift);

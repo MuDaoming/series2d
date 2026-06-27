@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <sstream>
 #include "sector.hpp"
+#include "sector_map.hpp"
 
 template<typename RT, typename PT, typename ST>
 class Family {
@@ -26,7 +27,8 @@ public:
     template<typename Symbol>
     Family(const std::vector<std::vector<PT>>& topS, int numProps, int numBranch,
            const Symbol& X, const Symbol& Y)
-        : topS_(topS), numProps_(numProps), numBranch_(numBranch)
+        : topS_(topS), numProps_(numProps), numBranch_(numBranch),
+          sectorMap_(numProps)
     {
         constructBranchIndices();
         computeDerivatives(X, Y);
@@ -46,7 +48,8 @@ public:
           branchIndices_(other.branchIndices_),
           sectorIdxs_(other.sectorIdxs_),
           cases_(other.cases_),
-          masterIdxs_(other.masterIdxs_)
+          masterIdxs_(other.masterIdxs_),
+          sectorMap_(other.sectorMap_)
     {
         // 转换topS_矩阵
         topS_.resize(other.topS_.size());
@@ -118,6 +121,14 @@ public:
     inline int nuSum(std::vector<int> const& nu) const;
     inline int getNumMaster() const { return masterIdxs_.size(); }
     inline bool isMaster(const std::vector<int>& nu) const;
+    inline std::vector<int> canonicalizeNu(const std::vector<int>& nu) const {
+        return sectorMap_.canonicalizeNu(nu);
+    }
+    inline std::vector<int> canonicalizeSector(const std::vector<int>& sector) const {
+        return sectorMap_.canonicalizeSector(sector);
+    }
+    inline const SectorMap& getSectorMap() const { return sectorMap_; }
+    void setSectorMap(const SectorMap& sectorMap);
     inline const std::vector<int>& getMasterIdxs() const { return masterIdxs_; }
     inline int getCaseByIdx(int idx) const { return (idx >= 0 && idx < (int)cases_.size()) ? cases_[idx] : -1; }
     inline const std::vector<std::vector<PT>>& getTopS() const { return topS_; }
@@ -146,6 +157,7 @@ private:
     std::vector<int> cases_;
     std::vector<int> masterIdxs_;
     std::vector<ST> masterDeltas_;  // delta 使用 ST 类型
+    SectorMap sectorMap_;
 
     // R矩阵的导数（N×N，多项式矩阵）
     std::vector<std::vector<PT>> dRdX_;  // dR/dX，R是topS的右下角N×N子矩阵
@@ -156,6 +168,7 @@ private:
     void computeDerivatives(const Symbol& X, const Symbol& Y);  // 计算dRdX和dRdY
     bool getSubS(const std::vector<int>& nu, std::vector<std::vector<PT>>& subS) const;
     void findSectors();
+    void rebuildMasters();
 
 };
 

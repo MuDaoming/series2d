@@ -120,7 +120,7 @@ InputConfig parseConfigFile(const std::string& path) {
 
     static const std::unordered_set<std::string> allowedKeys = {
         "B", "N", "deg", "p", "a", "b", "d", "bc",
-        "reduceMode", "print2DMode", "sector"
+        "reduceMode", "print2DMode", "sector", "sectorMap"
     };
     for (const auto& it : kv) {
         if (!allowedKeys.count(it.first)) {
@@ -143,9 +143,9 @@ InputConfig parseConfigFile(const std::string& path) {
     cfg.d = static_cast<mp_limb_t>(std::stoull(need("d")));
     if (kv.count("reduceMode")) {
         std::string mode = trim(kv["reduceMode"]);
-        if (mode != "normal" && mode != "maximalcut") {
+        if (mode != "normal" && mode != "cut") {
             throw std::runtime_error("Invalid reduceMode in config: " + mode +
-                                     " (expected normal or maximalcut)");
+                                     " (expected normal or cut)");
         }
         cfg.reduceMode = mode;
     }
@@ -159,6 +159,13 @@ InputConfig parseConfigFile(const std::string& path) {
     }
     if (kv.count("sector")) {
         cfg.sector = parseI32List(kv["sector"]);
+    }
+    if (kv.count("sectorMap")) {
+        std::filesystem::path mapPath(trim(kv["sectorMap"]));
+        if (!mapPath.is_absolute()) {
+            mapPath = std::filesystem::path(path).parent_path() / mapPath;
+        }
+        cfg.sectorMapPath = mapPath.lexically_normal().string();
     }
     cfg.bc = parseU64List(need("bc"));
     return cfg;

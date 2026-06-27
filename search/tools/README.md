@@ -85,8 +85,8 @@ Output order in `output_path`:
 Path: `search/tools/search_de`
 
 Purpose:
-- For each master integral `M_i`, search a polynomial relation between
-  `dM_i/delta` and the full master set.
+- For each DE target integral `M_i` listed in `G_path`, search a polynomial
+  relation between `dM_i/delta` and the full master basis from `masters_path`.
 - The derivative object is represented internally by shifting the same
   FI/BFI/BBFI tag by `nu -> nu + {shift,...,shift}`. Output maps it back to
   `d(M_i)`.
@@ -98,6 +98,10 @@ Usage:
 ./search_de <config_path> <G_path> <series_list_path> <masters_path> <output_path> [shift]
 ```
 
+- `G_path` lists the master integrals whose differential equations should be
+  searched. Every entry must also appear in `masters_path`.
+- `masters_path` lists the full master basis allowed on the right-hand side of
+  each differential equation.
 - `m` is read from `config_path` and used as the maximum degree to try.
 - `search_de` tries polynomial degrees with an exponential schedule:
   `0, 1, 2, 4, 8, ...`, with a final `m` attempt if the schedule would

@@ -27,12 +27,41 @@ Required keys:
 - `a = <uint64>`
 - `b = <uint64>`
 - `d = <uint64>`
-- `reduceMode = normal | maximalcut`
+- `reduceMode = normal | cut`
 - `bc = {u0,u1,...}`  (size must match number of masters)
+
+In `cut` mode, `bc` must contain exactly one nonzero element. If that
+element corresponds to a master in FBI sector `s_cut`, only integrals whose
+sector contains `s_cut` are retained:
+
+```text
+keep(source) iff sector(source) >= s_cut
+```
+
+All other sectors are set to zero. Cutting at the top FBI sector is the
+special case usually called a maximal cut.
 
 Optional keys:
 - `print2DMode = target | cache` (used by `dump_2dseries`, default `target`)
 - `sector = {n1,n2,...,nN}` (used by `dump_cz`; if omitted, topsector `{1,...,1}`)
+- `sectorMap = <path>` (relative paths are resolved from the config directory)
+
+Each nonempty line of the sector-map file has the form
+
+```text
+{{source sector} -> {target sector}, {source propagator -> target propagator, ...}}
+```
+
+For example:
+
+```text
+{{1,0,1,1} -> {1,1,0,1}, {3 -> 2}}
+```
+
+The mapping is applied to the complete index vector, including dots. A Case-0
+corner on the source side is removed from the master list and its target
+representative is used by reduction and boundary conditions. Cache keys and
+`cut` containment checks use the same representative.
 
 ### `target`
 - One integral tag per line, e.g. `FI{1,1,1,1}`, `BFI[XU]{1,1,1,1}`,
@@ -111,7 +140,7 @@ Output:
 Path: `expand/tools/dump_masters`
 
 Purpose:
-- Detect and dump master sectors (`nu`) for a family.
+- Detect and dump master sectors (`nu`) that survive the optional `sectorMap`.
 
 Usage:
 

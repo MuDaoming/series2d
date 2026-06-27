@@ -154,7 +154,26 @@ bool Family<RT, PT, ST>::isMaster(const std::vector<int>& nu) const
 
     int idx = idxFromSecvec(nu);
 
-    return cases_[idx] == 0;
+    return std::find(masterIdxs_.begin(), masterIdxs_.end(), idx) !=
+           masterIdxs_.end();
+}
+
+template<typename RT, typename PT, typename ST>
+void Family<RT, PT, ST>::setSectorMap(const SectorMap& sectorMap)
+{
+    if (sectorMap.numProps() != 0 && sectorMap.numProps() != numProps_) {
+        throw std::invalid_argument("SectorMap N does not match Family numProps");
+    }
+    for (const auto& entry : sectorMap.entries()) {
+        if (cases_[idxFromSecvec(entry.source)] < 0 ||
+            cases_[idxFromSecvec(entry.target)] < 0) {
+            throw std::invalid_argument(
+                "SectorMap source and target must be valid Family sectors");
+        }
+    }
+    sectorMap_ = sectorMap;
+    rebuildMasters();
+    masterDeltas_.assign(masterIdxs_.size(), ST(0));
 }
 
 // private member functions
@@ -235,7 +254,6 @@ void Family<RT, PT, ST>::findSectors() {
             Sector<RT, PT> tempSector(std::move(subS), nProps(secvec), numBranch_);
             int caseNum = tempSector.getCase();
             cases_[i] = caseNum;
-            if (caseNum == 0) masterIdxs_.push_back(i);
             sectors_.push_back(std::move(tempSector));
             sectorIdxs_.push_back(i);
         }
@@ -243,5 +261,16 @@ void Family<RT, PT, ST>::findSectors() {
             cases_[i] = -1;
         }
     }
-    
+    rebuildMasters();
+}
+
+template<typename RT, typename PT, typename ST>
+void Family<RT, PT, ST>::rebuildMasters() {
+    masterIdxs_.clear();
+    for (int idx = static_cast<int>(cases_.size()) - 1; idx >= 0; --idx) {
+        if (cases_[idx] != 0) continue;
+        const std::vector<int> sector = secvecFromIdx(idx);
+        if (sectorMap_.hasSource(sector)) continue;
+        masterIdxs_.push_back(idx);
+    }
 }

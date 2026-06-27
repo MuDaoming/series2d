@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cctype>
+#include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -22,6 +23,7 @@ struct InputConfig {
     mp_limb_t d = 0;
     std::string reduceMode = "normal";
     std::string print2DMode = "target";
+    std::string sectorMapPath;
     std::vector<int> sector;
     std::vector<mp_limb_t> bc;
 };

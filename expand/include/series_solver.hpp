@@ -87,7 +87,7 @@ class SeriesSolver {
 public:
     enum class ReduceMode {
         Normal,
-        MaximalCut
+        Cut
     };
     // ========================================================================
     // 构造与基本接口
@@ -99,6 +99,7 @@ public:
     void setAllMasterBoundary(const ST& value);
     void setReduceMode(ReduceMode mode) { reduceMode_ = mode; }
     void setReduceMode(const std::string& modeName);
+    void setCutSector(const std::vector<int>& sector);
     ReduceMode getReduceMode() const { return reduceMode_; }
     
     /// 设置重定义（必须在调用 getFBISeries() 之前调用）
@@ -173,6 +174,7 @@ private:
     mutable std::map<CacheKey, Series<ST>> cache_;
     mutable std::map<CacheKey, int> cacheCurrentDeg_;
     ReduceMode reduceMode_ = ReduceMode::Normal;
+    std::vector<int> cutSector_;
     
     // ========================================================================
     // Redefinition 相关
@@ -192,10 +194,8 @@ private:
     }
     
     bool isCorner(const std::vector<int>& nu) const;
-    bool isStrictSubsector(const std::vector<int>& sourceNu,
-                           const std::vector<int>& targetNu) const;
-    bool shouldDropInMaximalCut(const std::vector<int>& targetNu,
-                                const std::vector<int>& sourceNu) const;
+    bool sourceContainsCutSector(const std::vector<int>& sourceNu) const;
+    bool shouldDropInCut(const std::vector<int>& sourceNu) const;
     std::pair<int, int> findMaxIndex(const std::vector<int>& nu) const;
     
     static int nuTotSum(const std::vector<int>& nu) {
