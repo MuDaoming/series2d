@@ -20,14 +20,14 @@ public:
                    const ObjectLabel& object) const;
 
     int degree() const;
+    int degree(const SectorId& sector,
+               const ObjectLabel& object) const;
     std::vector<ObjectLabel> objects() const;
     std::vector<SectorId> sectors() const;
 
 private:
     using ObjectMap = std::map<ObjectLabel, std::vector<T>, ObjectLabelLess>;
     std::map<SectorId, ObjectMap, SectorIdLess> data_;
-    int degree_ = -1;
 };
 
 #include "../src/series_store.tpp"
-

@@ -52,6 +52,7 @@ private:
     std::vector<T> evaluateReductionAtSector(
         const SectorReduction<T>& reduction,
         const SectorId& sector,
+        int degreeD,
         std::vector<SeenReductionTerm<T>>& seenTerms) const;
 };
 

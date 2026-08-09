@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <stdexcept>
 
 template<typename T>
@@ -7,11 +8,6 @@ void SeriesStore<T>::addSeries(const SectorId& sector,
                                const ObjectLabel& object,
                                std::vector<T> coeffs) {
     if (coeffs.empty()) throw std::runtime_error("Cannot add empty series");
-    if (degree_ < 0) {
-        degree_ = static_cast<int>(coeffs.size()) - 1;
-    } else if (static_cast<int>(coeffs.size()) != degree_ + 1) {
-        throw std::runtime_error("Series degree mismatch for " + objectLabelToString(object));
-    }
     data_[sector][object] = std::move(coeffs);
 }
 
@@ -40,7 +36,20 @@ bool SeriesStore<T>::hasSeries(const SectorId& sector,
 
 template<typename T>
 int SeriesStore<T>::degree() const {
-    return degree_;
+    int out = -1;
+    for (const auto& sec : data_) {
+        for (const auto& obj : sec.second) {
+            out = std::max(out, static_cast<int>(obj.second.size()) - 1);
+        }
+    }
+    return out;
+}
+
+template<typename T>
+int SeriesStore<T>::degree(const SectorId& sector,
+                           const ObjectLabel& object) const {
+    const auto& s = getSeries(sector, object);
+    return static_cast<int>(s.size()) - 1;
 }
 
 template<typename T>
@@ -60,4 +69,3 @@ std::vector<SectorId> SeriesStore<T>::sectors() const {
     for (const auto& x : data_) out.push_back(x.first);
     return out;
 }
-

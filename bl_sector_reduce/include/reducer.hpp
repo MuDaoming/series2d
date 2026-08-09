@@ -20,6 +20,10 @@ public:
     std::vector<SectorReduction<T>> reduceAll(
         const std::vector<ObjectLabel>& objects,
         const std::function<void(const std::vector<SectorReduction<T>>&)>& onSectorDone = {}) const;
+    std::vector<SectorReduction<T>> reduceAll(
+        const std::vector<ObjectLabel>& objects,
+        const std::vector<SectorReduction<T>>& initialReductions,
+        const std::function<void(const std::vector<SectorReduction<T>>&)>& onSectorDone = {}) const;
 
 private:
     BLSectorConfig config_;
@@ -28,7 +32,7 @@ private:
     const MasterData& masters_;
     ApproximantBasisSolver<T> solver_;
 
-    int supportedDegree(int numMasters) const;
+    int supportedDegree(int numMasters, int degreeD) const;
     std::vector<int> degreeSchedule(int maxDegree) const;
     SectorReduction<T> makeFreeMasterReduction(const ObjectLabel& object,
                                                 const SectorId& sector) const;

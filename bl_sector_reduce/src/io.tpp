@@ -1,8 +1,10 @@
 #pragma once
 
 #include <cctype>
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <unordered_map>
@@ -40,11 +42,12 @@ BLSectorConfig parseBLSectorConfig(const std::string& path) {
     };
     BLSectorConfig cfg;
     cfg.nuSize = std::stoi(need("N"));
-    cfg.degreeD = std::stoi(need("deg"));
+    if (kv.count("deg")) cfg.degreeD = std::stoi(kv["deg"]);
     cfg.maxDegree = std::stoi(need("m"));
     cfg.prime = static_cast<mp_limb_t>(std::stoull(need("p")));
     if (kv.count("K_safety")) cfg.safetyOrder = std::stoi(kv["K_safety"]);
     if (kv.count("K_cert")) cfg.certOrder = std::stoi(kv["K_cert"]);
+    if (kv.count("sectorMap")) cfg.sectorMapPath = resolveRelative(path, kv["sectorMap"]);
     if (cfg.safetyOrder < 0 || cfg.certOrder < 0) {
         throw std::runtime_error("K_safety and K_cert must be nonnegative");
     }
@@ -65,6 +68,20 @@ std::vector<SectorSeriesEntry> parseSectorSeriesList(const std::string& path,
         SectorSeriesEntry e;
         if (!(ss >> sectorTok >> e.seriesPath >> e.targetPath >> e.masterPath)) {
             throw std::runtime_error("Invalid sector series list line: " + line);
+        }
+        std::string optionTok;
+        while (ss >> optionTok) {
+            const size_t optEq = optionTok.find('=');
+            if (optEq == std::string::npos) {
+                throw std::runtime_error("Invalid sector series option: " + optionTok);
+            }
+            const std::string key = optionTok.substr(0, optEq);
+            const std::string value = optionTok.substr(optEq + 1);
+            if (key == "deg") {
+                e.degreeD = std::stoi(value);
+            } else {
+                throw std::runtime_error("Unknown sector series option: " + optionTok);
+            }
         }
         const size_t eq = sectorTok.find('=');
         if (eq == std::string::npos || sectorTok.substr(0, eq) != "sector") {
@@ -117,7 +134,7 @@ static std::vector<T> parseSeriesLine(const std::string& line) {
 
 template<typename T>
 void loadSectorData(const std::vector<SectorSeriesEntry>& entries,
-                    int degreeD,
+                    int& degreeD,
                     int expectedNuSize,
                     SeriesStore<T>& series,
                     MasterData& masters) {
@@ -134,9 +151,22 @@ void loadSectorData(const std::vector<SectorSeriesEntry>& entries,
                 throw std::runtime_error("Too many series lines in " + e.seriesPath);
             }
             auto coeffs = parseSeriesLine<T>(line);
-            if (static_cast<int>(coeffs.size()) != degreeD + 1) {
-                throw std::runtime_error("Series degree mismatch in " + e.seriesPath);
+            if (coeffs.empty()) {
+                throw std::runtime_error("Empty series line in " + e.seriesPath);
             }
+            int availableDegree = static_cast<int>(coeffs.size()) - 1;
+            int useDegree = availableDegree;
+            if (degreeD >= 0) {
+                useDegree = degreeD;
+            }
+            if (e.degreeD >= 0) {
+                useDegree = e.degreeD;
+            }
+            if (useDegree > availableDegree) {
+                    throw std::runtime_error("Requested sector series degree exceeds available data in " +
+                                             e.seriesPath);
+            }
+            coeffs.resize(static_cast<size_t>(useDegree) + 1);
             series.addSeries(e.sector, targets[idx], std::move(coeffs));
             ++idx;
         }
@@ -155,4 +185,3 @@ void loadSectorData(const std::vector<SectorSeriesEntry>& entries,
         masters.setMasters(e.sector, std::move(ms));
     }
 }
-

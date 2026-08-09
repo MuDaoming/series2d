@@ -407,13 +407,27 @@ int main(int argc, char** argv) {
 
         const auto deTargets = parseSearchTargetFile(argv[2], cfg.nuSize);
         const auto masters = parseMastersFile(mastersPath, cfg.nuSize);
-        validateTargetsInMasters(deTargets, masters);
+
+        // The differentiated targets need not belong to the basis used on the
+        // right-hand side.  This is needed, for example, to construct a
+        // rectangular cross-sector equation d M_top / d delta = C M_sub.
+        // Read series for the union, while keeping `masters` as the only
+        // allowed undifferentiated labels in the relation search below.
+        std::vector<IntegralLabel> seriesLabels = masters;
+        std::map<IntegralLabel, bool, IntegralLabelLess> seriesLabelSet;
+        for (const auto& label : seriesLabels) seriesLabelSet[label] = true;
+        for (const auto& target : deTargets) {
+            if (seriesLabelSet.find(target) == seriesLabelSet.end()) {
+                seriesLabels.push_back(target);
+                seriesLabelSet[target] = true;
+            }
+        }
 
         std::vector<SeriesByLabel> masterSeriesByBC;
         masterSeriesByBC.reserve(numBC);
         for (const auto& entry : seriesList) {
             masterSeriesByBC.push_back(readSeriesForLabels(
-                entry.first, entry.second, masters, cfg.nuSize, cfg.degreeD));
+                entry.first, entry.second, seriesLabels, cfg.nuSize, cfg.degreeD));
         }
 
         if (outputPath.has_parent_path()) {

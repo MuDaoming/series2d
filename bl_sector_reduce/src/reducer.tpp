@@ -14,17 +14,38 @@ template<typename T>
 std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
     const std::vector<ObjectLabel>& objects,
     const std::function<void(const std::vector<SectorReduction<T>>&)>& onSectorDone) const {
-    std::vector<SectorReduction<T>> reductions;
+    return reduceAll(objects, {}, onSectorDone);
+}
+
+template<typename T>
+std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
+    const std::vector<ObjectLabel>& objects,
+    const std::vector<SectorReduction<T>>& initialReductions,
+    const std::function<void(const std::vector<SectorReduction<T>>&)>& onSectorDone) const {
+    std::vector<SectorReduction<T>> reductions = initialReductions;
     ContributionBuilder<T> contrib(series_, tree_);
 
     for (const auto& object : objects) {
         for (int sectorIndex : tree_.processingOrder()) {
             const SectorId& sector = tree_.sectorAt(sectorIndex);
+            bool seeded = false;
+            for (const auto& red : reductions) {
+                if (equalSectorId(red.sector, sector) &&
+                    equalObjectLabel(red.object, object)) {
+                    seeded = true;
+                    break;
+                }
+            }
+            if (seeded) {
+                if (onSectorDone) onSectorDone(reductions);
+                continue;
+            }
             if (!series_.hasSeries(sector, object)) {
                 if (onSectorDone) onSectorDone(reductions);
                 continue;
             }
             auto current = contrib.buildContribution(object, sectorIndex, reductions);
+            const int degreeD = static_cast<int>(current.size()) - 1;
             if (isZeroSeries(current)) {
                 SectorReduction<T> zero;
                 zero.sector = sector;
@@ -43,7 +64,7 @@ std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
 
             const auto& masterLabels = masters_.mastersFor(sector);
             const int r = static_cast<int>(masterLabels.size());
-            const int mSupported = supportedDegree(r);
+            const int mSupported = supportedDegree(r, degreeD);
             if (mSupported < 0) {
                 throw std::runtime_error("Insufficient series degree for object " +
                                          objectLabelToString(object) + " sector " +
@@ -53,7 +74,20 @@ std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
             std::vector<std::vector<T>> masterSeries;
             masterSeries.reserve(masterLabels.size());
             for (const auto& m : masterLabels) {
-                masterSeries.push_back(series_.getSeries(sector, m));
+                auto s = series_.getSeries(sector, m);
+                if (static_cast<int>(s.size()) < degreeD + 1) {
+                    std::ostringstream oss;
+                    oss << "Master series is shorter than target contribution: master="
+                        << objectLabelToString(m)
+                        << " sector=" << sectorIdToString(sector)
+                        << " have_D=" << static_cast<int>(s.size()) - 1
+                        << " need_D=" << degreeD;
+                    throw std::runtime_error(oss.str());
+                }
+                if (static_cast<int>(s.size()) > degreeD + 1) {
+                    s.resize(static_cast<size_t>(degreeD) + 1);
+                }
+                masterSeries.push_back(std::move(s));
             }
 
             bool found = false;
@@ -76,7 +110,7 @@ std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
                 oss << "Unresolved sector contribution: object=" << objectLabelToString(object)
                     << " sector=" << sectorIdToString(sector)
                     << " masters=" << r
-                    << " D=" << config_.degreeD
+                    << " D=" << degreeD
                     << " m_max=" << mMax
                     << " K_safety=" << config_.safetyOrder
                     << " K_cert=" << config_.certOrder;
@@ -98,9 +132,9 @@ std::vector<SectorReduction<T>> BLSectorReducer<T>::reduceAll(
 }
 
 template<typename T>
-int BLSectorReducer<T>::supportedDegree(int numMasters) const {
+int BLSectorReducer<T>::supportedDegree(int numMasters, int degreeD) const {
     const int denom = numMasters + 1;
-    const int available = config_.degreeD + 1 - config_.safetyOrder - config_.certOrder;
+    const int available = degreeD + 1 - config_.safetyOrder - config_.certOrder;
     if (available < denom) return -1;
     return available / denom - 1;
 }

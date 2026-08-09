@@ -1,0 +1,34 @@
+#!/bin/bash
+set -euo pipefail
+
+if [ "$#" -ne 4 ]; then
+  echo "Usage: $0 <reduction_output> <object_label> <sector> <output_path>" >&2
+  exit 1
+fi
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
+export FACTOR_BL_REDUCTION_INPUT="$1"
+export FACTOR_BL_REDUCTION_OBJECT="$2"
+export FACTOR_BL_REDUCTION_SECTOR="$3"
+export FACTOR_BL_REDUCTION_OUTPUT="$4"
+
+if [ -n "${WOLFRAM_KERNEL:-}" ] && [ -x "$WOLFRAM_KERNEL" ]; then
+  exec "$WOLFRAM_KERNEL" -script "$SCRIPT_DIR/factor_bl_reduction.wl" "$1" "$2" "$3" "$4"
+fi
+
+if command -v math >/dev/null 2>&1; then
+  exec math -script "$SCRIPT_DIR/factor_bl_reduction.wl" "$1" "$2" "$3" "$4"
+fi
+
+if command -v wolframscript >/dev/null 2>&1; then
+  exec wolframscript -file "$SCRIPT_DIR/factor_bl_reduction.wl" "$1" "$2" "$3" "$4"
+fi
+
+TIANHE_MATH=/fs2/home/s522pkuphy/Mathematica/bin/math
+if [ -x "$TIANHE_MATH" ]; then
+  exec "$TIANHE_MATH" -script "$SCRIPT_DIR/factor_bl_reduction.wl" "$1" "$2" "$3" "$4"
+fi
+
+echo "Error: cannot find wolframscript or a Mathematica math kernel" >&2
+echo "Set WOLFRAM_KERNEL to the executable path." >&2
+exit 127

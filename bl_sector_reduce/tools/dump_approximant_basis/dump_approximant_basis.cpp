@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     }
 
     try {
-        const BLSectorConfig config = parseBLSectorConfig(argv[1]);
+        BLSectorConfig config = parseBLSectorConfig(argv[1]);
         FlintMod::set_modulus(config.prime);
         const SectorId wantedSector = parseSectorId(argv[3], config.nuSize);
         const ObjectLabel object = parseObjectLabel(argv[4], config.nuSize);
@@ -36,11 +36,12 @@ int main(int argc, char** argv) {
         SeriesStore<FlintMod> series;
         MasterData masters;
         loadSectorData(entries, config.degreeD, config.nuSize, series, masters);
+        const int degreeD = series.degree(wantedSector, object);
         const auto& masterLabels = masters.mastersFor(wantedSector);
         const int r = static_cast<int>(masterLabels.size());
         const int workOrder =
             (r + 1) * (config.maxDegree + 1) + config.safetyOrder + config.certOrder;
-        if (workOrder > config.degreeD + 1) {
+        if (workOrder > degreeD + 1) {
             throw std::runtime_error("Requested work order exceeds available series length");
         }
 
@@ -49,7 +50,14 @@ int main(int argc, char** argv) {
         request.maxDegree = config.maxDegree;
         request.workOrder = workOrder;
         for (const auto& master : masterLabels) {
-            request.masters.push_back(series.getSeries(wantedSector, master));
+            auto masterSeries = series.getSeries(wantedSector, master);
+            if (static_cast<int>(masterSeries.size()) < degreeD + 1) {
+                throw std::runtime_error("Master series is shorter than requested object series");
+            }
+            if (static_cast<int>(masterSeries.size()) > degreeD + 1) {
+                masterSeries.resize(static_cast<size_t>(degreeD) + 1);
+            }
+            request.masters.push_back(std::move(masterSeries));
         }
 
         ApproximantBasisSolver<FlintMod> solver;

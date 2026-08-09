@@ -70,6 +70,14 @@ SectorTree::SectorTree(const std::vector<SectorId>& sectors) : sectors_(sectors)
     buildOrder();
 }
 
+SectorTree::SectorTree(const std::vector<SectorId>& sectors, const SectorMap& sectorMap)
+    : sectors_(sectors), sectorMap_(sectorMap) {
+    std::sort(sectors_.begin(), sectors_.end(), SectorIdLess{});
+    sectors_.erase(std::unique(sectors_.begin(), sectors_.end(), equalSectorId), sectors_.end());
+    if (sectors_.empty()) throw std::runtime_error("SectorTree needs at least one sector");
+    buildOrder();
+}
+
 int SectorTree::rootIndex() const { return rootIndex_; }
 const std::vector<int>& SectorTree::processingOrder() const { return order_; }
 int SectorTree::parentOf(int sectorIndex) const { return parents_.at(sectorIndex); }
@@ -89,7 +97,8 @@ std::vector<int> SectorTree::ancestorsOf(int sectorIndex) const {
     const int sectorComplexity = sectorPopcount(sector);
     for (int idx : order_) {
         if (idx == sectorIndex) break;
-        if (sectorPopcount(sectors_[idx]) > sectorComplexity) {
+        if (sectorPopcount(sectors_[idx]) > sectorComplexity &&
+            containsInMapOrbit(sectors_[idx], sector)) {
             out.push_back(idx);
         }
     }
@@ -108,4 +117,37 @@ void SectorTree::buildOrder() {
         return SectorIdLess{}(sectors_[a], sectors_[b]);
     });
     rootIndex_ = order_.front();
+}
+
+bool SectorTree::containsInMapOrbit(const SectorId& lhs, const SectorId& rhs) const {
+    if (sectorMap_.empty()) return sectorContains(lhs, rhs);
+
+    const auto lhsOrbit = orbitOf(lhs.bits);
+    const auto rhsOrbit = orbitOf(rhs.bits);
+    for (const auto& lhsBits : lhsOrbit) {
+        SectorId lhsId{lhsBits};
+        for (const auto& rhsBits : rhsOrbit) {
+            SectorId rhsId{rhsBits};
+            if (sectorContains(lhsId, rhsId)) return true;
+        }
+    }
+    return false;
+}
+
+std::vector<std::vector<int>> SectorTree::orbitOf(const std::vector<int>& sector) const {
+    std::vector<std::vector<int>> orbit;
+    auto addUnique = [&](const std::vector<int>& bits) {
+        if (std::find(orbit.begin(), orbit.end(), bits) == orbit.end()) {
+            orbit.push_back(bits);
+        }
+    };
+
+    const std::vector<int> canonical = sectorMap_.canonicalizeSector(sector);
+    addUnique(sector);
+    addUnique(canonical);
+    for (const auto& entry : sectorMap_.entries()) {
+        if (sectorMap_.canonicalizeSector(entry.source) == canonical) addUnique(entry.source);
+        if (sectorMap_.canonicalizeSector(entry.target) == canonical) addUnique(entry.target);
+    }
+    return orbit;
 }

@@ -73,7 +73,7 @@ std::vector<T> ContributionBuilder<T>::buildContribution(
     const std::vector<SectorReduction<T>>& knownReductions) const {
     const SectorId& sector = tree_.sectorAt(sectorIndex);
     std::vector<T> contribution = series_.getSeries(sector, object);
-    const int degreeD = series_.degree();
+    const int degreeD = static_cast<int>(contribution.size()) - 1;
     const auto ancestors = tree_.ancestorsOf(sectorIndex);
     std::vector<SeenReductionTerm<T>> seenTerms;
 
@@ -83,7 +83,7 @@ std::vector<T> ContributionBuilder<T>::buildContribution(
             if (!equalSectorId(red.sector, ancestor)) continue;
             if (!equalObjectLabel(red.object, object)) continue;
             if (red.isZero) continue;
-            const auto eval = evaluateReductionAtSector(red, sector, seenTerms);
+            const auto eval = evaluateReductionAtSector(red, sector, degreeD, seenTerms);
             for (int i = 0; i <= degreeD; ++i) contribution[i] -= eval[i];
         }
     }
@@ -94,8 +94,8 @@ template<typename T>
 std::vector<T> ContributionBuilder<T>::evaluateReductionAtSector(
     const SectorReduction<T>& reduction,
     const SectorId& sector,
+    int degreeD,
     std::vector<SeenReductionTerm<T>>& seenTerms) const {
-    const int degreeD = series_.degree();
     std::vector<T> numeratorSeries(degreeD + 1, T(0));
     for (const auto& term : reduction.terms) {
         const int duplicate = contribution_detail::duplicateStatus(
@@ -118,6 +118,15 @@ std::vector<T> ContributionBuilder<T>::evaluateReductionAtSector(
             reduction.denominator
         });
         const auto& masterSeries = series_.getSeries(sector, term.master);
+        if (static_cast<int>(masterSeries.size()) < degreeD + 1) {
+            std::ostringstream oss;
+            oss << "Master series is shorter than target contribution: master="
+                << objectLabelToString(term.master)
+                << " sector=" << sectorIdToString(sector)
+                << " have_D=" << static_cast<int>(masterSeries.size()) - 1
+                << " need_D=" << degreeD;
+            throw std::runtime_error(oss.str());
+        }
         const auto prod = multiplyPolySeries(term.numerator, masterSeries, degreeD);
         for (int i = 0; i <= degreeD; ++i) numeratorSeries[i] += prod[i];
     }

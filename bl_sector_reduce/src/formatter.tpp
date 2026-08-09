@@ -23,7 +23,11 @@ void writeReductions(std::ostream& out,
                      const MasterData& masters,
                      const std::vector<SectorReduction<T>>& reductions) {
     out << "# p = " << config.prime << "\n";
-    out << "# D = " << config.degreeD << "\n";
+    if (config.degreeD >= 0) {
+        out << "# D = " << config.degreeD << "\n";
+    } else {
+        out << "# D = variable\n";
+    }
     out << "# m_user = " << config.maxDegree << "\n";
     out << "# K_safety = " << config.safetyOrder << "\n";
     out << "# K_cert = " << config.certOrder << "\n\n";

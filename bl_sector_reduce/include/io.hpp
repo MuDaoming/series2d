@@ -12,6 +12,7 @@ struct SectorSeriesEntry {
     std::string seriesPath;
     std::string targetPath;
     std::string masterPath;
+    int degreeD = -1;
 };
 
 BLSectorConfig parseBLSectorConfig(const std::string& path);
@@ -22,10 +23,9 @@ std::vector<ObjectLabel> parseTargetFile(const std::string& path, int expectedNu
 
 template<typename T>
 void loadSectorData(const std::vector<SectorSeriesEntry>& entries,
-                    int degreeD,
+                    int& degreeD,
                     int expectedNuSize,
                     SeriesStore<T>& series,
                     MasterData& masters);
 
 #include "../src/io.tpp"
-
