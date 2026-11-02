@@ -1,0 +1,23 @@
+{
+  "name": "box_triangle_maximal_cut",
+  "kind": "two_loop_family",
+  "prime": 1000003,
+  "dimension": "26/7",
+  "t0": "2/5",
+  "gram": [["0","1/2","-13/30"],["1/2","0","-1/15"],["-13/30","-1/15","1/5"]],
+  "propagators": [
+    {"branch":0,"loop":[1,0],"shift":[0,0,0],"mass2":"0"},
+    {"branch":0,"loop":[1,0],"shift":[1,0,0],"mass2":"0"},
+    {"branch":0,"loop":[1,0],"shift":[1,1,0],"mass2":"0"},
+    {"branch":1,"loop":[0,1],"shift":[0,0,0],"mass2":"1/5"},
+    {"branch":1,"loop":[0,1],"shift":[-1,-1,0],"mass2":"1/5"},
+    {"branch":2,"loop":[1,1],"shift":[0,0,0],"mass2":"1/5"}
+  ],
+  "cut_sector":[1,1,1,1,1,1],
+  "endpoints":{"0":"regular","1":"regulated_zero"},
+  "targets":[[2,1,1,1,1,1],[1,2,1,1,1,1],[1,1,2,1,1,1],[1,1,1,2,1,1],[1,1,1,1,2,1],[1,1,1,1,1,2],[1,1,1,1,1,1]],
+  "order":16,
+  "train_order":10,
+  "relation_degree":2,
+  "de_degree":6
+}

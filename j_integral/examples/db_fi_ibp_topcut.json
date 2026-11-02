@@ -1,0 +1,18 @@
+{
+ "j_reduction":"../results/db_fi_ibp/j_reduction_completed.json",
+ "degree":24,"denominator_power":2,
+ "certificate_denominator":"all_lcm",
+ "discarded_modules":["Bz0{1,1,1,1,1,1}"],
+ "master_integrands":[],
+ "endpoint_zeros":{},
+ "integration_bounds_tau":["-2/5","3/5"],
+ "endpoint_values":{
+  "J{1,1,1,1,1,3}":{"lower":{},"upper":{}},
+  "J{1,1,1,1,2,1}":{"lower":{},"upper":{}},
+  "J{1,1,1,1,1,2}":{"lower":{},"upper":{}},
+  "J{1,1,1,1,1,1}":{"lower":{},"upper":{}},
+  "Bz0{1,1,1,1,1,1}":{"lower":{},"upper":{}}
+ },
+ "period_integral_map":{},
+ "boundary_convention":"Original-FI maximal cut quotients the full pinched-branch boundary differential module, including rationally weighted periods; this is not a claim that endpoint functions vanish before cut projection."
+}

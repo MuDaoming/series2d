@@ -1,0 +1,12 @@
+{
+ "j_reduction":"../results/vac_fi_ibp/j_reduction.json",
+ "degree":12,"denominator_power":2,
+ "certificate_denominator":{"matrix_row":"J{1,1,1}","matrix_column":"J{1,1,1}"},
+ "endpoint_zeros":{},
+ "integration_bounds_tau":["-2/5","3/5"],
+ "endpoint_values":{
+   "J{1,1,1}":{"lower":{"Bz0{1,1,1}":"1/2"},"upper":{"Bz0{1,1,1}":"1/2"}},
+   "Bz0{1,1,1}":{"lower":{},"upper":{}}
+ },
+ "period_integral_map":{"J{1,1,1}":{"FI111":"1"},"Bz0{1,1,1}":{"FI110":"-19/13"}}
+}

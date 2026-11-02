@@ -1,0 +1,19 @@
+{
+  "name": "equal_mass_vac_full",
+  "kind": "two_loop_family",
+  "prime": 1000003,
+  "dimension": "7/13",
+  "t0": "2/5",
+  "gram": [],
+  "propagators": [
+    {"branch": 0, "loop": [1, 0], "shift": [], "mass2": "1"},
+    {"branch": 1, "loop": [0, 1], "shift": [], "mass2": "1"},
+    {"branch": 2, "loop": [1, 1], "shift": [], "mass2": "1"}
+  ],
+  "endpoints": {"0": "regular", "1": "regulated_zero"},
+  "targets": [[2,1,1],[1,2,1],[1,1,2],[3,1,1],[2,2,1],[2,1,2],[1,3,1],[1,2,2],[1,1,3],[1,1,1]],
+  "order": 24,
+  "train_order": 16,
+  "relation_degree": 3,
+  "de_degree": 6
+}

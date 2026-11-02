@@ -1,0 +1,20 @@
+(* Independent original-momentum Blade reduction; not input to the J-IBP solver. *)
+base=DirectoryName[DirectoryName[$InputFileName]];
+out=FileNameJoin[{base,"results","vac_fi_ibp"}];
+If[!DirectoryQ[out],CreateDirectory[out,CreateIntermediateDirectories->True]];
+Get["/home/mudaoming/Documents/Packages/blade/blade-main/Blade.wl"];
+$BLWorkingDirectory=FileNameJoin[{out,"blade_cache"}];
+BLNthreads=1;BLSSolveNthreads=1;
+BLFamilyDefine[jvaccheck,7/13,{l1^2-1,l2^2-1,(l1+l2)^2-1},{l1,l2},{},{},{},{1,1,1},{}];
+indices=Select[Tuples[Range[1,4],3],Total[#]<=6&];
+target=BL[jvaccheck,#]&/@indices;
+prefer={BL[jvaccheck,{1,1,1}],BL[jvaccheck,{1,1,0}]};
+res=BLReduce[Join[target,prefer],prefer,"vac_fi_check","BladeMode"->None];
+If[!ListQ[res]||Length[res]!=Length[target]+2,Print["BLADE_REDUCTION_FAILED"];Exit[1]];
+res=res/.Thread[Take[res,-2]->prefer];
+Put[Thread[Join[target,prefer]->res],FileNameJoin[{out,"blade_rules.wl"}]];
+p=1000003;
+modr[x_]:=Mod[Numerator[Together[x]] PowerMod[Mod[Denominator[Together[x]],p],-1,p],p];
+records=MapThread[Function[{nu,v},<|"indices"->nu,"sunset"->modr[Coefficient[Expand[v],prefer[[1]]]],"tadpole_product"->modr[Coefficient[Expand[v],prefer[[2]]]],"unresolved"->(Expand[v/.Thread[prefer->{0,0}]]=!=0)|>],{indices,Take[res,Length[indices]]}];
+Export[FileNameJoin[{out,"blade_modp.json"}],<|"prime"->p,"dimension"->"7/13","records"->records,"master_integrals"->ToString[prefer,InputForm]|>,"RawJSON"];
+Print["BLADE_CHECK_OUTPUT=",FileNameJoin[{out,"blade_modp.json"}]];

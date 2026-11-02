@@ -1,0 +1,29 @@
+(* Independent momentum IBP; rank may occur internally, final MIs must be dot-only. *)
+base=DirectoryName[DirectoryName[$InputFileName]];out=FileNameJoin[{base,"results","db_fi_ibp"}];
+If[!DirectoryQ[out],CreateDirectory[out,CreateIntermediateDirectories->True]];
+Get["/home/mudaoming/Documents/Packages/blade/blade-main/Blade.wl"];
+$BLWorkingDirectory=FileNameJoin[{out,"blade_cache"}];BLNthreads=1;BLSSolveNthreads=1;
+Unprotect[Blade`Private`CacheDirectory];Clear[Blade`Private`CacheDirectory];
+Blade`Private`CacheDirectory[key_]:=FileNameJoin[{out,"blade_cache",ToString[Blade`Private`BLFamily,InputForm]<>"_"<>key}];
+BLSetReducerOptions["IntegralOrdering"->2];
+prop={l1^2,(l1+p1)^2,(l1+p1+p2)^2,l2^2-1/5,(l2-p1-p2)^2-1/5,(l1+l2)^2-1/5,
+      (l2+p1)^2};
+sp={p1^2->0,p2^2->0,p1 p2->1/2};
+top={1,1,1,1,1,1,0};
+BLFamilyDefine[jdbcheck2,26/7,prop,{l1,l2},{p1,p2},{},sp,top,{},top];
+masters=BLMaximalCutMasters[top,{},"PreferredMI"->"Dot"];
+Put[masters,FileNameJoin[{out,"blade_masters.wl"}]];
+If[!ListQ[masters]||!And@@(MatchQ[#,BL[_,{_Integer..}]]&/@masters),Print["INVALID_MASTERS=",masters];Exit[1]];
+If[!And@@(And@@Thread[#[[2]]>=0]&/@masters),Print["RANK_MASTER_DETECTED=",masters];Exit[1]];
+Print["DOT_ONLY_MASTERS=",masters];
+indexSets[n_,d_]:=Select[Tuples[Range[0,d],n],Total[#]<=d&];
+indices=1+#&/@indexSets[6,2];target=BL[jdbcheck2,Join[#,{0}]]&/@indices;
+res=BLReduce[Join[target,masters],masters,"db_dot2_cut","BladeMode"->None];
+If[!ListQ[res]||Length[res]!=Length[target]+Length[masters],Print["BLADE_REDUCTION_FAILED"];Exit[1]];
+res=res/.Thread[Take[res,-Length[masters]]->masters];
+Put[Thread[Join[target,masters]->res],FileNameJoin[{out,"blade_rules.wl"}]];
+p=1000003;modr[x_]:=Mod[Numerator[Together[x]]PowerMod[Mod[Denominator[Together[x]],p],-1,p],p];
+labels=("FI{"<>StringRiffle[ToString/@Take[#[[2]],6],","]<>"}")&/@masters;
+records=MapThread[Function[{nu,v},<|"indices"->nu,"coefficients"->AssociationThread[labels,modr/@(Coefficient[Expand[v],#]&/@masters)],"unresolved"->(Expand[v/.Thread[masters->ConstantArray[0,Length[masters]]]]=!=0)|>],{indices,Take[res,Length[indices]]}];
+Export[FileNameJoin[{out,"blade_modp.json"}],<|"prime"->p,"dimension"->"26/7","cut"->top,"master_indices"->(Take[#[[2]],6]&/@masters),"rank_free"->True,"records"->records|>,"RawJSON"];
+Print["BLADE_CHECK_OUTPUT=",FileNameJoin[{out,"blade_modp.json"}]];
