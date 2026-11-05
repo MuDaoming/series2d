@@ -54,10 +54,18 @@ Elimination eliminate(RMat a,int cols){int row=0;std::vector<int>pivots;for(int 
 RMat inverse(const RMat& a){int n=a.size();RMat b=a;for(int i=0;i<n;++i){b[i].resize(2*n);b[i][n+i]=RF(1);}auto e=eliminate(std::move(b),n);if(int(e.pivots.size())!=n)return {};RMat x(n,RRow(n));for(int i=0;i<n;++i)for(int j=0;j<n;++j)x[i][j]=e.matrix[i][n+j];return x;}
 struct SectorInfo {int type;std::vector<int>active;RMat inv;RF C;RRow zs;};
 struct NativeFamily {
- json cfg;int n,rank;std::vector<int>branch;Nu cut;RF dimension,U;std::vector<RF>X;RMat R;std::map<Nu,SectorInfo> sectors;std::vector<Nu>masters;std::map<Nu,int>master_index;std::map<std::pair<Nu,int>,RRow> cache;
+ json cfg;int n,rank;std::vector<int>branch;Nu cut;RF dimension,U,jacobian;std::vector<RF>X;RMat R;std::map<Nu,SectorInfo> sectors;std::vector<Nu>masters;std::map<Nu,int>master_index;std::map<std::pair<Nu,int>,RRow> cache;
  explicit NativeFamily(json cfg):cfg(std::move(cfg)){
   n=this->cfg.at("propagators").size();if(n>20)throw std::runtime_error("sector enumeration limited to 20 propagators");dimension=readr(this->cfg.at("dimension"));
-  RF t=Expression("t").parse(),z=Expression("z").parse();X={t*(RF(1)-z),(RF(1)-t)*(RF(1)-z),z};
+  RF t=Expression("t").parse(),z=Expression("z").parse();X={t*(RF(1)-z),(RF(1)-t)*(RF(1)-z),z};jacobian=RF(1)-z;
+  if(this->cfg.contains("branch_parameters")||this->cfg.contains("jacobian")){
+   if(!this->cfg.contains("branch_parameters")||!this->cfg.contains("jacobian")||this->cfg.at("branch_parameters").size()!=3)throw std::runtime_error("provide three branch_parameters and jacobian together");
+   for(int b=0;b<3;++b)X[b]=readr(this->cfg.at("branch_parameters")[b]);
+   jacobian=readr(this->cfg.at("jacobian"));
+   RF determinant=X[0].diff(0)*X[1].diff(1)-X[0].diff(1)*X[1].diff(0);
+   if(!(X[0]+X[1]+X[2]-RF(1)).zero())throw std::runtime_error("branch_parameters must sum to one");
+   if(jacobian.zero()||(!(jacobian-determinant).zero()&&!(jacobian+determinant).zero()))throw std::runtime_error("jacobian must equal the coordinate determinant up to orientation");
+  }
   auto props=this->cfg.at("propagators");int E=this->cfg.at("gram").size();RMat gram(E,RRow(E)),c(n,RRow(2)),shift(n,RRow(E));RRow mass(n),kin(n);for(int a=0;a<E;++a)for(int b=0;b<E;++b)gram[a][b]=readr(this->cfg["gram"][a][b]);
   std::set<int> bs;std::map<int,RRow>bc;
   for(int i=0;i<n;++i){int b=props[i].at("branch");branch.push_back(b);bs.insert(b);if(props[i].at("loop").size()!=2||int(props[i].at("shift").size())!=E)throw std::runtime_error("invalid loop/shift length");for(int j=0;j<2;++j)c[i][j]=readr(props[i]["loop"][j]);for(int j=0;j<E;++j)shift[i][j]=readr(props[i]["shift"][j]);mass[i]=readr(props[i].at("mass2"));
@@ -93,7 +101,7 @@ struct NativeFamily {
   cache.emplace(key,out);return out;
  }
  RRow diff(const Nu&nu,int variable){RRow out(rank);for(int i=0;i<n;++i)if(nu[i])for(int j=0;j<n;++j)if(nu[j]){RF c=R[i][j].diff(variable);if(!c.zero()){Nu src=nu;++src[i];++src[j];accumulate(out,-c*RF(nu[i]*(nu[j]+(i==j)))/RF(2),reduce(src,1));}}return out;}
- RF prefactor(const Nu&nu){RF a=RF(1)-Expression("z").parse();for(int b=0;b<3;++b){int k=-1;for(int i=0;i<n;++i)if(branch[i]==b)k+=nu[i];a=a*rpow(X[b],k);}return a*rpow(U,std::accumulate(nu.begin(),nu.end(),0));}
+ RF prefactor(const Nu&nu){RF a=jacobian;for(int b=0;b<3;++b){int k=-1;for(int i=0;i<n;++i)if(branch[i]==b)k+=nu[i];a=a*rpow(X[b],k);}return a*rpow(U,std::accumulate(nu.begin(),nu.end(),0));}
  void model(RMat&At,RMat&Az,std::map<std::string,RRow>&targets){RRow p;for(auto&nu:masters)p.push_back(prefactor(nu));At.assign(rank,RRow(rank));Az=At;for(int v=0;v<2;++v)for(int i=0;i<rank;++i){auto row=diff(masters[i],v);for(int j=0;j<rank;++j)row[j]=p[i]*row[j]/p[j];row[i]+=p[i].diff(v)/p[i]-RF(3)*dimension*U.diff(v)/(RF(2)*U);(v?Az:At)[i]=std::move(row);}for(auto& values:cfg.at("targets")){Nu nu=values.get<Nu>();if(!valid(nu))throw std::runtime_error("invalid target indices");RRow row=reduce(nu,0);RF fac=prefactor(nu);std::string label="J{";for(int i=0;i<n;++i)label+=(i?",":"")+std::to_string(nu[i]);label+="}";for(int j=0;j<rank;++j)row[j]=fac*row[j]/p[j];targets[label]=std::move(row);}}
 };
 P univariate(const MP& a){P p;for(slong i=0;i<nmod_mpoly_length(a.v,mc);++i){ulong e[2];nmod_mpoly_get_term_exp_ui(e,a.v,i,mc);if(e[0])throw std::runtime_error("expected specialized polynomial");p.set(e[1],nmod_mpoly_get_term_coeff_ui(a.v,i,mc));}return p;}
@@ -116,5 +124,6 @@ json prepare(const json&cfg){auto before=Clock::now();nmod_mpoly_ctx_init(mc,2,O
  for(auto&[label,row]:targets){if(int(row.size())!=r)throw std::runtime_error("target rank mismatch");MP den(1);for(auto&x:row)den=mlcm(den,x.d);auto dj=shiftjet(den,t0);addden(dj[0]);json jj=json::array();for(auto&x:row)jj.push_back(jetjson(shiftjet(x.n*mquot(den,x.d),t0)));out["targets"].push_back({{"label",label},{"den",jetjson(dj)},{"numer",jj}});}
  P g;nmod_poly_gcd(g.v,q.v,derivative(q).v);q=quotient(q,g);nmod_poly_make_monic(q.v,q.v);if(q.deg()<1)throw std::runtime_error("polynomial-only connection unsupported");out["q"]=polyjson(q);out["B"]=json::array();
  for(auto&row:az0){json rr=json::array();for(auto&[n,d]:row){P b=quotient(q*n,d);if(b.deg()>=q.deg())throw std::runtime_error("non-Fuchsian/infinity polynomial connection unsupported");rr.push_back(polyjson(b));}out["B"].push_back(rr);}
+ metadata["branch_parameters"]=cfg.value("branch_parameters",json::array({"t*(1-z)","(1-t)*(1-z)","z"}));metadata["jacobian"]=cfg.value("jacobian",json("1-z"));
  out["metadata"]=metadata;out["t0"]=cfg.at("t0");out["preparation_seconds"]=seconds(before);std::cerr<<"FBI preparation "<<seconds(before)<<"s rank="<<r<<" q_degree="<<q.deg()<<"\n";return out;
 }

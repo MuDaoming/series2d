@@ -1,0 +1,103 @@
+{
+  "name": "equal_mass_vac_full__fixed_X1_integrate_X2",
+  "kind": "two_loop_family",
+  "prime": 1000003,
+  "dimension": "7/13",
+  "t0": "2/5",
+  "gram": [],
+  "propagators": [
+    {
+      "branch": 0,
+      "loop": [
+        1,
+        0
+      ],
+      "shift": [],
+      "mass2": "1"
+    },
+    {
+      "branch": 1,
+      "loop": [
+        0,
+        1
+      ],
+      "shift": [],
+      "mass2": "1"
+    },
+    {
+      "branch": 2,
+      "loop": [
+        1,
+        1
+      ],
+      "shift": [],
+      "mass2": "1"
+    }
+  ],
+  "endpoints": {
+    "0": "regular",
+    "1": "regular"
+  },
+  "targets": [
+    [
+      2,
+      1,
+      1
+    ],
+    [
+      1,
+      2,
+      1
+    ],
+    [
+      1,
+      1,
+      2
+    ],
+    [
+      3,
+      1,
+      1
+    ],
+    [
+      2,
+      2,
+      1
+    ],
+    [
+      2,
+      1,
+      2
+    ],
+    [
+      1,
+      3,
+      1
+    ],
+    [
+      1,
+      2,
+      2
+    ],
+    [
+      1,
+      1,
+      3
+    ],
+    [
+      1,
+      1,
+      1
+    ]
+  ],
+  "order": 200,
+  "train_order": 16,
+  "relation_degree": 3,
+  "de_degree": 6,
+  "branch_parameters": [
+    "t",
+    "(1-t)*z",
+    "(1-t)*(1-z)"
+  ],
+  "jacobian": "1-t"
+}

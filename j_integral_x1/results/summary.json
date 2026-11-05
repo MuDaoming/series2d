@@ -1,0 +1,272 @@
+{
+  "scope": "DP maximal cut; fixed X1; both inner endpoints retained",
+  "parameterization": {
+    "X1": "x",
+    "X2": "(1-x)*y",
+    "X3": "(1-x)*(1-y)",
+    "jacobian": "1-x"
+  },
+  "samples": [
+    {
+      "prime": 1000003,
+      "x0": "2/5",
+      "order": 200,
+      "train_order": 120,
+      "heldout_orders": [
+        121,
+        200
+      ],
+      "relation_degree": 8,
+      "tested_object_count": 135,
+      "zero_objects": 0,
+      "masters": [
+        "J{1,1,1,1,1,1,2,2}",
+        "J{1,1,1,1,1,1,1,3}",
+        "J{1,1,1,1,2,1,1,1}",
+        "J{1,1,1,1,1,2,1,1}",
+        "J{1,1,1,1,1,1,2,1}",
+        "J{1,1,1,1,1,1,1,2}",
+        "J{1,1,1,1,1,1,1,1}",
+        "Bz1{1,1,1,1,1,1,1,1}",
+        "Bz0{1,1,1,1,1,1,1,1}"
+      ],
+      "master_count": 9,
+      "de_degrees": {
+        "Bz0{1,1,1,1,1,1,1,1}": 7,
+        "Bz1{1,1,1,1,1,1,1,1}": 5,
+        "J{1,1,1,1,1,1,1,1}": 24,
+        "J{1,1,1,1,1,1,1,2}": 26,
+        "J{1,1,1,1,1,1,1,3}": 43,
+        "J{1,1,1,1,1,1,2,1}": 26,
+        "J{1,1,1,1,1,1,2,2}": 43,
+        "J{1,1,1,1,1,2,1,1}": 26,
+        "J{1,1,1,1,2,1,1,1}": 26
+      },
+      "max_de_degree": 43,
+      "rejected_training_basis_vectors": 0,
+      "independent_point_checks": {
+        "all_pass": true,
+        "points": [
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "1/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "2/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "3/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "4/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "5/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "6/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "2/9",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "4/9",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          }
+        ],
+        "prime": 1000003,
+        "scope": "Exact rational FBI integration at independent t points; not a full symbolic-t certificate"
+      },
+      "operations": {
+        "certificate_checks": 9045,
+        "coefficient_integrations": 9045,
+        "denominator_stride": 2,
+        "infinity_steps": 18090,
+        "max_numerator_degree": 3618,
+        "pole_steps": 1818045
+      },
+      "timings": {
+        "certificate_seconds": 3.6679274810000004,
+        "fbi_jet_seconds": 0.09165218499999998,
+        "integration_seconds": 15.131053314999978,
+        "native_total_seconds": 18.814331999,
+        "pole_elimination_seconds": 5.5472309199999925,
+        "preparation_seconds": 0.256878535,
+        "process_compute_seconds": 19.07475511,
+        "qadic_seconds": 5.491188531000005,
+        "target_jet_seconds": 3.3730675239999974
+      }
+    },
+    {
+      "prime": 1000033,
+      "x0": "3/7",
+      "order": 220,
+      "train_order": 140,
+      "heldout_orders": [
+        141,
+        220
+      ],
+      "relation_degree": 8,
+      "tested_object_count": 135,
+      "zero_objects": 0,
+      "masters": [
+        "J{1,1,1,1,1,1,2,2}",
+        "J{1,1,1,1,1,1,1,3}",
+        "J{1,1,1,1,2,1,1,1}",
+        "J{1,1,1,1,1,2,1,1}",
+        "J{1,1,1,1,1,1,2,1}",
+        "J{1,1,1,1,1,1,1,2}",
+        "J{1,1,1,1,1,1,1,1}",
+        "Bz1{1,1,1,1,1,1,1,1}",
+        "Bz0{1,1,1,1,1,1,1,1}"
+      ],
+      "master_count": 9,
+      "de_degrees": {
+        "Bz0{1,1,1,1,1,1,1,1}": 7,
+        "Bz1{1,1,1,1,1,1,1,1}": 5,
+        "J{1,1,1,1,1,1,1,1}": 24,
+        "J{1,1,1,1,1,1,1,2}": 26,
+        "J{1,1,1,1,1,1,1,3}": 43,
+        "J{1,1,1,1,1,1,2,1}": 26,
+        "J{1,1,1,1,1,1,2,2}": 43,
+        "J{1,1,1,1,1,2,1,1}": 26,
+        "J{1,1,1,1,2,1,1,1}": 26
+      },
+      "max_de_degree": 43,
+      "rejected_training_basis_vectors": 0,
+      "independent_point_checks": {
+        "all_pass": true,
+        "points": [
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "1/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "2/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "3/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "4/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "5/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "6/7",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "2/9",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          },
+          {
+            "DE_checks": 9,
+            "completion_relations": 1,
+            "integral_certificate_checks": 52,
+            "point": "4/9",
+            "reduction_checks": 126,
+            "zero_checks": 0
+          }
+        ],
+        "prime": 1000033,
+        "scope": "Exact rational FBI integration at independent t points; not a full symbolic-t certificate"
+      },
+      "operations": {
+        "certificate_checks": 9945,
+        "coefficient_integrations": 9945,
+        "denominator_stride": 2,
+        "infinity_steps": 19890,
+        "max_numerator_degree": 3978,
+        "pole_steps": 2197845
+      },
+      "timings": {
+        "certificate_seconds": 5.416252025999997,
+        "fbi_jet_seconds": 0.13285644300000002,
+        "integration_seconds": 21.98956693799996,
+        "native_total_seconds": 27.251644743,
+        "pole_elimination_seconds": 7.618963783000009,
+        "preparation_seconds": 0.140579363,
+        "process_compute_seconds": 27.393816737,
+        "qadic_seconds": 8.403782579000026,
+        "target_jet_seconds": 4.851510652000003
+      }
+    }
+  ],
+  "legacy_regression": {
+    "all_pass": true,
+    "objects": 135,
+    "order": 20
+  }
+}
