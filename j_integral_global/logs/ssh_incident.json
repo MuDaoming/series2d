@@ -1,0 +1,15 @@
+{
+  "ID": "dp-global-j-ssh-connect-timeout-20261106",
+  "Scope": "Read-only Tianhe connection probe for global J finite-field sampling",
+  "Observed": "Three spaced probes through the existing BatchMode helper could not execute hostname; TCP port22 connection timed out, exit255. No remote job was submitted.",
+  "Cause": "External SSH connectivity unavailable; remote numerical/job state not inferred. Exact network/server cause unresolved.",
+  "Evidence": [
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/logs/ssh_probe_20261106.txt",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/logs/ssh_probe_second.txt",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/logs/ssh_probe_third.txt"
+  ],
+  "Correction": "Keep local validated computations running; retry the same helper later; do not change auth route or submit duplicates.",
+  "GeneralLesson": "A pre-command SSH timeout is an observation/connectivity failure, not a numerical failure or reason to rerun/cancel jobs.",
+  "Validation": "Local full-point run completed independently. Remote availability remains unverified.",
+  "Status": "external"
+}

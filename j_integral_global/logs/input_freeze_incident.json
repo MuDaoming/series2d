@@ -1,0 +1,15 @@
+{
+  "ID": "global-j-freeze-runtime-input-paths-20261106",
+  "Scope": "Local dynamic finite-field point dispatcher before Tianhe deployment; no remote jobs affected",
+  "Observed": "Initial dispatcher froze only the executable; subprocess arguments still referenced development JSON files. Diagnostic options were added to those source files during completed/active diagnostic batches. Original executables ignored the new options, but the recorded startup hash alone did not freeze runtime reads.",
+  "Cause": "Hash-only input identity was used without staging the actual files passed to numerical workers.",
+  "Evidence": [
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/tests/run_reconstruction.py",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/tests/test_dispatch.py",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/results/reconstruction/minimal44/input_identity.json"
+  ],
+  "Correction": "Stage family, basis and targets into the unique run/input directory, verify their hashes, and pass those frozen paths to every worker. Preserve valid point data. Recover the completed minimal44 input snapshot byte-for-byte and verify against its original SHA256.",
+  "GeneralLesson": "A startup source hash is not an immutable runtime input. Freeze and validate the actual file paths supplied to workers, separately from source review and binary freezing.",
+  "Validation": "Actual freeze_input function regression changes the source after staging and confirms the worker input copy is unchanged; dynamic dispatch regressions passed. Recovered minimal44 snapshot matches original SHA256; independent eight-point physical checks pass.",
+  "Status": "verified"
+}

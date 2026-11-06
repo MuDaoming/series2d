@@ -1,0 +1,637 @@
+{
+  "scope": "First J integral only; original t,z; all ordinary three-branch sectors; dot<=2; no ranks",
+  "status": "pointwise_global_reduction_closed; complete_DP_rational_t_reconstruction_not_yet_done",
+  "ordinary_J_sectors": 147,
+  "ordinary_J_targets": 2952,
+  "FBI_rank_before_aliases": 135,
+  "FBI_rank_after_aliases": 115,
+  "physical_boundary_dimension": 15,
+  "candidate_master_count": 496,
+  "candidate_J_count": 481,
+  "candidate_boundary_count": 15,
+  "basis_file": "examples/dp496_basis.json",
+  "target_file": "examples/dp_targets_dot2.json",
+  "samples": [
+    {
+      "file": "results/physical/dp_with_boundaries17.json",
+      "prime": 1000003,
+      "t_point": "17",
+      "FBI_rank": 115,
+      "target_count": 2952,
+      "objects_with_corner_boundaries": 3182,
+      "candidate_master_count": 496,
+      "candidate_J_count": 481,
+      "candidate_boundary_count": 15,
+      "DE_closed": true,
+      "physical_boundary_relations": 100,
+      "nonzero_reduction_coefficients": 115105,
+      "nonzero_DE_coefficients": 28234,
+      "scalar_certificate_checks": 1413,
+      "timings": {
+        "FBI_model_seconds": 13.263057518,
+        "completion_seconds": 1.5042150030000006,
+        "germ_seconds": 0.14155752499999963,
+        "total_seconds": 45.56108224
+      },
+      "checkpoint_reuse": "j_integral_global/results/physical/dp_point17.json"
+    },
+    {
+      "file": "results/physical/dp_values23.json",
+      "prime": 1000003,
+      "t_point": "23",
+      "FBI_rank": 115,
+      "target_count": 2952,
+      "objects_with_corner_boundaries": 3182,
+      "candidate_master_count": 496,
+      "candidate_J_count": 481,
+      "candidate_boundary_count": 15,
+      "DE_closed": true,
+      "physical_boundary_relations": 100,
+      "nonzero_reduction_coefficients": 115105,
+      "nonzero_DE_coefficients": 28234,
+      "scalar_certificate_checks": 52115,
+      "timings": {
+        "FBI_model_seconds": 12.854985446,
+        "completion_seconds": 1.5204919750000006,
+        "germ_seconds": 0.12878752199999965,
+        "total_seconds": 136.263020653
+      },
+      "checkpoint_reuse": null
+    },
+    {
+      "file": "results/physical/dp_second_values19.json",
+      "prime": 1000033,
+      "t_point": "19",
+      "FBI_rank": 115,
+      "target_count": 2952,
+      "objects_with_corner_boundaries": 3182,
+      "candidate_master_count": 496,
+      "candidate_J_count": 481,
+      "candidate_boundary_count": 15,
+      "DE_closed": true,
+      "physical_boundary_relations": 100,
+      "nonzero_reduction_coefficients": 115105,
+      "nonzero_DE_coefficients": 28234,
+      "scalar_certificate_checks": 52115,
+      "timings": {
+        "FBI_model_seconds": 25.061261829,
+        "completion_seconds": 1.4934230450000001,
+        "germ_seconds": 0.22926733899999974,
+        "total_seconds": 161.697059702
+      },
+      "checkpoint_reuse": null
+    }
+  ],
+  "global_top_J_candidates": [
+    "J{1,1,1,1,1,1,1,1}",
+    "J{1,1,1,1,1,1,1,2}",
+    "J{1,1,1,1,1,1,2,1}",
+    "J{1,1,1,1,1,2,1,1}",
+    "J{1,1,1,1,2,1,1,1}",
+    "J{1,1,1,1,1,1,1,3}",
+    "J{1,1,1,1,1,1,2,2}"
+  ],
+  "FBI_flatness_audit": {
+    "aliases": [
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          1,
+          1,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ]
+    ],
+    "all_pass": true,
+    "failures": [],
+    "flatness_checks": 6670,
+    "point": "17",
+    "prime": 1000003,
+    "rank": 115,
+    "total_seconds": 86.775475518
+  },
+  "small_uncut_complete_test": {
+    "input_snapshot": "results/reconstruction/minimal44/input/family.json",
+    "active_propagator_count": 6,
+    "ordinary_J_targets": 328,
+    "candidate_J_only_basis_count": 44,
+    "equivalent_basis_with_corner_boundaries": {
+      "J": 41,
+      "boundary": 3
+    },
+    "sample_count": 129,
+    "training_points": 121,
+    "heldout_points": 8,
+    "rational_coefficient_count": 4026,
+    "max_DE_relation_degree": 37,
+    "independent_point_checks": {
+      "all_pass": true,
+      "prime": 1000003,
+      "points": [
+        {
+          "point": "1/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "2/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "3/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "4/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "5/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "6/7",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "2/9",
+          "checks": 372,
+          "all_pass": true
+        },
+        {
+          "point": "4/9",
+          "checks": 372,
+          "all_pass": true
+        }
+      ],
+      "deliberate_unequal_coefficient_rejected": true
+    },
+    "reproducible_input": "examples/minimal44_jonly.json",
+    "reproducible_basis": "examples/minimal44_basis.json",
+    "reproducible_targets": "examples/minimal44_targets.json"
+  },
+  "retired_diagnostic_counts": {
+    "before_FBI_identifications": [
+      687,
+      732,
+      743
+    ],
+    "generic_FBI_solution_with_independent_boundary_germs": 596,
+    "reason": "Missing FBI identities and/or missing physical z=0 conditions; not physical minimal-master claims."
+  },
+  "production_sampling": {
+    "started": false,
+    "remote_job_submitted": false,
+    "blocker": "Three attempts using the established tianhe BatchMode alias timed out before running hostname (192.168.10.50:22).",
+    "evidence": [
+      "logs/ssh_probe_20261106.txt",
+      "logs/ssh_probe_second.txt",
+      "logs/ssh_probe_third.txt"
+    ],
+    "estimated_seconds_per_fresh_point": "about 120-180 on this local machine; varies with contention",
+    "required_sample_count": "unknown; adaptive reconstruction determines it"
+  },
+  "sha256": {
+    "examples/dp_physical.json": "aeab715fb524f3a7d2a9ca6039f3e55fef821bdcca4687991d6ec02febf56b41",
+    "examples/dp_physical_second.json": "927f42c6eed7de430d81ad196fa540d3ca5cc87d122c804fad25d0c1840a182e",
+    "examples/dp496_basis.json": "7cffb9ab268a823c90fd26e457dda7b355e2abb6ecb79e214fea04d9a43dd792",
+    "examples/dp_targets_dot2.json": "6271e47366c1758bb05cd09d5d44b8689cd284847923921f61437590f4e247db"
+  }
+}

@@ -1,0 +1,4 @@
+Command: python3 pipeline/tools/remote_tianhe.py run hostname
+Exit: 255
+ssh: connect to host 192.168.10.50 port 22: Connection timed out
+No remote job was submitted; local numerical computation is unaffected.
