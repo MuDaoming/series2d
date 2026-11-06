@@ -1,0 +1,7 @@
+{
+  "all_pass": true,
+  "prime": 1000003,
+  "master_count": 79,
+  "matrix_entries_including_zeros": 6241,
+  "explicit_union_entries": 1164
+}

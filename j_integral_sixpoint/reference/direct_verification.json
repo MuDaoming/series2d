@@ -1,0 +1,17 @@
+{
+  "all_pass": true,
+  "master_count": 79,
+  "point_count": 8,
+  "points": [
+    "151",
+    "152",
+    "153",
+    "154",
+    "155",
+    "156",
+    "157",
+    "158"
+  ],
+  "prime": 1000003,
+  "scalar_checks_including_zeros": 49928
+}

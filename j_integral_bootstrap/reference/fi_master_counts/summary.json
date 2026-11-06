@@ -1,0 +1,18 @@
+{
+  "e6": {
+    "master_count": 62,
+    "raw_nomap_count": 62,
+    "topsector_master_count": 5,
+    "rank_free": true,
+    "auxiliary_indices_zero": true,
+    "seconds": 146.83039
+  },
+  "dp": {
+    "master_count": 497,
+    "raw_nomap_count": 547,
+    "topsector_master_count": 15,
+    "rank_free": true,
+    "auxiliary_indices_zero": true,
+    "seconds": 326.42761
+  }
+}

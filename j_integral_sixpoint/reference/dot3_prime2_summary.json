@@ -1,0 +1,16 @@
+{
+  "prime": 1000033,
+  "t_point": "23",
+  "FBI_rank": 42,
+  "sector_count": 63,
+  "target_count": 2852,
+  "master_count_at_point": 79,
+  "unclosed_derivatives": [],
+  "scalar_certificate_checks": 1370,
+  "timings": {
+    "FBI_model_seconds": 2.391751067,
+    "completion_seconds": 0.08946720600000013,
+    "germ_seconds": 0.005488775999999973,
+    "total_seconds": 5.233978012
+  }
+}

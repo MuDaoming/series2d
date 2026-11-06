@@ -1,0 +1,38 @@
+// FBI example
+
+// Inputs: #L, #E, #Propagator, #Target, #EpsilonOrder, #ExtMomProdAndX
+
+// L is the number of loops
+#L
+2
+
+// E is the number of independent external legs
+#E
+5
+
+// Propagators
+// One propagator each line
+// {a1,a2,...,a_{L+E}},msquared means (a1*l1+...+aL*lL+a_{L+1}*p1+...+a_{L+E}*pE)^2-msquared
+#Propagator
+{1,0,0,0,0,0,0},0
+{1,0,0,0,1,0,0},0
+{0,1,0,0,0,0,0},0
+{0,1,0,0,0,0,1},0
+{0,1,1,1,-1,-1,0},0
+{1,1,1,0,0,0,0},0
+{1,1,1,0,0,-1,0},0
+
+// Desired Feynman Integrals (FI)
+// One desired FI each line
+// {nu1,nu2,..,nuN},D means integrand is 1/(D1^nu1*...*DN^nuN) and spacetime dimension is D
+#Target
+{1,1,1,1,1,1,1},4
+
+#EpsilonOrder
+5
+
+// External momenta products and branch parameters
+// One external momenta products and branch parameters each line
+// {p1*p1, p1*p2, ..., p1*pE, p2*p2, ..., p2*PE, ..., pE*pE},{X1,X2,...,XB}
+#ExtMomProdAndX
+{1, 1.5, -0.3333333333333333, -0.375, -0.4, 1, -0.45454545454545453, -0.42857142857142855, -0.46153846153846156, 0, 0.03333333333333333, 0.029411764705882353, 0, -5.0157337760278935, 0},{0.3333333333333333, 0.5, 1.}
