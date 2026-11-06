@@ -1,0 +1,8 @@
+extern/
+.venv/
+.deps/
+__pycache__/
+build/
+results/native_points/
+results/*.log
+results/*period17*.json

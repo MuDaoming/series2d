@@ -1,0 +1,96 @@
+{
+  "count": 18,
+  "compute_seconds": 11.796305281999999,
+  "points": [
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200018.json",
+      "t": "200018",
+      "seconds": 0.74144609
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200019.json",
+      "t": "200019",
+      "seconds": 0.582553968
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200020.json",
+      "t": "200020",
+      "seconds": 0.573639987
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200021.json",
+      "t": "200021",
+      "seconds": 0.634807079
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200022.json",
+      "t": "200022",
+      "seconds": 0.598506684
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200023.json",
+      "t": "200023",
+      "seconds": 0.628354809
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200024.json",
+      "t": "200024",
+      "seconds": 0.620772551
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200025.json",
+      "t": "200025",
+      "seconds": 0.573220482
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200026.json",
+      "t": "200026",
+      "seconds": 0.615062731
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200027.json",
+      "t": "200027",
+      "seconds": 0.60423745
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200028.json",
+      "t": "200028",
+      "seconds": 0.573563767
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200029.json",
+      "t": "200029",
+      "seconds": 0.585611441
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200030.json",
+      "t": "200030",
+      "seconds": 0.735705391
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200031.json",
+      "t": "200031",
+      "seconds": 1.245086951
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200032.json",
+      "t": "200032",
+      "seconds": 0.661097535
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200033.json",
+      "t": "200033",
+      "seconds": 0.62802481
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200034.json",
+      "t": "200034",
+      "seconds": 0.574890885
+    },
+    {
+      "path": "j_integral_bootstrap/results/native_points/point_200035.json",
+      "t": "200035",
+      "seconds": 0.619722671
+    }
+  ]
+}

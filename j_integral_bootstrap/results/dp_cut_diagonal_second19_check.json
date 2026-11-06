@@ -1,0 +1,338 @@
+{
+  "prime": 1000033,
+  "point": "19",
+  "total_J_sectors": 124,
+  "successful": 99,
+  "unresolved": [
+    {
+      "sector": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "error": "chosen J basis does not span target/derivative"
+    },
+    {
+      "sector": [
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "error": "chosen J basis does not span target/derivative"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "error": "no retained MFBI"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    },
+    {
+      "sector": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "error": "global J basis is dependent modulo cut boundaries"
+    }
+  ],
+  "scalar_checks": 2024,
+  "mismatches": [],
+  "cut_seconds": 2.316169298,
+  "all_successful_blocks_match": true,
+  "complete": false
+}

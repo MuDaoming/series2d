@@ -1,0 +1,286 @@
+{
+  "reference": "j_integral_global/results/reconstruction/minimal44/reduction.json",
+  "backend": "PL-Hasse",
+  "scope": "all off-diagonal SCC blocks; oracle envelopes and diagonal blocks",
+  "sample_source": "reference evaluation",
+  "prime": 1000003,
+  "master_count": 44,
+  "block_count": 19,
+  "blocks": [
+    {
+      "top": [
+        "J{0,0,1,1,0,1}",
+        "J{0,0,1,1,0,2}"
+      ],
+      "sub_rank": 0,
+      "diagonal_only": true
+    },
+    {
+      "top": [
+        "J{0,0,1,1,1,0}",
+        "J{0,0,1,1,2,0}"
+      ],
+      "sub_rank": 2,
+      "ambient": 8,
+      "constrained": 8,
+      "construction_seconds": 0.032835064455866814,
+      "training_points": 3,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,0,1,0,1}",
+        "J{0,1,0,1,0,2}"
+      ],
+      "sub_rank": 2,
+      "ambient": 8,
+      "constrained": 8,
+      "construction_seconds": 0.007847283966839314,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,0,1,1,0}",
+        "J{0,1,0,1,2,0}"
+      ],
+      "sub_rank": 2,
+      "ambient": 10,
+      "constrained": 8,
+      "construction_seconds": 0.015533516183495522,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,0,0,1,1,0}",
+        "J{1,0,0,1,2,0}"
+      ],
+      "sub_rank": 2,
+      "ambient": 10,
+      "constrained": 8,
+      "construction_seconds": 0.009473947808146477,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,0,1,1,1,1}"
+      ],
+      "sub_rank": 4,
+      "ambient": 5,
+      "constrained": 5,
+      "construction_seconds": 0.010796814225614071,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,0,1,1,1}",
+        "J{0,1,0,1,1,2}"
+      ],
+      "sub_rank": 6,
+      "ambient": 29,
+      "constrained": 20,
+      "construction_seconds": 0.02314590383321047,
+      "training_points": 3,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,1,1,0,1}",
+        "J{0,1,1,1,0,2}",
+        "J{0,1,1,2,0,1}",
+        "J{0,1,1,1,0,3}"
+      ],
+      "sub_rank": 4,
+      "ambient": 43,
+      "constrained": 33,
+      "construction_seconds": 0.038102179765701294,
+      "training_points": 4,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,1,1,1,0}",
+        "J{0,1,1,1,2,0}",
+        "J{0,1,1,2,1,0}",
+        "J{0,1,2,1,1,0}"
+      ],
+      "sub_rank": 12,
+      "ambient": 255,
+      "constrained": 92,
+      "construction_seconds": 0.08641125913709402,
+      "training_points": 4,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,0,0,1,1,1}",
+        "J{1,0,0,1,1,2}"
+      ],
+      "sub_rank": 4,
+      "ambient": 21,
+      "constrained": 11,
+      "construction_seconds": 0.030685448087751865,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,0,1,1,1,0}"
+      ],
+      "sub_rank": 6,
+      "ambient": 9,
+      "constrained": 6,
+      "construction_seconds": 0.031000103801488876,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,0,1,0,1}"
+      ],
+      "sub_rank": 4,
+      "ambient": 4,
+      "constrained": 4,
+      "construction_seconds": 0.014691123738884926,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,0,1,1,0}"
+      ],
+      "sub_rank": 6,
+      "ambient": 10,
+      "constrained": 4,
+      "construction_seconds": 0.03378078993409872,
+      "training_points": 1,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{0,1,1,1,1,1}",
+        "J{0,1,1,1,1,2}",
+        "J{0,1,1,1,2,1}"
+      ],
+      "sub_rank": 19,
+      "ambient": 305,
+      "constrained": 131,
+      "construction_seconds": 0.14134663250297308,
+      "training_points": 5,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,0,1,1,1,1}"
+      ],
+      "sub_rank": 9,
+      "ambient": 16,
+      "constrained": 8,
+      "construction_seconds": 0.04055698961019516,
+      "training_points": 2,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,0,1,1,1}",
+        "J{1,1,0,1,1,2}"
+      ],
+      "sub_rank": 14,
+      "ambient": 120,
+      "constrained": 57,
+      "construction_seconds": 0.08968907129019499,
+      "training_points": 4,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,1,1,0,1}",
+        "J{1,1,1,1,0,2}",
+        "J{1,1,2,1,0,1}"
+      ],
+      "sub_rank": 8,
+      "ambient": 62,
+      "constrained": 47,
+      "construction_seconds": 0.03666687663644552,
+      "training_points": 3,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,1,1,1,0}",
+        "J{1,1,1,1,2,0}",
+        "J{1,1,1,2,1,0}",
+        "J{1,1,2,1,1,0}"
+      ],
+      "sub_rank": 24,
+      "ambient": 658,
+      "constrained": 185,
+      "construction_seconds": 0.13056990318000317,
+      "training_points": 4,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    },
+    {
+      "top": [
+        "J{1,1,1,1,1,1}",
+        "J{1,1,1,1,1,2}",
+        "J{1,1,1,1,2,1}",
+        "J{1,1,1,2,1,1}",
+        "J{1,1,1,1,1,3}"
+      ],
+      "sub_rank": 39,
+      "ambient": 1936,
+      "constrained": 582,
+      "construction_seconds": 0.3574776379391551,
+      "training_points": 10,
+      "holdout_points": 8,
+      "exact_rational_identity": true,
+      "status": "finite-derivative-order"
+    }
+  ],
+  "ambient": 3509,
+  "constrained": 1217,
+  "distinct_training_points": 10,
+  "exact_global_DE_identity": true,
+  "total_seconds": 3.8090132512152195,
+  "native_calls": 0,
+  "native_seconds": 0,
+  "gauge_power": 1,
+  "gauge_policy": "t1"
+}

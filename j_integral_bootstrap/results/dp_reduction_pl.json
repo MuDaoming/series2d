@@ -1,0 +1,182 @@
+{
+  "reference": "j_integral_methods/results/dp/hermite.json",
+  "mode": "reduction",
+  "backend": "PL-Hasse",
+  "extra_order": 0,
+  "prime": 1000003,
+  "variable": "tau=t-t0",
+  "t0": "2/5",
+  "envelope_source": "complete reference; validation only",
+  "target_count": 82,
+  "coefficient_count": 656,
+  "master_count": 8,
+  "output_master_count": 8,
+  "ambient_parameters": 3651,
+  "constrained_parameters": 986,
+  "parameter_reduction": 3.702839756592292,
+  "construction_seconds": 0.19369589909911156,
+  "fitting_seconds": 0.20878347475081682,
+  "training_points": 5,
+  "holdout_points": 8,
+  "exact_rational_identity": true,
+  "ansatz_status": "finite-derivative-order",
+  "diagnostics": {
+    "route": "PL-Hasse",
+    "order_plan": {
+      "schema": 1,
+      "input_key": "5595cd06892c9a2c625ae3a258746b32db45db0a7226c38f2aa880f27d0914a2",
+      "policy": "target",
+      "order_profile_sha256": null,
+      "extra_order": 0,
+      "factors": [
+        {
+          "factor": [
+            200000,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            200001,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            198590,
+            345181,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            296487,
+            265954,
+            1
+          ],
+          "k": 2,
+          "pole_B": 2,
+          "order": 2,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            148779,
+            493997,
+            842295,
+            992402,
+            890014,
+            860861,
+            202931,
+            900290,
+            806475,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        }
+      ],
+      "analytic_completeness": false,
+      "selection_uses": "input A/B and envelope only; no oracle or jet reference"
+    },
+    "analytic_completeness": false,
+    "factor_cache_hits": 0,
+    "runtime_fingerprint": null,
+    "factors": [
+      {
+        "stage": "factor-complete",
+        "factor_index": 0,
+        "factor": [
+          200000,
+          1
+        ],
+        "order": 1,
+        "dimension": 9,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 1,
+        "factor": [
+          200001,
+          1
+        ],
+        "order": 1,
+        "dimension": 5,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 2,
+        "factor": [
+          198590,
+          345181,
+          1
+        ],
+        "order": 1,
+        "dimension": 68,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 3,
+        "factor": [
+          296487,
+          265954,
+          1
+        ],
+        "order": 2,
+        "dimension": 228,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 4,
+        "factor": [
+          148779,
+          493997,
+          842295,
+          992402,
+          890014,
+          860861,
+          202931,
+          900290,
+          806475,
+          1
+        ],
+        "order": 1,
+        "dimension": 306,
+        "cache_hit": false
+      }
+    ],
+    "global_caps_seconds": 0.00029729027301073074,
+    "cap_assembly": "indexed",
+    "cap_profile_origin": "input-derived",
+    "cap_profile_sha256": null,
+    "construction_seconds": 0.19107145443558693,
+    "workers": 1,
+    "laurent": {
+      "mode": "zero-refined",
+      "profile_origin": "input-derived-no-learning",
+      "profile_sha256": "06815df9017b23f190a0123ee74584091815206d4474fea917faff6aa2ad3feb",
+      "precision_profile_sha256": null,
+      "schedule_recompiled": true,
+      "routed_factors": 5,
+      "preparation_seconds": 0.0028846878558397293
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "reference": "j_integral_global/results/reconstruction/minimal44/reduction.json",
+  "mode": "reduction",
+  "backend": "jets",
+  "extra_order": 0,
+  "prime": 1000003,
+  "variable": "tau=t-t0",
+  "t0": "2/5",
+  "envelope_source": "complete reference; validation only",
+  "target_count": 10,
+  "coefficient_count": 440,
+  "master_count": 44,
+  "output_master_count": 44,
+  "ambient_parameters": 105,
+  "constrained_parameters": 93,
+  "parameter_reduction": 1.1290322580645162,
+  "construction_seconds": 1.2388215847313404,
+  "fitting_seconds": 0.016389685682952404,
+  "training_points": 4,
+  "holdout_points": 8,
+  "exact_rational_identity": true,
+  "ansatz_status": "finite-window-unconfirmed",
+  "diagnostics": {
+    "construction_seconds": 1.2387756612151861,
+    "constraint_rank": 0,
+    "factor_cache_hits": 0,
+    "coefficient_domain": "Fp-finite-projection",
+    "semantics": "analytic principal parts + module extension + input caps"
+  }
+}

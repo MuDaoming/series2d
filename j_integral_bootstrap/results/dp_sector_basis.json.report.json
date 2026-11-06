@@ -1,0 +1,28 @@
+{
+  "source": "j_integral_global/results/physical/dp_with_boundaries17.json",
+  "master_count": 496,
+  "changed": 0,
+  "J_sector_count": 124,
+  "by_active_lines": {
+    "3": 21,
+    "4": 88,
+    "5": 153,
+    "6": 156,
+    "7": 56,
+    "8": 7
+  },
+  "independent_rank_checks": [
+    {
+      "path": "j_integral_global/results/physical/dp_values23.json",
+      "prime": 1000003,
+      "t_point": "23",
+      "rank": 496
+    },
+    {
+      "path": "j_integral_global/results/physical/dp_second_values19.json",
+      "prime": 1000033,
+      "t_point": "19",
+      "rank": 496
+    }
+  ]
+}

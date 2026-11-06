@@ -1,0 +1,53 @@
+{
+  "status": "rejected as replacement for J module",
+  "experiments": [
+    {
+      "artifact": "j_integral_bootstrap/results/minimal_polynomial_period17.json",
+      "basis_type": "polynomial",
+      "master_count": 60,
+      "boundary_rank": 3,
+      "unclosed": 0,
+      "timings": {
+        "FBI_model_seconds": 0.059209798,
+        "basis_seconds": 0.062282599,
+        "total_seconds": 0.151790472
+      }
+    },
+    {
+      "artifact": "j_integral_bootstrap/results/dp_polynomial_period17.json",
+      "basis_type": "polynomial",
+      "master_count": 607,
+      "boundary_rank": 15,
+      "unclosed": 12,
+      "timings": {
+        "FBI_model_seconds": 4.228252681,
+        "basis_seconds": 22.721907237,
+        "total_seconds": 42.049051308
+      }
+    },
+    {
+      "artifact": "j_integral_bootstrap/results/minimal_proper_period17.json",
+      "basis_type": "proper rational",
+      "master_count": 69,
+      "boundary_rank": 3,
+      "unclosed": 50,
+      "timings": {
+        "FBI_model_seconds": 0.065997012,
+        "basis_seconds": 0.115005089,
+        "total_seconds": 0.255946877
+      }
+    },
+    {
+      "artifact": "j_integral_bootstrap/results/minimal_proper_period17_legacy.json",
+      "basis_type": "proper rational",
+      "master_count": 69,
+      "boundary_rank": 3,
+      "unclosed": 50,
+      "timings": {
+        "FBI_model_seconds": 0.080182622,
+        "basis_seconds": 0.132003439,
+        "total_seconds": 0.263560206
+      }
+    }
+  ]
+}

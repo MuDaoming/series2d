@@ -1,0 +1,380 @@
+{
+  "reference": "j_integral_global/results/reconstruction/minimal44/reduction.json",
+  "target": "J{1,0,1,1,1,0}",
+  "sub_masters": [
+    "J{0,0,1,1,0,1}",
+    "J{0,0,1,1,1,0}",
+    "J{1,0,0,1,1,0}",
+    "J{0,0,1,1,0,2}",
+    "J{0,0,1,1,2,0}",
+    "J{1,0,0,1,2,0}"
+  ],
+  "diagonal": {
+    "numerator": [
+      314286,
+      1000001
+    ],
+    "denominator": [
+      80000,
+      400001,
+      1
+    ]
+  },
+  "tests": [
+    {
+      "gauge_factors": [],
+      "dimension": 4,
+      "compatible": false,
+      "unique": false,
+      "error": "sample is inconsistent with the candidate envelope/analytic ansatz"
+    },
+    {
+      "gauge_factors": [
+        [
+          200000,
+          1
+        ]
+      ],
+      "dimension": 6,
+      "compatible": true,
+      "unique": true,
+      "error": null
+    },
+    {
+      "gauge_factors": [
+        [
+          200001,
+          1
+        ]
+      ],
+      "dimension": 4,
+      "compatible": false,
+      "unique": false,
+      "error": "sample is inconsistent with the candidate envelope/analytic ansatz"
+    },
+    {
+      "gauge_factors": [
+        [
+          200012,
+          1
+        ]
+      ],
+      "dimension": 7,
+      "compatible": false,
+      "unique": false,
+      "error": "sample is inconsistent with the candidate envelope/analytic ansatz"
+    },
+    {
+      "gauge_factors": [
+        [
+          200000,
+          1
+        ],
+        [
+          200001,
+          1
+        ],
+        [
+          200012,
+          1
+        ]
+      ],
+      "dimension": 9,
+      "compatible": true,
+      "unique": true,
+      "error": null
+    }
+  ],
+  "residue_diagnostics": [
+    {
+      "factor": [
+        200000,
+        1
+      ],
+      "residue_B": [
+        [
+          714287,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          285716,
+          428571,
+          0,
+          1000002,
+          2,
+          0
+        ],
+        [
+          285716,
+          0,
+          428571,
+          1000002,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "diagonal_residue": 714286,
+      "double_pole_row": [
+        0,
+        0,
+        0,
+        0,
+        727276,
+        272727
+      ],
+      "regular_initial_kernel": [
+        [
+          1,
+          0,
+          0,
+          285716,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          285716,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          285716
+        ]
+      ],
+      "pairings": [
+        0,
+        766237,
+        233766
+      ],
+      "forced_simple_pole": [
+        0,
+        727276,
+        272727
+      ]
+    },
+    {
+      "factor": [
+        200001,
+        1
+      ],
+      "residue_B": [
+        [
+          285715,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          285715,
+          142859,
+          0,
+          0,
+          1000001,
+          0
+        ],
+        [
+          0,
+          0,
+          285715,
+          0,
+          0,
+          0
+        ],
+        [
+          571431,
+          0,
+          0,
+          571429,
+          0,
+          0
+        ],
+        [
+          367348,
+          959187,
+          0,
+          0,
+          428572,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          285715
+        ]
+      ],
+      "diagonal_residue": 285715,
+      "double_pole_row": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "regular_initial_kernel": [],
+      "pairings": [],
+      "forced_simple_pole": []
+    },
+    {
+      "factor": [
+        200012,
+        1
+      ],
+      "residue_B": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          571438,
+          0,
+          857147,
+          999992,
+          0,
+          1000001
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          163268,
+          0,
+          959187,
+          285712,
+          0,
+          142857
+        ]
+      ],
+      "diagonal_residue": 0,
+      "double_pole_row": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "regular_initial_kernel": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          285719
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          928575
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          499996
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "pairings": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forced_simple_pole": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

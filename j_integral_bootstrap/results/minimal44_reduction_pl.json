@@ -1,0 +1,541 @@
+{
+  "reference": "j_integral_global/results/reconstruction/minimal44/reduction.json",
+  "mode": "reduction",
+  "backend": "PL-Hasse",
+  "extra_order": 0,
+  "prime": 1000003,
+  "variable": "tau=t-t0",
+  "t0": "2/5",
+  "envelope_source": "complete reference; validation only",
+  "target_count": 284,
+  "coefficient_count": 12496,
+  "master_count": 44,
+  "output_master_count": 44,
+  "ambient_parameters": 23642,
+  "constrained_parameters": 6683,
+  "parameter_reduction": 3.53763279964088,
+  "construction_seconds": 0.9672810388728976,
+  "fitting_seconds": 4.833515443839133,
+  "training_points": 6,
+  "holdout_points": 8,
+  "exact_rational_identity": true,
+  "ansatz_status": "finite-derivative-order",
+  "diagnostics": {
+    "route": "PL-Hasse",
+    "order_plan": {
+      "schema": 1,
+      "input_key": "149fa0d0dae840a30110d062dd68b455ec7cb218ee8044c9b1869e961acca504",
+      "policy": "target",
+      "order_profile_sha256": null,
+      "extra_order": 0,
+      "factors": [
+        {
+          "factor": [
+            88889,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            199999,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            200000,
+            1
+          ],
+          "k": 3,
+          "pole_B": 2,
+          "order": 3,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            200001,
+            1
+          ],
+          "k": 5,
+          "pole_B": 3,
+          "order": 5,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            200004,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            200012,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            311109,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            450001,
+            1
+          ],
+          "k": 1,
+          "pole_B": 2,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            533333,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            594397,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            700002,
+            1
+          ],
+          "k": 2,
+          "pole_B": 1,
+          "order": 2,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            825776,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            969896,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            79998,
+            400006,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            126916,
+            276550,
+            1
+          ],
+          "k": 1,
+          "pole_B": 2,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            508436,
+            93331,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            613796,
+            337933,
+            1
+          ],
+          "k": 1,
+          "pole_B": 2,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            615736,
+            527426,
+            1
+          ],
+          "k": 1,
+          "pole_B": 2,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            657781,
+            288893,
+            1
+          ],
+          "k": 1,
+          "pole_B": 2,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            879787,
+            400600,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            193584,
+            318775,
+            251028,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        },
+        {
+          "factor": [
+            788650,
+            256953,
+            683774,
+            1
+          ],
+          "k": 1,
+          "pole_B": 1,
+          "order": 1,
+          "reason": "target-pole-depth"
+        }
+      ],
+      "analytic_completeness": false,
+      "selection_uses": "input A/B and envelope only; no oracle or jet reference"
+    },
+    "analytic_completeness": false,
+    "factor_cache_hits": 0,
+    "runtime_fingerprint": null,
+    "factors": [
+      {
+        "stage": "factor-complete",
+        "factor_index": 0,
+        "factor": [
+          88889,
+          1
+        ],
+        "order": 1,
+        "dimension": 48,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 1,
+        "factor": [
+          199999,
+          1
+        ],
+        "order": 1,
+        "dimension": 73,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 2,
+        "factor": [
+          200000,
+          1
+        ],
+        "order": 3,
+        "dimension": 890,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 3,
+        "factor": [
+          200001,
+          1
+        ],
+        "order": 5,
+        "dimension": 2333,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 4,
+        "factor": [
+          200004,
+          1
+        ],
+        "order": 1,
+        "dimension": 48,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 5,
+        "factor": [
+          200012,
+          1
+        ],
+        "order": 1,
+        "dimension": 123,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 6,
+        "factor": [
+          311109,
+          1
+        ],
+        "order": 1,
+        "dimension": 41,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 7,
+        "factor": [
+          450001,
+          1
+        ],
+        "order": 1,
+        "dimension": 67,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 8,
+        "factor": [
+          533333,
+          1
+        ],
+        "order": 1,
+        "dimension": 119,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 9,
+        "factor": [
+          594397,
+          1
+        ],
+        "order": 1,
+        "dimension": 30,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 10,
+        "factor": [
+          700002,
+          1
+        ],
+        "order": 2,
+        "dimension": 89,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 11,
+        "factor": [
+          825776,
+          1
+        ],
+        "order": 1,
+        "dimension": 40,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 12,
+        "factor": [
+          969896,
+          1
+        ],
+        "order": 1,
+        "dimension": 40,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 13,
+        "factor": [
+          79998,
+          400006,
+          1
+        ],
+        "order": 1,
+        "dimension": 96,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 14,
+        "factor": [
+          126916,
+          276550,
+          1
+        ],
+        "order": 1,
+        "dimension": 70,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 15,
+        "factor": [
+          508436,
+          93331,
+          1
+        ],
+        "order": 1,
+        "dimension": 80,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 16,
+        "factor": [
+          613796,
+          337933,
+          1
+        ],
+        "order": 1,
+        "dimension": 100,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 17,
+        "factor": [
+          615736,
+          527426,
+          1
+        ],
+        "order": 1,
+        "dimension": 70,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 18,
+        "factor": [
+          657781,
+          288893,
+          1
+        ],
+        "order": 1,
+        "dimension": 168,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 19,
+        "factor": [
+          879787,
+          400600,
+          1
+        ],
+        "order": 1,
+        "dimension": 96,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 20,
+        "factor": [
+          193584,
+          318775,
+          251028,
+          1
+        ],
+        "order": 1,
+        "dimension": 60,
+        "cache_hit": false
+      },
+      {
+        "stage": "factor-complete",
+        "factor_index": 21,
+        "factor": [
+          788650,
+          256953,
+          683774,
+          1
+        ],
+        "order": 1,
+        "dimension": 90,
+        "cache_hit": false
+      }
+    ],
+    "global_caps_seconds": 0.02636364009231329,
+    "cap_assembly": "indexed",
+    "cap_profile_origin": "input-derived",
+    "cap_profile_sha256": null,
+    "construction_seconds": 0.9578662319108844,
+    "workers": 1,
+    "laurent": {
+      "mode": "zero-refined",
+      "profile_origin": "input-derived-no-learning",
+      "profile_sha256": "110952b27ff2fb97c1ec0224f0326c0e09fcef414440b5afe1db05db63578980",
+      "precision_profile_sha256": null,
+      "schedule_recompiled": true,
+      "routed_factors": 22,
+      "preparation_seconds": 0.013857103884220123
+    }
+  }
+}

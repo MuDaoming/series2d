@@ -1,0 +1,30 @@
+{
+  "reference": "j_integral_methods/results/dp/hermite.json",
+  "mode": "reduction",
+  "backend": "jets",
+  "extra_order": 0,
+  "prime": 1000003,
+  "variable": "tau=t-t0",
+  "t0": "2/5",
+  "envelope_source": "complete reference; validation only",
+  "target_count": 82,
+  "coefficient_count": 656,
+  "master_count": 8,
+  "output_master_count": 8,
+  "ambient_parameters": 3651,
+  "constrained_parameters": 986,
+  "parameter_reduction": 3.702839756592292,
+  "construction_seconds": 0.6974873896688223,
+  "fitting_seconds": 0.21711840573698282,
+  "training_points": 5,
+  "holdout_points": 8,
+  "exact_rational_identity": true,
+  "ansatz_status": "finite-window-unconfirmed",
+  "diagnostics": {
+    "construction_seconds": 0.6974644968286157,
+    "constraint_rank": 0,
+    "factor_cache_hits": 0,
+    "coefficient_domain": "Fp-finite-projection",
+    "semantics": "analytic principal parts + module extension + input caps"
+  }
+}
