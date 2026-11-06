@@ -6,3 +6,6 @@ build/
 results/native_points/
 results/*.log
 results/*period17*.json
+results/dp_full/
+results/dp_cuts/
+results/dp_*/
