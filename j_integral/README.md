@@ -2,6 +2,8 @@
 
 从已知 FBI 关系直接生成完整积分掉一个分支变量后的 $J(t)$ 展开，搜索约化和 DE；不预先输入 $J$ 的 DE。
 
+不经过高阶展开的 J 直接约化与 DE 方法比较见 [j_integral_methods](../j_integral_methods/README.md)：继续采用本目录的 t,z 参数化，独立测试结构化 z-IBP、总导数 ansatz 和符号 t 消元，并与本目录展开法逐项对照。
+
 旧 δ 展开与当前 t 展开的逐步推导及区别见 [delta_vs_t_expansion](docs/delta_vs_t_expansion.md)。
 
 数学定义见 [problem_solution](docs/problem_solution.md)，程序结构见 [code_structure](docs/code_structure.md)，实际结果见 [testing](docs/testing.md)。
