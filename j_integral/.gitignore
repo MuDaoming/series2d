@@ -1,5 +1,6 @@
-__pycache__/
-*.pyc
-build/
-results/*/
-tools/cache/
+src/IBP/build/
+src/IBP/tests/__pycache__/
+src/IBP/examples/output/
+archive/j_integral_bootstrap/official_route/tianhe/logs/
+archive/j_integral_bootstrap/pole_route/ratio
+archive/j_integral_bootstrap/results/mi_counts_side_*/

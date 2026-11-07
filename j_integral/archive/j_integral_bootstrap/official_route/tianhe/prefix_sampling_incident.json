@@ -1,0 +1,16 @@
+{
+  "ID": "dp-ab-per-sector-prefix-holdout-waste-20261107",
+  "Scope": "DP original AB learning/production driver on Tianhe job12289940",
+  "Observed": "422 successful numerical solves at316 distinct t. Actual149 fit reports show16 fit points,18 including per-sector checks,20 including final2. File-level audit finds296 extra t from prefix checks, plus106 restricted solves at normal20 t.",
+  "Cause": "Project driver called upstream partial recovery solve_de(_sector_limit=k) for every149 sectors to save progress. Upstream verifies each prefix with2 fresh points;148 incomplete prefixes therefore add296 unnecessary points. Restricted adapter additionally recomputed subfamilies rather than universally sharing a full-point cache.",
+  "Evidence": [
+    "reference/dp_global/ab_point_audit.json",
+    "official_route/run_upstream.py old loop149 partial solve calls",
+    "upstream/pipeline.py solve_de line605 and _check_complete_de",
+    "production numeric_file_paths.txt and restricted_events.jsonl"
+  ],
+  "Correction": "Call original solve_de once, retaining its internal bottom-up traversal and final independent check. Keep numerical cache global per full-point for baseline; restricted route remains explicit optional experiment. Preserve valid old DE, do not rerun or cancel healthy jobs just for accounting.",
+  "GeneralLesson": "Progress observation must not invoke partial scientific recovery entry points that perform expensive fresh validation. Count unique algorithmic training/check points separately from adapter executions, fallback failures and added diagnostic checks.",
+  "Validation": "Real149 sector reports and422 output files classified and exact identity296=2*(149-1) checked; upstream lightweight behavioral regression pending.",
+  "Status": "investigating"
+}

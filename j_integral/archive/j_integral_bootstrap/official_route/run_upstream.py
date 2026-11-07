@@ -39,11 +39,13 @@ def run(a):
         numeric=NumericBackend(a.family,a.basis,a.targets,a.binary,work/'numeric',point_directories=a.points,gauge=a.gauge)
         with prepare_setting(bundle,setting,cut,numeric,max_samples=a.max_samples,holdouts=2,
                              shared_de_samples=True,global_holdouts=2,fit_backend='stream') as point:
-            for k in range(1,len(family['sectors'])+1):
-                solved=point.solve_de(_internal=True,_sector_limit=k)
-                # Save official validation records after each successfully solved sector.
-                atomic(work/'progress.json',dict(status='running',completed=k,total=len(family['sectors']),seconds=perf_counter()-start,checks=solved.checks,native_new_points=numeric.calls))
-                print(json.dumps(dict(completed=k,total=len(family['sectors']),seconds=perf_counter()-start)),flush=True)
+            # One upstream solve already traverses all sectors bottom-up. Calling
+            # its partial-recovery API per sector would run fresh prefix holdouts
+            # after EVERY prefix, requiring hundreds of unnecessary IBP points.
+            atomic(work/'progress.json',dict(status='running',completed=0,total=len(family['sectors']),seconds=perf_counter()-start,native_new_points=numeric.calls))
+            solved=point.solve_de(_internal=True)
+            atomic(work/'progress.json',dict(status='complete',completed=point.completed,total=len(family['sectors']),seconds=perf_counter()-start,checks=solved.checks,native_new_points=numeric.calls))
+            print(json.dumps(dict(completed=point.completed,total=len(family['sectors']),seconds=perf_counter()-start)),flush=True)
             atomic(work/'solved_upstream.json',point.solve_de().to_dict())
             names=point.solve_de().context['masters']
             matrix=point.solve_de().matrix;de=physical_connection(matrix,names,answer['t0'],a.gauge)

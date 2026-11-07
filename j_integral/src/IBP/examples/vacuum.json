@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "family": {
+    "name": "equal_mass_vac_full",
+    "loops": [
+      "k1",
+      "k2"
+    ],
+    "external_momenta": [],
+    "gram": [],
+    "propagators": [
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [],
+        "mass2": "m2"
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [],
+        "mass2": "m2"
+      },
+      {
+        "loop": [
+          1,
+          1
+        ],
+        "shift": [],
+        "mass2": "m2"
+      }
+    ]
+  },
+  "j": {
+    "coordinates": "tz",
+    "branches": [
+      0,
+      1,
+      2
+    ],
+    "boundary": {
+      "z0": "fbi_analytic",
+      "z1": "regulated_zero"
+    }
+  },
+  "point": {
+    "prime": 1000003,
+    "dimension": "7/13",
+    "t": "17",
+    "parameters": {
+      "m2": "1"
+    }
+  },
+  "request": {
+    "generate_targets": {
+      "max_dot": 2,
+      "scope": "all"
+    },
+    "derivatives": "basis"
+  },
+  "options": {
+    "completion": 16,
+    "germ_order": 16
+  }
+}

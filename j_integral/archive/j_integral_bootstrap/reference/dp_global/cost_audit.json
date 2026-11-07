@@ -1,0 +1,39 @@
+{
+  "scope": "fixed kinematics,d=26/7,p=1000003",
+  "blade": {
+    "FI_masters_symmetry_mapped": 497,
+    "raw_before_symmetry_mapping": 547,
+    "topsector": 15,
+    "seconds": 326.42761
+  },
+  "anchor": {
+    "method": "reused complete J DE from mixed rational reconstruction and blockwise bootstrap; not separately timed cold build",
+    "retained_point_batches": {
+      "full": 41,
+      "cut_batches": 97,
+      "exceptional_90_rows": 33,
+      "extra_331_rows": 8,
+      "extra_40_rows": 16,
+      "restricted_53_dim": 288
+    },
+    "total_retained_batches": 483,
+    "distinct_t": 288,
+    "retained_numeric_worker_seconds_sum": 9361.41,
+    "successful_block_seconds_sum": 3380.10527165886,
+    "excluded": "failed exploratory attempts; independent validation; unrelated R-only batches; these sums are not elapsed wall time",
+    "cut_batch_detail": "Each cut batch has99 successful and25 failed sector attempts"
+  },
+  "AB_production": {
+    "job": 12289940,
+    "seconds": 13743.202667227946,
+    "job_elapsed_seconds": 13801,
+    "successful_numeric_IBP_calls": 422,
+    "full_family_successes": 312,
+    "restricted_family_successes": 110,
+    "failed_restricted_calls": 661,
+    "total_numeric_process_attempts": 1083,
+    "distinct_t": 316,
+    "plan_fallback_events_not_new_IBP_calls": 179
+  },
+  "comparison": "No end-to-end speedup claim: anchor acquisition is additional cost and was itself constructed with a mixed route"
+}

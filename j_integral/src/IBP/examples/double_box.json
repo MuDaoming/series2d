@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "family": {
+    "name": "box_triangle_maximal_cut",
+    "loops": [
+      "k1",
+      "k2"
+    ],
+    "external_momenta": [
+      "p1",
+      "p2",
+      "p3"
+    ],
+    "gram": [
+      [
+        "0",
+        "1/2",
+        "-13/30"
+      ],
+      [
+        "1/2",
+        "0",
+        "-1/15"
+      ],
+      [
+        "-13/30",
+        "-1/15",
+        "1/5"
+      ]
+    ],
+    "propagators": [
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [
+          0,
+          0,
+          0
+        ],
+        "mass2": "0"
+      },
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [
+          1,
+          0,
+          0
+        ],
+        "mass2": "0"
+      },
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [
+          1,
+          1,
+          0
+        ],
+        "mass2": "0"
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [
+          0,
+          0,
+          0
+        ],
+        "mass2": "1/5"
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [
+          -1,
+          -1,
+          0
+        ],
+        "mass2": "1/5"
+      },
+      {
+        "loop": [
+          1,
+          1
+        ],
+        "shift": [
+          0,
+          0,
+          0
+        ],
+        "mass2": "1/5"
+      }
+    ]
+  },
+  "j": {
+    "coordinates": "tz",
+    "branches": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      2
+    ],
+    "boundary": {
+      "z0": "regularized",
+      "z1": "regulated_zero"
+    },
+    "cut_sector": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {}
+  },
+  "request": {
+    "generate_targets": {
+      "max_dot": 2,
+      "scope": "all"
+    },
+    "derivatives": "basis"
+  },
+  "options": {
+    "completion": 16,
+    "germ_order": 16
+  }
+}
