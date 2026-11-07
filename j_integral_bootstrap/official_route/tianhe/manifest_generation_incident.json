@@ -1,0 +1,14 @@
+{
+  "ID": "j-slurm-manifest-generator-20261107",
+  "Scope": "Local generation of the DP original-route resource manifest",
+  "Observed": "An initial inline generator wrote the sbatch scripts but raised NameError because json was not imported before publishing the manifest. Mechanical prepare refused the missing manifest; no remote command or submission occurred.",
+  "Cause": "Inline manifest generator omitted an explicit json import.",
+  "Evidence": [
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/official_route/tianhe/make_manifest.py",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/official_route/tianhe/submission_manifest.preflight.json"
+  ],
+  "Correction": "Use a named reproducible generator with explicit imports and atomic manifest publication. Execute it before prepare; keep the checked submit gate.",
+  "GeneralLesson": "Generate submission inputs reproducibly and atomically. A missing or partial resource manifest must prevent submission rather than triggering a fallback submit.",
+  "Validation": "Named generator executed successfully, prepare returned pass with its regression suite. Real collector dynamic-dispatch regression and actual vacuum two-stage entry both pass. No numerical retry was needed for this metadata failure.",
+  "Status": "verified"
+}

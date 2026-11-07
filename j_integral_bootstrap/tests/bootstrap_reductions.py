@@ -13,6 +13,7 @@ from analytic_bootstrap.sampling import InconsistentSampleError
 from rational_learning import make_learner
 from fixed_fit import fixed_entry_fitter
 from native_fit import joint_fit
+from analytic_bootstrap.upstream.assembly import assemble_matrix
 from sector_de import components
 
 
@@ -183,8 +184,9 @@ def main(args):
                 for t in holdout:
                     if ansatz.evaluate((t-center)%p,fit['parameters'])!=sample(t)['values']:
                         raise ValueError('holdout disagrees with fitted ansatz')
-                answer=ansatz.assemble(fit['parameters'])
-                for name,row in zip(pending,answer):reductions[name]={j:r for j,r in zip(sub,row) if not r.is_zero()};done.add(name)
+                answer=assemble_matrix(ansatz,fit['parameters'])
+                for a,name in enumerate(pending):
+                    reductions[name]={j:answer.entries[a,b] for b,j in enumerate(sub) if (a,b) in answer.entries and not answer.entries[a,b].is_zero()};done.add(name)
                 reports.append(dict(sector=sector,kind=kind,targets=len(names),bootstrap_targets=len(pending),
                     route='analyticity-bootstrap',ambient=sum(c+1 for row in caps for c in row),
                     dimension=ansatz.dimension,joint_fit={k:v for k,v in fit.items() if k!='parameters'},training_points=len(train),

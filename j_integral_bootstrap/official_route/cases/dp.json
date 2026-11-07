@@ -1,0 +1,13 @@
+{
+  "family": "j_integral_global/examples/dp_physical.json",
+  "basis": "j_integral_global/examples/dp496_basis.json",
+  "targets": "j_integral_bootstrap/official_route/cases/dp_basis_targets.json",
+  "binary": "j_integral_bootstrap/build/global_point_subset",
+  "reconstructor": "j_integral_bootstrap/build/reconstruct_partial",
+  "work": "j_integral_bootstrap/results/dp_original_production",
+  "workers": 48,
+  "initial": 96,
+  "batch": 48,
+  "max_points": 384,
+  "gauge": 3
+}

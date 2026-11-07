@@ -1,0 +1,48 @@
+{
+  "ProjectRoot": "../../..",
+  "NodeCPUs": 56,
+  "NodeMemoryMiB": 250000,
+  "AllTasksIndependentAndReady": false,
+  "WorkloadReview": {
+    "IndependentUnit": "one complete R reconstruction followed by independent fresh-point verification",
+    "DependencyEvidence": "finish_global_reductions waits via afterok on12296043 because all400 frozen point outputs are true inputs to univariate reconstruction. Existing48worker sampling allocation releases before serial polynomial algebra; it is not retained idle. Within one setting, known denominator discovery can feed later coefficients, so current compiled worker is one dependent algebra operation. Native builds require same private GCC/FLINT already verified by full AB job12289940. One serial process, no multi-node tail or independent ready setting blocked. Complete status requires target set coverage3182 and verifier all496 columns at8 independent points; missing coefficients exitnonzero. max64GiB requested;400 sparse JSON points estimated tensGiB worstcase, unlike3GiB earlier DE alone.",
+    "SourceFiles": [
+      "finish_r.sbatch",
+      "../finish_global_reductions.py",
+      "../../pole_route/preconditioned.cpp",
+      "../../native/verify_reductions.cpp",
+      "../../../j_integral_methods/native/direct_j.cpp",
+      "../../../j_integral/native/prepare.hpp",
+      "../../tests/reference_space.py",
+      "../../results/dp_remaining_global/base_verified.json",
+      "../../results/dp_remaining_global/all_targets.json",
+      "../../results/dp_remaining_global/fresh_manifest.json"
+    ],
+    "IndependentBranches": []
+  },
+  "Tasks": [
+    {
+      "ID": "reconstruct_verify",
+      "CPUs": 1,
+      "PeakMemoryMiB": 49152,
+      "Output": "dp_remaining_global/reduction.json",
+      "ResourceEvidence": "400 sparse point JSON objects with knownRF pool estimated <48GiB;64GiB allocation for parser headroom;single-thread C++/Python."
+    }
+  ],
+  "Jobs": [
+    {
+      "Name": "dp-finish-R",
+      "Script": "finish_r.sbatch",
+      "Tasks": [
+        "reconstruct_verify"
+      ],
+      "LaunchRuntime": "native",
+      "NoMathematicaEvidence": "Only native C++ and Python finite field algebra.",
+      "LaunchSpacingSeconds": 0,
+      "LaunchMechanism": "One serial reconstruction and dependent exact verification after sampling exits0.",
+      "Overrides": {
+        "--dependency": "afterok:12296043"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "ID": "dp-ab-upstream-literal-cc-20261107",
+  "Scope": "Original AB native builders on Tianhe sharedGCC11.3",
+  "Observed": "12289927 built all three project C++ executables then failed resolving literal cc in build_kernels; no scientific learning started.",
+  "Cause": "Shared GCC bin has gcc/g++ but no cc alias; upstream builders invoke cc literally and ignore CC for several tools.",
+  "Evidence": [
+    "12289927-warm.err FileNotFoundError cc",
+    "upstream tools build_native_pole_kernel.py/build_pure_runtime.py literal cc commands"
+  ],
+  "Correction": "Create project-private build/toolchain/bin/cc symlink to verified shared absolute CC; prepend private bin to PATH; probe literal cc resolution before builds. Preserve C++ binaries for receipt-based reuse.",
+  "GeneralLesson": "Review actual compiler invocations including literal aliases in external builders; setting CC alone does not guarantee compliance. Supply private aliases without changing shared software or upstream code.",
+  "Validation": "Recovered12289940 COMPLETED0:0, native runtime built, all149 original AB blocks completed and all246016 connection entries equal to independent anchor. Private alias isolated-PATH regression passed.",
+  "Status": "verified"
+}

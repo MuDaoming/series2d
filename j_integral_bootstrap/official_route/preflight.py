@@ -8,14 +8,15 @@ from pathlib import Path
 from time import perf_counter
 
 
-def preflight(ansatz, samples, *, max_points=32, kernel_directory=None):
+def preflight(ansatz, samples, *, max_points=32, kernel_directory=None, return_parameters=False):
     """Return status incompatible/compatible/undetermined, never silently fall back.
 
     compatible means a unique fit to all supplied samples was obtained. Otherwise
     a consistent bounded prefix is undetermined. Only the original fitter's
     InconsistentSampleError is interpreted as mathematical incompatibility.
     Engine failures remain undetermined with an error. No fixed-entry identity
-    is imposed here: callers must still run their full joint constrained fit.
+    is imposed here. With return_parameters=True, a unique prefix solution may
+    be reused only after checking all remaining samples and every fixed identity.
     """
     from analytic_bootstrap.upstream.fitting import ProductionFitter
     from analytic_bootstrap.upstream.native_fit import NativeUnavailable
@@ -37,6 +38,7 @@ def preflight(ansatz, samples, *, max_points=32, kernel_directory=None):
             report['rank']=result['rank'];report['dimension']=result['dimension']
         unique=fitter.result()['parameters'] is not None
         report['unique']=unique
+        if unique and return_parameters:report['_parameters']=list(fitter.result()['parameters'])
         if used==len(values) and unique:report['status']='compatible'
         else:report['reason']='sample prefix consistent; full joint fit still required'
     except InconsistentSampleError as e:

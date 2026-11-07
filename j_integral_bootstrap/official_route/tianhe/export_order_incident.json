@@ -1,0 +1,15 @@
+{
+  "ID": "j-upstream-export-master-order-20261107",
+  "Scope": "Physical J DE export from official PointContext",
+  "Observed": "Official six-point solve completed47 sectors with its own sample checks, but first external comparison failed at J{0,1,1,0,1,0,1} to Bz0 column.",
+  "Cause": "Upstream family_definition reorders ready sectors canonically. Adapter export labeled matrix rows using pre-canonical SCC order instead of SolvedDE.context[masters]. Numeric solve was unaffected.",
+  "Evidence": [
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_sixpoint/results/upstream/connection_bad_export.json",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_sixpoint/results/upstream/solved_upstream.json",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_sixpoint/results/upstream_exact_comparison.json"
+  ],
+  "Correction": "Canonicalize family definition; always label matrix with its certified context master order; validate duplicate-free bijection before output reordering. Re-export saved official solution, do not repeat valid numeric computation.",
+  "GeneralLesson": "A correct master set is not a correct ordering. Adapters must use the matrix producer ordering and test a concrete nontrivial sector permutation.",
+  "Validation": "Three adapter regressions pass, including nontrivial canonical sector permutation. Corrected export agrees with independent baseline as exact rational functions at all6241 entries and passes49928 scalar checks at eight earlier-independent points. Eight additional fresh points are being generated for final export validation.",
+  "Status": "verified"
+}

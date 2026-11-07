@@ -16,6 +16,7 @@ from analytic_bootstrap.sampling import InconsistentSampleError
 from rational_learning import make_learner
 from fixed_fit import fixed_entry_fitter
 from native_fit import joint_fit
+from analytic_bootstrap.upstream.assembly import assemble_matrix
 
 
 def read(path):return json.loads(Path(path).read_text())
@@ -229,8 +230,8 @@ def main(args):
             started=perf_counter();print(json.dumps(dict(stage='construct',power=power,growth=growth,gauge=gauge,policy=policy,pole_scope=pole_scope,
                 ambient=sum(c+1 for row in caps for c in row))),flush=True)
             if args.backend=='jets':ansatz=build_de_ansatz(spec)
-            elif args.backend=='PL-structural':ansatz=build_pl_ansatz(spec,backend='PL-Hasse',laurent_mode='structural-refined-all')
-            else:ansatz=build_pl_ansatz(spec,backend='PL-Hasse')
+            elif args.backend=='PL-structural':ansatz=build_pl_ansatz(spec,backend='PL-Hasse',laurent_mode='structural-refined-all',extra_order=getattr(args,'extra_order',0))
+            else:ansatz=build_pl_ansatz(spec,backend='PL-Hasse',extra_order=getattr(args,'extra_order',0))
             fixed={(a,b):learned[i,j] for a,i in enumerate(block) for b,j in enumerate(sub) if (i,j) in learned and (i,j) in active}
             def sample(t):return dict(prime=p,x=(t-center)%p,
                 values=[[all_points[t][masters[i]].get(masters[j],0) for j in sub] for i in block])
@@ -245,13 +246,13 @@ def main(args):
                 for t in holdout:
                     if ansatz.evaluate((t-center)%p,fit['parameters'])!=sample(t)['values']:
                         raise ValueError('holdout disagrees with fitted ansatz')
-                answer=ansatz.assemble(fit['parameters'])
+                answer=assemble_matrix(ansatz,fit['parameters'])
                 for a,i in enumerate(block):
                     for b,j in enumerate(sub):
-                        r=answer[a][b]
+                        r=answer.entries.get((a,b),zero)
                         if not r.is_zero():built[i,j]=r
                 report=dict(top=[masters[i] for i in block],route='analyticity-bootstrap',
-                    power=power,growth=growth,gauge=gauge,ambient=sum(c+1 for row in caps for c in row),
+                    power=power,growth=growth,gauge=gauge,extra_order=getattr(args,'extra_order',0),ambient=sum(c+1 for row in caps for c in row),
                     normalization_policy=policy,
                     pole_scope=pole_scope,
                     fixed_entries=len(fixed),fixed_equations=fit['fixed_equation_count'],
@@ -283,6 +284,7 @@ if __name__=='__main__':
     p.add_argument('--basis',required=True);p.add_argument('--points',action='append',required=True)
     p.add_argument('--diagonals',action='append',required=True);p.add_argument('--partial',action='append',default=[])
     p.add_argument('--backend',choices=['PL-Hasse','PL-structural','jets'],default='PL-Hasse')
+    p.add_argument('--extra-order',type=int,default=0)
     p.add_argument('--witness-budget',type=int,default=4)
     p.add_argument('--internal-holdouts',type=int,default=3)
     p.add_argument('--relax-all-poles',action='store_true')

@@ -1,0 +1,13 @@
+{
+  "family": "j_integral_sixpoint/inputs/family.json",
+  "basis": "j_integral_sixpoint/inputs/basis.json",
+  "targets": "j_integral_bootstrap/official_route/cases/sixpoint_basis_targets.json",
+  "binary": "j_integral_bootstrap/build/global_point_subset",
+  "reconstructor": "j_integral_bootstrap/build/reconstruct_partial",
+  "work": "j_integral_bootstrap/results/sixpoint_original_production",
+  "workers": 3,
+  "initial": 64,
+  "batch": 32,
+  "max_points": 384,
+  "gauge": 3
+}

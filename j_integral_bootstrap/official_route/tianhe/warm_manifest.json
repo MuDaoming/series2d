@@ -1,0 +1,65 @@
+{
+  "ProjectRoot": "../../..",
+  "NodeCPUs": 56,
+  "NodeMemoryMiB": 250000,
+  "AllTasksIndependentAndReady": true,
+  "WorkloadReview": {
+    "IndependentUnit": "one original bottom-up DE setting using a validated complete learning anchor",
+    "DependencyEvidence": "Warm recovery: full496 anchor already verified at8 fresh points (1968128 entries); no repeated cold point reconstruction. warm.sbatch probes shared GCC+FLINT at compute runtime then builds private native kernels, run_case selects run_restricted wrapper. Original learn_anchor, prepare_setting, solve_de unchanged; lower-sector algebra dependencies are real. Numerical callback physically restricts to required supports with full-index verified basis embedding; one requested point at a time follows upstream learning decisions. Serial original setting has no independent ready setting internally. One node only: neither avoidable multi-setting wait nor scattered idle nodes; future independent settings would require separate plan.",
+    "SourceFiles": [
+      "make_manifest.py",
+      "../cases/dp.json",
+      "../cases/dp_basis_targets.json",
+      "../../../j_integral_global/examples/dp_physical.json",
+      "../../../j_integral_global/examples/dp496_basis.json",
+      "../build_backend.py",
+      "../build_production_runtime.py",
+      "../../tests/build_kernels.py",
+      "../../tests/compare_connections.py",
+      "../../native/reconstruct_partial.cpp",
+      "../../../j_integral/native/series.cpp",
+      "../run_case.py",
+      "../cold_anchor.py",
+      "../run_upstream.py",
+      "../upstream_j.py",
+      "../../tests/collect_points.py",
+      "../../tests/test_collect_dispatch.py",
+      "../../../j_integral_global/native/global_point.cpp",
+      "../../../j_integral_global/native/triangular.hpp",
+      "../../../j_integral_methods/native/direct_j.cpp",
+      "../../../j_integral/native/prepare.hpp",
+      "../../extern/analytic_bootstrap-master/analytic_bootstrap/upstream/pipeline.py",
+      "../../extern/analytic_bootstrap-master/analytic_bootstrap/upstream/fitting.py",
+      "warm.sbatch",
+      "../compiler_probe.py",
+      "../run_restricted.py",
+      "../restricted_numeric.py",
+      "../cases/dp_warm.json",
+      "../test_restricted_numeric.py",
+      "../test_restricted_closure.py"
+    ],
+    "IndependentBranches": []
+  },
+  "Tasks": [
+    {
+      "ID": "original_de",
+      "CPUs": 1,
+      "PeakMemoryMiB": 32768,
+      "Output": "dp_original_warm/production",
+      "ResourceEvidence": "One serial original AB setting; prior local block algebra below32GiB;65536MiB requested for headroom; no simultaneous point pool."
+    }
+  ],
+  "Jobs": [
+    {
+      "Name": "dp-original-warm",
+      "Script": "warm.sbatch",
+      "Tasks": [
+        "original_de"
+      ],
+      "LaunchRuntime": "native",
+      "NoMathematicaEvidence": "Only Python and C/C++ algebra, no Wolfram process.",
+      "LaunchSpacingSeconds": 0,
+      "LaunchMechanism": "Single original setting; all native library threads fixed1."
+    }
+  ]
+}

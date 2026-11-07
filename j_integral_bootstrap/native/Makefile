@@ -6,7 +6,7 @@ SHARED := ../../j_integral/native
 METHODS := ../../j_integral_methods/native
 GLOBAL := ../../j_integral_global/native
 .PHONY: all kernels
-all: ../build/cut_diagonal ../build/reconstruct_partial ../build/verify_connection ../build/verify_reductions
+all: ../build/cut_diagonal ../build/reconstruct_partial ../build/verify_connection ../build/verify_reductions ../build/preconditioned
 ../build/cut_diagonal: cut_diagonal.cpp $(SHARED)/prepare.hpp $(SHARED)/series.cpp $(METHODS)/direct_j.cpp $(GLOBAL)/triangular.hpp
 	mkdir -p ../build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
@@ -20,5 +20,9 @@ kernels:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
 
 ../build/verify_reductions: verify_reductions.cpp $(SHARED)/prepare.hpp $(SHARED)/series.cpp $(METHODS)/direct_j.cpp
+	mkdir -p ../build
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)
+
+../build/preconditioned: ../pole_route/preconditioned.cpp $(SHARED)/prepare.hpp $(SHARED)/series.cpp $(METHODS)/direct_j.cpp
 	mkdir -p ../build
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $< -o $@ $(LDLIBS)

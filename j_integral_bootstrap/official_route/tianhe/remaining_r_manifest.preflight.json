@@ -1,0 +1,33 @@
+{
+  "Status": "pass",
+  "Tasks": 400,
+  "TotalTaskCPUs": 400,
+  "EstimatedPeakMemoryMiB": 819200,
+  "RequestedNodes": 1,
+  "Errors": [],
+  "Limits": "Static declared resources and dependency review only; cannot infer mathematical independence or prove code implements declarations. Inspect actual workers, scheduler availability, active writers and launch spacing.",
+  "TimeUTC": "2026-11-07T11:33:12.241250+00:00",
+  "RegressionExitCode": 0,
+  "RegressionLog": ".....................\n----------------------------------------------------------------------\nRan 21 tests in 0.065s\n\nOK\n",
+  "Hashes": {
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/official_route/tianhe/remaining_r_manifest.json": "2e1de394fde3a00012ff5f1bb2c0d687fddc395ed12ee4e74c418059fad9cbb4",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/SKILL.md": "89c74f8e69ebea0f2fc5b84ba912b0e1b54a0d2ea0e71c7f1e2f7cb57134ad1a",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/references/learned_rules.md": "8a954d91aa37c41467ed57516626f1bb9825a6c427a90058fdfc7373375b8eb6",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/references/manifest.md": "240cd74b9b5554892de9b544695c8632fd4bc48f57aba5fe05328760b5ef8316",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/references/tianhe.md": "894fe9e1facc378846209fc0e12d97a43e20a433c49b15c5c924f0aededac49e",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/references/workflow_review.md": "d56e0eb0c551da7f2e7bcb34b71fb726a49d82fb523f0257b4cb4daa8b20b0f2",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/scripts/check_submission.py": "151129988e47f3f54d88b9d724a5d208afeca9644e9ecb5896c6b737e06ae19b",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/scripts/test_regressions.py": "1525e8b47ddefd5bd9853ffdfd14d2246be19e8f9b0f9484b570abe1b467c46d",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/scripts/test_workflow.py": "8f4c08bafce730058b7a1ac92506aa980af391c5b437fd48d19edd2de2fac724",
+    "/home/mudaoming/.codex/skills/tianhe-slurm/scripts/workflow.py": "39d6c36d1cb213175bcbe666791a84f2989fe30d3b5bb6f0748e8bf9ee23dfca",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/official_route/tianhe/remaining_r.sbatch": "d726b3d6fb772c499f8d6dc6da6e990debd5bc4e7c240254d010826b43488967",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/tests/collect_points.py": "5f02fcd84262d3a83a1a9fd0fca387b6e0831b078aa2dfc3de416ef68481541a",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/tests/test_collect_dispatch.py": "00f726801eb2e91f9aada44d5528d454e1a9cafef4e194bf584863d5cda79fa5",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/native/global_point.cpp": "4f6d35ae750fa215be4fac7e4092f7771ffba03685372153e4910ebb0ebedf37",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/native/triangular.hpp": "d4b98df8421725a093f9c502babaf20f445d0b9e34aff48376e324625122d2c6",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/examples/dp_physical.json": "aeab715fb524f3a7d2a9ca6039f3e55fef821bdcca4687991d6ec02febf56b41",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_global/examples/dp496_basis.json": "7cffb9ab268a823c90fd26e457dda7b355e2abb6ecb79e214fea04d9a43dd792",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/results/dp_remaining_global/targets.json": "6eeabcd46adef716cc3955c28af87609e04202a408c81814445d2bb3f0354a07",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_bootstrap/results/dp_remaining_global/no_derivatives.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  }
+}

@@ -1,0 +1,3646 @@
+{
+  "ProjectRoot": "../../..",
+  "NodeCPUs": 56,
+  "NodeMemoryMiB": 250000,
+  "AllTasksIndependentAndReady": true,
+  "WorkloadReview": {
+    "IndependentUnit": "one fixed-t R-only numerical J-IBP calculation for1022 index parents including537 pending objects and fixed496 master parents",
+    "DependencyEvidence": "Completed original AB job12289940 has released its node. All400 t401..800 requests are ready and independent, share immutable input/native binary, use perpoint locks+atomic receipts. collect_points ThreadPoolExecutor/as_completed dispatches dynamically; test_collect_dispatch verifies early slot reuse and exactly once. One48-worker node, not48 independent exclusive-node jobs. No dependency on local restricted computations; their overlap is retained as cross-check, not a barrier. Native point allocation physically needs at most48 cores, each thread1. This reduces full family sampling targets from2952 to1022; R-only skips derivatives. Local probe currently approximately100s per point, prior fullDP RSS below1GiB; budget2GiB each. One node eliminates scattered-tail allocation, dynamic pool avoids idle waits until finaltail.",
+    "SourceFiles": [
+      "remaining_r.sbatch",
+      "../../tests/collect_points.py",
+      "../../tests/test_collect_dispatch.py",
+      "../../../j_integral_global/native/global_point.cpp",
+      "../../../j_integral_global/native/triangular.hpp",
+      "../../../j_integral_global/examples/dp_physical.json",
+      "../../../j_integral_global/examples/dp496_basis.json",
+      "../../results/dp_remaining_global/targets.json",
+      "../../results/dp_remaining_global/no_derivatives.json"
+    ],
+    "IndependentBranches": [
+      {
+        "Members": [
+          "point401",
+          "point402",
+          "point403",
+          "point404",
+          "point405",
+          "point406",
+          "point407",
+          "point408",
+          "point409",
+          "point410",
+          "point411",
+          "point412",
+          "point413",
+          "point414",
+          "point415",
+          "point416",
+          "point417",
+          "point418",
+          "point419",
+          "point420",
+          "point421",
+          "point422",
+          "point423",
+          "point424",
+          "point425",
+          "point426",
+          "point427",
+          "point428",
+          "point429",
+          "point430",
+          "point431",
+          "point432",
+          "point433",
+          "point434",
+          "point435",
+          "point436",
+          "point437",
+          "point438",
+          "point439",
+          "point440",
+          "point441",
+          "point442",
+          "point443",
+          "point444",
+          "point445",
+          "point446",
+          "point447",
+          "point448",
+          "point449",
+          "point450",
+          "point451",
+          "point452",
+          "point453",
+          "point454",
+          "point455",
+          "point456",
+          "point457",
+          "point458",
+          "point459",
+          "point460",
+          "point461",
+          "point462",
+          "point463",
+          "point464",
+          "point465",
+          "point466",
+          "point467",
+          "point468",
+          "point469",
+          "point470",
+          "point471",
+          "point472",
+          "point473",
+          "point474",
+          "point475",
+          "point476",
+          "point477",
+          "point478",
+          "point479",
+          "point480",
+          "point481",
+          "point482",
+          "point483",
+          "point484",
+          "point485",
+          "point486",
+          "point487",
+          "point488",
+          "point489",
+          "point490",
+          "point491",
+          "point492",
+          "point493",
+          "point494",
+          "point495",
+          "point496",
+          "point497",
+          "point498",
+          "point499",
+          "point500",
+          "point501",
+          "point502",
+          "point503",
+          "point504",
+          "point505",
+          "point506",
+          "point507",
+          "point508",
+          "point509",
+          "point510",
+          "point511",
+          "point512",
+          "point513",
+          "point514",
+          "point515",
+          "point516",
+          "point517",
+          "point518",
+          "point519",
+          "point520",
+          "point521",
+          "point522",
+          "point523",
+          "point524",
+          "point525",
+          "point526",
+          "point527",
+          "point528",
+          "point529",
+          "point530",
+          "point531",
+          "point532",
+          "point533",
+          "point534",
+          "point535",
+          "point536",
+          "point537",
+          "point538",
+          "point539",
+          "point540",
+          "point541",
+          "point542",
+          "point543",
+          "point544",
+          "point545",
+          "point546",
+          "point547",
+          "point548",
+          "point549",
+          "point550",
+          "point551",
+          "point552",
+          "point553",
+          "point554",
+          "point555",
+          "point556",
+          "point557",
+          "point558",
+          "point559",
+          "point560",
+          "point561",
+          "point562",
+          "point563",
+          "point564",
+          "point565",
+          "point566",
+          "point567",
+          "point568",
+          "point569",
+          "point570",
+          "point571",
+          "point572",
+          "point573",
+          "point574",
+          "point575",
+          "point576",
+          "point577",
+          "point578",
+          "point579",
+          "point580",
+          "point581",
+          "point582",
+          "point583",
+          "point584",
+          "point585",
+          "point586",
+          "point587",
+          "point588",
+          "point589",
+          "point590",
+          "point591",
+          "point592",
+          "point593",
+          "point594",
+          "point595",
+          "point596",
+          "point597",
+          "point598",
+          "point599",
+          "point600",
+          "point601",
+          "point602",
+          "point603",
+          "point604",
+          "point605",
+          "point606",
+          "point607",
+          "point608",
+          "point609",
+          "point610",
+          "point611",
+          "point612",
+          "point613",
+          "point614",
+          "point615",
+          "point616",
+          "point617",
+          "point618",
+          "point619",
+          "point620",
+          "point621",
+          "point622",
+          "point623",
+          "point624",
+          "point625",
+          "point626",
+          "point627",
+          "point628",
+          "point629",
+          "point630",
+          "point631",
+          "point632",
+          "point633",
+          "point634",
+          "point635",
+          "point636",
+          "point637",
+          "point638",
+          "point639",
+          "point640",
+          "point641",
+          "point642",
+          "point643",
+          "point644",
+          "point645",
+          "point646",
+          "point647",
+          "point648",
+          "point649",
+          "point650",
+          "point651",
+          "point652",
+          "point653",
+          "point654",
+          "point655",
+          "point656",
+          "point657",
+          "point658",
+          "point659",
+          "point660",
+          "point661",
+          "point662",
+          "point663",
+          "point664",
+          "point665",
+          "point666",
+          "point667",
+          "point668",
+          "point669",
+          "point670",
+          "point671",
+          "point672",
+          "point673",
+          "point674",
+          "point675",
+          "point676",
+          "point677",
+          "point678",
+          "point679",
+          "point680",
+          "point681",
+          "point682",
+          "point683",
+          "point684",
+          "point685",
+          "point686",
+          "point687",
+          "point688",
+          "point689",
+          "point690",
+          "point691",
+          "point692",
+          "point693",
+          "point694",
+          "point695",
+          "point696",
+          "point697",
+          "point698",
+          "point699",
+          "point700",
+          "point701",
+          "point702",
+          "point703",
+          "point704",
+          "point705",
+          "point706",
+          "point707",
+          "point708",
+          "point709",
+          "point710",
+          "point711",
+          "point712",
+          "point713",
+          "point714",
+          "point715",
+          "point716",
+          "point717",
+          "point718",
+          "point719",
+          "point720",
+          "point721",
+          "point722",
+          "point723",
+          "point724",
+          "point725",
+          "point726",
+          "point727",
+          "point728",
+          "point729",
+          "point730",
+          "point731",
+          "point732",
+          "point733",
+          "point734",
+          "point735",
+          "point736",
+          "point737",
+          "point738",
+          "point739",
+          "point740",
+          "point741",
+          "point742",
+          "point743",
+          "point744",
+          "point745",
+          "point746",
+          "point747",
+          "point748",
+          "point749",
+          "point750",
+          "point751",
+          "point752",
+          "point753",
+          "point754",
+          "point755",
+          "point756",
+          "point757",
+          "point758",
+          "point759",
+          "point760",
+          "point761",
+          "point762",
+          "point763",
+          "point764",
+          "point765",
+          "point766",
+          "point767",
+          "point768",
+          "point769",
+          "point770",
+          "point771",
+          "point772",
+          "point773",
+          "point774",
+          "point775",
+          "point776",
+          "point777",
+          "point778",
+          "point779",
+          "point780",
+          "point781",
+          "point782",
+          "point783",
+          "point784",
+          "point785",
+          "point786",
+          "point787",
+          "point788",
+          "point789",
+          "point790",
+          "point791",
+          "point792",
+          "point793",
+          "point794",
+          "point795",
+          "point796",
+          "point797",
+          "point798",
+          "point799",
+          "point800"
+        ],
+        "Evidence": "No point reads another; every point has unique output and lock.",
+        "Dispatch": "dynamic",
+        "CapacityEvidence": "48workers at2GiB budget=98304MiB,131072MiB allocation;56physical cores. Proven dynamic pool regression."
+      }
+    ]
+  },
+  "Tasks": [
+    {
+      "ID": "point401",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point401.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point402",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point402.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point403",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point403.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point404",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point404.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point405",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point405.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point406",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point406.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point407",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point407.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point408",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point408.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point409",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point409.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point410",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point410.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point411",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point411.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point412",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point412.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point413",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point413.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point414",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point414.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point415",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point415.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point416",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point416.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point417",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point417.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point418",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point418.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point419",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point419.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point420",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point420.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point421",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point421.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point422",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point422.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point423",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point423.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point424",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point424.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point425",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point425.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point426",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point426.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point427",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point427.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point428",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point428.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point429",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point429.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point430",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point430.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point431",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point431.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point432",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point432.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point433",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point433.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point434",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point434.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point435",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point435.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point436",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point436.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point437",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point437.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point438",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point438.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point439",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point439.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point440",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point440.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point441",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point441.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point442",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point442.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point443",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point443.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point444",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point444.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point445",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point445.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point446",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point446.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point447",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point447.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point448",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point448.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point449",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point449.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point450",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point450.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point451",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point451.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point452",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point452.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point453",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point453.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point454",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point454.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point455",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point455.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point456",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point456.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point457",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point457.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point458",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point458.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point459",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point459.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point460",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point460.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point461",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point461.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point462",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point462.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point463",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point463.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point464",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point464.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point465",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point465.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point466",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point466.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point467",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point467.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point468",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point468.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point469",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point469.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point470",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point470.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point471",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point471.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point472",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point472.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point473",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point473.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point474",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point474.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point475",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point475.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point476",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point476.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point477",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point477.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point478",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point478.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point479",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point479.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point480",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point480.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point481",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point481.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point482",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point482.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point483",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point483.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point484",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point484.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point485",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point485.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point486",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point486.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point487",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point487.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point488",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point488.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point489",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point489.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point490",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point490.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point491",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point491.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point492",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point492.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point493",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point493.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point494",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point494.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point495",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point495.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point496",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point496.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point497",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point497.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point498",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point498.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point499",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point499.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point500",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point500.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point501",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point501.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point502",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point502.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point503",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point503.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point504",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point504.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point505",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point505.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point506",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point506.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point507",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point507.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point508",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point508.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point509",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point509.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point510",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point510.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point511",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point511.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point512",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point512.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point513",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point513.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point514",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point514.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point515",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point515.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point516",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point516.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point517",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point517.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point518",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point518.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point519",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point519.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point520",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point520.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point521",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point521.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point522",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point522.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point523",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point523.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point524",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point524.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point525",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point525.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point526",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point526.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point527",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point527.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point528",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point528.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point529",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point529.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point530",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point530.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point531",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point531.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point532",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point532.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point533",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point533.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point534",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point534.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point535",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point535.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point536",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point536.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point537",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point537.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point538",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point538.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point539",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point539.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point540",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point540.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point541",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point541.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point542",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point542.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point543",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point543.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point544",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point544.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point545",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point545.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point546",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point546.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point547",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point547.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point548",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point548.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point549",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point549.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point550",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point550.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point551",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point551.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point552",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point552.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point553",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point553.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point554",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point554.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point555",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point555.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point556",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point556.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point557",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point557.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point558",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point558.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point559",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point559.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point560",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point560.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point561",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point561.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point562",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point562.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point563",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point563.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point564",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point564.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point565",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point565.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point566",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point566.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point567",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point567.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point568",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point568.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point569",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point569.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point570",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point570.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point571",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point571.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point572",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point572.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point573",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point573.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point574",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point574.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point575",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point575.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point576",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point576.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point577",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point577.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point578",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point578.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point579",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point579.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point580",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point580.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point581",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point581.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point582",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point582.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point583",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point583.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point584",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point584.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point585",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point585.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point586",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point586.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point587",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point587.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point588",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point588.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point589",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point589.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point590",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point590.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point591",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point591.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point592",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point592.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point593",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point593.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point594",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point594.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point595",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point595.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point596",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point596.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point597",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point597.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point598",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point598.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point599",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point599.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point600",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point600.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point601",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point601.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point602",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point602.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point603",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point603.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point604",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point604.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point605",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point605.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point606",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point606.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point607",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point607.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point608",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point608.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point609",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point609.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point610",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point610.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point611",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point611.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point612",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point612.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point613",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point613.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point614",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point614.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point615",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point615.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point616",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point616.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point617",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point617.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point618",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point618.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point619",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point619.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point620",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point620.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point621",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point621.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point622",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point622.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point623",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point623.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point624",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point624.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point625",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point625.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point626",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point626.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point627",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point627.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point628",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point628.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point629",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point629.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point630",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point630.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point631",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point631.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point632",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point632.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point633",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point633.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point634",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point634.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point635",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point635.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point636",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point636.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point637",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point637.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point638",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point638.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point639",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point639.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point640",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point640.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point641",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point641.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point642",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point642.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point643",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point643.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point644",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point644.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point645",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point645.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point646",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point646.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point647",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point647.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point648",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point648.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point649",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point649.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point650",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point650.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point651",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point651.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point652",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point652.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point653",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point653.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point654",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point654.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point655",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point655.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point656",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point656.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point657",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point657.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point658",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point658.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point659",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point659.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point660",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point660.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point661",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point661.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point662",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point662.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point663",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point663.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point664",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point664.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point665",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point665.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point666",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point666.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point667",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point667.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point668",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point668.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point669",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point669.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point670",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point670.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point671",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point671.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point672",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point672.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point673",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point673.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point674",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point674.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point675",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point675.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point676",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point676.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point677",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point677.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point678",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point678.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point679",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point679.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point680",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point680.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point681",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point681.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point682",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point682.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point683",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point683.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point684",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point684.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point685",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point685.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point686",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point686.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point687",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point687.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point688",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point688.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point689",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point689.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point690",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point690.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point691",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point691.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point692",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point692.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point693",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point693.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point694",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point694.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point695",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point695.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point696",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point696.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point697",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point697.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point698",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point698.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point699",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point699.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point700",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point700.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point701",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point701.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point702",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point702.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point703",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point703.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point704",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point704.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point705",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point705.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point706",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point706.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point707",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point707.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point708",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point708.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point709",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point709.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point710",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point710.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point711",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point711.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point712",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point712.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point713",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point713.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point714",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point714.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point715",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point715.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point716",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point716.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point717",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point717.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point718",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point718.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point719",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point719.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point720",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point720.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point721",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point721.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point722",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point722.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point723",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point723.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point724",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point724.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point725",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point725.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point726",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point726.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point727",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point727.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point728",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point728.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point729",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point729.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point730",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point730.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point731",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point731.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point732",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point732.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point733",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point733.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point734",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point734.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point735",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point735.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point736",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point736.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point737",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point737.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point738",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point738.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point739",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point739.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point740",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point740.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point741",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point741.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point742",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point742.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point743",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point743.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point744",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point744.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point745",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point745.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point746",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point746.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point747",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point747.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point748",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point748.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point749",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point749.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point750",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point750.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point751",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point751.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point752",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point752.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point753",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point753.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point754",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point754.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point755",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point755.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point756",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point756.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point757",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point757.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point758",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point758.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point759",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point759.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point760",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point760.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point761",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point761.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point762",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point762.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point763",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point763.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point764",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point764.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point765",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point765.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point766",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point766.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point767",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point767.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point768",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point768.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point769",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point769.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point770",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point770.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point771",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point771.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point772",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point772.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point773",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point773.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point774",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point774.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point775",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point775.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point776",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point776.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point777",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point777.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point778",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point778.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point779",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point779.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point780",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point780.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point781",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point781.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point782",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point782.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point783",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point783.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point784",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point784.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point785",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point785.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point786",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point786.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point787",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point787.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point788",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point788.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point789",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point789.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point790",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point790.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point791",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point791.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point792",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point792.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point793",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point793.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point794",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point794.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point795",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point795.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point796",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point796.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point797",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point797.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point798",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point798.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point799",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point799.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    },
+    {
+      "ID": "point800",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_remaining_global/samples/points/point800.json",
+      "ResourceEvidence": "Prior fullDP native receipt <1GiB;2GiB point budget;1thread."
+    }
+  ],
+  "Jobs": [
+    {
+      "Name": "dp-remaining-R",
+      "Script": "remaining_r.sbatch",
+      "Tasks": [
+        "point401",
+        "point402",
+        "point403",
+        "point404",
+        "point405",
+        "point406",
+        "point407",
+        "point408",
+        "point409",
+        "point410",
+        "point411",
+        "point412",
+        "point413",
+        "point414",
+        "point415",
+        "point416",
+        "point417",
+        "point418",
+        "point419",
+        "point420",
+        "point421",
+        "point422",
+        "point423",
+        "point424",
+        "point425",
+        "point426",
+        "point427",
+        "point428",
+        "point429",
+        "point430",
+        "point431",
+        "point432",
+        "point433",
+        "point434",
+        "point435",
+        "point436",
+        "point437",
+        "point438",
+        "point439",
+        "point440",
+        "point441",
+        "point442",
+        "point443",
+        "point444",
+        "point445",
+        "point446",
+        "point447",
+        "point448",
+        "point449",
+        "point450",
+        "point451",
+        "point452",
+        "point453",
+        "point454",
+        "point455",
+        "point456",
+        "point457",
+        "point458",
+        "point459",
+        "point460",
+        "point461",
+        "point462",
+        "point463",
+        "point464",
+        "point465",
+        "point466",
+        "point467",
+        "point468",
+        "point469",
+        "point470",
+        "point471",
+        "point472",
+        "point473",
+        "point474",
+        "point475",
+        "point476",
+        "point477",
+        "point478",
+        "point479",
+        "point480",
+        "point481",
+        "point482",
+        "point483",
+        "point484",
+        "point485",
+        "point486",
+        "point487",
+        "point488",
+        "point489",
+        "point490",
+        "point491",
+        "point492",
+        "point493",
+        "point494",
+        "point495",
+        "point496",
+        "point497",
+        "point498",
+        "point499",
+        "point500",
+        "point501",
+        "point502",
+        "point503",
+        "point504",
+        "point505",
+        "point506",
+        "point507",
+        "point508",
+        "point509",
+        "point510",
+        "point511",
+        "point512",
+        "point513",
+        "point514",
+        "point515",
+        "point516",
+        "point517",
+        "point518",
+        "point519",
+        "point520",
+        "point521",
+        "point522",
+        "point523",
+        "point524",
+        "point525",
+        "point526",
+        "point527",
+        "point528",
+        "point529",
+        "point530",
+        "point531",
+        "point532",
+        "point533",
+        "point534",
+        "point535",
+        "point536",
+        "point537",
+        "point538",
+        "point539",
+        "point540",
+        "point541",
+        "point542",
+        "point543",
+        "point544",
+        "point545",
+        "point546",
+        "point547",
+        "point548",
+        "point549",
+        "point550",
+        "point551",
+        "point552",
+        "point553",
+        "point554",
+        "point555",
+        "point556",
+        "point557",
+        "point558",
+        "point559",
+        "point560",
+        "point561",
+        "point562",
+        "point563",
+        "point564",
+        "point565",
+        "point566",
+        "point567",
+        "point568",
+        "point569",
+        "point570",
+        "point571",
+        "point572",
+        "point573",
+        "point574",
+        "point575",
+        "point576",
+        "point577",
+        "point578",
+        "point579",
+        "point580",
+        "point581",
+        "point582",
+        "point583",
+        "point584",
+        "point585",
+        "point586",
+        "point587",
+        "point588",
+        "point589",
+        "point590",
+        "point591",
+        "point592",
+        "point593",
+        "point594",
+        "point595",
+        "point596",
+        "point597",
+        "point598",
+        "point599",
+        "point600",
+        "point601",
+        "point602",
+        "point603",
+        "point604",
+        "point605",
+        "point606",
+        "point607",
+        "point608",
+        "point609",
+        "point610",
+        "point611",
+        "point612",
+        "point613",
+        "point614",
+        "point615",
+        "point616",
+        "point617",
+        "point618",
+        "point619",
+        "point620",
+        "point621",
+        "point622",
+        "point623",
+        "point624",
+        "point625",
+        "point626",
+        "point627",
+        "point628",
+        "point629",
+        "point630",
+        "point631",
+        "point632",
+        "point633",
+        "point634",
+        "point635",
+        "point636",
+        "point637",
+        "point638",
+        "point639",
+        "point640",
+        "point641",
+        "point642",
+        "point643",
+        "point644",
+        "point645",
+        "point646",
+        "point647",
+        "point648",
+        "point649",
+        "point650",
+        "point651",
+        "point652",
+        "point653",
+        "point654",
+        "point655",
+        "point656",
+        "point657",
+        "point658",
+        "point659",
+        "point660",
+        "point661",
+        "point662",
+        "point663",
+        "point664",
+        "point665",
+        "point666",
+        "point667",
+        "point668",
+        "point669",
+        "point670",
+        "point671",
+        "point672",
+        "point673",
+        "point674",
+        "point675",
+        "point676",
+        "point677",
+        "point678",
+        "point679",
+        "point680",
+        "point681",
+        "point682",
+        "point683",
+        "point684",
+        "point685",
+        "point686",
+        "point687",
+        "point688",
+        "point689",
+        "point690",
+        "point691",
+        "point692",
+        "point693",
+        "point694",
+        "point695",
+        "point696",
+        "point697",
+        "point698",
+        "point699",
+        "point700",
+        "point701",
+        "point702",
+        "point703",
+        "point704",
+        "point705",
+        "point706",
+        "point707",
+        "point708",
+        "point709",
+        "point710",
+        "point711",
+        "point712",
+        "point713",
+        "point714",
+        "point715",
+        "point716",
+        "point717",
+        "point718",
+        "point719",
+        "point720",
+        "point721",
+        "point722",
+        "point723",
+        "point724",
+        "point725",
+        "point726",
+        "point727",
+        "point728",
+        "point729",
+        "point730",
+        "point731",
+        "point732",
+        "point733",
+        "point734",
+        "point735",
+        "point736",
+        "point737",
+        "point738",
+        "point739",
+        "point740",
+        "point741",
+        "point742",
+        "point743",
+        "point744",
+        "point745",
+        "point746",
+        "point747",
+        "point748",
+        "point749",
+        "point750",
+        "point751",
+        "point752",
+        "point753",
+        "point754",
+        "point755",
+        "point756",
+        "point757",
+        "point758",
+        "point759",
+        "point760",
+        "point761",
+        "point762",
+        "point763",
+        "point764",
+        "point765",
+        "point766",
+        "point767",
+        "point768",
+        "point769",
+        "point770",
+        "point771",
+        "point772",
+        "point773",
+        "point774",
+        "point775",
+        "point776",
+        "point777",
+        "point778",
+        "point779",
+        "point780",
+        "point781",
+        "point782",
+        "point783",
+        "point784",
+        "point785",
+        "point786",
+        "point787",
+        "point788",
+        "point789",
+        "point790",
+        "point791",
+        "point792",
+        "point793",
+        "point794",
+        "point795",
+        "point796",
+        "point797",
+        "point798",
+        "point799",
+        "point800"
+      ],
+      "MaxConcurrentTasks": 48,
+      "PoolEvidence": "collect_points dynamic ThreadPoolExecutor/as_completed tested by test_collect_dispatch.py",
+      "LaunchRuntime": "native",
+      "NoMathematicaEvidence": "Python native C++ workers only.",
+      "LaunchSpacingSeconds": 0,
+      "LaunchMechanism": "Slurm one48slot allocation with dynamically reused local native workers."
+    }
+  ]
+}

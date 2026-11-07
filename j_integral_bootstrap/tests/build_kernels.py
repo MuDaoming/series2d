@@ -1,4 +1,5 @@
 """Compile the upstream PL kernels against the same FLINT as our J worker."""
+import argparse
 import hashlib
 import json
 import os
@@ -7,6 +8,11 @@ import tempfile
 from pathlib import Path
 import subprocess
 
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--prefix', default=os.environ.get('FLINT_PREFIX','/usr/local'), help='FLINT installation prefix')
+parser.add_argument('--production', action='store_true', help='also build the complete upstream algebraic runtime')
+args = parser.parse_args()
+prefix=Path(args.prefix).resolve()
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'extern/analytic_bootstrap-master'
 OUT = ROOT / 'build/kernels'
@@ -23,8 +29,8 @@ records = []
 for name, relative in sources.items():
     source = SOURCE / relative
     temporary = OUT / (name + '.tmp-' + str(os.getpid()))
-    command = ['cc', '-O3', '-I/usr/local/include', str(source), '-o', str(temporary),
-               '-L/usr/local/lib', '-Wl,-rpath,/usr/local/lib', '-lflint', '-lgmp']
+    command = ['cc', '-O3', '-I'+str(prefix/'include'), str(source), '-o', str(temporary),
+               '-L'+str(prefix/'lib'), '-Wl,-rpath,'+str(prefix/'lib'), '-lflint', '-lgmp']
     try:
         subprocess.run(command, check=True)
         os.replace(temporary, OUT/name)
@@ -48,8 +54,11 @@ upstream.mkdir(parents=True, exist_ok=True)
 with tempfile.TemporaryDirectory(prefix='upstream-build-', dir=ROOT/'build') as staged:
     staged = Path(staged)
     subprocess.run([sys.executable, '-m', 'analytic_bootstrap.upstream.build_native',
-                    '--prefix', '/usr/local', '--output', str(staged)],
+                    '--prefix', str(prefix), '--output', str(staged)],
                    env=env, check=True)
     for name in ('upstream_evaluate.so', 'upstream_fit.so', 'build.json'):
         os.replace(staged/name, upstream/name)
 print(upstream)
+
+if args.production:
+    subprocess.run([sys.executable, str(ROOT/'official_route/build_production_runtime.py')], env=dict(os.environ,FLINT_PREFIX=str(prefix)), check=True)

@@ -1,0 +1,16 @@
+{
+  "ID": "dp-ab-compute-compiler-path-20261107",
+  "Scope": "DP original AB Tianhe native runtime build",
+  "Observed": "Job12288434 failed1:0 in7s before any numerical point; dependent12288510 never started.",
+  "Cause": "Login /usr/bin/g++ exists but compute image lacks that executable; launcher hardcoded login path despite existing shared compiler rule.",
+  "Evidence": [
+    "official_route/tianhe/anchor_failure_evidence.log",
+    "Slurm12288434 stderr FileNotFoundError /usr/bin/g++",
+    "12288510 DependencyNeverSatisfied RunTime00:00:00; canceled only pending dependent",
+    "12289927-warm.out compute compiler probe host cn81132 GCC11.3 OK"
+  ],
+  "Correction": "Use shared GCC11.3 explicit CC/CXX/PATH/library path; compile/run FLINT+filesystem preflight on compute before full build. Reuse already validated anchor; new isolated warm work directory.",
+  "GeneralLesson": "Compiler availability must be validated on the compute image, not inferred from login. Run a compile-and-execute dependency probe before costly native compilation.",
+  "Validation": "Local FLINT+filesystem executable probe passed; compute job12289927 cn81132 sharedGCC11.3 compiled, linked and executed same probe successfully (stdout OK), then advanced into native build. This verifies compiler recovery only; full science job remains running.",
+  "Status": "verified"
+}

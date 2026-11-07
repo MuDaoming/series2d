@@ -1,0 +1,3249 @@
+{
+  "ProjectRoot": "../../..",
+  "NodeCPUs": 56,
+  "NodeMemoryMiB": 250000,
+  "AllTasksIndependentAndReady": false,
+  "WorkloadReview": {
+    "IndependentUnit": "one fixed-t numeric J-IBP evaluation; later one original bottom-up DE setting",
+    "DependencyEvidence": "Anchor first verifies runtime and builds private native executables and AB kernels; numerical points genuinely require these artifacts. run_case -> cold_anchor -> collect_points: dynamically dispatch every point in the current requested batch. Next batch is needed only when rational coefficients remain unknown. run_case production requires a complete anchor and invokes original learn_anchor/prepare_setting/solve_de, preserving real lower-sector dependencies. Separate jobs release the parallel allocation before serial algebra begins. Production is queued with afterok on the anchor job; anchor returns0 only after its scientific-completion gate, and the production worker independently requires the complete anchor file. Actual dispatcher regression tests early slot release and exactly-once reuse.",
+    "SourceFiles": [
+      "make_manifest.py",
+      "../cases/dp.json",
+      "../cases/dp_basis_targets.json",
+      "../../../j_integral_global/examples/dp_physical.json",
+      "../../../j_integral_global/examples/dp496_basis.json",
+      "../build_backend.py",
+      "../build_production_runtime.py",
+      "../../tests/build_kernels.py",
+      "../../tests/compare_connections.py",
+      "../../native/reconstruct_partial.cpp",
+      "../../../j_integral/native/series.cpp",
+      "../run_case.py",
+      "../cold_anchor.py",
+      "../run_upstream.py",
+      "../upstream_j.py",
+      "../../tests/collect_points.py",
+      "../../tests/test_collect_dispatch.py",
+      "../../../j_integral_global/native/global_point.cpp",
+      "../../../j_integral_global/native/triangular.hpp",
+      "../../../j_integral_methods/native/direct_j.cpp",
+      "../../../j_integral/native/prepare.hpp",
+      "../../extern/analytic_bootstrap-master/analytic_bootstrap/upstream/pipeline.py",
+      "../../extern/analytic_bootstrap-master/analytic_bootstrap/upstream/fitting.py"
+    ],
+    "IndependentBranches": [
+      {
+        "Members": [
+          "point17",
+          "point18",
+          "point19",
+          "point20",
+          "point21",
+          "point22",
+          "point23",
+          "point24",
+          "point25",
+          "point26",
+          "point27",
+          "point28",
+          "point29",
+          "point30",
+          "point31",
+          "point32",
+          "point33",
+          "point34",
+          "point35",
+          "point36",
+          "point37",
+          "point38",
+          "point39",
+          "point40",
+          "point41",
+          "point42",
+          "point43",
+          "point44",
+          "point45",
+          "point46",
+          "point47",
+          "point48",
+          "point49",
+          "point50",
+          "point51",
+          "point52",
+          "point53",
+          "point54",
+          "point55",
+          "point56",
+          "point57",
+          "point58",
+          "point59",
+          "point60",
+          "point61",
+          "point62",
+          "point63",
+          "point64",
+          "point65",
+          "point66",
+          "point67",
+          "point68",
+          "point69",
+          "point70",
+          "point71",
+          "point72",
+          "point73",
+          "point74",
+          "point75",
+          "point76",
+          "point77",
+          "point78",
+          "point79",
+          "point80",
+          "point81",
+          "point82",
+          "point83",
+          "point84",
+          "point85",
+          "point86",
+          "point87",
+          "point88",
+          "point89",
+          "point90",
+          "point91",
+          "point92",
+          "point93",
+          "point94",
+          "point95",
+          "point96",
+          "point97",
+          "point98",
+          "point99",
+          "point100",
+          "point101",
+          "point102",
+          "point103",
+          "point104",
+          "point105",
+          "point106",
+          "point107",
+          "point108",
+          "point109",
+          "point110",
+          "point111",
+          "point112"
+        ],
+        "Evidence": "Initial96 point workers read immutable assets, have disjoint locked outputs, and never read one another.",
+        "Dispatch": "dynamic",
+        "CapacityEvidence": "48 single-core workers;98304MiB worst-case sum below131072MiB, leaving32768MiB coordinator headroom. Actual test_collect_dispatch regression passed."
+      }
+    ]
+  },
+  "Tasks": [
+    {
+      "ID": "point17",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point17.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point18",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point18.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point19",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point19.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point20",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point20.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point21",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point21.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point22",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point22.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point23",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point23.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point24",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point24.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point25",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point25.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point26",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point26.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point27",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point27.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point28",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point28.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point29",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point29.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point30",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point30.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point31",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point31.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point32",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point32.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point33",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point33.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point34",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point34.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point35",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point35.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point36",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point36.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point37",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point37.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point38",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point38.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point39",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point39.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point40",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point40.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point41",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point41.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point42",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point42.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point43",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point43.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point44",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point44.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point45",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point45.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point46",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point46.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point47",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point47.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point48",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point48.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point49",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point49.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point50",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point50.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point51",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point51.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point52",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point52.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point53",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point53.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point54",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point54.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point55",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point55.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point56",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point56.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point57",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point57.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point58",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point58.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point59",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point59.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point60",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point60.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point61",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point61.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point62",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point62.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point63",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point63.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point64",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point64.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point65",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point65.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point66",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point66.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point67",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point67.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point68",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point68.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point69",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point69.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point70",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point70.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point71",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point71.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point72",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point72.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point73",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point73.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point74",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point74.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point75",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point75.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point76",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point76.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point77",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point77.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point78",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point78.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point79",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point79.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point80",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point80.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point81",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point81.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point82",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point82.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point83",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point83.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point84",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point84.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point85",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point85.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point86",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point86.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point87",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point87.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point88",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point88.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point89",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point89.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point90",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point90.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point91",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point91.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point92",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point92.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point93",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point93.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point94",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point94.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point95",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point95.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point96",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point96.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point97",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point97.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point98",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point98.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point99",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point99.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point100",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point100.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point101",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point101.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point102",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point102.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point103",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point103.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point104",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point104.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point105",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point105.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point106",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point106.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point107",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point107.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point108",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point108.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point109",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point109.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point110",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point110.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point111",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point111.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point112",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point112.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point113",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point113.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point114",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point114.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point115",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point115.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point116",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point116.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point117",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point117.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point118",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point118.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point119",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point119.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point120",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point120.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point121",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point121.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point122",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point122.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point123",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point123.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point124",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point124.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point125",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point125.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point126",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point126.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point127",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point127.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point128",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point128.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point129",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point129.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point130",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point130.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point131",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point131.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point132",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point132.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point133",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point133.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point134",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point134.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point135",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point135.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point136",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point136.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point137",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point137.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point138",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point138.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point139",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point139.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point140",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point140.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point141",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point141.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point142",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point142.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point143",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point143.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point144",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point144.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point145",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point145.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point146",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point146.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point147",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point147.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point148",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point148.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point149",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point149.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point150",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point150.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point151",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point151.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point152",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point152.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point153",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point153.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point154",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point154.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point155",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point155.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point156",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point156.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point157",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point157.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point158",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point158.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point159",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point159.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point160",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point160.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point161",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point161.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point162",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point162.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point163",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point163.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point164",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point164.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point165",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point165.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point166",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point166.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point167",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point167.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point168",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point168.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point169",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point169.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point170",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point170.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point171",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point171.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point172",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point172.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point173",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point173.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point174",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point174.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point175",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point175.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point176",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point176.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point177",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point177.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point178",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point178.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point179",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point179.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point180",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point180.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point181",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point181.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point182",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point182.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point183",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point183.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point184",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point184.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point185",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point185.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point186",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point186.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point187",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point187.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point188",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point188.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point189",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point189.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point190",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point190.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point191",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point191.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point192",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point192.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point193",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point193.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point194",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point194.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point195",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point195.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point196",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point196.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point197",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point197.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point198",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point198.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point199",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point199.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point200",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point200.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point201",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point201.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point202",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point202.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point203",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point203.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point204",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point204.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point205",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point205.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point206",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point206.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point207",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point207.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point208",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point208.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point209",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point209.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point210",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point210.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point211",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point211.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point212",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point212.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point213",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point213.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point214",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point214.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point215",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point215.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point216",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point216.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point217",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point217.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point218",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point218.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point219",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point219.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point220",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point220.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point221",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point221.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point222",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point222.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point223",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point223.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point224",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point224.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point225",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point225.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point226",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point226.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point227",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point227.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point228",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point228.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point229",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point229.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point230",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point230.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point231",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point231.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point232",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point232.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point233",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point233.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point234",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point234.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point235",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point235.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point236",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point236.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point237",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point237.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point238",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point238.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point239",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point239.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point240",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point240.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point241",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point241.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point242",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point242.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point243",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point243.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point244",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point244.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point245",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point245.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point246",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point246.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point247",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point247.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point248",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point248.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point249",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point249.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point250",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point250.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point251",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point251.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point252",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point252.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point253",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point253.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point254",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point254.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point255",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point255.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point256",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point256.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point257",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point257.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point258",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point258.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point259",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point259.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point260",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point260.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point261",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point261.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point262",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point262.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point263",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point263.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point264",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point264.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point265",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point265.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point266",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point266.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point267",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point267.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point268",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point268.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point269",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point269.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point270",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point270.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point271",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point271.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point272",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point272.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point273",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point273.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point274",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point274.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point275",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point275.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point276",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point276.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point277",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point277.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point278",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point278.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point279",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point279.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point280",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point280.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point281",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point281.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point282",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point282.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point283",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point283.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point284",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point284.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point285",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point285.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point286",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point286.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point287",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point287.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point288",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point288.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point289",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point289.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point290",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point290.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point291",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point291.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point292",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point292.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point293",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point293.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point294",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point294.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point295",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point295.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point296",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point296.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point297",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point297.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point298",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point298.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point299",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point299.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point300",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point300.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point301",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point301.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point302",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point302.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point303",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point303.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point304",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point304.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point305",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point305.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point306",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point306.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point307",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point307.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point308",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point308.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point309",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point309.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point310",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point310.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point311",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point311.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point312",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point312.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point313",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point313.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point314",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point314.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point315",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point315.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point316",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point316.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point317",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point317.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point318",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point318.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point319",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point319.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point320",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point320.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point321",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point321.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point322",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point322.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point323",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point323.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point324",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point324.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point325",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point325.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point326",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point326.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point327",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point327.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point328",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point328.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point329",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point329.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point330",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point330.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point331",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point331.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point332",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point332.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point333",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point333.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point334",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point334.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point335",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point335.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point336",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point336.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point337",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point337.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point338",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point338.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point339",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point339.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point340",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point340.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point341",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point341.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point342",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point342.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point343",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point343.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point344",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point344.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point345",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point345.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point346",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point346.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point347",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point347.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point348",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point348.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point349",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point349.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point350",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point350.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point351",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point351.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point352",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point352.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point353",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point353.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point354",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point354.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point355",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point355.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point356",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point356.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point357",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point357.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point358",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point358.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point359",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point359.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point360",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point360.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point361",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point361.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point362",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point362.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point363",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point363.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point364",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point364.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point365",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point365.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point366",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point366.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point367",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point367.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point368",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point368.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point369",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point369.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point370",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point370.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point371",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point371.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point372",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point372.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point373",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point373.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point374",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point374.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point375",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point375.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point376",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point376.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point377",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point377.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point378",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point378.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point379",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point379.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point380",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point380.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point381",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point381.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point382",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point382.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point383",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point383.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point384",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point384.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point385",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point385.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point386",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point386.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point387",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point387.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point388",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point388.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point389",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point389.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point390",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point390.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point391",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point391.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point392",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point392.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point393",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point393.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point394",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point394.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point395",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point395.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point396",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point396.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point397",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point397.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point398",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point398.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point399",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point399.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "point400",
+      "CPUs": 1,
+      "PeakMemoryMiB": 2048,
+      "Output": "dp_original_production/anchor/samples/points/point400.json",
+      "ResourceEvidence": "Single-thread C++ J-IBP; prior full-DP point receipts below roughly1GiB; budget2GiB per worker."
+    },
+    {
+      "ID": "original_de",
+      "CPUs": 1,
+      "PeakMemoryMiB": 32768,
+      "Output": "dp_original_production/production",
+      "ResourceEvidence": "Single serial original production setting; large local block prototype below32GiB; request65536MiB for additional headroom. Confirm remote environment before actual submission."
+    }
+  ],
+  "Jobs": [
+    {
+      "Name": "dp-anchor",
+      "Script": "anchor.sbatch",
+      "Tasks": [
+        "point17",
+        "point18",
+        "point19",
+        "point20",
+        "point21",
+        "point22",
+        "point23",
+        "point24",
+        "point25",
+        "point26",
+        "point27",
+        "point28",
+        "point29",
+        "point30",
+        "point31",
+        "point32",
+        "point33",
+        "point34",
+        "point35",
+        "point36",
+        "point37",
+        "point38",
+        "point39",
+        "point40",
+        "point41",
+        "point42",
+        "point43",
+        "point44",
+        "point45",
+        "point46",
+        "point47",
+        "point48",
+        "point49",
+        "point50",
+        "point51",
+        "point52",
+        "point53",
+        "point54",
+        "point55",
+        "point56",
+        "point57",
+        "point58",
+        "point59",
+        "point60",
+        "point61",
+        "point62",
+        "point63",
+        "point64",
+        "point65",
+        "point66",
+        "point67",
+        "point68",
+        "point69",
+        "point70",
+        "point71",
+        "point72",
+        "point73",
+        "point74",
+        "point75",
+        "point76",
+        "point77",
+        "point78",
+        "point79",
+        "point80",
+        "point81",
+        "point82",
+        "point83",
+        "point84",
+        "point85",
+        "point86",
+        "point87",
+        "point88",
+        "point89",
+        "point90",
+        "point91",
+        "point92",
+        "point93",
+        "point94",
+        "point95",
+        "point96",
+        "point97",
+        "point98",
+        "point99",
+        "point100",
+        "point101",
+        "point102",
+        "point103",
+        "point104",
+        "point105",
+        "point106",
+        "point107",
+        "point108",
+        "point109",
+        "point110",
+        "point111",
+        "point112",
+        "point113",
+        "point114",
+        "point115",
+        "point116",
+        "point117",
+        "point118",
+        "point119",
+        "point120",
+        "point121",
+        "point122",
+        "point123",
+        "point124",
+        "point125",
+        "point126",
+        "point127",
+        "point128",
+        "point129",
+        "point130",
+        "point131",
+        "point132",
+        "point133",
+        "point134",
+        "point135",
+        "point136",
+        "point137",
+        "point138",
+        "point139",
+        "point140",
+        "point141",
+        "point142",
+        "point143",
+        "point144",
+        "point145",
+        "point146",
+        "point147",
+        "point148",
+        "point149",
+        "point150",
+        "point151",
+        "point152",
+        "point153",
+        "point154",
+        "point155",
+        "point156",
+        "point157",
+        "point158",
+        "point159",
+        "point160",
+        "point161",
+        "point162",
+        "point163",
+        "point164",
+        "point165",
+        "point166",
+        "point167",
+        "point168",
+        "point169",
+        "point170",
+        "point171",
+        "point172",
+        "point173",
+        "point174",
+        "point175",
+        "point176",
+        "point177",
+        "point178",
+        "point179",
+        "point180",
+        "point181",
+        "point182",
+        "point183",
+        "point184",
+        "point185",
+        "point186",
+        "point187",
+        "point188",
+        "point189",
+        "point190",
+        "point191",
+        "point192",
+        "point193",
+        "point194",
+        "point195",
+        "point196",
+        "point197",
+        "point198",
+        "point199",
+        "point200",
+        "point201",
+        "point202",
+        "point203",
+        "point204",
+        "point205",
+        "point206",
+        "point207",
+        "point208",
+        "point209",
+        "point210",
+        "point211",
+        "point212",
+        "point213",
+        "point214",
+        "point215",
+        "point216",
+        "point217",
+        "point218",
+        "point219",
+        "point220",
+        "point221",
+        "point222",
+        "point223",
+        "point224",
+        "point225",
+        "point226",
+        "point227",
+        "point228",
+        "point229",
+        "point230",
+        "point231",
+        "point232",
+        "point233",
+        "point234",
+        "point235",
+        "point236",
+        "point237",
+        "point238",
+        "point239",
+        "point240",
+        "point241",
+        "point242",
+        "point243",
+        "point244",
+        "point245",
+        "point246",
+        "point247",
+        "point248",
+        "point249",
+        "point250",
+        "point251",
+        "point252",
+        "point253",
+        "point254",
+        "point255",
+        "point256",
+        "point257",
+        "point258",
+        "point259",
+        "point260",
+        "point261",
+        "point262",
+        "point263",
+        "point264",
+        "point265",
+        "point266",
+        "point267",
+        "point268",
+        "point269",
+        "point270",
+        "point271",
+        "point272",
+        "point273",
+        "point274",
+        "point275",
+        "point276",
+        "point277",
+        "point278",
+        "point279",
+        "point280",
+        "point281",
+        "point282",
+        "point283",
+        "point284",
+        "point285",
+        "point286",
+        "point287",
+        "point288",
+        "point289",
+        "point290",
+        "point291",
+        "point292",
+        "point293",
+        "point294",
+        "point295",
+        "point296",
+        "point297",
+        "point298",
+        "point299",
+        "point300",
+        "point301",
+        "point302",
+        "point303",
+        "point304",
+        "point305",
+        "point306",
+        "point307",
+        "point308",
+        "point309",
+        "point310",
+        "point311",
+        "point312",
+        "point313",
+        "point314",
+        "point315",
+        "point316",
+        "point317",
+        "point318",
+        "point319",
+        "point320",
+        "point321",
+        "point322",
+        "point323",
+        "point324",
+        "point325",
+        "point326",
+        "point327",
+        "point328",
+        "point329",
+        "point330",
+        "point331",
+        "point332",
+        "point333",
+        "point334",
+        "point335",
+        "point336",
+        "point337",
+        "point338",
+        "point339",
+        "point340",
+        "point341",
+        "point342",
+        "point343",
+        "point344",
+        "point345",
+        "point346",
+        "point347",
+        "point348",
+        "point349",
+        "point350",
+        "point351",
+        "point352",
+        "point353",
+        "point354",
+        "point355",
+        "point356",
+        "point357",
+        "point358",
+        "point359",
+        "point360",
+        "point361",
+        "point362",
+        "point363",
+        "point364",
+        "point365",
+        "point366",
+        "point367",
+        "point368",
+        "point369",
+        "point370",
+        "point371",
+        "point372",
+        "point373",
+        "point374",
+        "point375",
+        "point376",
+        "point377",
+        "point378",
+        "point379",
+        "point380",
+        "point381",
+        "point382",
+        "point383",
+        "point384",
+        "point385",
+        "point386",
+        "point387",
+        "point388",
+        "point389",
+        "point390",
+        "point391",
+        "point392",
+        "point393",
+        "point394",
+        "point395",
+        "point396",
+        "point397",
+        "point398",
+        "point399",
+        "point400"
+      ],
+      "MaxConcurrentTasks": 48,
+      "PoolEvidence": "collect_points ThreadPoolExecutor and test_collect_dispatch.py actual behavior regression. Total384 possible adaptive requests, at most48 active expensive workers.",
+      "LaunchRuntime": "native",
+      "NoMathematicaEvidence": "Python collector invokes the C++ J-IBP binary only.",
+      "LaunchSpacingSeconds": 0,
+      "LaunchMechanism": "Slurm batch allocation with dynamic native process pool; run_case verifies actual CPU affinity can contain the worker budget."
+    },
+    {
+      "Name": "dp-original-de",
+      "Script": "production.sbatch",
+      "Tasks": [
+        "original_de"
+      ],
+      "LaunchRuntime": "native",
+      "NoMathematicaEvidence": "Original Python/C algebra APIs and C++ J numeric callback only; no Wolfram/Blade worker.",
+      "LaunchSpacingSeconds": 0,
+      "LaunchMechanism": "One serial setting, thread environment fixed to1.",
+      "Overrides": {
+        "--dependency": "afterok:12288434"
+      }
+    }
+  ]
+}

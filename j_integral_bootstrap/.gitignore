@@ -9,3 +9,10 @@ results/*period17*.json
 results/dp_full/
 results/dp_cuts/
 results/dp_*/
+
+results/dp_*.json
+pole_route/preconditioned
+results/official_smoke/
+
+results/mi_counts/
+official_route/tianhe/*.log

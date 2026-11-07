@@ -13,7 +13,17 @@ from pathlib import Path
 from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
-os.environ.setdefault('ANALYTIC_BOOTSTRAP_KERNEL_DIR', str(ROOT/'build/kernels'))
+# Full upstream runtime is validated here on its nonpersistent fused branch.
+# Persistent workers currently fail on DP; explicit caller settings win.
+production = ROOT/'build/production'
+required = ('laurent_fused_kernel', 'laurent_higher_fused_kernel',
+            'coordinate_kernel.so', 'learning_rank_kernel')
+if 'ANALYTIC_BOOTSTRAP_KERNEL_DIR' not in os.environ:
+    selected = production if all((production/name).is_file() for name in required) else ROOT/'build/kernels'
+    os.environ['ANALYTIC_BOOTSTRAP_KERNEL_DIR'] = str(selected)
+if Path(os.environ['ANALYTIC_BOOTSTRAP_KERNEL_DIR']).resolve() == production.resolve():
+    os.environ.setdefault('ANALYTIC_BOOTSTRAP_PERSISTENT_PURE', '0')
+    os.environ.setdefault('ANALYTIC_BOOTSTRAP_EARLY_SUPPORT', '0')
 sys.path[:0] = [str(ROOT / '.deps'), str(ROOT / 'extern/analytic_bootstrap-master')]
 from analytic_bootstrap import (BootstrapSpec, RatFunc, RatMat, SampleFitter,
                                 build_reduction_ansatz, build_de_ansatz, build_pl_ansatz)

@@ -1,0 +1,14 @@
+{
+  "ID": "j-upstream-native-library-path-20261107",
+  "Scope": "J-IBP adapter invoking unmodified upstream ProductionFitter, including prospective Tianhe worker",
+  "Observed": "Local six-point upstream production reached sector26 then failed NativeUnavailable; binaries existed under project build/upstream but upstream default searched extern/analytic_bootstrap-master/build/upstream_native.",
+  "Cause": "Adapter omitted ANALYTIC_BOOTSTRAP_UPSTREAM_KERNEL_DIR. Early diagonal-only sectors did not construct a fitter, so the missing path was detected late.",
+  "Evidence": [
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_sixpoint/results/upstream.log",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral_sixpoint/results/upstream_v2.log"
+  ],
+  "Correction": "Set the stable project native-library directory unless user explicitly overrides it; dlopen both libraries before learning or numerical work. Preserve first failure and reuse validated numeric caches.",
+  "GeneralLesson": "When adapting an upstream production entry, validate the actual selected optional runtime libraries before expensive work; compilation alone does not configure the loader.",
+  "Validation": "Both libraries dlopen successfully; restarted actual six-point production passed the previously failing sector and reached sector39. Adapter unit regressions also pass. Complete run is still pending, so this verifies the runtime path fix only.",
+  "Status": "verified"
+}

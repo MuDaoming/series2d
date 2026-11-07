@@ -17,6 +17,7 @@ def joint_fit(ansatz,samples,fixed=None,identity_points=None):
     # Identity certificates need cap+1 distinct elements of Fp, not distinct
     # integer representatives (for example, 0 and p are the same node).
     identity_points=list(dict.fromkeys(int(x)%ansatz.spec.prime for x in (identity_points or [])))
+    entry_started=perf_counter()
     samples=list(samples)
     root=Path(__file__).resolve().parents[1]
     kernels=root/'build/upstream'
@@ -24,11 +25,47 @@ def joint_fit(ansatz,samples,fixed=None,identity_points=None):
     if kernels.is_dir() and ansatz.dimension>=512:
         if str(root) not in sys.path:sys.path.insert(0,str(root))
         from official_route.preflight import preflight
-        precheck=preflight(ansatz,samples,max_points=32,kernel_directory=kernels)
+        precheck=preflight(ansatz,samples,max_points=32,kernel_directory=kernels,return_parameters=True)
         if precheck['status']=='incompatible':
             return dict(compatible=False,dimension=ansatz.dimension,rank=precheck.get('rank',0),
                         parameters=None,preflight=precheck,sample_count=precheck['used_samples'],
                         fixed_entries=len(fixed),total_seconds=precheck['seconds'])
+        parameters=precheck.pop('_parameters',None)
+        if parameters is not None:
+            p=ansatz.spec.prime;cache={};checker=SampleFitter(ansatz)
+            def evaluate(x):
+                if x not in cache:cache[x]=ansatz.evaluate(x,parameters)
+                return cache[x]
+            result=dict(compatible=True,dimension=ansatz.dimension,rank=ansatz.dimension,
+                        parameters=parameters,preflight=precheck,sample_count=len(samples),
+                        fixed_entries=len(fixed),fixed_equation_count=0,equation_rows=0,
+                        route='reuse-upstream-unique-solution')
+            for sample in samples:
+                x,ys=checker._sample(sample)
+                if [v for row in evaluate(x) for v in row]!=ys:
+                    result.update(compatible=False,parameters=None,reason='remaining sample rejects the unique prefix solution');return result
+            counts={k:0 for k in fixed}
+            for (a,j),r in fixed.items():
+                q,rem=poly_divmod(ansatz.spec.envelope.denominators[a][j],r.den,p)
+                if any(rem) or poly_degree(poly_mul(r.num,q,p))>ansatz.spec.envelope.numerator_caps[a][j]:
+                    raise ValueError('known function violates its input envelope')
+            for x in identity_points:
+                needed=[k for k in fixed if counts[k]<=ansatz.spec.envelope.numerator_caps[k[0]][k[1]]]
+                if not needed:break
+                try:predicted=evaluate(x)
+                except ZeroDivisionError:continue
+                for a,j in needed:
+                    try:expected=fixed[a,j].evaluate(x)
+                    except ZeroDivisionError:continue
+                    if predicted[a][j]!=expected:
+                        result.update(compatible=False,parameters=None,reason='known rational identity rejects the unique prefix solution');return result
+                    counts[a,j]+=1
+            if all(counts[k]>ansatz.spec.envelope.numerator_caps[k[0]][k[1]] for k in fixed):
+                if any(ansatz.conditions.residual(ansatz.local_parameters(parameters))):raise ArithmeticError('reused upstream solution violates cap constraints')
+                result.update(fixed_identity_value_checks=sum(counts.values()),total_seconds=perf_counter()-entry_started)
+                return result
+            # Too few distinct nodes for an identity certificate: keep the
+            # original affine joint solver; never accept on incomplete checks.
     p=ansatz.spec.prime;n=ansatz.ambient_parameters;nc=ansatz.shape[1];started=perf_counter()
     equations={i:dict(row) for i,(_,row) in enumerate(sorted(ansatz.conditions.pivots.items()))}
     cap_rank=len(equations);target_masks=[0]*n;degrees=[0]*n

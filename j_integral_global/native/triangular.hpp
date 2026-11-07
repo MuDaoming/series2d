@@ -70,8 +70,28 @@ struct ScalarHermite {
 };
 struct TriangularIntegrator {
  int r;std::vector<std::vector<ZR>>A;Factors factors;std::vector<std::unique_ptr<ScalarHermite>>scalar;EndpointGerm endpoint;Quotient completion;long long steps=0;int completion_count=0;
+ bool atomic_mode=false;long long atomic_hits=0,atomic_misses=0;
+ std::map<std::string,int>factor_ids;std::vector<P>atomic_factors;
+ using AtomKey=std::tuple<int,int,int,int>;std::map<AtomKey,C>atomic_cache;
  TriangularIntegrator(std::vector<std::vector<ZR>>A,int germ_order):r(A.size()),A(std::move(A)),endpoint(this->A,germ_order){for(int i=0;i<r;++i){for(int j=0;j<i;++j)if(!this->A[i][j].zero())throw std::runtime_error("FBI connection not sector triangular");scalar.push_back(std::make_unique<ScalarHermite>(this->A[i][i],factors));}}
- C raw(std::vector<ZR>v){C out;for(int i=0;i<r;++i)if(!v[i].zero()){auto [h,g]=scalar[i]->reduce(std::move(v[i]));scalar[i]->coordinates(h,i,out);axpy(out,endpoint.finite_part(i,g),prime-1);if(!g.zero())for(int j=i+1;j<r;++j)if(!A[i][j].zero())v[j]=v[j]-g*A[i][j];++steps;}return out;}
+ C legacy_raw(std::vector<ZR>v){C out;for(int i=0;i<r;++i)if(!v[i].zero()){auto [h,g]=scalar[i]->reduce(std::move(v[i]));scalar[i]->coordinates(h,i,out);axpy(out,endpoint.finite_part(i,g),prime-1);if(!g.zero())for(int j=i+1;j<r;++j)if(!A[i][j].zero())v[j]=v[j]-g*A[i][j];++steps;}return out;}
+ int factor_id(const P&f){auto key=pkey(f);auto it=factor_ids.find(key);if(it!=factor_ids.end())return it->second;int id=atomic_factors.size();atomic_factors.push_back(f);factor_ids.emplace(std::move(key),id);return id;}
+ const C& atomic_image(int row,int id,int power,int degree){
+  AtomKey key{row,id,power,degree};auto found=atomic_cache.find(key);if(found!=atomic_cache.end()){++atomic_hits;return found->second;}++atomic_misses;
+  P numerator;numerator.set(degree,1);ZR v=power?ZR(numerator,ppow(atomic_factors.at(id),power)):zp(numerator);
+  auto [h,g]=scalar[row]->reduce(std::move(v));C out;scalar[row]->coordinates(h,row,out);axpy(out,endpoint.finite_part(row,g),prime-1);
+  if(!g.zero())for(int j=row+1;j<r;++j)if(!A[row][j].zero())atomic_term(j,g*A[row][j],prime-1,out);
+  return atomic_cache.emplace(std::move(key),std::move(out)).first->second;
+ }
+ void atomic_term(int row,const ZR&v,U coefficient,C&out){
+  if(v.zero()||!coefficient)return;P poly,proper;nmod_poly_divrem(poly.v,proper.v,v.n.v,v.d.v);
+  for(int d=0;d<=poly.deg();++d)if(poly.at(d))axpy(out,atomic_image(row,-1,0,d),mul(coefficient,poly.at(d)));
+  for(auto&[factor,power]:factors.get(v.d)){
+   int id=factor_id(factor);P fp=ppow(factor,power),rest=quotient(v.d,fp);P digits=modp(proper*invert_mod(modp(rest,fp),fp),fp);
+   for(int k=power;k>=1;--k){P hi,lo;nmod_poly_divrem(hi.v,lo.v,digits.v,factor.v);for(int d=0;d<=lo.deg();++d)if(lo.at(d))axpy(out,atomic_image(row,id,k,d),mul(coefficient,lo.at(d)));digits=std::move(hi);}
+  }
+ }
+ C raw(std::vector<ZR>v){if(!atomic_mode)return legacy_raw(std::move(v));C out;for(int i=0;i<r;++i)if(!v[i].zero())atomic_term(i,v[i],1,out);return out;}
  C integrate(std::vector<ZR>v){return completion.reduce(raw(std::move(v)));}
  C boundary(const std::vector<ZR>&v,int end){if(end==1)return {};C out;for(int i=0;i<r;++i)if(!v[i].zero())axpy(out,endpoint.finite_part(i,v[i]),1);return completion.reduce(std::move(out));}
  void impose_analytic_boundary(const std::vector<int>&vanishing_order){
