@@ -20,8 +20,10 @@
 
 native verifier 重新编译时使用构建锁与临时可执行文件，编译成功后原子替换二进制，并记录源码、依赖及二进制 SHA256。不修改任何既有科学验证报告。
 
-## 仍建议补充的输入一致性检查
+## 展开中心一致性缺口已补齐
 
-审查时 `bootstrap_global.py` 的 checkpoint 恢复只检查 prime 与 master 名称，不检查 t0；diagonal 输入也只检查 prime。`bootstrap_reductions.py` 的 checkpoint 同样没有核对 t0。因而若有人复用同名工作目录但改变展开中心，旧 numerator_tau/denominator_tau 可能按新中心解释。最小检查是改变 t0 后重用 checkpoint，应在恢复前拒绝；物理输入变化还应有 family/kinematics 指纹。本次授权的三个已实证修复没有顺带修改这些入口；当前 DP 的输入中心固定，不能据此推断现有科学结果有误。
+后续修复了三个入口：`bootstrap_global.py` 读取 diagonal（包括作为 diagonal 输入的完整 DE）和恢复 DE checkpoint，`bootstrap_reductions.py` 恢复 R checkpoint。此前这些入口只核对 prime/基底，改变 t0 后可能把旧 numerator_tau/denominator_tau 按新中心解释。现在要求显式 t0，并以 `Fraction` 与当前 family/完整 DE 的中心比较；不相等或缺失时在载入系数、写回 checkpoint 前拒绝。两个 partial 输入原有的中心检查继续保留。
+
+新增 `test_coordinate_guards.py`：错中心与缺中心均拒绝且 checkpoint 字节不变；等价的 2/5 与 4/10 正常接受；同时覆盖既有 partial 中心拒绝。6 项新测试及2项完成状态测试全部通过。当前 DP 的中心固定，本修复不转换或重写任何科学结果。不同物理输入但中心相同仍应由 family/kinematics 指纹识别，这不在本次仅修坐标一致性的范围内。
 
 本次回归结果：拟合相关 5 项、完成状态 2 项、native verifier 3 项，共 10 项全部通过；相关 Python 文件 py_compile 通过。两个可执行文件的当前源码/依赖 SHA256、二进制 SHA256 均与 build receipt 一致。日志在 `results/dp_diagnosis/review/{fit,completion,verifier}_regression.log`。

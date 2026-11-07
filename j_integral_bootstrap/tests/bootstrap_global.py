@@ -46,7 +46,8 @@ def main(args):
     diagonal={};learned={}
     for path in args.diagonals:
         d=read(path)
-        if d['prime']!=p:raise ValueError('diagonal field differs')
+        if d['prime']!=p or 't0' not in d or Fraction(d['t0'])!=Fraction(cfg['t0']):
+            raise ValueError('diagonal field/coordinate differs')
         for m,row in d['de'].items():
             for j,v in row['rhs'].items():
                 key=(index[m],index[j]);value=rf(v)
@@ -76,7 +77,9 @@ def main(args):
         temp=checkpoint.with_suffix('.tmp.json');temp.write_text(json.dumps(result,indent=2)+'\n');temp.replace(checkpoint)
     saved=read(checkpoint) if checkpoint.exists() and not args.restart else None
     if saved:
-        if saved['prime']!=p or saved['masters']!=masters:raise ValueError('checkpoint identity differs')
+        if (saved['prime']!=p or saved['masters']!=masters or 't0' not in saved
+                or Fraction(saved['t0'])!=Fraction(cfg['t0'])):
+            raise ValueError('checkpoint field/basis/coordinate differs')
         known=[index[m] for m in saved['known_rows']];reports=saved['blocks']
         for m,row in saved['de'].items():
             for j,v in row['rhs'].items():built[index[m],index[j]]=rf(v)

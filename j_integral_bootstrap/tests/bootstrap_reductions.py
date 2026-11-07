@@ -56,7 +56,9 @@ def main(args):
     done=set(masters);reductions={};reports=[];used_rows={};checkpoint=work/'reduction.json'
     if checkpoint.exists():
         saved=read(checkpoint)
-        if saved['prime']!=p or saved['masters']!=masters:raise ValueError('checkpoint identity differs')
+        if (saved['prime']!=p or saved['masters']!=masters or 't0' not in saved
+                or Fraction(saved['t0'])!=Fraction(connection['t0'])):
+            raise ValueError('checkpoint field/basis/coordinate differs')
         done=set(saved['known_targets']);reports=saved['groups'];used_rows=saved.get('connection_rows_used',{})
         for m,digest in used_rows.items():
             now=hashlib.sha256(json.dumps(connection['de'][m]['rhs'],sort_keys=True).encode()).hexdigest()
