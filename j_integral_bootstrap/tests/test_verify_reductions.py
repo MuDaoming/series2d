@@ -22,4 +22,20 @@ class VerifyReductions(unittest.TestCase):
    point['reduction_values'][zero]={};(d/'point.json').write_text(json.dumps(point))
    del answer['reductions'][zero]
    self.assertIn('missing target',run().stderr)
+ def test_rejects_empty_inputs_and_missing_status(self):
+  with tempfile.TemporaryDirectory() as td:
+   d=Path(td);m='J{1}'
+   answer=dict(status='complete',prime=101,t0='0',masters=[m],tested_objects=[m],reductions={})
+   point=dict(prime=101,t_point=2,masters_at_point=[m],unclosed_derivatives=[],reduction_values={m:{m:1}})
+   manifest=dict(points=[str(d/'point.json')])
+   def run():
+    for name,value in [('answer',answer),('point',point),('manifest',manifest)]:
+     (d/(name+'.json')).write_text(json.dumps(value))
+    return subprocess.run([str(ROOT/'build/verify_reductions'),str(d/'answer.json'),str(d/'manifest.json'),str(d/'check.json')],capture_output=True,text=True)
+   self.assertEqual(run().returncode,0)
+   del answer['status'];self.assertNotEqual(run().returncode,0)
+   answer['status']='complete';manifest['points']=[]
+   self.assertIn('nonempty point manifest',run().stderr)
+   manifest['points']=[str(d/'point.json')];answer['tested_objects']=[]
+   self.assertIn('nonempty tested objects',run().stderr)
 if __name__=='__main__':unittest.main()

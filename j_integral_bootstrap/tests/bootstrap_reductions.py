@@ -197,9 +197,10 @@ def main(args):
             save('need_points_or_envelope',pending_targets=pending,attempts=attempts)
             print(json.dumps(dict(status='need_points_or_envelope',known_targets=len(done),pending=pending)),flush=True)
             failed.append(dict(targets=pending,attempts=attempts));continue
-    if len(done)!=len(targets):
+    missing_targets=[name for name in targets if name not in done]
+    if missing_targets:
         save('need_points_or_envelope' if failed else 'waiting_for_connection',
-             pending_targets=[name for name in targets if name not in done],failed_groups=failed,waiting_for_connection=skipped)
+             pending_targets=missing_targets,failed_groups=failed,waiting_for_connection=skipped)
         return 2
     save('complete',all_reconstructed=True)
     print(json.dumps(dict(status='complete',target_count=len(targets),nonmaster_targets=len(reductions))),flush=True)

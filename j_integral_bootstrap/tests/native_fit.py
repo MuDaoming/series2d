@@ -13,7 +13,10 @@ from analytic_bootstrap.poly import poly_divmod,poly_mul,poly_degree
 
 
 def joint_fit(ansatz,samples,fixed=None,identity_points=None):
-    fixed=fixed or {};identity_points=identity_points or []
+    fixed=fixed or {}
+    # Identity certificates need cap+1 distinct elements of Fp, not distinct
+    # integer representatives (for example, 0 and p are the same node).
+    identity_points=list(dict.fromkeys(int(x)%ansatz.spec.prime for x in (identity_points or [])))
     samples=list(samples)
     root=Path(__file__).resolve().parents[1]
     kernels=root/'build/upstream'

@@ -5,10 +5,12 @@
 int main(int argc,char**argv){try{
  if(argc!=4)throw std::runtime_error("verify_reductions REDUCTION POINT_MANIFEST OUTPUT");
  json answer,manifest;{std::ifstream f(argv[1]);f>>answer;}{std::ifstream f(argv[2]);f>>manifest;}
- if(answer.value("status",std::string("complete"))!="complete")throw std::runtime_error("reduction is incomplete");
+ if(answer.at("status").get<std::string>()!="complete")throw std::runtime_error("reduction is incomplete");
+ if(!manifest.at("points").is_array()||manifest.at("points").empty())throw std::runtime_error("verification requires nonempty point manifest");
  prime=answer.at("prime");nmod_init(&mod,prime);nmod_mpoly_ctx_init(mc,2,ORD_LEX,prime);
  auto masters=answer.at("masters").get<std::vector<std::string>>();int n=masters.size();
  auto targets=answer.at("tested_objects").get<std::vector<std::string>>();
+ if(targets.empty())throw std::runtime_error("verification requires nonempty tested objects");
  auto objects=targets;for(auto &m:masters)if(std::find(objects.begin(),objects.end(),m)==objects.end())objects.push_back(m);
  std::map<std::string,int>index;for(int i=0;i<n;++i)index[masters[i]]=i;
  for(auto &name:targets)if(!index.count(name)&&!answer.at("reductions").contains(name))throw std::runtime_error("missing target reduction: "+name);

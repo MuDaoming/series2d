@@ -5,7 +5,8 @@
 int main(int argc,char**argv){try{
  if(argc!=4)throw std::runtime_error("verify_connection CONNECTION POINT_MANIFEST OUTPUT");
  json answer,manifest;{std::ifstream f(argv[1]);f>>answer;}{std::ifstream f(argv[2]);f>>manifest;}
- if(answer.value("status",std::string("complete"))!="complete")throw std::runtime_error("connection is incomplete");
+ if(answer.at("status").get<std::string>()!="complete")throw std::runtime_error("connection is incomplete");
+ if(!manifest.at("points").is_array()||manifest.at("points").empty())throw std::runtime_error("verification requires nonempty point manifest");
  prime=answer.at("prime");nmod_init(&mod,prime);nmod_mpoly_ctx_init(mc,2,ORD_LEX,prime);
  auto masters=answer.at("masters").get<std::vector<std::string>>();int n=masters.size();
  std::map<std::string,int>index;for(int i=0;i<n;++i)index[masters[i]]=i;
