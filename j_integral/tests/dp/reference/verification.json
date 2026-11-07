@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "all_rational_entries_equal": true,
+  "masters": 496,
+  "blocks": 149,
+  "matrix_entries_including_zeros": 246016,
+  "explicit_union_entries": 28234,
+  "training_distinct_points": 16,
+  "training_plus_sector_checks_distinct_points": 18,
+  "final_holdout_points": 2,
+  "total_distinct_points": 20,
+  "actual_IBP_invocations": 20,
+  "failed_IBP_invocations": 0,
+  "IBP_seconds_sum": 1040.2349300393835,
+  "IBP_seconds_min": 47.42772682849318,
+  "IBP_seconds_max": 57.49041475355625,
+  "learn": {
+    "phases_seconds": {
+      "anchor": 644.2656544065103
+    },
+    "total_seconds": 652.6795465378091,
+    "note": "total includes input/output and uncovered orchestration; phases are disjoint"
+  },
+  "solve": {
+    "phases_seconds": {
+      "cut": 8.249508523382246,
+      "fit": 133.5099106086418,
+      "sampler_prepare": 6.43141530547291,
+      "numeric_samples": 1056.7470665350556,
+      "holdout": 0.7144383396953344,
+      "assembly": 8.044080967083573,
+      "transport_and_compile": 1.3954396806657314,
+      "ansatz": 69.16969071887434
+    },
+    "total_seconds": 1311.9717915784568,
+    "note": "total includes input/output and uncovered orchestration; phases are disjoint"
+  },
+  "wall_seconds": 2042.3555648326874,
+  "sampling": {
+    "max_samples": 512,
+    "holdouts": 2,
+    "shared_de_samples": true,
+    "global_holdouts": 2,
+    "fit_backend": "stream"
+  },
+  "physical_export_equals_reference": true
+}

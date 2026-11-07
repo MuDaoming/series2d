@@ -1,0 +1,28 @@
+{
+  "dp": {
+    "masters": 496,
+    "blocks": 149,
+    "actual_IBP_invocations": 20,
+    "failed_IBP_invocations": 0,
+    "training_distinct_points": 16,
+    "total_distinct_points": 20,
+    "IBP_seconds_sum": 1040.2349300393835,
+    "wall_seconds": 2042.3555648326874,
+    "physical_export_equals_reference": true,
+    "learn_seconds": 652.6795465378091,
+    "solve_seconds": 1311.9717915784568
+  },
+  "e6": {
+    "masters": 79,
+    "blocks": 47,
+    "actual_IBP_invocations": 10,
+    "failed_IBP_invocations": 0,
+    "training_distinct_points": 6,
+    "total_distinct_points": 10,
+    "IBP_seconds_sum": 10.120862853713334,
+    "wall_seconds": 23.69955062866211,
+    "physical_export_equals_reference": true,
+    "learn_seconds": 5.003290727734566,
+    "solve_seconds": 18.06623276975006
+  }
+}

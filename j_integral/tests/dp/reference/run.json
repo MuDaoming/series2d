@@ -1,0 +1,37 @@
+{
+  "start": 1794063074.0470042,
+  "host": "mudaoming-System-Product-Name",
+  "pid": 2883380,
+  "case": "dp",
+  "python": "/usr/bin/python",
+  "AB_package": "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap",
+  "input_and_code_sha256": {
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/provenance.json": "15567e9c6fd26becdc7818cc62353ee6bfbdb6a7e9188e19f91a49b1e2700021",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/anchor.json.gz": "77152605d46d178865a8338e19dadb1fb0ef49bd043dd62d75e38990b855f575",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/setting.json": "69276b8219852d8e05eb604f51d6e0bfb332e0ceb097c3052f042b9545696fbf",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/definition.json": "f1f8afe4d03f69aa90e936cc5d50a36b3c8b051395d855619851990a9d452256",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/family_request.json": "68ece2e2a76bde288adfa5b533e753510eec06d86564ce38cb24990c005b8c7a",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/basis.json": "7cffb9ab268a823c90fd26e457dda7b355e2abb6ecb79e214fea04d9a43dd792",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/diagonals.json": "fcd13d2d93b9e3ae8b60d17a0a3845b73c11236a1436d000060eb94f229a8dbe",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/dp/input/normalization.json": "c5e7c810d7b7e2d5f3c5e37f448d03069d603122054048d83354277334cc7d15",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/backend_worker.py": "e17d6d17e580dce4eda3aab392037c42712130b680cab2614530b01f9905da5b",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/src/IBP/build/j-ibp": "8369173c7c97ed4cba165a2afc9fd0f4e4a7812456191ef22aea5c3b41bc0b54",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap/upstream/__main__.py": "53f35d6f901b3eeb4be2b98bd68de9b7e2792f2c5dccb52c25df99a0f60b16a7",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap/upstream/pipeline.py": "3610873d8ef6cdb68d37ba189ce586ed6357d6b3cc3333e2589c3415e1c98012",
+    "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap/upstream/backends.py": "d528ab1dc7ea7a5a4d6b2ab32e39da38781f589b367918674b5336ed0d6de0da"
+  },
+  "environment": {
+    "ANALYTIC_BOOTSTRAP_EARLY_SUPPORT": "0",
+    "ANALYTIC_BOOTSTRAP_PERSISTENT_PURE": "0",
+    "OPENBLAS_NUM_THREADS": "1",
+    "ANALYTIC_BOOTSTRAP_UPSTREAM_KERNEL_DIR": "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/../archive/j_integral_bootstrap/build/upstream",
+    "ANALYTIC_BOOTSTRAP_KERNEL_DIR": "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/tests/../archive/j_integral_bootstrap/build/production",
+    "ANALYTIC_BOOTSTRAP_FIT_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "entry": "python -m analytic_bootstrap.upstream learn; python -m analytic_bootstrap.upstream solve-de",
+  "new_numeric_cache": true,
+  "end": 1794065116.4165928,
+  "scientific_complete": true
+}

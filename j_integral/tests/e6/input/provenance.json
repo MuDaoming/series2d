@@ -1,0 +1,20 @@
+{
+  "reference_source": "j_integral_sixpoint/reference/connection_mod1000003.json",
+  "reference_sha256": "fd219dfb59c23539e9ebba53bd0ced8e7bd8c8ab041d90c26f105f29623c57d7",
+  "family_source": "j_integral_sixpoint/inputs/family.json",
+  "physical_master_count": 79,
+  "block_count": 47,
+  "nonzero_physical_DE": 1164,
+  "FBI_branches": [
+    2,
+    3,
+    2
+  ],
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {}
+  },
+  "normalization": "uniform gauge only; no known off-diagonal coefficient enters numeric backend"
+}

@@ -1,0 +1,3669 @@
+{
+  "family": {
+    "name": "dp_J",
+    "normalization": "M=[t(t-1)]^3 J; tau=t-2/5",
+    "basis_identity": "b995a327f2dcfebbd9943eb38bb0aed62bd1544d9932e4458709cf566ea4afbb"
+  },
+  "variable": "tau",
+  "sectors": [
+    {
+      "id": "block0",
+      "masters": [
+        "Bz0{0,0,1,1,0,0,1,0}"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "block1",
+      "masters": [
+        "Bz0{0,1,0,0,0,1,0,1}"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "block4",
+      "masters": [
+        "Bz0{0,1,1,0,1,0,0,1}"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "block9",
+      "masters": [
+        "Bz0{1,1,1,0,0,1,1,0}"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "block2",
+      "masters": [
+        "Bz0{0,0,1,1,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block3",
+      "masters": [
+        "Bz0{0,1,0,0,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block5",
+      "masters": [
+        "Bz0{0,1,1,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block15",
+      "masters": [
+        "J{0,0,1,0,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block16",
+      "masters": [
+        "J{0,0,1,0,0,1,1,0}",
+        "J{0,0,1,0,0,1,2,0}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block17",
+      "masters": [
+        "J{0,0,1,0,1,0,0,1}",
+        "J{0,0,1,0,1,0,0,2}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block18",
+      "masters": [
+        "J{0,0,1,0,1,0,1,0}",
+        "J{0,0,1,0,1,0,2,0}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block19",
+      "masters": [
+        "J{0,0,1,1,0,0,0,1}",
+        "J{0,0,1,1,0,0,0,2}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block20",
+      "masters": [
+        "J{0,0,1,1,0,0,1,0}",
+        "J{0,0,1,1,0,0,2,0}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block21",
+      "masters": [
+        "J{0,1,0,1,0,0,0,1}",
+        "J{0,1,0,1,0,0,0,2}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block22",
+      "masters": [
+        "J{1,0,0,0,0,1,1,0}",
+        "J{1,0,0,0,0,1,2,0}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block23",
+      "masters": [
+        "J{1,0,0,0,1,0,0,1}",
+        "J{1,0,0,0,1,0,0,2}"
+      ],
+      "depends_on": [
+        "block1"
+      ]
+    },
+    {
+      "id": "block24",
+      "masters": [
+        "J{1,0,0,1,0,0,0,1}",
+        "J{1,0,0,1,0,0,0,2}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block25",
+      "masters": [
+        "J{1,0,0,1,0,0,1,0}",
+        "J{1,0,0,1,0,0,2,0}"
+      ],
+      "depends_on": [
+        "block0"
+      ]
+    },
+    {
+      "id": "block6",
+      "masters": [
+        "Bz0{0,0,1,1,1,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block2",
+        "block3"
+      ]
+    },
+    {
+      "id": "block7",
+      "masters": [
+        "Bz0{0,1,1,0,1,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block3",
+        "block4"
+      ]
+    },
+    {
+      "id": "block8",
+      "masters": [
+        "Bz0{0,1,1,1,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block5"
+      ]
+    },
+    {
+      "id": "block10",
+      "masters": [
+        "Bz0{1,1,1,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block5"
+      ]
+    },
+    {
+      "id": "block26",
+      "masters": [
+        "J{0,0,1,0,0,1,1,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16"
+      ]
+    },
+    {
+      "id": "block27",
+      "masters": [
+        "J{0,0,1,0,1,0,1,1}",
+        "J{0,0,1,0,1,0,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block17",
+        "block18"
+      ]
+    },
+    {
+      "id": "block28",
+      "masters": [
+        "J{0,0,1,0,1,1,0,1}",
+        "J{0,0,1,0,1,1,0,2}",
+        "J{0,0,1,0,1,2,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block3"
+      ]
+    },
+    {
+      "id": "block29",
+      "masters": [
+        "J{0,0,1,0,1,1,1,0}",
+        "J{0,0,1,0,1,1,2,0}",
+        "J{0,0,1,0,1,2,1,0}",
+        "J{0,0,1,0,2,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block18",
+        "block3"
+      ]
+    },
+    {
+      "id": "block30",
+      "masters": [
+        "J{0,0,1,1,0,0,1,1}",
+        "J{0,0,1,1,0,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block20"
+      ]
+    },
+    {
+      "id": "block31",
+      "masters": [
+        "J{0,0,1,1,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block2"
+      ]
+    },
+    {
+      "id": "block32",
+      "masters": [
+        "J{0,0,1,1,0,1,1,0}",
+        "J{0,0,1,1,0,1,2,0}",
+        "J{0,0,1,1,0,2,1,0}",
+        "J{0,0,1,2,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block2",
+        "block20"
+      ]
+    },
+    {
+      "id": "block33",
+      "masters": [
+        "J{0,0,1,1,1,0,0,1}",
+        "J{0,0,1,1,1,0,0,2}",
+        "J{0,0,1,1,2,0,0,1}",
+        "J{0,0,1,2,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block17",
+        "block19",
+        "block2"
+      ]
+    },
+    {
+      "id": "block34",
+      "masters": [
+        "J{0,0,1,1,1,0,1,0}",
+        "J{0,0,1,1,1,0,2,0}",
+        "J{0,0,1,1,2,0,1,0}",
+        "J{0,0,1,2,1,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block18",
+        "block2",
+        "block20"
+      ]
+    },
+    {
+      "id": "block35",
+      "masters": [
+        "J{0,1,0,1,0,0,1,1}",
+        "J{0,1,0,1,0,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block21"
+      ]
+    },
+    {
+      "id": "block36",
+      "masters": [
+        "J{0,1,0,1,0,1,0,1}",
+        "J{0,1,0,1,0,1,0,2}",
+        "J{0,1,0,1,0,2,0,1}",
+        "J{0,1,0,2,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block18",
+        "block2",
+        "block21"
+      ]
+    },
+    {
+      "id": "block37",
+      "masters": [
+        "J{0,1,0,1,1,0,0,1}",
+        "J{0,1,0,1,1,0,0,2}",
+        "J{0,1,0,1,2,0,0,1}",
+        "J{0,1,0,2,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block2",
+        "block21"
+      ]
+    },
+    {
+      "id": "block38",
+      "masters": [
+        "J{0,1,1,0,0,1,0,1}",
+        "J{0,1,1,0,0,1,0,2}",
+        "J{0,1,1,0,0,2,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block18",
+        "block4"
+      ]
+    },
+    {
+      "id": "block39",
+      "masters": [
+        "J{0,1,1,0,0,1,1,0}",
+        "J{0,1,1,0,0,1,2,0}",
+        "J{0,1,1,0,0,2,1,0}",
+        "J{0,1,2,0,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block17",
+        "block4"
+      ]
+    },
+    {
+      "id": "block40",
+      "masters": [
+        "J{0,1,1,1,0,0,0,1}",
+        "J{0,1,1,1,0,0,0,2}",
+        "J{0,1,1,2,0,0,0,1}",
+        "J{0,1,2,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block21",
+        "block5"
+      ]
+    },
+    {
+      "id": "block41",
+      "masters": [
+        "J{0,1,1,1,0,0,1,0}",
+        "J{0,1,1,1,0,0,2,0}",
+        "J{0,1,1,2,0,0,1,0}",
+        "J{0,1,2,1,0,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block20",
+        "block5"
+      ]
+    },
+    {
+      "id": "block42",
+      "masters": [
+        "J{1,0,0,0,0,1,1,1}",
+        "J{1,0,0,0,0,1,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block22"
+      ]
+    },
+    {
+      "id": "block43",
+      "masters": [
+        "J{1,0,0,0,1,0,1,1}",
+        "J{1,0,0,0,1,0,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block23"
+      ]
+    },
+    {
+      "id": "block44",
+      "masters": [
+        "J{1,0,0,0,1,1,0,1}",
+        "J{1,0,0,0,1,1,0,2}",
+        "J{1,0,0,0,1,2,0,1}",
+        "J{1,0,0,0,2,1,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block23",
+        "block3"
+      ]
+    },
+    {
+      "id": "block45",
+      "masters": [
+        "J{1,0,0,0,1,1,1,0}",
+        "J{1,0,0,0,1,1,2,0}",
+        "J{1,0,0,0,1,2,1,0}",
+        "J{1,0,0,0,2,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block22",
+        "block3"
+      ]
+    },
+    {
+      "id": "block46",
+      "masters": [
+        "J{1,0,0,1,0,0,1,1}",
+        "J{1,0,0,1,0,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block24",
+        "block25"
+      ]
+    },
+    {
+      "id": "block47",
+      "masters": [
+        "J{1,0,0,1,0,1,0,1}",
+        "J{1,0,0,1,0,1,0,2}",
+        "J{1,0,0,1,0,2,0,1}",
+        "J{1,0,0,2,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block24"
+      ]
+    },
+    {
+      "id": "block48",
+      "masters": [
+        "J{1,0,0,1,0,1,1,0}",
+        "J{1,0,0,1,0,1,2,0}",
+        "J{1,0,0,1,0,2,1,0}",
+        "J{1,0,0,2,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block2",
+        "block22",
+        "block25"
+      ]
+    },
+    {
+      "id": "block49",
+      "masters": [
+        "J{1,0,0,1,1,0,0,1}",
+        "J{1,0,0,1,1,0,0,2}",
+        "J{1,0,0,1,2,0,0,1}",
+        "J{1,0,0,2,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block2",
+        "block23",
+        "block24"
+      ]
+    },
+    {
+      "id": "block50",
+      "masters": [
+        "J{1,0,0,1,1,0,1,0}",
+        "J{1,0,0,1,1,0,2,0}",
+        "J{1,0,0,1,2,0,1,0}",
+        "J{1,0,0,2,1,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block25"
+      ]
+    },
+    {
+      "id": "block51",
+      "masters": [
+        "J{1,0,1,0,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block22"
+      ]
+    },
+    {
+      "id": "block52",
+      "masters": [
+        "J{1,0,1,0,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block17",
+        "block23"
+      ]
+    },
+    {
+      "id": "block53",
+      "masters": [
+        "J{1,0,1,0,1,0,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block18"
+      ]
+    },
+    {
+      "id": "block54",
+      "masters": [
+        "J{1,0,1,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block24"
+      ]
+    },
+    {
+      "id": "block55",
+      "masters": [
+        "J{1,0,1,1,0,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block20",
+        "block25"
+      ]
+    },
+    {
+      "id": "block56",
+      "masters": [
+        "J{1,1,0,0,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block17",
+        "block22"
+      ]
+    },
+    {
+      "id": "block57",
+      "masters": [
+        "J{1,1,0,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block21",
+        "block24"
+      ]
+    },
+    {
+      "id": "block58",
+      "masters": [
+        "J{1,1,0,1,0,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block25"
+      ]
+    },
+    {
+      "id": "block11",
+      "masters": [
+        "Bz0{0,1,1,1,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block2",
+        "block3",
+        "block4",
+        "block5",
+        "block6",
+        "block7",
+        "block8"
+      ]
+    },
+    {
+      "id": "block12",
+      "masters": [
+        "Bz0{1,1,1,0,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block3",
+        "block4",
+        "block7",
+        "block9"
+      ]
+    },
+    {
+      "id": "block13",
+      "masters": [
+        "Bz0{1,1,1,1,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block10",
+        "block5"
+      ]
+    },
+    {
+      "id": "block59",
+      "masters": [
+        "J{0,0,1,0,1,1,1,1}",
+        "J{0,0,1,0,1,1,1,2}",
+        "J{0,0,1,0,1,1,2,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3"
+      ]
+    },
+    {
+      "id": "block60",
+      "masters": [
+        "J{0,0,1,1,0,1,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block20",
+        "block30",
+        "block32"
+      ]
+    },
+    {
+      "id": "block61",
+      "masters": [
+        "J{0,0,1,1,1,0,1,1}",
+        "J{0,0,1,1,1,0,1,2}",
+        "J{0,0,1,1,1,0,2,1}",
+        "J{0,0,1,1,2,0,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block27",
+        "block30",
+        "block33",
+        "block34"
+      ]
+    },
+    {
+      "id": "block62",
+      "masters": [
+        "J{0,0,1,1,1,1,0,1}",
+        "J{0,0,1,1,1,1,0,2}",
+        "J{0,0,1,1,1,2,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block17",
+        "block19",
+        "block2",
+        "block28",
+        "block3",
+        "block31",
+        "block33",
+        "block6"
+      ]
+    },
+    {
+      "id": "block63",
+      "masters": [
+        "J{0,0,1,1,1,1,1,0}",
+        "J{0,0,1,1,1,1,2,0}",
+        "J{0,0,1,1,1,2,1,0}",
+        "J{0,0,1,1,2,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block18",
+        "block2",
+        "block20",
+        "block29",
+        "block3",
+        "block32",
+        "block34",
+        "block6"
+      ]
+    },
+    {
+      "id": "block64",
+      "masters": [
+        "J{0,1,0,1,0,1,1,1}",
+        "J{0,1,0,1,0,1,1,2}",
+        "J{0,1,0,1,0,1,2,1}",
+        "J{0,1,0,1,0,2,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block27",
+        "block33",
+        "block35",
+        "block36"
+      ]
+    },
+    {
+      "id": "block65",
+      "masters": [
+        "J{0,1,0,1,1,0,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block35",
+        "block37"
+      ]
+    },
+    {
+      "id": "block66",
+      "masters": [
+        "J{0,1,0,1,1,1,0,1}",
+        "J{0,1,0,1,1,1,0,2}",
+        "J{0,1,0,1,1,2,0,1}",
+        "J{0,1,0,1,2,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block18",
+        "block2",
+        "block21",
+        "block29",
+        "block3",
+        "block36",
+        "block37",
+        "block6"
+      ]
+    },
+    {
+      "id": "block67",
+      "masters": [
+        "J{0,1,1,0,0,1,1,1}",
+        "J{0,1,1,0,0,1,1,2}",
+        "J{0,1,1,0,0,1,2,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block26",
+        "block27",
+        "block38",
+        "block39",
+        "block4"
+      ]
+    },
+    {
+      "id": "block68",
+      "masters": [
+        "J{0,1,1,0,1,1,0,1}",
+        "J{0,1,1,0,1,1,0,2}",
+        "J{0,1,1,0,1,2,0,1}",
+        "J{0,1,1,0,1,2,1,0}",
+        "J{0,1,1,0,1,1,0,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block28",
+        "block29",
+        "block3",
+        "block38",
+        "block39",
+        "block4",
+        "block7"
+      ]
+    },
+    {
+      "id": "block69",
+      "masters": [
+        "J{0,1,1,1,0,0,1,1}",
+        "J{0,1,1,1,0,0,1,2}",
+        "J{0,1,1,1,0,0,2,1}",
+        "J{0,1,1,2,0,0,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block20",
+        "block21",
+        "block30",
+        "block35",
+        "block40",
+        "block41",
+        "block5"
+      ]
+    },
+    {
+      "id": "block70",
+      "masters": [
+        "J{0,1,1,1,0,1,0,1}",
+        "J{0,1,1,1,0,1,0,2}",
+        "J{0,1,1,1,0,2,0,1}",
+        "J{0,1,1,2,0,1,0,1}",
+        "J{0,1,1,1,0,1,0,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block31",
+        "block36",
+        "block38",
+        "block4",
+        "block40",
+        "block5",
+        "block8"
+      ]
+    },
+    {
+      "id": "block71",
+      "masters": [
+        "J{0,1,1,1,0,1,1,0}",
+        "J{0,1,1,1,0,1,2,0}",
+        "J{0,1,1,1,0,2,1,0}",
+        "J{0,1,1,2,0,1,1,0}",
+        "J{0,1,2,1,0,1,1,0}",
+        "J{0,1,1,1,0,1,3,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block17",
+        "block19",
+        "block2",
+        "block20",
+        "block32",
+        "block33",
+        "block39",
+        "block4",
+        "block41",
+        "block5",
+        "block8"
+      ]
+    },
+    {
+      "id": "block72",
+      "masters": [
+        "J{0,1,1,1,1,0,0,1}",
+        "J{0,1,1,1,1,0,0,2}",
+        "J{0,1,1,1,2,0,0,1}",
+        "J{0,1,1,2,1,0,0,1}",
+        "J{0,1,2,1,1,0,0,1}",
+        "J{0,1,1,1,1,0,0,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block17",
+        "block19",
+        "block2",
+        "block21",
+        "block33",
+        "block37",
+        "block39",
+        "block4",
+        "block40",
+        "block5",
+        "block8"
+      ]
+    },
+    {
+      "id": "block73",
+      "masters": [
+        "J{0,1,1,1,1,0,1,0}",
+        "J{0,1,1,1,1,0,2,0}",
+        "J{0,1,1,1,2,0,1,0}",
+        "J{0,1,1,2,1,0,1,0}",
+        "J{0,1,1,1,1,0,3,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block31",
+        "block34",
+        "block38",
+        "block4",
+        "block41",
+        "block5",
+        "block8"
+      ]
+    },
+    {
+      "id": "block74",
+      "masters": [
+        "J{1,0,0,0,1,1,1,1}",
+        "J{1,0,0,0,1,1,1,2}",
+        "J{1,0,0,0,1,1,2,1}",
+        "J{1,0,0,0,1,2,1,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block22",
+        "block23",
+        "block3",
+        "block42",
+        "block43",
+        "block44",
+        "block45"
+      ]
+    },
+    {
+      "id": "block75",
+      "masters": [
+        "J{1,0,0,1,0,1,1,1}",
+        "J{1,0,0,1,0,1,1,2}",
+        "J{1,0,0,1,0,1,2,1}",
+        "J{1,0,0,1,0,2,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block22",
+        "block24",
+        "block25",
+        "block42",
+        "block46",
+        "block47",
+        "block48"
+      ]
+    },
+    {
+      "id": "block76",
+      "masters": [
+        "J{1,0,0,1,1,0,1,1}",
+        "J{1,0,0,1,1,0,1,2}",
+        "J{1,0,0,1,1,0,2,1}",
+        "J{1,0,0,1,2,0,1,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block23",
+        "block24",
+        "block25",
+        "block43",
+        "block46",
+        "block49",
+        "block50"
+      ]
+    },
+    {
+      "id": "block77",
+      "masters": [
+        "J{1,0,0,1,1,1,0,1}",
+        "J{1,0,0,1,1,1,0,2}",
+        "J{1,0,0,1,1,2,0,1}",
+        "J{1,0,0,1,2,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block23",
+        "block24",
+        "block3",
+        "block44",
+        "block47",
+        "block49",
+        "block6"
+      ]
+    },
+    {
+      "id": "block78",
+      "masters": [
+        "J{1,0,0,1,1,1,1,0}",
+        "J{1,0,0,1,1,1,2,0}",
+        "J{1,0,0,1,1,2,1,0}",
+        "J{1,0,0,1,2,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block22",
+        "block25",
+        "block3",
+        "block45",
+        "block48",
+        "block50",
+        "block6"
+      ]
+    },
+    {
+      "id": "block79",
+      "masters": [
+        "J{1,0,1,0,0,1,1,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block22",
+        "block42",
+        "block51"
+      ]
+    },
+    {
+      "id": "block80",
+      "masters": [
+        "J{1,0,1,0,1,0,1,1}",
+        "J{1,0,1,0,1,0,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block18",
+        "block23",
+        "block27",
+        "block43",
+        "block52",
+        "block53"
+      ]
+    },
+    {
+      "id": "block81",
+      "masters": [
+        "J{1,0,1,0,1,1,0,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block23",
+        "block28",
+        "block3",
+        "block44"
+      ]
+    },
+    {
+      "id": "block83",
+      "masters": [
+        "J{1,0,1,0,1,1,1,0}",
+        "J{1,0,1,0,1,1,2,0}",
+        "J{1,0,1,0,1,2,1,0}",
+        "J{1,0,1,0,2,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block18",
+        "block22",
+        "block29",
+        "block3",
+        "block45",
+        "block51",
+        "block53"
+      ]
+    },
+    {
+      "id": "block84",
+      "masters": [
+        "J{1,0,1,1,0,0,1,1}",
+        "J{1,0,1,1,0,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block20",
+        "block24",
+        "block25",
+        "block30",
+        "block46",
+        "block54",
+        "block55"
+      ]
+    },
+    {
+      "id": "block85",
+      "masters": [
+        "J{1,0,1,1,0,1,0,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block19",
+        "block2",
+        "block24",
+        "block47"
+      ]
+    },
+    {
+      "id": "block87",
+      "masters": [
+        "J{1,0,1,1,0,1,1,0}",
+        "J{1,0,1,1,0,1,2,0}",
+        "J{1,0,1,1,0,2,1,0}",
+        "J{1,0,1,2,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block2",
+        "block20",
+        "block22",
+        "block25",
+        "block32",
+        "block48",
+        "block51",
+        "block55"
+      ]
+    },
+    {
+      "id": "block88",
+      "masters": [
+        "J{1,0,1,1,1,0,0,1}",
+        "J{1,0,1,1,1,0,0,2}",
+        "J{1,0,1,1,2,0,0,1}",
+        "J{1,0,1,2,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block17",
+        "block19",
+        "block2",
+        "block23",
+        "block24",
+        "block33",
+        "block49",
+        "block52",
+        "block54"
+      ]
+    },
+    {
+      "id": "block89",
+      "masters": [
+        "J{1,0,1,1,1,0,1,0}",
+        "J{1,0,1,1,1,0,2,0}",
+        "J{1,0,1,1,2,0,1,0}",
+        "J{1,0,1,2,1,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block18",
+        "block2",
+        "block20",
+        "block25",
+        "block34",
+        "block50",
+        "block53",
+        "block55"
+      ]
+    },
+    {
+      "id": "block90",
+      "masters": [
+        "J{1,1,0,0,0,1,1,1}",
+        "J{1,1,0,0,0,1,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block18",
+        "block22",
+        "block27",
+        "block42",
+        "block53",
+        "block56"
+      ]
+    },
+    {
+      "id": "block91",
+      "masters": [
+        "J{1,1,0,0,1,0,1,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block23",
+        "block43",
+        "block51",
+        "block52",
+        "block56"
+      ]
+    },
+    {
+      "id": "block92",
+      "masters": [
+        "J{1,1,0,0,1,2,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block22",
+        "block28",
+        "block3",
+        "block45",
+        "block56"
+      ]
+    },
+    {
+      "id": "block94",
+      "masters": [
+        "J{1,1,0,0,1,1,2,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block22",
+        "block28",
+        "block3",
+        "block45"
+      ]
+    },
+    {
+      "id": "block96",
+      "masters": [
+        "J{1,1,0,1,0,0,1,1}",
+        "J{1,1,0,1,0,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block21",
+        "block24",
+        "block25",
+        "block35",
+        "block46",
+        "block57",
+        "block58"
+      ]
+    },
+    {
+      "id": "block97",
+      "masters": [
+        "J{1,1,0,1,0,1,0,1}",
+        "J{1,1,0,1,0,1,0,2}",
+        "J{1,1,0,1,0,2,0,1}",
+        "J{1,1,0,2,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block18",
+        "block2",
+        "block21",
+        "block24",
+        "block36",
+        "block47",
+        "block53",
+        "block57"
+      ]
+    },
+    {
+      "id": "block98",
+      "masters": [
+        "J{1,1,0,1,0,1,1,0}",
+        "J{1,1,0,1,0,1,2,0}",
+        "J{1,1,0,1,0,2,1,0}",
+        "J{1,1,0,2,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block17",
+        "block19",
+        "block2",
+        "block22",
+        "block25",
+        "block33",
+        "block48",
+        "block56",
+        "block58"
+      ]
+    },
+    {
+      "id": "block99",
+      "masters": [
+        "J{1,1,0,1,1,0,0,1}",
+        "J{1,1,0,1,1,0,0,2}",
+        "J{1,1,0,1,2,0,0,1}",
+        "J{1,1,0,2,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block2",
+        "block21",
+        "block23",
+        "block24",
+        "block37",
+        "block49",
+        "block51",
+        "block52",
+        "block56",
+        "block57"
+      ]
+    },
+    {
+      "id": "block100",
+      "masters": [
+        "J{1,1,0,1,1,0,2,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block19",
+        "block2",
+        "block25",
+        "block50"
+      ]
+    },
+    {
+      "id": "block102",
+      "masters": [
+        "J{1,1,1,0,0,1,0,1}",
+        "J{1,1,1,0,0,1,0,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block18",
+        "block38",
+        "block4",
+        "block53",
+        "block9"
+      ]
+    },
+    {
+      "id": "block103",
+      "masters": [
+        "J{1,1,1,0,0,1,1,0}",
+        "J{1,1,1,0,0,1,2,0}",
+        "J{1,1,1,0,0,2,1,0}",
+        "J{1,1,2,0,0,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block17",
+        "block22",
+        "block39",
+        "block4",
+        "block51",
+        "block56",
+        "block9"
+      ]
+    },
+    {
+      "id": "block104",
+      "masters": [
+        "J{1,1,1,0,1,0,0,1}",
+        "J{1,1,1,0,1,0,0,2}",
+        "J{1,1,1,0,2,0,0,1}",
+        "J{1,1,2,0,1,0,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block16",
+        "block17",
+        "block23",
+        "block39",
+        "block4",
+        "block51",
+        "block52",
+        "block56",
+        "block9"
+      ]
+    },
+    {
+      "id": "block105",
+      "masters": [
+        "J{1,1,1,1,0,0,0,1}",
+        "J{1,1,1,1,0,0,0,2}",
+        "J{1,1,1,2,0,0,0,1}",
+        "J{1,1,2,1,0,0,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block10",
+        "block19",
+        "block21",
+        "block24",
+        "block40",
+        "block5",
+        "block54",
+        "block57"
+      ]
+    },
+    {
+      "id": "block106",
+      "masters": [
+        "J{1,1,1,1,0,0,1,0}",
+        "J{1,1,1,1,0,0,2,0}",
+        "J{1,1,1,2,0,0,1,0}",
+        "J{1,1,2,1,0,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block10",
+        "block19",
+        "block20",
+        "block25",
+        "block41",
+        "block5",
+        "block55",
+        "block58"
+      ]
+    },
+    {
+      "id": "block108",
+      "masters": [
+        "J{0,0,1,1,0,1,2,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block19",
+        "block2",
+        "block20",
+        "block30",
+        "block32"
+      ]
+    },
+    {
+      "id": "block110",
+      "masters": [
+        "J{0,1,0,1,1,0,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block16",
+        "block19",
+        "block2",
+        "block21",
+        "block35",
+        "block37"
+      ]
+    },
+    {
+      "id": "block14",
+      "masters": [
+        "Bz0{1,1,1,1,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block11",
+        "block12",
+        "block13",
+        "block2",
+        "block3",
+        "block4",
+        "block5",
+        "block6",
+        "block7",
+        "block8",
+        "block9"
+      ]
+    },
+    {
+      "id": "block82",
+      "masters": [
+        "J{1,0,1,0,1,1,0,1}",
+        "J{1,0,1,0,1,2,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block17",
+        "block23",
+        "block28",
+        "block3",
+        "block44",
+        "block52",
+        "block81"
+      ]
+    },
+    {
+      "id": "block86",
+      "masters": [
+        "J{1,0,1,1,0,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block19",
+        "block24",
+        "block47",
+        "block54",
+        "block85"
+      ]
+    },
+    {
+      "id": "block95",
+      "masters": [
+        "J{1,1,0,0,1,1,1,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block17",
+        "block22",
+        "block28",
+        "block45",
+        "block56",
+        "block92",
+        "block94"
+      ]
+    },
+    {
+      "id": "block101",
+      "masters": [
+        "J{1,1,0,1,1,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block100",
+        "block15",
+        "block19",
+        "block25",
+        "block50",
+        "block58"
+      ]
+    },
+    {
+      "id": "block107",
+      "masters": [
+        "J{0,0,1,1,0,1,1,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block20",
+        "block30",
+        "block32",
+        "block60"
+      ]
+    },
+    {
+      "id": "block111",
+      "masters": [
+        "J{0,1,0,1,1,0,2,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block19",
+        "block21",
+        "block35",
+        "block37",
+        "block65"
+      ]
+    },
+    {
+      "id": "block113",
+      "masters": [
+        "J{0,1,1,0,1,1,1,1}",
+        "J{0,1,1,0,1,1,1,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block38",
+        "block39",
+        "block4",
+        "block59",
+        "block67",
+        "block68",
+        "block7"
+      ]
+    },
+    {
+      "id": "block116",
+      "masters": [
+        "J{0,1,1,1,1,1,0,1}",
+        "J{0,1,1,1,1,1,0,2}",
+        "J{0,1,1,1,1,2,0,1}",
+        "J{0,1,1,1,2,1,0,1}",
+        "J{0,1,1,2,1,1,0,1}",
+        "J{0,1,1,1,1,1,0,3}",
+        "J{0,1,1,1,1,2,0,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block11",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block33",
+        "block36",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block5",
+        "block6",
+        "block62",
+        "block66",
+        "block68",
+        "block7",
+        "block70",
+        "block72",
+        "block8"
+      ]
+    },
+    {
+      "id": "block117",
+      "masters": [
+        "J{0,1,1,1,1,1,1,0}",
+        "J{0,1,1,1,1,1,2,0}",
+        "J{0,1,1,1,1,2,1,0}",
+        "J{0,1,1,1,2,1,1,0}",
+        "J{0,1,1,2,1,1,1,0}",
+        "J{0,1,1,1,1,1,3,0}",
+        "J{0,1,1,1,1,2,2,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block11",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block38",
+        "block39",
+        "block4",
+        "block41",
+        "block5",
+        "block6",
+        "block62",
+        "block63",
+        "block68",
+        "block7",
+        "block71",
+        "block73",
+        "block8"
+      ]
+    },
+    {
+      "id": "block118",
+      "masters": [
+        "J{1,0,0,1,1,1,1,1}",
+        "J{1,0,0,1,1,1,1,2}",
+        "J{1,0,0,1,1,1,2,1}",
+        "J{1,0,0,1,1,2,1,1}",
+        "J{1,0,0,1,2,1,1,1}",
+        "J{1,0,0,1,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block2",
+        "block22",
+        "block23",
+        "block24",
+        "block25",
+        "block3",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block46",
+        "block47",
+        "block48",
+        "block49",
+        "block50",
+        "block6",
+        "block74",
+        "block75",
+        "block76",
+        "block77",
+        "block78"
+      ]
+    },
+    {
+      "id": "block122",
+      "masters": [
+        "J{1,0,1,1,1,0,1,1}",
+        "J{1,0,1,1,1,0,1,2}",
+        "J{1,0,1,1,1,0,2,1}",
+        "J{1,0,1,1,2,0,1,1}",
+        "J{1,0,1,2,1,0,1,1}",
+        "J{1,0,1,1,1,0,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block23",
+        "block24",
+        "block25",
+        "block27",
+        "block30",
+        "block33",
+        "block34",
+        "block43",
+        "block46",
+        "block49",
+        "block50",
+        "block52",
+        "block53",
+        "block54",
+        "block55",
+        "block61",
+        "block76",
+        "block80",
+        "block84",
+        "block88",
+        "block89"
+      ]
+    },
+    {
+      "id": "block124",
+      "masters": [
+        "J{1,0,1,1,1,1,1,0}",
+        "J{1,0,1,1,1,1,2,0}",
+        "J{1,0,1,1,1,2,1,0}",
+        "J{1,0,1,1,2,1,1,0}",
+        "J{1,0,1,2,1,1,1,0}",
+        "J{1,0,2,1,1,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block16",
+        "block18",
+        "block2",
+        "block20",
+        "block22",
+        "block25",
+        "block29",
+        "block3",
+        "block32",
+        "block34",
+        "block45",
+        "block48",
+        "block50",
+        "block51",
+        "block53",
+        "block55",
+        "block6",
+        "block63",
+        "block78",
+        "block83",
+        "block87",
+        "block89"
+      ]
+    },
+    {
+      "id": "block126",
+      "masters": [
+        "J{1,1,0,1,0,1,1,1}",
+        "J{1,1,0,1,0,1,1,2}",
+        "J{1,1,0,1,0,1,2,1}",
+        "J{1,1,0,1,0,2,1,1}",
+        "J{1,1,0,2,0,1,1,1}",
+        "J{1,1,0,1,0,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block22",
+        "block24",
+        "block25",
+        "block27",
+        "block33",
+        "block35",
+        "block36",
+        "block42",
+        "block46",
+        "block47",
+        "block48",
+        "block53",
+        "block56",
+        "block57",
+        "block58",
+        "block64",
+        "block75",
+        "block90",
+        "block96",
+        "block97",
+        "block98"
+      ]
+    },
+    {
+      "id": "block131",
+      "masters": [
+        "J{1,1,1,0,0,1,1,1}",
+        "J{1,1,1,0,0,1,1,2}",
+        "J{1,1,1,0,0,1,2,1}",
+        "J{1,1,1,0,0,2,1,1}",
+        "J{1,1,1,0,0,1,1,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block102",
+        "block103",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block22",
+        "block26",
+        "block27",
+        "block38",
+        "block39",
+        "block4",
+        "block42",
+        "block51",
+        "block53",
+        "block56",
+        "block67",
+        "block79",
+        "block9",
+        "block90"
+      ]
+    },
+    {
+      "id": "block132",
+      "masters": [
+        "J{1,1,1,0,1,0,1,1}",
+        "J{1,1,1,0,1,0,1,2}",
+        "J{1,1,1,0,1,0,2,1}",
+        "J{1,1,1,0,2,0,1,1}",
+        "J{1,1,1,0,1,0,1,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block102",
+        "block104",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block23",
+        "block26",
+        "block27",
+        "block38",
+        "block39",
+        "block4",
+        "block43",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block67",
+        "block80",
+        "block9",
+        "block91"
+      ]
+    },
+    {
+      "id": "block135",
+      "masters": [
+        "J{1,1,1,1,0,0,1,1}",
+        "J{1,1,1,1,0,0,1,2}",
+        "J{1,1,1,1,0,0,2,1}",
+        "J{1,1,1,2,0,0,1,1}",
+        "J{1,1,2,1,0,0,1,1}",
+        "J{1,1,1,1,0,0,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block10",
+        "block105",
+        "block106",
+        "block19",
+        "block20",
+        "block21",
+        "block24",
+        "block25",
+        "block30",
+        "block35",
+        "block40",
+        "block41",
+        "block46",
+        "block5",
+        "block54",
+        "block55",
+        "block57",
+        "block58",
+        "block69",
+        "block84",
+        "block96"
+      ]
+    },
+    {
+      "id": "block137",
+      "masters": [
+        "J{1,1,1,1,0,1,1,0}",
+        "J{1,1,1,1,0,1,2,0}",
+        "J{1,1,1,1,0,2,1,0}",
+        "J{1,1,1,2,0,1,1,0}",
+        "J{1,1,2,1,0,1,1,0}",
+        "J{1,2,1,1,0,1,1,0}",
+        "J{1,1,1,1,0,1,3,0}",
+        "J{1,1,1,1,0,2,2,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block103",
+        "block106",
+        "block13",
+        "block16",
+        "block17",
+        "block19",
+        "block2",
+        "block20",
+        "block22",
+        "block25",
+        "block32",
+        "block33",
+        "block39",
+        "block4",
+        "block41",
+        "block48",
+        "block5",
+        "block51",
+        "block55",
+        "block56",
+        "block58",
+        "block71",
+        "block8",
+        "block87",
+        "block9",
+        "block98"
+      ]
+    },
+    {
+      "id": "block138",
+      "masters": [
+        "J{1,1,1,1,1,0,0,1}",
+        "J{1,1,1,1,1,0,0,2}",
+        "J{1,1,1,1,2,0,0,1}",
+        "J{1,1,1,2,1,0,0,1}",
+        "J{1,1,2,1,1,0,0,1}",
+        "J{1,2,1,1,1,0,0,1}",
+        "J{1,1,1,1,1,0,0,3}",
+        "J{1,1,1,1,2,0,0,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block104",
+        "block105",
+        "block13",
+        "block16",
+        "block17",
+        "block19",
+        "block2",
+        "block21",
+        "block23",
+        "block24",
+        "block33",
+        "block37",
+        "block39",
+        "block4",
+        "block40",
+        "block49",
+        "block5",
+        "block51",
+        "block52",
+        "block54",
+        "block56",
+        "block57",
+        "block72",
+        "block8",
+        "block88",
+        "block9",
+        "block99"
+      ]
+    },
+    {
+      "id": "block93",
+      "masters": [
+        "J{1,1,0,0,1,1,0,1}",
+        "J{1,1,0,0,1,1,0,2}",
+        "J{1,1,0,0,1,2,0,1}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block23",
+        "block29",
+        "block3",
+        "block44",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block81",
+        "block82",
+        "block83",
+        "block92"
+      ]
+    },
+    {
+      "id": "block109",
+      "masters": [
+        "J{0,0,1,1,1,1,1,1}",
+        "J{0,0,1,1,1,1,1,2}",
+        "J{0,0,1,1,1,1,2,1}",
+        "J{0,0,1,1,1,2,1,1}",
+        "J{0,0,1,1,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block107",
+        "block108",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block59",
+        "block6",
+        "block60",
+        "block61",
+        "block62",
+        "block63"
+      ]
+    },
+    {
+      "id": "block112",
+      "masters": [
+        "J{0,1,0,1,1,1,1,1}",
+        "J{0,1,0,1,1,1,1,2}",
+        "J{0,1,0,1,1,1,2,1}",
+        "J{0,1,0,1,1,2,1,1}",
+        "J{0,1,0,1,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block110",
+        "block111",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block33",
+        "block35",
+        "block36",
+        "block37",
+        "block59",
+        "block6",
+        "block62",
+        "block64",
+        "block65",
+        "block66"
+      ]
+    },
+    {
+      "id": "block114",
+      "masters": [
+        "J{0,1,1,1,0,1,1,1}",
+        "J{0,1,1,1,0,1,1,2}",
+        "J{0,1,1,1,0,1,2,1}",
+        "J{0,1,1,1,0,2,1,1}",
+        "J{0,1,1,1,0,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block107",
+        "block108",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block26",
+        "block27",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block35",
+        "block36",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block5",
+        "block60",
+        "block64",
+        "block67",
+        "block69",
+        "block70",
+        "block71",
+        "block8"
+      ]
+    },
+    {
+      "id": "block115",
+      "masters": [
+        "J{0,1,1,1,1,0,1,1}",
+        "J{0,1,1,1,1,0,1,2}",
+        "J{0,1,1,1,1,0,2,1}",
+        "J{0,1,1,1,2,0,1,1}",
+        "J{0,1,1,1,1,0,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block110",
+        "block111",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block26",
+        "block27",
+        "block30",
+        "block31",
+        "block33",
+        "block34",
+        "block35",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block5",
+        "block61",
+        "block65",
+        "block67",
+        "block69",
+        "block72",
+        "block73",
+        "block8"
+      ]
+    },
+    {
+      "id": "block119",
+      "masters": [
+        "J{1,0,1,0,1,1,1,1}",
+        "J{1,0,1,0,1,1,1,2}",
+        "J{1,0,1,0,1,1,2,1}",
+        "J{1,0,1,0,1,2,1,1}",
+        "J{1,0,1,0,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block22",
+        "block23",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block51",
+        "block52",
+        "block53",
+        "block59",
+        "block74",
+        "block79",
+        "block80",
+        "block81",
+        "block82",
+        "block83"
+      ]
+    },
+    {
+      "id": "block120",
+      "masters": [
+        "J{1,0,1,1,0,2,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block19",
+        "block2",
+        "block24",
+        "block31",
+        "block47",
+        "block54",
+        "block85",
+        "block86"
+      ]
+    },
+    {
+      "id": "block127",
+      "masters": [
+        "J{1,1,0,1,2,0,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block100",
+        "block101",
+        "block15",
+        "block19",
+        "block2",
+        "block25",
+        "block31",
+        "block50",
+        "block58"
+      ]
+    },
+    {
+      "id": "block134",
+      "masters": [
+        "J{1,1,1,0,1,1,1,0}",
+        "J{1,1,1,0,1,1,2,0}",
+        "J{1,1,1,0,1,2,1,0}",
+        "J{1,1,1,0,2,1,1,0}",
+        "J{1,2,1,0,1,1,1,0}",
+        "J{1,1,1,0,1,1,3,0}",
+        "J{1,1,1,0,1,2,2,0}"
+      ],
+      "depends_on": [
+        "block1",
+        "block102",
+        "block103",
+        "block12",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block22",
+        "block28",
+        "block29",
+        "block3",
+        "block38",
+        "block39",
+        "block4",
+        "block45",
+        "block51",
+        "block53",
+        "block56",
+        "block68",
+        "block7",
+        "block83",
+        "block9",
+        "block92",
+        "block94",
+        "block95"
+      ]
+    },
+    {
+      "id": "block121",
+      "masters": [
+        "J{1,0,1,1,0,1,1,1}",
+        "J{1,0,1,1,0,1,1,2}",
+        "J{1,0,1,1,0,1,2,1}",
+        "J{1,0,1,1,0,2,1,1}",
+        "J{1,0,1,1,0,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block107",
+        "block108",
+        "block120",
+        "block15",
+        "block16",
+        "block19",
+        "block2",
+        "block20",
+        "block22",
+        "block24",
+        "block25",
+        "block26",
+        "block30",
+        "block31",
+        "block32",
+        "block42",
+        "block46",
+        "block47",
+        "block48",
+        "block51",
+        "block54",
+        "block55",
+        "block60",
+        "block75",
+        "block79",
+        "block84",
+        "block85",
+        "block86",
+        "block87"
+      ]
+    },
+    {
+      "id": "block123",
+      "masters": [
+        "J{1,0,1,1,1,1,0,1}",
+        "J{1,0,1,1,1,1,0,2}",
+        "J{1,0,1,1,1,2,0,1}",
+        "J{1,0,1,1,2,1,0,1}",
+        "J{1,0,2,1,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block120",
+        "block15",
+        "block17",
+        "block19",
+        "block2",
+        "block23",
+        "block24",
+        "block28",
+        "block3",
+        "block31",
+        "block33",
+        "block44",
+        "block47",
+        "block49",
+        "block52",
+        "block54",
+        "block6",
+        "block62",
+        "block77",
+        "block81",
+        "block82",
+        "block85",
+        "block86",
+        "block88"
+      ]
+    },
+    {
+      "id": "block125",
+      "masters": [
+        "J{1,1,0,0,1,1,1,1}",
+        "J{1,1,0,0,1,1,1,2}",
+        "J{1,1,0,0,1,1,2,1}",
+        "J{1,1,0,0,1,2,1,1}",
+        "J{1,1,0,0,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block22",
+        "block23",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block59",
+        "block74",
+        "block81",
+        "block82",
+        "block83",
+        "block90",
+        "block91",
+        "block92",
+        "block93",
+        "block94"
+      ]
+    },
+    {
+      "id": "block128",
+      "masters": [
+        "J{1,1,0,1,1,0,1,1}",
+        "J{1,1,0,1,1,0,1,2}",
+        "J{1,1,0,1,1,0,2,1}",
+        "J{1,1,0,1,2,0,1,1}",
+        "J{1,1,0,1,1,0,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block100",
+        "block101",
+        "block110",
+        "block111",
+        "block127",
+        "block15",
+        "block16",
+        "block19",
+        "block2",
+        "block21",
+        "block23",
+        "block24",
+        "block25",
+        "block26",
+        "block31",
+        "block35",
+        "block37",
+        "block43",
+        "block46",
+        "block49",
+        "block50",
+        "block51",
+        "block52",
+        "block56",
+        "block57",
+        "block58",
+        "block65",
+        "block76",
+        "block91",
+        "block96",
+        "block99"
+      ]
+    },
+    {
+      "id": "block129",
+      "masters": [
+        "J{1,1,0,1,1,1,0,1}",
+        "J{1,1,0,1,1,1,0,2}",
+        "J{1,1,0,1,1,2,0,1}",
+        "J{1,1,0,1,2,1,0,1}",
+        "J{1,1,0,2,1,1,0,1}",
+        "J{1,2,0,1,1,1,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block2",
+        "block21",
+        "block23",
+        "block24",
+        "block29",
+        "block3",
+        "block36",
+        "block37",
+        "block44",
+        "block47",
+        "block49",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block57",
+        "block6",
+        "block66",
+        "block77",
+        "block81",
+        "block82",
+        "block83",
+        "block92",
+        "block93",
+        "block97",
+        "block99"
+      ]
+    },
+    {
+      "id": "block130",
+      "masters": [
+        "J{1,1,0,1,1,1,1,0}",
+        "J{1,1,0,1,1,1,2,0}",
+        "J{1,1,0,1,1,2,1,0}",
+        "J{1,1,0,1,2,1,1,0}",
+        "J{1,2,0,1,1,1,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block100",
+        "block101",
+        "block127",
+        "block15",
+        "block17",
+        "block19",
+        "block2",
+        "block22",
+        "block25",
+        "block28",
+        "block3",
+        "block31",
+        "block33",
+        "block45",
+        "block48",
+        "block50",
+        "block56",
+        "block58",
+        "block6",
+        "block62",
+        "block78",
+        "block92",
+        "block94",
+        "block95",
+        "block98"
+      ]
+    },
+    {
+      "id": "block133",
+      "masters": [
+        "J{1,1,1,0,1,1,0,1}",
+        "J{1,1,1,0,1,1,0,2}",
+        "J{1,1,1,0,1,2,0,1}",
+        "J{1,1,1,0,2,1,0,1}",
+        "J{1,1,2,0,1,1,0,1}",
+        "J{1,1,1,0,1,1,0,3}",
+        "J{1,1,1,0,1,2,0,2}"
+      ],
+      "depends_on": [
+        "block1",
+        "block102",
+        "block104",
+        "block12",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block23",
+        "block28",
+        "block29",
+        "block3",
+        "block38",
+        "block39",
+        "block4",
+        "block44",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block68",
+        "block7",
+        "block81",
+        "block82",
+        "block83",
+        "block9",
+        "block92",
+        "block93"
+      ]
+    },
+    {
+      "id": "block136",
+      "masters": [
+        "J{1,1,1,1,0,1,0,1}",
+        "J{1,1,1,1,0,1,0,2}",
+        "J{1,1,1,1,0,2,0,1}",
+        "J{1,1,1,2,0,1,0,1}",
+        "J{1,1,2,1,0,1,0,1}",
+        "J{1,1,1,1,0,1,0,3}",
+        "J{1,1,1,1,0,2,0,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block102",
+        "block105",
+        "block120",
+        "block13",
+        "block15",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block24",
+        "block31",
+        "block36",
+        "block38",
+        "block4",
+        "block40",
+        "block47",
+        "block5",
+        "block53",
+        "block54",
+        "block57",
+        "block70",
+        "block8",
+        "block85",
+        "block86",
+        "block9",
+        "block97"
+      ]
+    },
+    {
+      "id": "block139",
+      "masters": [
+        "J{1,1,1,1,1,0,1,0}",
+        "J{1,1,1,1,1,0,2,0}",
+        "J{1,1,1,1,2,0,1,0}",
+        "J{1,1,1,2,1,0,1,0}",
+        "J{1,2,1,1,1,0,1,0}",
+        "J{1,1,1,1,1,0,3,0}",
+        "J{1,1,1,1,2,0,2,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block100",
+        "block101",
+        "block102",
+        "block106",
+        "block127",
+        "block13",
+        "block15",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block25",
+        "block31",
+        "block34",
+        "block38",
+        "block4",
+        "block41",
+        "block5",
+        "block50",
+        "block53",
+        "block55",
+        "block58",
+        "block73",
+        "block8",
+        "block89",
+        "block9"
+      ]
+    },
+    {
+      "id": "block140",
+      "masters": [
+        "J{0,1,1,1,1,1,1,1}",
+        "J{0,1,1,1,1,1,1,2}",
+        "J{0,1,1,1,1,1,2,1}",
+        "J{0,1,1,1,1,2,1,1}",
+        "J{0,1,1,1,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block107",
+        "block108",
+        "block109",
+        "block11",
+        "block110",
+        "block111",
+        "block112",
+        "block113",
+        "block114",
+        "block115",
+        "block116",
+        "block117",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block35",
+        "block36",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block5",
+        "block59",
+        "block6",
+        "block60",
+        "block61",
+        "block62",
+        "block63",
+        "block64",
+        "block65",
+        "block66",
+        "block67",
+        "block68",
+        "block69",
+        "block7",
+        "block70",
+        "block71",
+        "block72",
+        "block73",
+        "block8"
+      ]
+    },
+    {
+      "id": "block141",
+      "masters": [
+        "J{1,0,1,1,1,1,1,1}",
+        "J{1,0,1,1,1,1,1,2}",
+        "J{1,0,1,1,1,1,2,1}",
+        "J{1,0,1,1,1,2,1,1}",
+        "J{1,0,1,1,2,1,1,1}",
+        "J{1,0,1,1,1,1,1,3}",
+        "J{1,0,1,1,1,1,2,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block107",
+        "block108",
+        "block109",
+        "block118",
+        "block119",
+        "block120",
+        "block121",
+        "block122",
+        "block123",
+        "block124",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block22",
+        "block23",
+        "block24",
+        "block25",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block46",
+        "block47",
+        "block48",
+        "block49",
+        "block50",
+        "block51",
+        "block52",
+        "block53",
+        "block54",
+        "block55",
+        "block59",
+        "block6",
+        "block60",
+        "block61",
+        "block62",
+        "block63",
+        "block74",
+        "block75",
+        "block76",
+        "block77",
+        "block78",
+        "block79",
+        "block80",
+        "block81",
+        "block82",
+        "block83",
+        "block84",
+        "block85",
+        "block86",
+        "block87",
+        "block88",
+        "block89"
+      ]
+    },
+    {
+      "id": "block142",
+      "masters": [
+        "J{1,1,0,1,1,1,1,1}",
+        "J{1,1,0,1,1,1,1,2}",
+        "J{1,1,0,1,1,1,2,1}",
+        "J{1,1,0,1,1,2,1,1}",
+        "J{1,1,0,1,2,1,1,1}",
+        "J{1,1,0,1,1,1,1,3}",
+        "J{1,1,0,1,1,1,2,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block100",
+        "block101",
+        "block110",
+        "block111",
+        "block112",
+        "block118",
+        "block125",
+        "block126",
+        "block127",
+        "block128",
+        "block129",
+        "block130",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block22",
+        "block23",
+        "block24",
+        "block25",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block33",
+        "block35",
+        "block36",
+        "block37",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block46",
+        "block47",
+        "block48",
+        "block49",
+        "block50",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block57",
+        "block58",
+        "block59",
+        "block6",
+        "block62",
+        "block64",
+        "block65",
+        "block66",
+        "block74",
+        "block75",
+        "block76",
+        "block77",
+        "block78",
+        "block81",
+        "block82",
+        "block83",
+        "block90",
+        "block91",
+        "block92",
+        "block93",
+        "block94",
+        "block95",
+        "block96",
+        "block97",
+        "block98",
+        "block99"
+      ]
+    },
+    {
+      "id": "block143",
+      "masters": [
+        "J{1,1,1,0,1,1,1,1}",
+        "J{1,1,1,0,1,1,1,2}",
+        "J{1,1,1,0,1,1,2,1}",
+        "J{1,1,1,0,1,2,1,1}",
+        "J{1,1,1,0,1,1,1,3}"
+      ],
+      "depends_on": [
+        "block1",
+        "block102",
+        "block103",
+        "block104",
+        "block113",
+        "block119",
+        "block12",
+        "block125",
+        "block131",
+        "block132",
+        "block133",
+        "block134",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block22",
+        "block23",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block38",
+        "block39",
+        "block4",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block51",
+        "block52",
+        "block53",
+        "block56",
+        "block59",
+        "block67",
+        "block68",
+        "block7",
+        "block74",
+        "block79",
+        "block80",
+        "block81",
+        "block82",
+        "block83",
+        "block9",
+        "block90",
+        "block91",
+        "block92",
+        "block93",
+        "block94",
+        "block95"
+      ]
+    },
+    {
+      "id": "block144",
+      "masters": [
+        "J{1,1,1,1,0,1,1,1}",
+        "J{1,1,1,1,0,1,1,2}",
+        "J{1,1,1,1,0,1,2,1}",
+        "J{1,1,1,1,0,2,1,1}",
+        "J{1,1,1,2,0,1,1,1}",
+        "J{1,1,1,1,0,1,1,3}",
+        "J{1,1,1,1,0,1,2,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block102",
+        "block103",
+        "block105",
+        "block106",
+        "block107",
+        "block108",
+        "block114",
+        "block120",
+        "block121",
+        "block126",
+        "block13",
+        "block131",
+        "block135",
+        "block136",
+        "block137",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block22",
+        "block24",
+        "block25",
+        "block26",
+        "block27",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block35",
+        "block36",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block42",
+        "block46",
+        "block47",
+        "block48",
+        "block5",
+        "block51",
+        "block53",
+        "block54",
+        "block55",
+        "block56",
+        "block57",
+        "block58",
+        "block60",
+        "block64",
+        "block67",
+        "block69",
+        "block70",
+        "block71",
+        "block75",
+        "block79",
+        "block8",
+        "block84",
+        "block85",
+        "block86",
+        "block87",
+        "block9",
+        "block90",
+        "block96",
+        "block97",
+        "block98"
+      ]
+    },
+    {
+      "id": "block145",
+      "masters": [
+        "J{1,1,1,1,1,0,1,1}",
+        "J{1,1,1,1,1,0,1,2}",
+        "J{1,1,1,1,1,0,2,1}",
+        "J{1,1,1,1,2,0,1,1}",
+        "J{1,1,1,2,1,0,1,1}",
+        "J{1,1,1,1,1,0,1,3}",
+        "J{1,1,1,1,1,0,2,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block100",
+        "block101",
+        "block102",
+        "block104",
+        "block105",
+        "block106",
+        "block110",
+        "block111",
+        "block115",
+        "block122",
+        "block127",
+        "block128",
+        "block13",
+        "block132",
+        "block135",
+        "block138",
+        "block139",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block23",
+        "block24",
+        "block25",
+        "block26",
+        "block27",
+        "block30",
+        "block31",
+        "block33",
+        "block34",
+        "block35",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block43",
+        "block46",
+        "block49",
+        "block5",
+        "block50",
+        "block51",
+        "block52",
+        "block53",
+        "block54",
+        "block55",
+        "block56",
+        "block57",
+        "block58",
+        "block61",
+        "block65",
+        "block67",
+        "block69",
+        "block72",
+        "block73",
+        "block76",
+        "block8",
+        "block80",
+        "block84",
+        "block88",
+        "block89",
+        "block9",
+        "block91",
+        "block96",
+        "block99"
+      ]
+    },
+    {
+      "id": "block146",
+      "masters": [
+        "J{1,1,1,1,1,1,0,1}",
+        "J{1,1,1,1,1,1,0,2}",
+        "J{1,1,1,1,1,2,0,1}",
+        "J{1,1,1,1,2,1,0,1}",
+        "J{1,1,1,2,1,1,0,1}",
+        "J{1,1,2,1,1,1,0,1}",
+        "J{1,1,1,1,1,1,0,3}",
+        "J{1,1,1,1,1,2,0,2}",
+        "J{1,1,1,1,1,3,0,1}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block102",
+        "block104",
+        "block105",
+        "block11",
+        "block116",
+        "block12",
+        "block120",
+        "block123",
+        "block129",
+        "block13",
+        "block133",
+        "block136",
+        "block138",
+        "block14",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block21",
+        "block23",
+        "block24",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block33",
+        "block36",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block44",
+        "block47",
+        "block49",
+        "block5",
+        "block51",
+        "block52",
+        "block53",
+        "block54",
+        "block56",
+        "block57",
+        "block6",
+        "block62",
+        "block66",
+        "block68",
+        "block7",
+        "block70",
+        "block72",
+        "block77",
+        "block8",
+        "block81",
+        "block82",
+        "block83",
+        "block85",
+        "block86",
+        "block88",
+        "block9",
+        "block92",
+        "block93",
+        "block97",
+        "block99"
+      ]
+    },
+    {
+      "id": "block147",
+      "masters": [
+        "J{1,1,1,1,1,1,1,0}",
+        "J{1,1,1,1,1,1,2,0}",
+        "J{1,1,1,1,1,2,1,0}",
+        "J{1,1,1,1,2,1,1,0}",
+        "J{1,1,1,2,1,1,1,0}",
+        "J{1,2,1,1,1,1,1,0}",
+        "J{1,1,1,1,1,1,3,0}",
+        "J{1,1,1,1,1,2,2,0}",
+        "J{1,1,1,1,1,3,1,0}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block100",
+        "block101",
+        "block102",
+        "block103",
+        "block106",
+        "block11",
+        "block117",
+        "block12",
+        "block124",
+        "block127",
+        "block13",
+        "block130",
+        "block134",
+        "block137",
+        "block139",
+        "block14",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block22",
+        "block25",
+        "block28",
+        "block29",
+        "block3",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block38",
+        "block39",
+        "block4",
+        "block41",
+        "block45",
+        "block48",
+        "block5",
+        "block50",
+        "block51",
+        "block53",
+        "block55",
+        "block56",
+        "block58",
+        "block6",
+        "block62",
+        "block63",
+        "block68",
+        "block7",
+        "block71",
+        "block73",
+        "block78",
+        "block8",
+        "block83",
+        "block87",
+        "block89",
+        "block9",
+        "block92",
+        "block94",
+        "block95",
+        "block98"
+      ]
+    },
+    {
+      "id": "block148",
+      "masters": [
+        "J{1,1,1,1,1,1,1,1}",
+        "J{1,1,1,1,1,1,1,2}",
+        "J{1,1,1,1,1,1,2,1}",
+        "J{1,1,1,1,1,2,1,1}",
+        "J{1,1,1,1,2,1,1,1}",
+        "J{1,1,1,1,1,1,1,3}",
+        "J{1,1,1,1,1,1,2,2}"
+      ],
+      "depends_on": [
+        "block0",
+        "block1",
+        "block10",
+        "block100",
+        "block101",
+        "block102",
+        "block103",
+        "block104",
+        "block105",
+        "block106",
+        "block107",
+        "block108",
+        "block109",
+        "block11",
+        "block110",
+        "block111",
+        "block112",
+        "block113",
+        "block114",
+        "block115",
+        "block116",
+        "block117",
+        "block118",
+        "block119",
+        "block12",
+        "block120",
+        "block121",
+        "block122",
+        "block123",
+        "block124",
+        "block125",
+        "block126",
+        "block127",
+        "block128",
+        "block129",
+        "block13",
+        "block130",
+        "block131",
+        "block132",
+        "block133",
+        "block134",
+        "block135",
+        "block136",
+        "block137",
+        "block138",
+        "block139",
+        "block14",
+        "block140",
+        "block141",
+        "block142",
+        "block143",
+        "block144",
+        "block145",
+        "block146",
+        "block147",
+        "block15",
+        "block16",
+        "block17",
+        "block18",
+        "block19",
+        "block2",
+        "block20",
+        "block21",
+        "block22",
+        "block23",
+        "block24",
+        "block25",
+        "block26",
+        "block27",
+        "block28",
+        "block29",
+        "block3",
+        "block30",
+        "block31",
+        "block32",
+        "block33",
+        "block34",
+        "block35",
+        "block36",
+        "block37",
+        "block38",
+        "block39",
+        "block4",
+        "block40",
+        "block41",
+        "block42",
+        "block43",
+        "block44",
+        "block45",
+        "block46",
+        "block47",
+        "block48",
+        "block49",
+        "block5",
+        "block50",
+        "block51",
+        "block52",
+        "block53",
+        "block54",
+        "block55",
+        "block56",
+        "block57",
+        "block58",
+        "block59",
+        "block6",
+        "block60",
+        "block61",
+        "block62",
+        "block63",
+        "block64",
+        "block65",
+        "block66",
+        "block67",
+        "block68",
+        "block69",
+        "block7",
+        "block70",
+        "block71",
+        "block72",
+        "block73",
+        "block74",
+        "block75",
+        "block76",
+        "block77",
+        "block78",
+        "block79",
+        "block8",
+        "block80",
+        "block81",
+        "block82",
+        "block83",
+        "block84",
+        "block85",
+        "block86",
+        "block87",
+        "block88",
+        "block89",
+        "block9",
+        "block90",
+        "block91",
+        "block92",
+        "block93",
+        "block94",
+        "block95",
+        "block96",
+        "block97",
+        "block98",
+        "block99"
+      ]
+    }
+  ],
+  "reductions": {}
+}

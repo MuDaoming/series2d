@@ -1,0 +1,20 @@
+{
+  "reference_source": "j_integral_bootstrap/reference/dp_global/connection_mod1000003.json.gz",
+  "reference_sha256": "1efb7ce191238a6ec9ee5244413f44c77001b62ba46da0ae4cafa0466c1231a1",
+  "family_source": "j_integral_global/examples/dp_physical.json",
+  "physical_master_count": 496,
+  "block_count": 149,
+  "nonzero_physical_DE": 28234,
+  "FBI_branches": [
+    3,
+    3,
+    2
+  ],
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {}
+  },
+  "normalization": "uniform gauge only; no known off-diagonal coefficient enters numeric backend"
+}
