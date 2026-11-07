@@ -3,5 +3,6 @@
   "run.json": "21d6e164bf67585aa05c604eab5aa598faa5eed73dd633bef8055187e54645df",
   "verification.json": "25e94527a60f38af8aff98cc0dca149575edb509e50cf5f0063692c269d6921b",
   "learn_timings.json": "eb82b65400005d13f6a3ae22d42ed45ced30d0463dae710959fa4c8c675c1c1f",
-  "physical_de.json.gz": "c3d38cef32cb4383da7de42108a3590301486581f1f00e6327505185ca5439ce"
+  "physical_de.json.gz": "c3d38cef32cb4383da7de42108a3590301486581f1f00e6327505185ca5439ce",
+  "rational_reconstruction_degrees.json": "a1c3bf01115c7ad72570426e4b86e451ff2ca8e0e918cdcc9457f5546450d5c0"
 }

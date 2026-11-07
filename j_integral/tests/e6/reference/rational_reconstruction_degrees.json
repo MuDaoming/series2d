@@ -1,0 +1,31 @@
+{
+  "prime": 1000003,
+  "t0": "2/5",
+  "masters": 79,
+  "nonzero_entries": 1164,
+  "gcd_checked": true,
+  "entries_with_cancelled_common_factors": 0,
+  "maximum_numerator_degree": 50,
+  "maximum_denominator_degree": 50,
+  "maximum_total_degree": 100,
+  "ordinary_rational_reconstruction_points": 101,
+  "with_two_independent_check_points": 103,
+  "hardest_entries": [
+    {
+      "row": "J{1,1,1,1,1,1,2}",
+      "column": "Bz0{0,1,1,0,1,0,1}",
+      "numerator_degree": 50,
+      "denominator_degree": 50,
+      "total_degree": 100,
+      "interpolation_points": 101
+    },
+    {
+      "row": "J{1,1,1,1,1,2,1}",
+      "column": "Bz0{0,1,1,0,1,0,1}",
+      "numerator_degree": 50,
+      "denominator_degree": 50,
+      "total_degree": 100,
+      "interpolation_points": 101
+    }
+  ]
+}
