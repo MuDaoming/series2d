@@ -1,0 +1,128 @@
+{
+  "same_FI_family_dimension_and_kinematics_checked": true,
+  "FI_total": 62,
+  "J_total": 79,
+  "ordinary_J_total": 78,
+  "boundary": [
+    "Bz0{0,1,1,0,1,0,1}"
+  ],
+  "by_active_propagators": [
+    {
+      "active": 3,
+      "FI": 12,
+      "ordinary_J": 11
+    },
+    {
+      "active": 4,
+      "FI": 8,
+      "ordinary_J": 12
+    },
+    {
+      "active": 5,
+      "FI": 23,
+      "ordinary_J": 31
+    },
+    {
+      "active": 6,
+      "FI": 14,
+      "ordinary_J": 19
+    },
+    {
+      "active": 7,
+      "FI": 5,
+      "ordinary_J": 5
+    }
+  ],
+  "sector_differences": [
+    {
+      "mask": "1010010",
+      "FI": 1,
+      "ordinary_J": 0
+    },
+    {
+      "mask": "0110101",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "0110110",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1010101",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1010110",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "0110111",
+      "FI": 2,
+      "ordinary_J": 1
+    },
+    {
+      "mask": "0111101",
+      "FI": 1,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "0111110",
+      "FI": 1,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1010111",
+      "FI": 2,
+      "ordinary_J": 1
+    },
+    {
+      "mask": "1011101",
+      "FI": 1,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1011110",
+      "FI": 1,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1110101",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1110110",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "0111111",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1011111",
+      "FI": 2,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1110111",
+      "FI": 4,
+      "ordinary_J": 3
+    },
+    {
+      "mask": "1111101",
+      "FI": 2,
+      "ordinary_J": 4
+    },
+    {
+      "mask": "1111110",
+      "FI": 2,
+      "ordinary_J": 4
+    }
+  ]
+}
