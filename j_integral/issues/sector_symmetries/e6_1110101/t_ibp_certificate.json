@@ -1,0 +1,353 @@
+{
+  "prime": 1000003,
+  "t0": "2/5",
+  "sector": "1110101",
+  "top_masters": [
+    "J{1,1,1,0,1,0,1}",
+    "J{1,1,1,0,1,0,2}",
+    "J{1,1,1,0,2,0,1}"
+  ],
+  "FI_sector_masters": [
+    [
+      2,
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      1
+    ]
+  ],
+  "constant_top_coefficients": {
+    "J{1,1,1,0,1,0,1}": 1,
+    "J{1,1,1,0,1,0,2}": 432656,
+    "J{1,1,1,0,2,0,1}": 758004
+  },
+  "primitive": {
+    "J{1,1,1,0,1,0,1}": {
+      "numerator_tau": [
+        440003,
+        200002,
+        999996
+      ],
+      "denominator_tau": [
+        1
+      ]
+    },
+    "J{1,1,1,0,1,0,2}": {
+      "numerator_tau": [
+        234545,
+        913438,
+        714987
+      ],
+      "denominator_tau": [
+        1
+      ]
+    },
+    "J{1,1,1,0,2,0,1}": {
+      "numerator_tau": [
+        33443,
+        861205,
+        693990
+      ],
+      "denominator_tau": [
+        1
+      ]
+    }
+  },
+  "lower_terms_in_derivative": {
+    "Bz0{0,1,1,0,1,0,1}": {
+      "numerator_tau": [
+        119140,
+        96692,
+        687864,
+        395756,
+        895137,
+        336874,
+        647251,
+        168428
+      ],
+      "denominator_tau": [
+        908643,
+        517399,
+        79489,
+        497899,
+        72494,
+        496769,
+        1
+      ]
+    },
+    "J{0,1,0,0,1,0,1}": {
+      "numerator_tau": [
+        507017,
+        703733,
+        293009,
+        781550
+      ],
+      "denominator_tau": [
+        244466,
+        994963,
+        714243,
+        586874,
+        1
+      ]
+    },
+    "J{0,1,1,0,0,0,1}": {
+      "numerator_tau": [
+        268427,
+        361414,
+        947031,
+        545304
+      ],
+      "denominator_tau": [
+        244466,
+        994963,
+        714243,
+        586874,
+        1
+      ]
+    },
+    "J{0,1,1,0,1,0,1}": {
+      "numerator_tau": [
+        827442,
+        419736,
+        98100,
+        800652
+      ],
+      "denominator_tau": [
+        611165,
+        959495,
+        386873,
+        1
+      ]
+    },
+    "J{0,1,1,0,1,0,2}": {
+      "numerator_tau": [
+        217702,
+        654740,
+        500887,
+        321537
+      ],
+      "denominator_tau": [
+        611165,
+        959495,
+        386873,
+        1
+      ]
+    },
+    "J{0,1,1,0,2,0,1}": {
+      "numerator_tau": [
+        472004,
+        547735,
+        377228,
+        644776
+      ],
+      "denominator_tau": [
+        611165,
+        959495,
+        386873,
+        1
+      ]
+    },
+    "J{1,0,0,0,1,0,1}": {
+      "numerator_tau": [
+        894888,
+        627139,
+        799422,
+        32366
+      ],
+      "denominator_tau": [
+        704743,
+        839991,
+        689301,
+        309897,
+        1
+      ]
+    },
+    "J{1,0,1,0,0,0,1}": {
+      "numerator_tau": [
+        811295,
+        955100,
+        941094,
+        157940
+      ],
+      "denominator_tau": [
+        704743,
+        839991,
+        689301,
+        309897,
+        1
+      ]
+    },
+    "J{1,0,1,0,1,0,1}": {
+      "numerator_tau": [
+        504574,
+        393359,
+        912993,
+        207935
+      ],
+      "denominator_tau": [
+        261853,
+        445342,
+        109896,
+        1
+      ]
+    },
+    "J{1,0,1,0,1,0,2}": {
+      "numerator_tau": [
+        502423,
+        511945,
+        75849,
+        42242
+      ],
+      "denominator_tau": [
+        261853,
+        445342,
+        109896,
+        1
+      ]
+    },
+    "J{1,0,1,0,2,0,1}": {
+      "numerator_tau": [
+        42552,
+        355538,
+        349208,
+        815787
+      ],
+      "denominator_tau": [
+        261853,
+        445342,
+        109896,
+        1
+      ]
+    }
+  },
+  "identity": "d(sum_i g_i J_i)/dt = sum_i c_i J_i + sum_lower R_lower(t) J_lower(t); exact rational identity, endpoint terms NOT discarded",
+  "exact_top_identity_checked": true,
+  "attempts": [
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 0,
+      "unknowns": 6,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 1,
+      "unknowns": 9,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 2,
+      "unknowns": 12,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 3,
+      "unknowns": 15,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 4,
+      "unknowns": 18,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 5,
+      "unknowns": 21,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 6,
+      "unknowns": 24,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 7,
+      "unknowns": 27,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 8,
+      "unknowns": 30,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 9,
+      "unknowns": 33,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 10,
+      "unknowns": 36,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 11,
+      "unknowns": 39,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 0,
+      "polynomial_degree": 12,
+      "unknowns": 42,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 4,
+      "polynomial_degree": 0,
+      "unknowns": 6,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 4,
+      "polynomial_degree": 1,
+      "unknowns": 9,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 4,
+      "polynomial_degree": 2,
+      "unknowns": 12,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 4,
+      "polynomial_degree": 3,
+      "unknowns": 15,
+      "nullity": 0
+    },
+    {
+      "denominator_degree": 4,
+      "polynomial_degree": 4,
+      "unknowns": 18,
+      "nullity": 1
+    }
+  ],
+  "full79_coefficient_identity_checked": true,
+  "independent_cached_IBP_points": [
+    154001,
+    237418
+  ],
+  "independent_scalar_checks": 158,
+  "endpoint_terms_kept": true
+}
