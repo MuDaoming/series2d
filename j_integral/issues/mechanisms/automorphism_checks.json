@@ -1,0 +1,215 @@
+[
+  {
+    "case": "bubble_box/null",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5
+        }
+      },
+      {
+        "branch_map": [
+          2,
+          1,
+          0
+        ],
+        "propagator_map": {
+          "1": 5,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 1
+        }
+      }
+    ]
+  },
+  {
+    "case": "bubble_box/off",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5
+        }
+      },
+      {
+        "branch_map": [
+          2,
+          1,
+          0
+        ],
+        "propagator_map": {
+          "1": 5,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 1
+        }
+      }
+    ]
+  },
+  {
+    "case": "four_line_exchange/mass_split",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4
+        }
+      }
+    ]
+  },
+  {
+    "case": "four_line_exchange/symmetric",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4
+        }
+      },
+      {
+        "branch_map": [
+          2,
+          1,
+          0
+        ],
+        "propagator_map": {
+          "1": 4,
+          "2": 2,
+          "3": 3,
+          "4": 1
+        }
+      }
+    ]
+  },
+  {
+    "case": "massless_triangle/off_shell",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5
+        }
+      }
+    ]
+  },
+  {
+    "case": "massless_triangle/on_shell",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5
+        }
+      }
+    ]
+  },
+  {
+    "case": "six_line_null_legs/both_null",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5,
+          "6": 6
+        }
+      }
+    ]
+  },
+  {
+    "case": "six_line_null_legs/both_off",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5,
+          "6": 6
+        }
+      }
+    ]
+  },
+  {
+    "case": "six_line_null_legs/p_off",
+    "automorphisms": [
+      {
+        "branch_map": [
+          0,
+          1,
+          2
+        ],
+        "propagator_map": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5,
+          "6": 6
+        }
+      }
+    ]
+  }
+]

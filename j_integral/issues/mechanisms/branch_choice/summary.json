@@ -1,0 +1,68 @@
+[
+  {
+    "old_to_new_branches": [
+      0,
+      1,
+      2
+    ],
+    "J_top": 4,
+    "total_J_system": 28,
+    "unclosed": [],
+    "returncode": 0
+  },
+  {
+    "old_to_new_branches": [
+      0,
+      2,
+      1
+    ],
+    "J_top": 2,
+    "total_J_system": 18,
+    "unclosed": [],
+    "returncode": 0
+  },
+  {
+    "old_to_new_branches": [
+      1,
+      0,
+      2
+    ],
+    "J_top": 4,
+    "total_J_system": 28,
+    "unclosed": [],
+    "returncode": 0
+  },
+  {
+    "old_to_new_branches": [
+      1,
+      2,
+      0
+    ],
+    "J_top": 2,
+    "total_J_system": 18,
+    "unclosed": [],
+    "returncode": 0
+  },
+  {
+    "old_to_new_branches": [
+      2,
+      0,
+      1
+    ],
+    "J_top": 3,
+    "total_J_system": 25,
+    "unclosed": [],
+    "returncode": 0
+  },
+  {
+    "old_to_new_branches": [
+      2,
+      1,
+      0
+    ],
+    "J_top": 3,
+    "total_J_system": 25,
+    "unclosed": [],
+    "returncode": 0
+  }
+]

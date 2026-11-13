@@ -1,0 +1,9 @@
+{
+  "dimension": "4.6",
+  "A": "-1.2",
+  "B": "-2.7",
+  "triangle_direct": "-2.5214764629113031696197423668399754",
+  "divided_difference": "-2.5214764629113031696197423668399754",
+  "relative_error": "2.778726e-46",
+  "identity": "Triangle(0,A,B)=-2*(d-3)/(d-4)*(Bubble(A)-Bubble(B))/(A-B)"
+}

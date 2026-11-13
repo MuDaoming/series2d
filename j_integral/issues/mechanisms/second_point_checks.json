@@ -1,0 +1,173 @@
+[
+  {
+    "case": "branch_choice/012",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 4,
+    "total_J_system": 28,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/021",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 2,
+    "total_J_system": 18,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/102",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 4,
+    "total_J_system": 28,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/120",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 2,
+    "total_J_system": 18,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/201",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 25,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/210",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 25,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/four_mass_split",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 2,
+    "total_J_system": 5,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "branch_choice/four_symmetric",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 2,
+    "total_J_system": 4,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "bubble_box/null",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 10,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "bubble_box/off",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 18,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "four_line_exchange/mass_split",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 7,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "four_line_exchange/symmetric",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 6,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "massless_triangle/off_shell",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 5,
+    "total_J_system": 24,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "massless_triangle/on_shell",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 3,
+    "total_J_system": 14,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "six_line_null_legs/both_null",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 4,
+    "total_J_system": 28,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "six_line_null_legs/both_off",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 7,
+    "total_J_system": 68,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "six_line_null_legs/p_off",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 7,
+    "total_J_system": 49,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "sunrise_deformation",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 2,
+    "total_J_system": 3,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "vacuum_m0m",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 1,
+    "total_J_system": 2,
+    "top_count_stable": true,
+    "DE_closed": true
+  }
+]

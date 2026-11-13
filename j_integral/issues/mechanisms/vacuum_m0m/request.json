@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "family": {
+    "name": "vacuum_equal_mass_massless",
+    "loops": [
+      "l1",
+      "l2"
+    ],
+    "external_momenta": [],
+    "gram": [],
+    "propagators": [
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [],
+        "mass2": 1
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [],
+        "mass2": 0
+      },
+      {
+        "loop": [
+          1,
+          1
+        ],
+        "shift": [],
+        "mass2": 1
+      }
+    ]
+  },
+  "j": {
+    "coordinates": "tz",
+    "branches": [
+      0,
+      1,
+      2
+    ],
+    "boundary": {
+      "z0": "fbi_analytic",
+      "z1": "regulated_zero"
+    }
+  },
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {}
+  },
+  "request": {
+    "targets": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        2,
+        1,
+        1
+      ],
+      [
+        1,
+        2,
+        1
+      ],
+      [
+        1,
+        1,
+        2
+      ]
+    ],
+    "derivatives": "basis"
+  },
+  "options": {
+    "completion": 16,
+    "germ_order": 16
+  }
+}

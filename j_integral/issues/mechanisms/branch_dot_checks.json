@@ -1,0 +1,142 @@
+[
+  {
+    "case": "012",
+    "branch_groups": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "021",
+    "branch_groups": [
+      [
+        1,
+        2
+      ],
+      [
+        6
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "102",
+    "branch_groups": [
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        6
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "120",
+    "branch_groups": [
+      [
+        6
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "201",
+    "branch_groups": [
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "210",
+    "branch_groups": [
+      [
+        6
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "four_mass_split",
+    "branch_groups": [
+      [
+        1
+      ],
+      [
+        4
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "coefficient_identity_checked": true
+  },
+  {
+    "case": "four_symmetric",
+    "branch_groups": [
+      [
+        1
+      ],
+      [
+        4
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "coefficient_identity_checked": true
+  }
+]

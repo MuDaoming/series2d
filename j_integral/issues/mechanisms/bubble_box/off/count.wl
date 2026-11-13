@@ -1,0 +1,10 @@
+$HistoryLength=0;out=DirectoryName[$InputFileName];SetDirectory[out];
+Get["/home/mudaoming/Documents/Packages/blade/blade-main/Blade.wl"];
+Unprotect[Blade`Private`CacheDirectory];Clear[Blade`Private`CacheDirectory];
+Blade`Private`CacheDirectory[key_]:=FileNameJoin[{out,"cache",ToString[Blade`Private`BLFamily,InputForm]<>"_"<>key}];
+BLNthreads=1;BLSSolveNthreads=1;BLSetReducerOptions["IntegralOrdering"->2];
+prop={l1^2,l2^2,(l2+k)^2,(l2+q)^2,(l1+l2+r)^2,(l1+k)^2,(l1+q)^2,(l1+r)^2,(l2+r)^2};
+top={1,1,1,1,1,0,0,0,0};
+sp={k k->2/7,k q->38113/9240,k r->550909/120120,q q->38113/4620,q r->22483/4620,r r->149/60};
+BLFamilyDefine[boxoff,26/7,prop,{l1,l2},{k,q,r},{},sp,top,{},top];
+start=AbsoluteTime[];mi=BLMaximalCutMasters[top,{},"PreferredMI"->"Dot"];Put[mi,"masters.wl"];Export["result.json",<|"masters"->ToString[mi,InputForm],"count"->Length[mi],"seconds"->(AbsoluteTime[]-start)|>,"RawJSON"];Print["RESULT=",mi];Exit[];

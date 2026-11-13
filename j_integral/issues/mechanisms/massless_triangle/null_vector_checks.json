@@ -1,0 +1,9 @@
+{
+  "triangle_F": "c*(A*x+B*y)+p2*x*y",
+  "box_F": "A*x+B*y+C+p2*x*y",
+  "vector_field": "B*d/dx-A*d/dy",
+  "V_F": "p2*(B*y-A*x)",
+  "V_t": "b*(B-A)/(x+y+b)^2",
+  "exact_checks": true,
+  "interpretation": "At p2=0 the vector field preserves F and yields a simpler subloop IBP, but it moves the fixed-t slice; its integrated identity therefore does not become a pointwise algebraic J relation."
+}

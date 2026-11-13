@@ -81,3 +81,7 @@ python j_integral/issues/sector_symmetries/fit_certificate.py 1110101
 ```
 
 第一、二步用 sympy，精确有理运算。第三步复用已有全 DE 证书搜索与现有数值点，不提交远程作业、不生成新 IBP 点。
+
+## 后续：从恒等式定位到具体来源
+
+随后用外腿离壳/质量拆分和子圈解析积分进一步检查，见 [具体机制报告](../mechanisms/README.md)。无对称例子的额外关系可定位到无质量外腿造成的参数多项式退化，而不再仅以“找到 t 全导数”作为解释。

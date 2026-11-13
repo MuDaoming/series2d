@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "family": {
+    "name": "equalmass_sunrise_off_pseudothreshold",
+    "loops": [
+      "L1",
+      "L2"
+    ],
+    "external_momenta": [
+      "p"
+    ],
+    "gram": [
+      [
+        "s"
+      ]
+    ],
+    "propagators": [
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [
+          0
+        ],
+        "mass2": "m2"
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [
+          0
+        ],
+        "mass2": "m2"
+      },
+      {
+        "loop": [
+          1,
+          1
+        ],
+        "shift": [
+          1
+        ],
+        "mass2": "m2"
+      }
+    ]
+  },
+  "j": {
+    "coordinates": "tz",
+    "branches": [
+      0,
+      1,
+      2
+    ],
+    "boundary": {
+      "z0": "fbi_analytic",
+      "z1": "regulated_zero"
+    }
+  },
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {
+      "s": "3/2",
+      "m2": "1"
+    }
+  },
+  "request": {
+    "targets": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        2
+      ],
+      [
+        1,
+        2,
+        1
+      ],
+      [
+        2,
+        1,
+        1
+      ]
+    ],
+    "derivatives": "basis"
+  },
+  "options": {
+    "completion": 16,
+    "germ_order": 16
+  }
+}

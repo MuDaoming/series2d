@@ -1,0 +1,11 @@
+# 测试范围与接口问题记录
+
+所有主结果使用显式包含三 branch 低 sector 的目标集合，保留边界函数，要求 DE 闭合。19 个独立输入在第二个质数 $1000033$、第二个 t 点 19 复核，普通顶层 J 数目不变且 DE 闭合，见上级的 second_point_checks.json。
+
+初次尝试五传播子 family 时，只给 corner 和五个顶层 single-dot、未给低 sector，接口在建立 completion 后退出码 139。该次失败没有生成被本研究使用的结果。补全低 sector 目标后正常返回；这里仍应视为通用 IBP 接口的鲁棒性缺陷（至少应报告缺失/未闭合而非崩溃），本次没有修改生产求解器去掩盖该问题。
+
+可复现输入：由 massless_triangle/on_shell/request.json 保留全部 family/j/point/options，仅把 request.targets 改成 corner 和五个单位 dot；调用同一 build/j-ibp。不要把此失败当成数学上的秩变化。
+
+六传播子的离壳输入起初只含 dot<=1，返回 unclosed（正常退出状态 2），增加到 dot<=2 后闭合。prepare.py 已更新为重建实际成功使用的输入，逐项核对其生成内容与保存输入一致。
+
+点态计数稳定和 DE 闭合不是任意 dot 下主积分最小性的普适证明。解析机制结论以一般维度的符号恒等式、显式子圈积分和受控变形共同支持，各处没有把数值计数单独当作完整证明。

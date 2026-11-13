@@ -1,0 +1,9 @@
+{
+  "generic_dimension_symbolic_identity": true,
+  "generic_s_symbolic_identity": true,
+  "independent_numeric_IBP_match": true,
+  "sigma": "s/m2",
+  "identity": "[1-t(1-t)(sigma-1)]m2 J121=-(3h-4)(t-1)J111+2(t-1)m2 J112-t(t-1)^2 B",
+  "integrated_identity": "I112=(3d-8)/(8m2)I111-(d-2)^2/(16(d-3)m2^2)T^2+(sigma-1)/2 * integral[t(1-t)J121 dt]",
+  "explanation": "The extra moment vanishes from the relation only at sigma=1; equal-mass permutations alone do not suffice away from this point."
+}

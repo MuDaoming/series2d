@@ -7,3 +7,5 @@
 - [DP 三传播子三 branch：等质量 on-shell sunrise](dp_sunrise_00110001/README.md)：独立定义、两个 J 主积分及边界函数的解析式。
 
 - [其它 sector 的置换对称与最后一重 IBP](sector_symmetries/README.md)：e6/DP 精确多项式置换检查，以及无置换自对称的 e6 五传播子例子。
+
+- [J 多于 FI 的具体机制与受控检验](mechanisms/README.md)：传播子交换、特殊运动学、真空齐次性、无标度边界，以及 branch 选择。包含 10 次独立 Blade 计数和 19 个 J 第二点复核。

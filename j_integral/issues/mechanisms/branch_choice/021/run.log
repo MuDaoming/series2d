@@ -1,0 +1,20 @@
+model r=14 targets=328 elapsed=0.0810472s
+germs built 0.000494245s
+completion=19 elapsed=0.0902817s
+target 20/328 elapsed=0.0908382s
+target 40/328 elapsed=0.0927415s
+target 60/328 elapsed=0.0943234s
+target 80/328 elapsed=0.0954145s
+target 100/328 elapsed=0.0968646s
+target 120/328 elapsed=0.0981667s
+target 140/328 elapsed=0.10085s
+target 160/328 elapsed=0.102646s
+target 180/328 elapsed=0.105242s
+target 200/328 elapsed=0.119528s
+target 220/328 elapsed=0.126251s
+target 240/328 elapsed=0.130201s
+target 260/328 elapsed=0.138064s
+target 280/328 elapsed=0.139475s
+target 300/328 elapsed=0.141957s
+target 320/328 elapsed=0.146769s
+global point masters=18 unclosed=0 elapsed=0.194956s
