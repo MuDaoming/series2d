@@ -72,7 +72,8 @@ struct Expression {
 RF readr(const json& x){return Expression(x.is_string()?x.get<std::string>():x.dump()).parse();}
 using RRow=std::vector<RF>;using RMat=std::vector<RRow>;using Nu=std::vector<int>;
 struct Elimination {RMat matrix;std::vector<int> pivots;};
-Elimination eliminate(RMat a,int cols){int row=0;std::vector<int>pivots;for(int c=0;c<cols&&row<int(a.size());++c){int k=row;while(k<int(a.size())&&a[k][c].zero())++k;if(k==int(a.size()))continue;std::swap(a[k],a[row]);RF v=a[row][c];for(auto& x:a[row])x=x/v;for(int i=0;i<int(a.size());++i)if(i!=row&&!a[i][c].zero()){RF v=a[i][c];for(int j=0;j<int(a[i].size());++j)a[i][j]=a[i][j]-v*a[row][j];}pivots.push_back(c);++row;}return {std::move(a),std::move(pivots)};}
+json fbi_elimination_audit=json::array();
+Elimination eliminate(RMat a,int cols){if(!a.empty())fbi_elimination_audit.push_back({{"equations",a.size()},{"coefficient_columns",cols},{"stored_columns",a[0].size()}});int row=0;std::vector<int>pivots;for(int c=0;c<cols&&row<int(a.size());++c){int k=row;while(k<int(a.size())&&a[k][c].zero())++k;if(k==int(a.size()))continue;std::swap(a[k],a[row]);RF v=a[row][c];for(auto& x:a[row])x=x/v;for(int i=0;i<int(a.size());++i)if(i!=row&&!a[i][c].zero()){RF v=a[i][c];for(int j=0;j<int(a[i].size());++j)a[i][j]=a[i][j]-v*a[row][j];}pivots.push_back(c);++row;}return {std::move(a),std::move(pivots)};}
 RMat inverse(const RMat& a){int n=a.size();RMat b=a;for(int i=0;i<n;++i){b[i].resize(2*n);b[i][n+i]=RF(1);}auto e=eliminate(std::move(b),n);if(int(e.pivots.size())!=n)return {};RMat x(n,RRow(n));for(int i=0;i<n;++i)for(int j=0;j<n;++j)x[i][j]=e.matrix[i][n+j];return x;}
 struct SectorInfo {int type;std::vector<int>active;RMat inv;RF C;RRow zs;};
 U constant(const RF&a);

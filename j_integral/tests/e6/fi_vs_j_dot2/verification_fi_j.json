@@ -1,0 +1,8 @@
+{
+  "prime": 9223372036854775783,
+  "common_three_branch_targets_checked": 1111,
+  "additional_zero_targets_checked": 584,
+  "raw_Blade_master_count": 62,
+  "after_explicit_duplicate_merge": 61,
+  "all_FI_vs_J_reductions_equal": true
+}

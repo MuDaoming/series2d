@@ -219,3 +219,13 @@ python3 j_integral/src/IBP/tests/test_interface.py --reference
 ```
 
 这项测试显式依赖archive保存的参考文件；普通编译和生产计算没有这个依赖。真空测试还检查固定基底下dot2升到dot3、另一个常点及只请求部分导数。新增的接口并未宣称自动证明任意家族的全局最小主基。
+
+## 求解规模诊断
+
+`diagnostics.linear_algebra` 记录实际算法的结构，不将其伪装成一个Laporta大方程组：
+
+- `FBI_elimination_systems`：已知FBI公式中每次约束Hessian/KKT求逆或消元的行数、系数列数和存储列数；逆矩阵的单位阵右端不计为系数未知量。
+- `z_nonzero_relations_submitted`、`z_independent_relations`、`z_relation_columns`：一维Hermite约化之后，向全局稀疏消元器流式提交的非零关系、独立关系和出现的形式坐标数；包括所声明的边界条件。
+- `reduction_vectors`、`reduction_coordinate_columns`、`basis_rows`：目标/端点表示式的数量、形式坐标数及选定基的秩。这些表示式不是额外IBP关系。
+
+局部递推和Hermite闭式消去并未逐条展开成方程表，因此上述关系数不是所有操作的总数。若请求DE，first-jet还会构造第二个FBI模型，矩阵消元次数相应增加；只需数值约化时可设置 `request.derivatives=[]`。

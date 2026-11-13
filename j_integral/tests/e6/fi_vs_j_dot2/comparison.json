@@ -1,0 +1,280 @@
+{
+  "scope": {
+    "all_dot_le_2_targets": 1695,
+    "common_three_branch_targets": 1111,
+    "additional_scaleless_zero_targets": 584,
+    "dimension": "26/7",
+    "kinematics": "unchanged e6 input; all FI parameters numerical",
+    "size_comparison_prime": 9223372036854775783,
+    "sampling_comparison_prime": 1000003,
+    "sampling_variable": "tau=t-2/5",
+    "count_rule": "Only actual new public J-IBP executions; cache hits and repeated block requests are excluded. AB learning-anchor costs are reported separately."
+  },
+  "FI": {
+    "prime": 9223372036854775783,
+    "dimension": "26/7",
+    "targets": 1695,
+    "common_three_branch_targets": 1111,
+    "seed_dot": 2,
+    "seed_rank": 1,
+    "sectors": 63,
+    "generated_equations": 267120,
+    "nonzero_equations": 267120,
+    "variables": 129722,
+    "coefficient_nonzeros": 4326889,
+    "phase": "complete",
+    "generation_seconds": 100.875178,
+    "selected_independent_equations": 120817,
+    "selected_equations_after_pruning": 54419,
+    "numeric_IBP_solves": 1,
+    "master_count": 62,
+    "zero_target_rows": 584,
+    "metadata_recovery": "Final AssociateTo metadata updates had an arity error. Counts below come from the validated saved reduction dimensions; equation/pruning counts were saved before the update error. No solve was repeated."
+  },
+  "J_original_size": {
+    "basis": 79,
+    "prime": 9223372036854775783,
+    "FBI_rank": 42,
+    "FBI_systems": 71,
+    "FBI_equation_rows_sum": 227,
+    "FBI_max_equations": 7,
+    "FBI_shapes": [
+      {
+        "rows": 1,
+        "columns": 1,
+        "count": 24
+      },
+      {
+        "rows": 2,
+        "columns": 2,
+        "count": 19
+      },
+      {
+        "rows": 3,
+        "columns": 3,
+        "count": 7
+      },
+      {
+        "rows": 4,
+        "columns": 4,
+        "count": 1
+      },
+      {
+        "rows": 7,
+        "columns": 7,
+        "count": 20
+      }
+    ],
+    "FBI_recurrence_states": 1789,
+    "FBI_sector_count": 63,
+    "basis_rows": 79,
+    "reduction_coordinate_columns": 368,
+    "reduction_vectors": 1195,
+    "z_independent_relations": 54,
+    "z_nonzero_relations_submitted": 94,
+    "z_relation_attempts": 107,
+    "z_relation_coefficient_nonzeros": 1777,
+    "z_relation_columns": 501
+  },
+  "J_separated_size": {
+    "basis": 61,
+    "prime": 9223372036854775783,
+    "FBI_rank": 42,
+    "FBI_systems": 71,
+    "FBI_equation_rows_sum": 227,
+    "FBI_max_equations": 7,
+    "FBI_shapes": [
+      {
+        "rows": 1,
+        "columns": 1,
+        "count": 24
+      },
+      {
+        "rows": 2,
+        "columns": 2,
+        "count": 19
+      },
+      {
+        "rows": 3,
+        "columns": 3,
+        "count": 7
+      },
+      {
+        "rows": 4,
+        "columns": 4,
+        "count": 1
+      },
+      {
+        "rows": 7,
+        "columns": 7,
+        "count": 20
+      }
+    ],
+    "FBI_recurrence_states": 1789,
+    "FBI_sector_count": 63,
+    "basis_rows": 61,
+    "reduction_coordinate_columns": 312,
+    "reduction_vectors": 1195,
+    "z_independent_relations": 54,
+    "z_nonzero_relations_submitted": 69,
+    "z_relation_attempts": 81,
+    "z_relation_coefficient_nonzeros": 1502,
+    "z_relation_columns": 465
+  },
+  "J_original_direct": {
+    "holdouts": 4,
+    "max_degree_sum": 137,
+    "nonzero_slots": 10502,
+    "passed": true,
+    "slots_fitted": 10502,
+    "train": 144,
+    "worst_denominator_degree": 68,
+    "worst_numerator_degree": 69,
+    "actual_IBP_calls": 148,
+    "prime": 1000003,
+    "targets": 1111,
+    "basis_size": 79,
+    "variable": "tau=t-2/5",
+    "anchor_cost_included": true
+  },
+  "J_separated_direct_generic": {
+    "holdouts": 4,
+    "max_degree_sum": 4,
+    "nonzero_slots": 8396,
+    "passed": true,
+    "slots_fitted": 8396,
+    "train": 10,
+    "worst_denominator_degree": 3,
+    "worst_numerator_degree": 1,
+    "actual_IBP_calls": 14,
+    "prime": 1000003,
+    "targets": 1111,
+    "basis_size": 61,
+    "variable": "tau=t-2/5",
+    "anchor_cost_included": true
+  },
+  "J_separated_direct_using_proved_factorization": {
+    "IBP_calls": 1,
+    "note": "The complete rational t dependence follows from the proved factorization, so no t reconstruction is needed."
+  },
+  "J_original_AB": {
+    "actual_IBP_calls": 17,
+    "DE_stage": 10,
+    "reduction_stage_new": 7,
+    "reduction_training_points": 5,
+    "reduction_holdout_points": 2,
+    "learning_anchor_IBP_calls": 148,
+    "total_including_this_reduction_anchor": 165,
+    "excludes": "Historical DE-anchor acquisition, if any. The separated DE anchor is analytic.",
+    "rational_entries_verified": 10502,
+    "ansatz_dimension": 22086,
+    "rejected_points": 0
+  },
+  "J_separated_AB": {
+    "actual_IBP_calls": 10,
+    "DE_stage": 4,
+    "reduction_stage_new": 6,
+    "reduction_training_points": 4,
+    "reduction_holdout_points": 2,
+    "learning_anchor_IBP_calls": 1,
+    "total_including_this_reduction_anchor": 11,
+    "excludes": "Historical DE-anchor acquisition, if any. The separated DE anchor is analytic.",
+    "rational_entries_verified": 8396,
+    "ansatz_dimension": 8994,
+    "rejected_points": 0
+  },
+  "FI_J_full_numeric_verification": {
+    "prime": 9223372036854775783,
+    "common_three_branch_targets_checked": 1111,
+    "additional_zero_targets_checked": 584,
+    "raw_Blade_master_count": 62,
+    "after_explicit_duplicate_merge": 61,
+    "all_FI_vs_J_reductions_equal": true
+  },
+  "limitations": [
+    "The unmodified AB second-layer existing-DE route hit KeyError:block0 in residue witness setup before any IBP. We used its default reduce flow, which establishes/checks the DE; DE and reduction point counts are split above.",
+    "An initial AB interface variant unnecessarily computed derivatives on reduction requests. It is retained locally as a diagnostic and excluded from the final run counts. The final interface requests derivatives only in DE mode.",
+    "FI metadata final AssociateTo calls had a logging arity error; saved matrix dimensions were validated and the metadata recovered without repeating the numerical solve."
+  ],
+  "all_sampling_point_size_ranges": {
+    "j_direct": {
+      "z_nonzero_relations_submitted": [
+        94,
+        94
+      ],
+      "z_independent_relations": [
+        54,
+        54
+      ],
+      "z_relation_columns": [
+        501,
+        501
+      ],
+      "reduction_coordinate_columns": [
+        429,
+        442
+      ]
+    },
+    "j_direct_separated": {
+      "z_nonzero_relations_submitted": [
+        69,
+        69
+      ],
+      "z_independent_relations": [
+        54,
+        54
+      ],
+      "z_relation_columns": [
+        465,
+        465
+      ],
+      "reduction_coordinate_columns": [
+        373,
+        403
+      ]
+    },
+    "j_ab": {
+      "z_nonzero_relations_submitted": [
+        94,
+        94
+      ],
+      "z_independent_relations": [
+        54,
+        54
+      ],
+      "z_relation_columns": [
+        501,
+        501
+      ],
+      "reduction_coordinate_columns": [
+        429,
+        442
+      ]
+    },
+    "j_ab_separated": {
+      "z_nonzero_relations_submitted": [
+        69,
+        69
+      ],
+      "z_independent_relations": [
+        54,
+        54
+      ],
+      "z_relation_columns": [
+        465,
+        465
+      ],
+      "reduction_coordinate_columns": [
+        380,
+        397
+      ]
+    }
+  },
+  "provenance_sha256": {
+    "j_integral/src/IBP/build/j-ibp": "00c3bf51d89649e3732a216c0cd492ec690c4fad8e0922f823f0bbb439ed4731",
+    "j_integral/tests/e6/fi_vs_j_dot2/backend_worker.py": "c24e66d494becca946955e5afe8e5be1c8fc420e9a57a59cde97f82d2d437d71",
+    "j_integral/tests/e6/fi_vs_j_dot2/reconstruct.cpp": "525174822aa785f48a8bcc7bb9e53850840e4282a29eef0dcfa428933620e131",
+    "j_integral/tests/e6/fi_vs_j_dot2/fi/numeric.wl": "35157b6a9f428be5e5e68359cfa1a07344f18692df1526fceed4984ac9668660",
+    "j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap/upstream/pipeline.py": "3610873d8ef6cdb68d37ba189ce586ed6357d6b3cc3333e2589c3415e1c98012"
+  }
+}

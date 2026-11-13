@@ -16,9 +16,10 @@ struct Span {
  std::vector<U> solve(C v,int size)const{C answer;for(auto&[key,e]:rows){auto it=v.find(key);if(it!=v.end()){U c=it->second;axpy(v,e.row,prime-c);axpy(answer,e.weights,c);}}if(!v.empty())throw std::runtime_error("chosen J basis does not span target/derivative");std::vector<U>a(size);for(auto&[k,x]:answer)a.at(std::stoi(k))=x;return a;}
 };
 struct Quotient {
+ long long attempted_rows=0,nonzero_rows=0,submitted_nonzeros=0;std::set<std::string> submitted_columns;
  std::map<std::string,C> rows;
  C reduce(C v)const{for(auto&[key,row]:rows){auto it=v.find(key);if(it!=v.end())axpy(v,row,prime-it->second);}return v;}
- void insert(C v){v=reduce(std::move(v));if(v.empty())return;U inv=nmod_inv(v.begin()->second,mod);std::string key=v.begin()->first;rows.emplace(key,scaled(v,inv));}
+ void insert(C v){++attempted_rows;if(!v.empty())++nonzero_rows;submitted_nonzeros+=v.size();for(auto&kv:v)submitted_columns.insert(kv.first);v=reduce(std::move(v));if(v.empty())return;U inv=nmod_inv(v.begin()->second,mod);std::string key=v.begin()->first;rows.emplace(key,scaled(v,inv));}
 };
 std::pair<P,P> specialize(const RF&a,U point){MP n,d;nmod_mpoly_evaluate_one_ui(n.v,a.n.v,0,point,mc);nmod_mpoly_evaluate_one_ui(d.v,a.d.v,0,point,mc);P nn=univariate(n),dd=univariate(d),g;if(dd.zero())throw std::runtime_error("singular specialization");nmod_poly_gcd(g.v,nn.v,dd.v);return {quotient(nn,g),quotient(dd,g)};}
 using RationalRow=std::vector<std::pair<P,P>>;

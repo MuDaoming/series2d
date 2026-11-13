@@ -35,3 +35,5 @@ e6为原两圈六点例子，额外外动量满足 $p_6=p_1+p_2-p_3-p_4-p_5$；�
 首次原包CLI运行 `original_cli_001` 已完成：学习5.00秒、求解18.07秒、真实数值IBP10次（6个不同训练点，含块检查共8点，再加2个最终检查点），无失败。79×79全部6241项与已有有理DE一致，撤回共同规范后的物理DE也逐条目完全相同。可追踪结果在 `reference/`，完整运行记录在 `runs/original_cli_001/`。
 
 FI与J主积分数目的进一步比较及一个明确的t-IBP关系见 [analysis/README.md](analysis/README.md)。
+
+固定全部运动学、全局dot<=2数值约化的FI/J规模及重构/AB次数对比，见 [fi_vs_j_dot2/README.md](fi_vs_j_dot2/README.md)。该测试不是FI运动学DE。

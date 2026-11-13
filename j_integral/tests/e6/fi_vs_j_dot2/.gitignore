@@ -1,0 +1,11 @@
+/reconstruct
+/__pycache__/
+/fi/run_rank1/
+/j_direct/
+/j_direct_separated/
+/j_ab/
+/j_ab_separated/
+/j_original_common_prime.json
+/j_separated_common_prime.json
+/j_separated_anchor_point.json
+/backend_all_derivatives.py
