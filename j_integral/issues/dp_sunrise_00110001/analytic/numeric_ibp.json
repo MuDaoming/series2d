@@ -1,0 +1,85 @@
+{
+  "basis": [
+    "Bz0{1,1,1}",
+    "J{1,1,1}",
+    "J{1,1,2}"
+  ],
+  "basis_status": "candidate_at_this_point",
+  "definition": {
+    "boundary": {
+      "z0": "fbi_analytic",
+      "z1": "regulated_zero"
+    },
+    "branches": [
+      0,
+      1,
+      2
+    ],
+    "coordinates": "tz"
+  },
+  "derivatives": {
+    "Bz0{1,1,1}": {
+      "Bz0{1,1,1}": 226366
+    },
+    "J{1,1,1}": {
+      "Bz0{1,1,1}": 999970,
+      "J{1,1,1}": 901263,
+      "J{1,1,2}": 448531
+    },
+    "J{1,1,2}": {
+      "Bz0{1,1,1}": 415568,
+      "J{1,1,1}": 972792,
+      "J{1,1,2}": 493508
+    }
+  },
+  "diagnostics": {
+    "FBI_rank": 1,
+    "auxiliary_J_parents": 0,
+    "basis_size": 3,
+    "completion_relations": 1,
+    "physical_boundary_relations": 0,
+    "requested_J_targets": 4,
+    "scalar_certificate_checks": 7,
+    "timings": {
+      "FBI_model_seconds": 0.000960887,
+      "completion_seconds": 0.0003913209999999998,
+      "germ_seconds": 0.0001053330000000001,
+      "total_seconds": 0.003278736
+    },
+    "wall_seconds": 0.018142116
+  },
+  "point": {
+    "dimension": "26/7",
+    "parameters": {
+      "m2": "1",
+      "s": "1"
+    },
+    "prime": 1000003,
+    "t": "17"
+  },
+  "reductions": {
+    "Bz0{1,1,1}": {
+      "Bz0{1,1,1}": 1
+    },
+    "Bz1{1,1,1}": {},
+    "J{1,1,1}": {
+      "J{1,1,1}": 1
+    },
+    "J{1,1,2}": {
+      "J{1,1,2}": 1
+    },
+    "J{1,2,1}": {
+      "Bz0{1,1,1}": 995651,
+      "J{1,1,1}": 285690,
+      "J{1,1,2}": 32
+    },
+    "J{2,1,1}": {
+      "Bz0{1,1,1}": 4624,
+      "J{1,1,1}": 571457,
+      "J{1,1,2}": 999969
+    }
+  },
+  "schema_version": 1,
+  "status": "complete",
+  "unclosed_derivatives": []
+}
