@@ -196,3 +196,7 @@ j_integral/src/IBP/build/j-ibp \
   --output /tmp/e6_fourprop.json
 python3 j_integral/issues/e6_sector_0110101/check_definition.py /tmp/e6_fourprop.json
 ```
+
+## 解析积分尝试
+
+见 [解析公式与推导](analytic/README.md)：两个低 sector 的 $J$ 和边界函数已完全积分，三个顶层 $J$ 暂得到完成 $z$ 积分的超几何表示；检验脚本及结果同时保存。

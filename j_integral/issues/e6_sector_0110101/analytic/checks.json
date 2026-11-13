@@ -1,0 +1,159 @@
+{
+  "precision": 50,
+  "normalization": "physical FI/FBI/J including Gamma factors; (-s-i0)^a=e^(-i*pi*a)*s^a for positive s",
+  "checks": [
+    {
+      "test": "sunrise z integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.23",
+      "s": "2.4833333333333333333333333333333333333333333333333",
+      "relative_error": "8.7843465e-49"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.23",
+      "s": "1.0",
+      "relative_error": "8.766241e-49"
+    },
+    {
+      "test": "boundary y integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.23",
+      "relative_error": "3.3214565e-40"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.61",
+      "s": "2.4833333333333333333333333333333333333333333333333",
+      "relative_error": "1.1272094e-48"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.61",
+      "s": "1.0",
+      "relative_error": "1.1281364e-48"
+    },
+    {
+      "test": "boundary y integral",
+      "d": "3.7142857142857142857142857142857142857142857142857",
+      "t": "0.61",
+      "relative_error": "3.3214565e-40"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "5.5",
+      "t": "0.23",
+      "s": "2.4833333333333333333333333333333333333333333333333",
+      "relative_error": "3.0714273e-51"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "5.5",
+      "t": "0.23",
+      "s": "1.0",
+      "relative_error": "1.8655539e-51"
+    },
+    {
+      "test": "boundary y integral",
+      "d": "5.5",
+      "t": "0.23",
+      "relative_error": "2.7311991e-51"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "5.5",
+      "t": "0.61",
+      "s": "2.4833333333333333333333333333333333333333333333333",
+      "relative_error": "4.1119619e-103"
+    },
+    {
+      "test": "sunrise z integral",
+      "d": "5.5",
+      "t": "0.61",
+      "s": "1.0",
+      "relative_error": "1.4951195e-51"
+    },
+    {
+      "test": "boundary y integral",
+      "d": "5.5",
+      "t": "0.61",
+      "relative_error": "4.2102931e-51"
+    },
+    {
+      "test": "top z integral to Gauss 2F1",
+      "indices": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "relative_error": "4.5217241e-51"
+    },
+    {
+      "test": "top z integral to Gauss 2F1",
+      "indices": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "relative_error": "1.3276878e-42"
+    },
+    {
+      "test": "top z integral to Gauss 2F1",
+      "indices": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "relative_error": "3.4558691e-51"
+    }
+  ],
+  "exact_diagonal_DE_checks": [
+    "J{1,0,1,1}",
+    "J{1,1,0,1}",
+    "Bz0{1,1,1,1}"
+  ],
+  "exact_coordinate_and_F_checks": true,
+  "exact_boundary_primitive_check": true,
+  "sunrise_FI_Gamma_identity": true,
+  "boundary_period_prescription": "Beta-function analytic continuation in independent endpoint exponents; not an ordinary convergent integral",
+  "boundary_period_beta_arguments": [
+    "1-d/2",
+    "d/2-2"
+  ],
+  "boundary_period_beta_argument_sum": -1,
+  "boundary_period_analytic_continuation": 0,
+  "boundary_regularization_samples": [
+    {
+      "epsilon": "0.01",
+      "beta_value": "-1.17766792433398001"
+    },
+    {
+      "epsilon": "0.001",
+      "beta_value": "-0.118164696642422614"
+    },
+    {
+      "epsilon": "0.0001",
+      "beta_value": "-0.0118253271329174344"
+    }
+  ],
+  "example_lower_values_at_t_0_37": {
+    "J1011": {
+      "real": "-2.43722063465686279019474074052",
+      "imaginary": "-3.05617800999282901134947156101"
+    },
+    "J1101": {
+      "real": "-4.66726775422625423436209599781",
+      "imaginary": "-5.85256864905180318566507692442"
+    },
+    "B1111": {
+      "real": "21.2149373678664736858266525085",
+      "imaginary": "26.6026900253029567215924545664"
+    }
+  }
+}
