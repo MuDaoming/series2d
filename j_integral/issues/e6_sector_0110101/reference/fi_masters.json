@@ -1,0 +1,45 @@
+{
+  "source": "Blade master discovery for the original e6 family; not independently rediscovered for this isolated family",
+  "all_master_indices": [
+    [
+      2,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      0,
+      1
+    ]
+  ],
+  "top_master_indices": [
+    [
+      2,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "all_count": 4,
+  "top_count": 2
+}

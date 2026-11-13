@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "j_integral/tests/e6/input/family_request.json": "03041b18eb2686f3db99abdc0d61211c7740108de94c2481ee33da6a57904992",
+    "j_integral/tests/e6/reference/physical_de.json.gz": "d7d127a05d15399c09d11daa293f8c333cd46ac86b0938ce4a43a53469cd4357",
+    "j_integral/tests/e6/analysis/t_ibp_certificate.json": "a415bd51a1223a9f24d3aee374de0bc30a4b42d7963a0fe9b7f2fea6b9673652",
+    "j_integral/archive/j_integral_bootstrap/reference/fi_master_counts/e6.json": "ebfdaaf485e22f9e0c346ddb76fd95d85d3933aef779bf3b1eb5cbb8ecdb8aac"
+  },
+  "ordinary_J_top_count": 3,
+  "ordinary_J_total": 5,
+  "boundary_total": 1,
+  "differential_closure_rank": 6,
+  "FI_top_count": 2,
+  "FI_supported_subsectors_count": 4,
+  "FI_count_scope": "Inherited original-family representatives; recheck independently before claiming minimality of isolated family"
+}

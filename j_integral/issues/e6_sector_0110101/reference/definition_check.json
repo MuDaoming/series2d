@@ -1,0 +1,6 @@
+{
+  "momentum_routing_and_kinematics_equal": true,
+  "point": 17,
+  "DE_scalar_checks_including_zeros": 36,
+  "all_DE_coefficients_equal": true
+}

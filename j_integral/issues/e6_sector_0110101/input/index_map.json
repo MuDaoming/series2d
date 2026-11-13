@@ -1,0 +1,30 @@
+{
+  "original_family": "e6",
+  "original_sector": "0110101",
+  "original_propagator_numbers": [
+    2,
+    3,
+    5,
+    7
+  ],
+  "new_propagator_numbers": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "loop_change": {
+    "ell1": "k1+p3",
+    "ell2": "k2"
+  },
+  "external_change": {
+    "P": "p1-p3-p4",
+    "Q": "p1+p2-p3-p4"
+  },
+  "invariants": {
+    "sP": "149/60",
+    "sQ": "38113/4620",
+    "sR": "1",
+    "P_dot_Q": "22483/4620"
+  }
+}

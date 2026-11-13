@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "family": {
+    "name": "e6_sector_0110101_four_propagators",
+    "loops": [
+      "ell1",
+      "ell2"
+    ],
+    "external_momenta": [
+      "P",
+      "Q"
+    ],
+    "gram": [
+      [
+        "sP",
+        "(sP+sQ-sR)/2"
+      ],
+      [
+        "(sP+sQ-sR)/2",
+        "sQ"
+      ]
+    ],
+    "propagators": [
+      {
+        "loop": [
+          1,
+          0
+        ],
+        "shift": [
+          0,
+          0
+        ],
+        "mass2": 0
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [
+          0,
+          0
+        ],
+        "mass2": 0
+      },
+      {
+        "loop": [
+          0,
+          1
+        ],
+        "shift": [
+          0,
+          1
+        ],
+        "mass2": 0
+      },
+      {
+        "loop": [
+          1,
+          1
+        ],
+        "shift": [
+          1,
+          0
+        ],
+        "mass2": 0
+      }
+    ]
+  },
+  "j": {
+    "coordinates": "tz",
+    "branches": [
+      0,
+      1,
+      1,
+      2
+    ],
+    "boundary": {
+      "z0": "fbi_analytic",
+      "z1": "regulated_zero"
+    }
+  },
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "parameters": {
+      "sP": "149/60",
+      "sQ": "38113/4620",
+      "sR": "1"
+    }
+  },
+  "request": {
+    "targets": [
+      [
+        1,
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        1,
+        1,
+        2,
+        1
+      ]
+    ],
+    "basis": [
+      "Bz0{1,1,1,1}",
+      "J{1,0,1,1}",
+      "J{1,1,0,1}",
+      "J{1,1,1,1}",
+      "J{1,1,1,2}",
+      "J{1,1,2,1}"
+    ],
+    "derivatives": "basis"
+  },
+  "options": {
+    "completion": 16,
+    "germ_order": 16
+  }
+}
