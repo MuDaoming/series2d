@@ -1,0 +1,752 @@
+{
+  "exit_code": 0,
+  "seconds": 106.03259064722806,
+  "updated_utc": "2026-11-13T09:08:46.254157+00:00",
+  "diagnostics": {
+    "FBI_rank": 115,
+    "auxiliary_J_parents": 0,
+    "basis_size": 496,
+    "completion_relations": 215,
+    "linear_algebra": {
+      "FBI_elimination_systems": [
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 7,
+          "equations": 7,
+          "stored_columns": 7
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 1,
+          "equations": 1,
+          "stored_columns": 2
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 2,
+          "equations": 2,
+          "stored_columns": 4
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 3,
+          "equations": 3,
+          "stored_columns": 6
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 4,
+          "equations": 4,
+          "stored_columns": 8
+        },
+        {
+          "coefficient_columns": 5,
+          "equations": 5,
+          "stored_columns": 10
+        }
+      ],
+      "FBI_recurrence_states": 5262,
+      "FBI_sector_count": 147,
+      "basis_rows": 496,
+      "reduction_coordinate_columns": 4954,
+      "reduction_vectors": 3182,
+      "z_independent_relations": 215,
+      "z_nonzero_relations_submitted": 799,
+      "z_relation_attempts": 799,
+      "z_relation_coefficient_nonzeros": 34530,
+      "z_relation_columns": 5695
+    },
+    "physical_boundary_relations": 100,
+    "requested_J_targets": 2952,
+    "scalar_certificate_checks": 10431,
+    "timings": {
+      "FBI_model_seconds": 19.941208657,
+      "completion_seconds": 5.060476941000001,
+      "germ_seconds": 0.33087075799999965,
+      "total_seconds": 103.957242258
+    },
+    "wall_seconds": 105.888526473
+  },
+  "result_keys": [
+    "basis",
+    "basis_status",
+    "definition",
+    "derivatives",
+    "diagnostics",
+    "point",
+    "reductions",
+    "schema_version",
+    "status",
+    "unclosed_derivatives"
+  ]
+}

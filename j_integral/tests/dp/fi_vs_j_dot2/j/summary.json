@@ -1,0 +1,27 @@
+{
+  "seconds": 106.03259064722806,
+  "basis_size": 496,
+  "FBI_rank": 115,
+  "FBI_matrix_operations": 141,
+  "FBI_total_rows": 343,
+  "FBI_shapes": {
+    "(1, 1)": 45,
+    "(7, 7)": 12,
+    "(2, 2)": 48,
+    "(3, 3)": 27,
+    "(4, 4)": 8,
+    "(5, 5)": 1
+  },
+  "other_linear_algebra": {
+    "FBI_recurrence_states": 5262,
+    "FBI_sector_count": 147,
+    "basis_rows": 496,
+    "reduction_coordinate_columns": 4954,
+    "reduction_vectors": 3182,
+    "z_independent_relations": 215,
+    "z_nonzero_relations_submitted": 799,
+    "z_relation_attempts": 799,
+    "z_relation_coefficient_nonzeros": 34530,
+    "z_relation_columns": 5695
+  }
+}

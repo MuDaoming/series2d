@@ -1,0 +1,23 @@
+{
+  "checked_utc": "2026-11-13T09:11:44.268960+00:00",
+  "services": {
+    "dp-fi-native-dot2": {
+      "MainPID": "60211",
+      "Result": "success",
+      "MemoryCurrent": "796176384",
+      "CPUUsageNSec": "455464174000",
+      "ActiveState": "active",
+      "SubState": "running",
+      "log_tail": "Blade: a pacakge for block-triangular form improved Feynman integral decomposition.\nVersion 2024/05/23.\nAuthor: Xin Guan, Xiao Liu, Yan-Qing Ma and Wen-Hao Wu.\nNumber of defined symbols=65. Please see ?Blade`* for help.\n\n--------------------------------------------------\nBLSetReducerOptions->\"IBPParameter\" -> Automatic, \"IntegralOrdering\" -> 1, \"CheckMastersQ\" -> True, \"FilterLevel\" -> 3, \"IBPForMapSector\" -> False, \"MaxIncrement\" -> 2, \"CloseSymmetry\" -> False, \"ExternalSymmetry\" -> True, \"CutNoDot\" -> False, \"BlackBoxRank\" -> 2, \"BlackBoxDot\" -> 0, \"MaxPrime\" -> 200, \"MaxDegree\" -> 1000\nBLSetSchemeOptions->\"OperatorExtendGQ\" -> True, \"MinimalSchemeRank\" -> 1, \"PartitionDot\" -> True, \"PartitionRankThreshold\" -> 100, \"UniqueSubsectorQ\" -> True\nBLSetReducerOptions->\"IBPParameter\" -> Automatic, \"IntegralOrdering\" -> 2, \"CheckMastersQ\" -> True, \"FilterLevel\" -> 3, \"IBPForMapSector\" -> False, \"MaxIncrement\" -> 2, \"CloseSymmetry\" -> False, \"ExternalSymmetry\" -> True, \"CutNoDot\" -> False, \"BlackBoxRank\" -> 2, \"BlackBoxDot\" -> 0, \"MaxPrime\" -> 200, \"MaxDegree\" -> 1000--------------------------------------------------\nNATIVE_START TARGETS=4095 MASTERS=547\n\nDivideLevel -> Infinity\nBegin BLReduce...\n      MaximalCutMasters already exist.\n      Solve system id -> 1, Sector -> BL[dpNativeDot2, {1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0}]\n      Begin BLReduce...\n            Begin GenerateIBP...\n                  Begin BLIBPSystem...\n                        Rank: 2, Dots: 2, FilterLevel: 3"
+    },
+    "dp-j-ibp-size": {
+      "MainPID": "0",
+      "Result": "success",
+      "MemoryCurrent": "[not set]",
+      "CPUUsageNSec": "[not set]",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "log_tail": "ed=46.7592s\ntarget 1820/2952 elapsed=47.4997s\ntarget 1840/2952 elapsed=48.1602s\ntarget 1860/2952 elapsed=48.7369s\ntarget 1880/2952 elapsed=49.1665s\ntarget 1900/2952 elapsed=49.5063s\ntarget 1920/2952 elapsed=49.8607s\ntarget 1940/2952 elapsed=51.2895s\ntarget 1960/2952 elapsed=51.7669s\ntarget 1980/2952 elapsed=52.2608s\ntarget 2000/2952 elapsed=54.0771s\ntarget 2020/2952 elapsed=61.7091s\ntarget 2040/2952 elapsed=63.8781s\ntarget 2060/2952 elapsed=66.1318s\ntarget 2080/2952 elapsed=66.8472s\ntarget 2100/2952 elapsed=69.1676s\ntarget 2120/2952 elapsed=69.8392s\ntarget 2140/2952 elapsed=70.2706s\ntarget 2160/2952 elapsed=70.8514s\ntarget 2180/2952 elapsed=73.3336s\ntarget 2200/2952 elapsed=74.2066s\ntarget 2220/2952 elapsed=75.1242s\ntarget 2240/2952 elapsed=75.2481s\ntarget 2260/2952 elapsed=75.4335s\ntarget 2280/2952 elapsed=75.9398s\ntarget 2300/2952 elapsed=76.291s\ntarget 2320/2952 elapsed=76.6525s\ntarget 2340/2952 elapsed=77.0617s\ntarget 2360/2952 elapsed=79.4065s\ntarget 2380/2952 elapsed=81.2036s\ntarget 2400/2952 elapsed=82.7067s\ntarget 2420/2952 elapsed=83.9141s\ntarget 2440/2952 elapsed=84.3678s\ntarget 2460/2952 elapsed=85.0235s\ntarget 2480/2952 elapsed=85.0496s\ntarget 2500/2952 elapsed=85.1014s\ntarget 2520/2952 elapsed=85.2304s\ntarget 2540/2952 elapsed=85.2742s\ntarget 2560/2952 elapsed=85.4205s\ntarget 2580/2952 elapsed=85.5676s\ntarget 2600/2952 elapsed=86.0894s\ntarget 2620/2952 elapsed=86.3951s\ntarget 2640/2952 elapsed=86.6738s\ntarget 2660/2952 elapsed=86.7742s\ntarget 2680/2952 elapsed=86.9323s\ntarget 2700/2952 elapsed=87.3418s\ntarget 2720/2952 elapsed=87.8591s\ntarget 2740/2952 elapsed=88.0463s\ntarget 2760/2952 elapsed=88.4915s\ntarget 2780/2952 elapsed=89.2031s\ntarget 2800/2952 elapsed=91.4587s\ntarget 2820/2952 elapsed=92.2781s\ntarget 2840/2952 elapsed=93.0106s\ntarget 2860/2952 elapsed=93.3869s\ntarget 2880/2952 elapsed=94.1543s\ntarget 2900/2952 elapsed=94.2399s\ntarget 2920/2952 elapsed=94.477s\ntarget 2940/2952 elapsed=94.8094s\nglobal point masters=496 unclosed=0 elapsed=105.31s\n"
+    }
+  }
+}

@@ -5,3 +5,7 @@
 /fi/blade_native/system_sizes.json
 /fi/blade_native/masters.json
 /fi/blade_native/completion.json
+/j/result.json
+/j/run.log
+/__pycache__/
+/j/__pycache__/
