@@ -1,0 +1,7 @@
+/fi/blade_native/cache/
+/fi/blade_native/*.log
+/fi/blade_native/reductions.wl
+/fi/blade_native/run_status.json
+/fi/blade_native/system_sizes.json
+/fi/blade_native/masters.json
+/fi/blade_native/completion.json
