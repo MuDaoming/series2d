@@ -1,0 +1,15 @@
+$HistoryLength=0;out=DirectoryName[$InputFileName];SetDirectory[out];
+Get["/home/mudaoming/Documents/Packages/blade/blade-main/Blade.wl"];
+Unprotect[Blade`Private`CacheDirectory];Clear[Blade`Private`CacheDirectory];
+Blade`Private`CacheDirectory[key_]:=FileNameJoin[{out,"cache",ToString[Blade`Private`BLFamily,InputForm]<>"_"<>key}];
+BLNthreads=1;BLSSolveNthreads=1;BLSetReducerOptions["IntegralOrdering"->2];
+prop={l1^2-1,l2^2,(l1+l2)^2-1,(l1+l2+Q)^2-1,(l1+Q)^2};top={1,1,1,1,0};
+BLFamilyDefine[thresholdbubble,26/7,prop,{l1,l2},{Q},{},{Q^2->2},top,{}];
+masters=BLMaximalCutMasters[top,{},"PreferredMI"->"Dot"];Put[masters,"masters.wl"];
+target={BL[thresholdbubble,{1,1,1,1,0}],BL[thresholdbubble,{1,1,0,2,0}],BL[thresholdbubble,{1,0,1,1,0}]};
+res=BLReduce[Join[target,masters],masters,"threshold_verify","BladeMode"->None];
+If[!ListQ[res]||Length[res]!=Length[target]+Length[masters],Print["REDUCE_FAILED"];Exit[2]];
+res=res/.Thread[Take[res,-Length[masters]]->masters];
+d=26/7;identity=Together[res[[1]]+res[[2]]/(d-3)-(d-2)/(2(d-3))*res[[3]]];
+If[identity=!=0,Print["IDENTITY_FAILED=",identity];Exit[3]];
+Export["blade_checks.json",<|"dimension"->"26/7","Q2"->2,"masters"->ToString[masters,InputForm],"topsector_master_count"->Count[(And@@Thread[Take[#[[2]],4]>0]&/@masters),True],"identity_exactly_zero"->True,"reductions"->ToString[Take[res,3],InputForm]|>,"RawJSON"];Print["THRESHOLD_IDENTITY_PASS"];Exit[];

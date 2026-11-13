@@ -1,0 +1,18 @@
+$HistoryLength=0;out=DirectoryName[$InputFileName];SetDirectory[out];
+Get["/home/mudaoming/Documents/Packages/blade/blade-main/Blade.wl"];
+Unprotect[Blade`Private`CacheDirectory];Clear[Blade`Private`CacheDirectory];
+Blade`Private`CacheDirectory[key_]:=FileNameJoin[{out,"cache",ToString[Blade`Private`BLFamily,InputForm]<>"_"<>key}];
+BLNthreads=1;BLSSolveNthreads=1;BLSetReducerOptions["IntegralOrdering"->2];
+prop={l1^2,(l1+p)^2,l2^2,(l2+k)^2,(l2+q)^2,(l1+l2+r)^2,(l1+k)^2,(l1+q)^2,(l1+r)^2,(l2+p)^2,(l2+r)^2};
+top={1,1,1,1,1,1,0,0,0,0,0};
+sp={p p->0,p k->1/34,p q->-271/330,p r->-11/30,k k->0,k q->38113/9240,k r->9425513/2042040,q q->38113/4620,q r->1699/420,r r->7/4};
+BLFamilyDefine[sixbothnull,26/7,prop,{l1,l2},{p,k,q,r},{},sp,top,{},top];
+masters=BLMaximalCutMasters[top,{},"PreferredMI"->"Dot"];
+indices={{1,1,1,1,1,2},{1,1,1,1,2,1},{1,1,1,2,1,1},{1,1,1,1,1,3}};
+target=BL[sixbothnull,Join[#,{0,0,0,0,0}]]&/@indices;
+res=BLReduce[Join[target,masters],masters,"factorization_verify_dot2","BladeMode"->None];
+If[!ListQ[res]||Length[res]!=Length[target]+Length[masters],Print["REDUCTION_FAILED"];Exit[2]];
+res=res/.Thread[Take[res,-Length[masters]]->masters];
+prime=1000003;modr[x_]:=Mod[Numerator[Together[x]]PowerMod[Mod[Denominator[Together[x]],prime],-1,prime],prime];
+records=MapThread[Function[{nu,v},<|"indices"->nu,"coefficients"->(modr/@(Coefficient[Expand[v],#]&/@masters)),"unresolved"->(Expand[v/.Thread[masters->ConstantArray[0,Length[masters]]]]=!=0)|>],{indices,Take[res,Length[indices]]}];
+Export["reduction_verification.json",<|"prime"->prime,"master_indices"->(Take[#[[2]],6]&/@masters),"records"->records|>,"RawJSON"];Print["VERIFY_DONE"];Exit[];

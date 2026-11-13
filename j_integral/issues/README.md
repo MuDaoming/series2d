@@ -8,4 +8,7 @@
 
 - [其它 sector 的置换对称与最后一重 IBP](sector_symmetries/README.md)：e6/DP 精确多项式置换检查，以及无置换自对称的 e6 五传播子例子。
 
-- [J 多于 FI 的具体机制与受控检验](mechanisms/README.md)：传播子交换、特殊运动学、真空齐次性、无标度边界，以及 branch 选择。包含 10 次独立 Blade 计数和 19 个 J 第二点复核。
+- [J 多于 FI 的具体机制与受控检验](mechanisms/README.md)：传播子交换、特殊运动学、真空齐次性、无标度边界，以及 branch 选择。包含受控 Blade 计数、J 第二点复核和逐 sector 的待解决登记。
+
+- [两侧 branch 多项式为零时的统一解析分离](mechanisms/branch_factorization/README.md)：完整 e6 的 J/FI 等价公式、dot≤2 全局验证、Blade 清单重复及 FI 约化核对。
+- [阈值 bubble 与母图传播子重合](mechanisms/threshold_bubble/README.md)：明确的 J 微分关系、非零端点和完整 FI 降阶，含独立 Blade 验证。

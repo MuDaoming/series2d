@@ -1,0 +1,44 @@
+{
+  "prime": 1000003,
+  "dimension": "26/7",
+  "t_checks": [
+    17,
+    23
+  ],
+  "targets_checked": 1111,
+  "all_coefficients_t_independent": true,
+  "independent_Blade_sixprop_maximal_cut_targets": [
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      2
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      2,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      2,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1,
+      3
+    ]
+  ]
+}

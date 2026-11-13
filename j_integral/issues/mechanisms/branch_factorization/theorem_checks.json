@@ -1,0 +1,53 @@
+{
+  "generic_parameter_transformation_checked": true,
+  "retained_zero_intrinsic_groups": [
+    [
+      1,
+      2
+    ],
+    [
+      6,
+      7
+    ]
+  ],
+  "Blade_duplicate_sunrise_invariants": [
+    "1",
+    "1"
+  ],
+  "Blade_raw_count": 62,
+  "Blade_after_explicit_duplicate_merge": 61,
+  "t_factor": "t^(h-C-1)*(1-t)^(h-A-1)",
+  "normalized_identity": "J_nu(t)=t^(h-C-1)*(1-t)^(h-A-1)/Beta(h-C,h-A) * I_nu",
+  "diagonal_checks": [
+    {
+      "output": "j_result.json",
+      "master_count": 60,
+      "every_diagonal_exponent_matches": true,
+      "DE_closed": true
+    },
+    {
+      "output": "j_dot2.json",
+      "master_count": 61,
+      "every_diagonal_exponent_matches": true,
+      "DE_closed": true
+    },
+    {
+      "output": "j_blade_basis.json",
+      "master_count": 61,
+      "every_diagonal_exponent_matches": true,
+      "DE_closed": true
+    },
+    {
+      "output": "j_blade_basis_second.json",
+      "master_count": 61,
+      "every_diagonal_exponent_matches": true,
+      "DE_closed": true
+    },
+    {
+      "output": "j_blade_basis_t23.json",
+      "master_count": 61,
+      "every_diagonal_exponent_matches": true,
+      "DE_closed": true
+    }
+  ]
+}

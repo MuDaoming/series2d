@@ -3,3 +3,5 @@ __pycache__/
 **/cache/
 core
 core.*
+
+dp_dot2_audit/j_result.json

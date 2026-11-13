@@ -1,8 +1,9 @@
 """Recheck top J counts and DE closure at a second prime and t point."""
-import json,subprocess,tempfile
+import json,subprocess,tempfile,sys
 from pathlib import Path
 root=Path(__file__).resolve().parents[3];base=Path(__file__).resolve().parent
-paths=sorted(set(base.glob('*/*/request.json'))|set(base.glob('*/request.json')));rows=[]
+paths=sorted(set(base.glob('*/*/request.json'))|set(base.glob('*/request.json')));filters=sys.argv[1:];rows=json.load(open(base/'second_point_checks.json')) if filters else []
+paths=[p for p in paths if p.relative_to(base).parts[0] not in ['branch_factorization','dp_dot2_audit'] and (not filters or any(str(p.parent.relative_to(base)).startswith(q) for q in filters))]
 def top_count(r):return sum(n.startswith('J') and all(int(q)>0 for q in n.split('{')[1][:-1].split(',')) for n in r['basis'])
 for path in paths:
  old=json.load(open(path.with_name('j_result.json')));f=json.load(open(path));f['point']['prime']=1000033;f['point']['t']='19'
@@ -11,5 +12,5 @@ for path in paths:
   p=subprocess.run([str(root/'j_integral/src/IBP/build/j-ibp'),'--input',str(tmp/'request.json'),'--output',str(tmp/'result.json')],capture_output=True,text=True)
   assert p.returncode==0,(str(path),p.stderr)
   new=json.load(open(tmp/'result.json'));assert not new['unclosed_derivatives'];assert top_count(new)==top_count(old),(path,top_count(new),top_count(old))
-  row={'case':str(path.parent.relative_to(base)),'prime':1000033,'t':19,'top_J_count':top_count(new),'total_J_system':len(new['basis']),'top_count_stable':True,'DE_closed':True};rows.append(row);print(row,flush=True)
-(base/'second_point_checks.json').write_text(json.dumps(rows,indent=2)+'\n')
+  row={'case':str(path.parent.relative_to(base)),'prime':1000033,'t':19,'top_J_count':top_count(new),'total_J_system':len(new['basis']),'top_count_stable':True,'DE_closed':True};rows=[q for q in rows if q['case']!=row['case']];rows.append(row);print(row,flush=True)
+(base/'second_point_checks.json').write_text(json.dumps(sorted(rows,key=lambda r:r['case']),indent=2)+'\n')

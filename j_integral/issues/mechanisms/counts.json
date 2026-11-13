@@ -24,6 +24,30 @@
     "J_DE_closed": true
   },
   {
+    "case": "dp_massive_bubble/equal",
+    "FI_top": 3,
+    "J_top": 4,
+    "J_ordinary_all_sectors": 8,
+    "boundary_count": 2,
+    "Blade_seconds": 6.964952,
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "J_DE_closed": true
+  },
+  {
+    "case": "dp_massive_bubble/split",
+    "FI_top": 4,
+    "J_top": 4,
+    "J_ordinary_all_sectors": 8,
+    "boundary_count": 2,
+    "Blade_seconds": 6.009084,
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "J_DE_closed": true
+  },
+  {
     "case": "four_line_exchange/mass_split",
     "FI_top": 3,
     "J_top": 3,
@@ -102,6 +126,18 @@
     "J_ordinary_all_sectors": 45,
     "boundary_count": 4,
     "Blade_seconds": 35.470358,
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "17",
+    "J_DE_closed": true
+  },
+  {
+    "case": "threshold_bubble/split_parent",
+    "FI_top": 1,
+    "J_top": 1,
+    "J_ordinary_all_sectors": 4,
+    "boundary_count": 1,
+    "Blade_seconds": 4.81039,
     "prime": 1000003,
     "dimension": "26/7",
     "t": "17",

@@ -1,0 +1,8 @@
+{
+	"dimension":"26\/7",
+	"Q2":2,
+	"masters":"{BL[thresholdbubble, {2, 1, 0, 1, 0}], BL[thresholdbubble, {1, 0, 1, 1, 0}], BL[thresholdbubble, {1, 1, 0, 1, 0}], BL[thresholdbubble, {1, 0, 0, 1, 0}], BL[thresholdbubble, {1, 0, 1, 0, 0}]}",
+	"topsector_master_count":0,
+	"identity_exactly_zero":true,
+	"reductions":"{(6*BL[thresholdbubble, {1, 0, 1, 1, 0}])\/5 - (7*BL[thresholdbubble, {2, 1, 0, 1, 0}])\/5, BL[thresholdbubble, {2, 1, 0, 1, 0}], BL[thresholdbubble, {1, 0, 1, 1, 0}]}"
+}

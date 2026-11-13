@@ -1,0 +1,70 @@
+[
+  {
+    "mask": "00100101",
+    "FI": 0,
+    "J": 1,
+    "matches": [
+      {
+        "bubble": [
+          3,
+          6
+        ],
+        "threshold_line": 8,
+        "m2": "1"
+      },
+      {
+        "bubble": [
+          6,
+          8
+        ],
+        "threshold_line": 3,
+        "m2": "1"
+      }
+    ]
+  },
+  {
+    "mask": "00100111",
+    "FI": 0,
+    "J": 1,
+    "matches": [
+      {
+        "bubble": [
+          3,
+          6
+        ],
+        "threshold_line": 8,
+        "m2": "1"
+      }
+    ]
+  },
+  {
+    "mask": "01100101",
+    "FI": 0,
+    "J": 3,
+    "matches": [
+      {
+        "bubble": [
+          6,
+          8
+        ],
+        "threshold_line": 3,
+        "m2": "1"
+      }
+    ]
+  },
+  {
+    "mask": "11100101",
+    "FI": 0,
+    "J": 2,
+    "matches": [
+      {
+        "bubble": [
+          6,
+          8
+        ],
+        "threshold_line": 3,
+        "m2": "1"
+      }
+    ]
+  }
+]

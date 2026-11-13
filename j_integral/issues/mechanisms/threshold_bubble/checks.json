@@ -1,0 +1,10 @@
+{
+  "generic_d_m2_s_symbolic_bubble_identity": true,
+  "bubble_DE_numeric_relative_error": "3.0519025e-46",
+  "J_identity": "d(t J1111)/dt=(d-3)J1111+J2101",
+  "J_identity_all_basis_coefficients_checked": true,
+  "FI_identity": "I1111=-I1102/(d-3)+(d-2)/(2*(d-3)*m2)*I1011",
+  "endpoint": "[t J1111]_0^1=(d-2)/(2*m2)*T*Bubble_mm(Q2)",
+  "t_dependent_fractional_mass": "M2(t)=m2/(1-t)",
+  "independent_Blade_full_reduction_identity": true
+}

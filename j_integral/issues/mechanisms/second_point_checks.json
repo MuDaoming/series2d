@@ -90,6 +90,24 @@
     "DE_closed": true
   },
   {
+    "case": "dp_massive_bubble/equal",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 4,
+    "total_J_system": 10,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "dp_massive_bubble/split",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 4,
+    "total_J_system": 10,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
     "case": "four_line_exchange/mass_split",
     "prime": 1000033,
     "t": 19,
@@ -158,6 +176,24 @@
     "t": 19,
     "top_J_count": 2,
     "total_J_system": 3,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "threshold_bubble",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 1,
+    "total_J_system": 5,
+    "top_count_stable": true,
+    "DE_closed": true
+  },
+  {
+    "case": "threshold_bubble/split_parent",
+    "prime": 1000033,
+    "t": 19,
+    "top_J_count": 1,
+    "total_J_system": 5,
     "top_count_stable": true,
     "DE_closed": true
   },

@@ -1,0 +1,1902 @@
+{
+  "scope": "Raw sectors with J>FI in the saved lists; cross-sector representatives must not be mistaken for physical rank differences. New full dot<=2 J tests preserve these original counts.",
+  "summary": {
+    "e6": {
+      "resolved": 14
+    },
+    "dp": {
+      "resolved": 7,
+      "representatives_pending": 9,
+      "partial": 20,
+      "unresolved": 26
+    }
+  },
+  "sectors": [
+    {
+      "family": "e6",
+      "mask": "0110101",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "0110110",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1010101",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1010110",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "0111101",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 1,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "0111110",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 1,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1011101",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 1,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1011110",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 1,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1110101",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1110110",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "0111111",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1011111",
+      "FI_raw": 2,
+      "J_original_dot2": 3,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1111101",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "e6",
+      "mask": "1111110",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "J_separated_dot2": 2,
+      "status": "resolved",
+      "mechanism": "Two retained branches have zero intrinsic polynomials; explicit Beta separation makes J/FI reduction equivalent. Old projection retains t inside the kernel.",
+      "evidence": "branch_factorization/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "00100101",
+      "FI_raw": 0,
+      "J_original_dot2": 1,
+      "branch_sizes": [
+        1,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "m,0,m zero-invariant vacuum: homogeneity plus momentum IBP reduces I111 to tadpole product.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "10001010",
+        "10000101",
+        "01001010"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "vacuum_m0m/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "00100110",
+      "FI_raw": 0,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        1,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [
+        "01001001"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01001001"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00101001",
+      "FI_raw": 0,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        1,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01000110"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01000110"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00101010",
+      "FI_raw": 0,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        1,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [
+        "01000101"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01000101"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00110001",
+      "FI_raw": 1,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        1,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "Equal-mass sunrise at s=m2: full permutation plus disappearance of an explicit (s/m2-1)-weighted moment.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01010010"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01010010"
+      ],
+      "evidence": "sunrise_deformation/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "00100111",
+      "FI_raw": 0,
+      "J_original_dot2": 1,
+      "branch_sizes": [
+        1,
+        1,
+        2
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "A massive-massless bubble threshold coincides with a parent propagator; its explicit subloop DE and momentum IBP remove the topsector.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01001011"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "threshold_bubble/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "00101011",
+      "FI_raw": 0,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        1,
+        1,
+        2
+      ],
+      "masses_squared": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01000111"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01000111"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00101101",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01001110"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00101110",
+      "FI_raw": 0,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [
+        "01001101"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01001101"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00110101",
+      "FI_raw": 0,
+      "J_original_dot2": 1,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01011010"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00110110",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00111001",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01010110"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01010110"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00111010",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01010101",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          2,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01011001",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          2,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01100101",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "A massive-massless bubble threshold coincides with a parent propagator; its explicit subloop DE and momentum IBP remove the topsector.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01101010"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "threshold_bubble/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "01100110",
+      "FI_raw": 0,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        2,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01101001"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01101001"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01110001",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        2,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "Equal-mass massive-bubble exchange moves t; representative mass splitting increases FI3->4 while J stays4.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [
+        [
+          4,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "dp_massive_bubble/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "01110010",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        2,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "Equal-mass massive-bubble exchange moves t; representative mass splitting increases FI3->4 while J stays4.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [
+        [
+          4,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "dp_massive_bubble/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "10001101",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10001110",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10010101",
+      "FI_raw": 1,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10010110",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10011001",
+      "FI_raw": 2,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10011010",
+      "FI_raw": 1,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00101111",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        1,
+        2,
+        2
+      ],
+      "masses_squared": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01001111"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01001111"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00110111",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        1,
+        2,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00111101",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        1,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          8
+        ]
+      ],
+      "equivalent_sectors": [
+        "01011110"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00111110",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          3,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01011011",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        1,
+        2,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01011101",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          2,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01100111",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        1,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01101011"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01101011"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01101101",
+      "FI_raw": 0,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "representatives_pending",
+      "mechanism": "FI representatives occur in an equivalent sector, so raw FI=0 is not topsector vanishing.",
+      "remaining": "Merge equivalent sector representatives before diagnosing any physical J-FI excess.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "01101110"
+      ],
+      "equivalent_sectors_with_FI_representatives": [
+        "01101110"
+      ],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01110101",
+      "FI_raw": 0,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01111010",
+      "FI_raw": 0,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10011101",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10011110",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        1,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          1,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10101101",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10110101",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11001110",
+      "FI_raw": 1,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11011010",
+      "FI_raw": 0,
+      "J_original_dot2": 3,
+      "branch_sizes": [
+        2,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11100101",
+      "FI_raw": 0,
+      "J_original_dot2": 2,
+      "branch_sizes": [
+        3,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "resolved",
+      "mechanism": "A massive-massless bubble threshold coincides with a parent propagator; its explicit subloop DE and momentum IBP remove the topsector.",
+      "remaining": "",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [
+        "11101010"
+      ],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": "threshold_bubble/README.md"
+    },
+    {
+      "family": "dp",
+      "mask": "11100110",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        3,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11101001",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        3,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11110001",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        3,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          4,
+          8
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11110010",
+      "FI_raw": 3,
+      "J_original_dot2": 4,
+      "branch_sizes": [
+        3,
+        1,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "partial",
+      "mechanism": "Equal-mass bubble exchange involving the integrated branch exists; its contribution to the whole excess has not been completed.",
+      "remaining": "Write the explicit transported FI relation and account for any remaining independent excess.",
+      "equal_mass_singleton_pairs": [
+        [
+          4,
+          7
+        ]
+      ],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "00111111",
+      "FI_raw": 3,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        1,
+        3,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01011111",
+      "FI_raw": 3,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        1,
+        3,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01111101",
+      "FI_raw": 3,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        2,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "01111110",
+      "FI_raw": 3,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        2,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "10111101",
+      "FI_raw": 2,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        2,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11011110",
+      "FI_raw": 2,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        2,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11100111",
+      "FI_raw": 4,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        3,
+        1,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11101011",
+      "FI_raw": 4,
+      "J_original_dot2": 5,
+      "branch_sizes": [
+        3,
+        1,
+        2
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11101101",
+      "FI_raw": 3,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11101110",
+      "FI_raw": 3,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11110101",
+      "FI_raw": 0,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11110110",
+      "FI_raw": 7,
+      "J_original_dot2": 8,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11111001",
+      "FI_raw": 7,
+      "J_original_dot2": 8,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11111010",
+      "FI_raw": 0,
+      "J_original_dot2": 7,
+      "branch_sizes": [
+        3,
+        2,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11111101",
+      "FI_raw": 7,
+      "J_original_dot2": 9,
+      "branch_sizes": [
+        3,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    },
+    {
+      "family": "dp",
+      "mask": "11111110",
+      "FI_raw": 7,
+      "J_original_dot2": 9,
+      "branch_sizes": [
+        3,
+        3,
+        1
+      ],
+      "masses_squared": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "status": "unresolved",
+      "mechanism": "No specific complete identity explaining the excess has been derived.",
+      "remaining": "Derive a concrete FI identity and show why it does not preserve the fixed-t slice.",
+      "equal_mass_singleton_pairs": [],
+      "equivalent_sectors": [],
+      "equivalent_sectors_with_FI_representatives": [],
+      "evidence": ""
+    }
+  ]
+}
