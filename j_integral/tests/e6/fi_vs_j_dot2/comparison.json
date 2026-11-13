@@ -276,5 +276,26 @@
     "j_integral/tests/e6/fi_vs_j_dot2/reconstruct.cpp": "525174822aa785f48a8bcc7bb9e53850840e4282a29eef0dcfa428933620e131",
     "j_integral/tests/e6/fi_vs_j_dot2/fi/numeric.wl": "35157b6a9f428be5e5e68359cfa1a07344f18692df1526fceed4984ac9668660",
     "j_integral/archive/j_integral_bootstrap/extern/analytic_bootstrap-master/analytic_bootstrap/upstream/pipeline.py": "3610873d8ef6cdb68d37ba189ce586ed6357d6b3cc3333e2589c3415e1c98012"
+  },
+  "fi_blade_native": {
+    "systems": [
+      {
+        "directory": "e6NativeDot2_dot2_1",
+        "raw_equations": 1294356,
+        "raw_FI_unknowns": 497083,
+        "all_integral_file_entries": 497083,
+        "selected_equations": 64818,
+        "selected_FI_unknowns": 72134,
+        "returned_dependent_integrals": 1111,
+        "masters": 62
+      }
+    ],
+    "system_count": 1,
+    "generation_seconds": 436.005,
+    "first_load_learn_trim_seconds": 462.611,
+    "status": "complete",
+    "total_seconds": 1151.405213,
+    "rational_reload_and_reconstruction_seconds": 117.299,
+    "native_reduce_seconds": 1020.675
   }
 }

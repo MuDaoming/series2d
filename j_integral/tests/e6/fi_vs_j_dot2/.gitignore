@@ -9,3 +9,8 @@
 /j_separated_common_prime.json
 /j_separated_anchor_point.json
 /backend_all_derivatives.py
+
+/fi/blade_native/cache/
+/fi/blade_native/*.log
+/fi/blade_native/reductions.wl
+/fi/blade_native/rejected_cut_cache/

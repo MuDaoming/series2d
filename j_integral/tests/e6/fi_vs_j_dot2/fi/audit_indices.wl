@@ -1,0 +1,14 @@
+$HistoryLength=0;started=AbsoluteTime[];
+base=DirectoryName[DirectoryName[$InputFileName]];out=FileNameJoin[{base,"fi","run_rank1"}];If[!DirectoryQ[out],CreateDirectory[out,CreateIntermediateDirectories->True]];SetDirectory[out];
+fd=Import[FileNameJoin[{base,"input","fi_family.json"}],"RawJSON"];
+Get[FileNameJoin[{fd["blade_root"],"Blade.wl"}]];
+AppendTo[$Path,Blade`$BLBladeIBPPath];Get["BladeIBP.m"];
+BladeIBP`SetDim[ToExpression[fd["dimension"]]];
+prop=ToExpression/@fd["propagators"];loops=ToExpression/@fd["loops"];legs=ToExpression/@fd["external_momenta"];sp=(ToExpression[#[[1]]]->ToExpression[#[[2]]])&/@fd["scalar_products"];
+fam=Global`e6NumericDot2;BladeIBP`NewBasis[fam,prop,loops,legs,{},sp];BladeIBP`AnalyzeSectors[fam,fd["top"],"CloseSyms"->False,"ExtSyms"->True,"SubgraphSyms"->False];BladeIBP`IntegralOrdering=2;
+masters=BladeIBP`BL[fam,#]&/@Import[FileNameJoin[{base,"input","fi_masters.json"}],"RawJSON"];
+indices=Import[FileNameJoin[{base,"input","all_targets.json"}],"RawJSON"];targets=BladeIBP`BL[fam,Join[#,ConstantArray[0,6]]]&/@indices;expr=BladeIBP`EliminateZeroSectors[targets];needed=DeleteDuplicates[Join[masters,BladeIBP`IntegralsIn[expr]]];
+sectors=BladeIBP`UniqueSectors[fam];Print["SECTORS=",Length[sectors]," TARGETS=",Length[targets]];
+eqs=Flatten[Table[With[{seeds=BladeIBP`GenSeeds[sect,{0,2},0,1]},Join[BladeIBP`GenIds["IBP"][sect,seeds],BladeIBP`GenIds["LI"][sect,seeds],BladeIBP`GenIds["SR"][sect,seeds],BladeIBP`GenIds["Map"][sect,seeds]]],{sect,sectors}]];generated=Length[eqs];eqs=DeleteCases[BladeIBP`EliminateZeroSectors[eqs],0];
+all=BladeIBP`SortIntegrals[DeleteDuplicates[Join[BladeIBP`IntegralsIn[eqs],needed]]];all=Join[Select[all,!MemberQ[masters,#]&],masters];prime=FiniteFlow`FFPrimeNo[0];
+Export["all_indices_audit.json",all/.BladeIBP`BL[_,a_List]:>a,"RawJSON"];Print["AUDIT_COUNT=",Length[all]," UNIQUE=",Length[DeleteDuplicates[all]]];Exit[];

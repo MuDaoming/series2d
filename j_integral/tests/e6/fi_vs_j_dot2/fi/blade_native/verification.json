@@ -1,0 +1,7 @@
+{
+	"passed":true,
+	"targets":1695,
+	"prime":9223372036854775783,
+	"unknown_master_count":0,
+	"comparison":"all coefficients modulo p, after the explicit equal-sunrise alias"
+}

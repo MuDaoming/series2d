@@ -1,0 +1,15 @@
+{
+	"systems":[
+		{
+			"directory":"e6NativeDot2_dot2_1",
+			"raw_equations":1294356,
+			"raw_FI_unknowns":497083,
+			"all_integral_file_entries":497083,
+			"selected_equations":64818,
+			"selected_FI_unknowns":72134,
+			"returned_dependent_integrals":1111,
+			"masters":62
+		}
+	],
+	"system_count":1
+}

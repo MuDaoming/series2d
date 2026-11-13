@@ -1,0 +1,15 @@
+$HistoryLength=0;out=DirectoryName[$InputFileName];base=DirectoryName[DirectoryName[out]];
+fd=Import[FileNameJoin[{base,"input","fi_family.json"}],"RawJSON"];Get[FileNameJoin[{fd["blade_root"],"Blade.wl"}]];
+res=Get[FileNameJoin[{out,"reductions.wl"}]];
+old=Import[FileNameJoin[{base,"fi","run_rank1","reductions.json"}],"RawJSON"];prime=old["prime"];
+mi=BL[e6NativeDot2,Join[Take[#,7],ConstantArray[0,6]]]&/@old["masters"];
+res=res/.Dispatch[Thread[Take[res,-Length[mi]]->mi]];
+modr[x_]:=With[{v=Together[x]},Mod[Numerator[v] PowerMod[Mod[Denominator[v],prime],-1,prime],prime]];
+v=Table[With[{e=Expand[res[[i]]]},modr/@(Coefficient[e,#]&/@mi)],{i,1695}];
+unknown=Complement[BLIntegralsIn[res],mi];
+a=First@FirstPosition[old["masters"],Join[{1,0,1,0,0,1,0},ConstantArray[0,6]]];b=First@FirstPosition[old["masters"],Join[{0,1,0,0,1,0,1},ConstantArray[0,6]]];
+normal[row_]:=ReplacePart[row,{a->0,b->Mod[row[[a]]+row[[b]],prime]}];
+bad=Select[Range[1695],normal[v[[#]]]=!=normal[old["values"][[#]]]&];
+Export[FileNameJoin[{out,"verification_mismatches.json"}],<|"count"->Length[bad],"first"->Table[<|"row"->i,"target"->old["targets"][[i]],"native"->normal[v[[i]]],"previous"->normal[old["values"][[i]]]|>,{i,Take[bad,UpTo[3]]}]|>,"RawJSON"];
+passed=(normal/@v)===(normal/@old["values"])&&unknown==={};
+Export[FileNameJoin[{out,"verification.json"}],<|"passed"->passed,"targets"->1695,"prime"->prime,"unknown_master_count"->Length[unknown],"comparison"->"all coefficients modulo p, after the explicit equal-sunrise alias"|>,"RawJSON"];Print["NATIVE_VERIFIED=",passed];Exit[If[passed,0,2]];
