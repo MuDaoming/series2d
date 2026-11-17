@@ -1,0 +1,73 @@
+{
+  "case": "original_small",
+  "point": {
+    "prime": 1000003,
+    "dimension": "26/7",
+    "t": "23",
+    "parameters": {}
+  },
+  "targets": 1111,
+  "J_basis_size": 79,
+  "primitive_parameters_before": 966,
+  "primitive_parameters_AB": 411,
+  "physical_rows_excluded": 0,
+  "timings_wall": {
+    "snapshot": 0.7858157847076654,
+    "module": 8.599001370370388,
+    "reference": 1.278796854428947,
+    "image_ab": 1.904946749098599,
+    "image_trivial": 17.19713127426803
+  },
+  "reference": {
+    "relation_seconds": 0.028342788,
+    "seed_source": "reference",
+    "submitted_primitive_seeds": 0,
+    "target_coordinate_columns": 439,
+    "total_seconds": 1.190183997,
+    "z_columns": 501,
+    "z_independent_rows": 54,
+    "z_nnz": 1777,
+    "z_nonzero_rows": 94
+  },
+  "candidates": {
+    "image_ab": {
+      "basis_independent": true,
+      "density_generators": 411,
+      "density_image_dimension": 169,
+      "global_columns": 127,
+      "global_nnz": 1008,
+      "global_nonzero_rows": 42,
+      "global_rank": 42,
+      "image_dimension_with_boundary": 169,
+      "local_analytic_columns": 13,
+      "local_analytic_rank": 12,
+      "local_analytic_rows": 52,
+      "relation_seconds": 0.302127295,
+      "seed_source": "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/issues/ab_seed_constraints/build/original_small/module/ab_seeds.json",
+      "total_seconds": 1.812395353,
+      "unrepresented_relations": 0,
+      "all_target_coefficients_equal": true,
+      "unresolved_count": 0
+    },
+    "image_trivial": {
+      "basis_independent": true,
+      "density_generators": 966,
+      "density_image_dimension": 446,
+      "global_columns": 422,
+      "global_nnz": 9450,
+      "global_nonzero_rows": 42,
+      "global_rank": 42,
+      "image_dimension_with_boundary": 446,
+      "local_analytic_columns": 13,
+      "local_analytic_rank": 12,
+      "local_analytic_rows": 52,
+      "relation_seconds": 6.01545059,
+      "seed_source": "/home/mudaoming/Documents/NewReps/reduce/series2d/j_integral/issues/ab_seed_constraints/build/original_small/module/trivial_seeds.json",
+      "total_seconds": 17.046335717,
+      "unrepresented_relations": 0,
+      "all_target_coefficients_equal": true,
+      "unresolved_count": 0
+    }
+  },
+  "passed": true
+}

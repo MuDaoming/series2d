@@ -10,7 +10,7 @@ $$
 D_i=(c_{i1}\ell_1+c_{i2}\ell_2+q_i)^2-m_i^2+i0,
 \qquad
 I_\nu^d=\int\frac{d^d\ell_1}{i\pi^{d/2}}
-\frac{d^d\ell_2}{i\pi^{d/2}}\prod_iD_i^{-\nu_i}.
+\frac{d^d\ell_2}{i\pi^{d/2}}\prod_{i:\nu_i>0}D_i^{-\nu_i}.
 $$
 
 $q_i$ 是输入外动量的线性组合；现有FBI接口只接受非负指标，不处理不可约分子。圈动量二次结构相同的传播子组成branch $\mathcal B_b$，$b=1,2,3$。活跃传播子的参数写为 $x_i=X_by_i$，各branch中 $\sum y_i=1$，$\sigma_b=\sum_{i\in\mathcal B_b}\nu_i$，$v=\sum_i\nu_i$。
@@ -18,8 +18,8 @@ $q_i$ 是输入外动量的线性组合；现有FBI接口只接受非负指标�
 配方 $\sum_iX_by_iD_i=\ell^{\mathsf T}A\ell+2\ell\cdot B+C$，定义 $U=\det A$、$F=B^{\mathsf T}\operatorname{adj}(A)B-UC$。FBI定义为
 
 $$
-\mathcal I_\nu^d(X)=\frac{(-1)^v\Gamma(v-d)}{\prod_i\Gamma(\nu_i)}
-\int[dy]_\nu\frac{\prod_i y_i^{\nu_i-1}}{(F-i0)^{v-d}}.
+\mathcal I_\nu^d(X)=\frac{(-1)^v\Gamma(v-d)}{\prod_{i:\nu_i>0}\Gamma(\nu_i)}
+\int[dy]_\nu\frac{\prod_{i:\nu_i>0} y_i^{\nu_i-1}}{(F-i0)^{v-d}}.
 $$
 
 $[dy]_\nu$ 包含各活跃branch的simplex约束。采用
@@ -113,4 +113,4 @@ e6和DP的具体统计与比较限制见 [规模总结](../../../tests/IBP_SIZE_
 
 新思路是对有限奇点的整数支要求从 $\mu=0$ 开始，不允许负整数幂；非整数支保留，暂不约束无穷远。应按AB构造允许分子组成的模，用其生成元参数化候选被积行或关系，减少未知参数，再考虑如何接入上述Hermite流程。
 
-这不是把单独FBI分量的整数幂删掉，也不是已经实现的功能。矩阵组合之间可能发生解析极点相消；需要由整个组合的模条件判断。现有FBI的 $z$ 连接可作为这一步AB的输入，无需先有J的DE。新约束对物理密度、全导数原函数和边界项的具体适用方式需要分别证明和验证。
+这不是把单独FBI分量的整数幂删掉。正式后端尚未接入，独立e6实验已得到可保持约化系数的模参数化和Hermite像空间方案，见 [实验结果](../../../issues/ab_seed_constraints/README.md)。矩阵组合之间可能发生解析极点相消；需要由整个组合的模条件判断。现有FBI的 $z$ 连接可作为这一步AB的输入，无需先有J的DE。新约束对物理密度、全导数原函数和边界项的具体适用方式需要分别证明和验证。
