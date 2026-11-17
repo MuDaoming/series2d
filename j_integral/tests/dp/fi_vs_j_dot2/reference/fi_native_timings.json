@@ -1,0 +1,9 @@
+{
+  "final_masters": 492,
+  "initial_maximal_cut_candidates": 547,
+  "generation_seconds": 496.9,
+  "first_load_learn_trim_seconds": 653.899,
+  "reload_and_rational_reconstruction_seconds": 484.903,
+  "total_seconds": 1956.2014,
+  "note": "completion.json masters field is the initial candidate count, not final rank"
+}

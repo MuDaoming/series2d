@@ -1,0 +1,15 @@
+{
+	"systems":[
+		{
+			"directory":"dpNativeDot2_dot2_1",
+			"raw_equations":1716116,
+			"raw_FI_unknowns":756477,
+			"all_integral_file_entries":756477,
+			"selected_equations":318997,
+			"selected_FI_unknowns":338813,
+			"returned_dependent_integrals":3839,
+			"masters":492
+		}
+	],
+	"system_count":1
+}
