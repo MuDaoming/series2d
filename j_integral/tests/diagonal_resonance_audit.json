@@ -1,0 +1,2770 @@
+{
+  "scan_bound": 128,
+  "results": [
+    {
+      "snapshot": "j_integral/issues/ab_seed_constraints/build/original63/snapshot.json",
+      "point": {
+        "dimension": "26/7",
+        "parameters": {},
+        "prime": 9223372036854775783,
+        "t": "17"
+      },
+      "FBI_rank": 42,
+      "positive_finite_primitive_exponents_scanned_through": 128,
+      "finite_factors_checked": 159,
+      "finite_primitive_power_counts": {},
+      "infinity_primitive_degree_counts": {
+        "2": 42
+      },
+      "finite_nonfuchsian_diagonal_entries": [],
+      "default_completion_seed_count_verified": 42,
+      "finite_resonances": [],
+      "infinity_resonances": [
+        {
+          "component": 0,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 1,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 2,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 3,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 4,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 5,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 6,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 7,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 8,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 9,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 10,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 11,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 12,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 13,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 14,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 15,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 16,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 17,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 18,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 19,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 20,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 21,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 22,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 23,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 24,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 25,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 26,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 27,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 28,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 29,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 30,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 31,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 32,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 33,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 34,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 35,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 36,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 37,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 38,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 39,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 40,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 41,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        }
+      ]
+    },
+    {
+      "snapshot": "j_integral/issues/ab_seed_constraints/build/separated63/snapshot.json",
+      "point": {
+        "dimension": "26/7",
+        "parameters": {},
+        "prime": 9223372036854775783,
+        "t": "17"
+      },
+      "FBI_rank": 42,
+      "positive_finite_primitive_exponents_scanned_through": 128,
+      "finite_factors_checked": 144,
+      "finite_primitive_power_counts": {},
+      "infinity_primitive_degree_counts": {
+        "2": 42
+      },
+      "finite_nonfuchsian_diagonal_entries": [],
+      "default_completion_seed_count_verified": 42,
+      "finite_resonances": [],
+      "infinity_resonances": [
+        {
+          "component": 0,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 1,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 2,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 3,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 4,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 5,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 6,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 7,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 8,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 9,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 10,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 11,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 12,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 13,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 14,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 15,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 16,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 17,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 18,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 19,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 20,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 21,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 22,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 23,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 24,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 25,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 26,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 27,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 28,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 29,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 30,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 31,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 32,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 33,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 34,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 35,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 36,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 37,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 38,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 39,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 40,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 41,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        }
+      ]
+    },
+    {
+      "snapshot": "j_integral/issues/ab_seed_constraints/build/dp_connection_snapshot.json",
+      "point": {
+        "dimension": "26/7",
+        "parameters": {},
+        "prime": 9223372036854775783,
+        "t": "17"
+      },
+      "FBI_rank": 115,
+      "positive_finite_primitive_exponents_scanned_through": 128,
+      "finite_factors_checked": 556,
+      "finite_primitive_power_counts": {},
+      "infinity_primitive_degree_counts": {
+        "2": 115
+      },
+      "finite_nonfuchsian_diagonal_entries": [],
+      "default_completion_seed_count_verified": 115,
+      "finite_resonances": [],
+      "infinity_resonances": [
+        {
+          "component": 0,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 1,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 2,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 3,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 4,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 5,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 6,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 7,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 8,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 9,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 10,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 11,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 12,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 13,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 14,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 15,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 16,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 17,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 18,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 19,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 20,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 21,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 22,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 23,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 24,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 25,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 26,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 27,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 28,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 29,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 30,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 31,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 32,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 33,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 34,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 35,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 36,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 37,
+          "master": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 38,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 39,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 40,
+          "master": [
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 41,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 42,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 43,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 44,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 45,
+          "master": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 46,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 47,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 48,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 49,
+          "master": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 50,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 51,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 52,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 53,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 54,
+          "master": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 55,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 56,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 57,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 58,
+          "master": [
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 59,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 60,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 61,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 62,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 63,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 64,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 65,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 66,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 67,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 68,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 69,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 70,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 71,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 72,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 73,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 74,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 75,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 76,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 77,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 78,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 79,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 80,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 81,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 82,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 83,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 84,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 85,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 86,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 87,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 88,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 89,
+          "master": [
+            0,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 90,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 91,
+          "master": [
+            0,
+            1,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 92,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 93,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 94,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 95,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 96,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 97,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 98,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 99,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 100,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 101,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 102,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 103,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 104,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 105,
+          "master": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 106,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 107,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 108,
+          "master": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 109,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 110,
+          "master": [
+            0,
+            1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 111,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 112,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 113,
+          "master": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "primitive_degree": 2
+        },
+        {
+          "component": 114,
+          "master": [
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "primitive_degree": 2
+        }
+      ]
+    }
+  ]
+}
