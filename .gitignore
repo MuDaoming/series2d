@@ -4,3 +4,7 @@
 ref/
 search_like_blade/
 SKILL/
+
+__pycache__/
+
+*.pyc
