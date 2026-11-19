@@ -816,9 +816,12 @@ ComputeIrreduciblePoleConstraintStructures[
     residueAllowedFp = Length[residueAllowedBasis];
     residueAllowedK = residueAllowedFp/degree;
     residueConstraintLocal = rowBasis[
-      NullSpace[
-        residueAllowedBasis,
-        Modulus -> modulus
+      If[Length[residueAllowedBasis] === 0,
+        IdentityMatrix[expandedDimension],
+        NullSpace[
+          residueAllowedBasis,
+          Modulus -> modulus
+        ]
       ],
       modulus
     ];
@@ -1014,9 +1017,12 @@ ComputeIrreduciblePoleConstraintStructures[
     numeratorTransform = buildNumeratorTransform[
       deltaSeries, dimension, degree, dI, generator, modulus, reduce
     ];
-    constraintRaw = Mod[
-      constraintLocal . numeratorTransform,
-      modulus
+    constraintRaw = If[Length[constraintLocal] === 0,
+      {},
+      Mod[
+        constraintLocal . numeratorTransform,
+        modulus
+      ]
     ];
     constraintRaw = rowBasis[constraintRaw, modulus];
     constraintRank = Length[constraintRaw];
@@ -1027,7 +1033,13 @@ ComputeIrreduciblePoleConstraintStructures[
     ];
     allowedFp = ambientFp - constraintRank;
     allowedK = allowedFp/degree;
-    allowedBasis = NullSpace[constraintRaw, Modulus -> modulus];
+    (* An empty row basis has lost its ambient column dimension.  In that
+       zero-constraint case every proper-numerator coordinate is allowed;
+       NullSpace[{}, Modulus -> p] otherwise remains unevaluated. *)
+    allowedBasis = If[Length[constraintRaw] === 0,
+      IdentityMatrix[ambientFp],
+      NullSpace[constraintRaw, Modulus -> modulus]
+    ];
     dI -> <|
       "dI" -> dI,
       "Variable" -> variable,
