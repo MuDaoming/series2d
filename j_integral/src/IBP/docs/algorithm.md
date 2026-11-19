@@ -2,6 +2,8 @@
 
 本文说明现有程序，不是新的AB播种实现。完整输入格式、归一化及运行方法见 [接口README](../README.md)。
 
+z方向局部Hermite的完整数学步骤、终止条件和结构复杂度见 [z_hermite_algorithm.md](z_hermite_algorithm.md)。
+
 ## 1. 从FI到待约化对象
 
 两个圈动量为 $\ell_1,\ell_2$，传播子
